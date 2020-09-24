@@ -1,0 +1,81 @@
+/* -------------- ПЛИТОЧНАЯ ВЕРСТКА -------------- */
+
+.content-grid {
+    /* TODO: нормальная адаптивная плитка получится только с js */
+    columns: 7;
+    column-gap: 1rem;
+    justify-content: center;
+
+    /*flex-wrap: wrap;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: flex-start;*/
+
+    margin: 1rem auto;
+    padding: 0;
+
+}
+
+@media (max-width: 1850px) {
+    .content-grid {
+        columns: 6;
+    }
+}
+
+@media (max-width: 1580px) {
+    .content-grid {
+        columns: 5;
+    }
+}
+
+@media (max-width: 1350px) {
+    .content-grid {
+        columns: 4;
+    }
+}
+
+@media (max-width: 1100px) {
+    .content-grid {
+        columns: 3;
+    }
+}
+
+@media (max-width: 850px) {
+    .content-grid {
+        columns: 2;
+    }
+}
+
+@media (max-width: 580px) {
+    .content-grid {
+        columns: 1;
+    }
+}
+
+.content-grid__item {
+    display: inline-block;
+    position: relative;
+
+    width: 15rem;
+    margin: 1rem 0.5rem 1rem 0.5rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.settings-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
