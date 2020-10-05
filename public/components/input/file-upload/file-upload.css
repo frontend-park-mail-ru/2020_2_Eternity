@@ -1,0 +1,33 @@
+.form__input-file-upload {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 150px;
+    height: 36px;
+    margin: 10px auto;
+}
+
+.form__input-file-upload input[type="file"] {
+    opacity: 0;
+    padding: 0;
+    height: 40px;
+    width: 144px;
+}
+
+.form__input-file-upload__label {
+    background: #3b70f1;
+    text-align: center;
+    color: #ffffff;
+    display: block;
+    padding: 10px 10px;
+    position: absolute;
+    font-weight: 700;
+    transition: all 0.3s ease-in-out;
+    border-radius: 25px;
+}
+
+.form__input-file-upload:hover .form__input-file-upload__label {
+    background: #eaf5fe;
+    color: #3b70f1;
+}
+
