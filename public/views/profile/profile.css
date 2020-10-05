@@ -1,0 +1,121 @@
+.profile-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 10vh auto 20px;
+  width: 30%;
+  border-radius: 12px;
+}
+
+.profile-card__content {
+  width: 100%;
+  text-align: center;
+}
+
+.profile-card__user-info {
+  text-align: center;
+  line-height: .8rem;
+}
+
+.profile-card__user-info ul {
+  padding: 0;
+  margin: 5px auto;
+  list-style-type: none;
+  line-height: 2rem;
+}
+
+.profile-card__user-info li:last-child {
+  margin-top: 20px;
+}
+
+.profile-card__user-info li:first-child {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.profile-background {
+  position: absolute;
+  top: -90px;
+  left: 0;
+
+  height: 20vh;
+  width: 100%;
+
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-desk {
+  height: 100%;
+  padding: 1rem;
+  text-align: right;
+}
+
+.profile-desk__grid {
+  max-width: 100%;
+  display: grid;
+  grid-gap: 2em;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  margin: 20px auto;
+  padding: 1em;
+}
+
+.profile-desk__grid > * {
+  display: inline-block;
+  max-width: 300px;
+  max-height: 200px;
+  margin: 0 10px;
+}
+
+.profile-desk__grid__card {
+  flex: 1 0 100px;
+  display: flex;
+  margin: 0 auto;
+  grid-gap: 1em;
+
+  text-decoration: none;
+  background: rgba(255, 255, 255, 1);
+
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+}
+
+.profile-desk__grid__card img {
+  max-width: 100%;
+  max-height: 100%;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  object-fit: cover;
+}
+
+.profile-card__user-avatar {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.profile__btn-edit {
+  -moz-appearance: button;
+  -webkit-appearance: button;
+  text-decoration: none;
+  border-radius: 100%;
+  background-color: #f1f1f1;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+  padding: 7px 3px 0;
+  height: 32px;
+  width: 32px;
+  box-shadow: 3px 3px 3px rgba(214, 214, 214, 0.6);
+}
+
+.profile__btn-edit > i {
+  pointer-events: none;
+}
