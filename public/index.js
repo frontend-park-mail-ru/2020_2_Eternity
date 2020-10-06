@@ -33,8 +33,13 @@ function settingsPage() {
 }
 
 function regPage() {
-    const reg = new AuthRegPage();
+    const reg = new AuthRegPage('registration');
     reg.render();
+}
+
+function loginPage() {
+    const loginP = new AuthRegPage('auth')
+    loginP.render()
 }
 
 function pinCreatingPage() {
@@ -50,6 +55,8 @@ const routes = {
     '/profile': profilePage,
     '/profile/edit': settingsPage,
     '/create-pin': pinCreatingPage,
+    '/login': loginPage,
+    '/signup': regPage
 };
 
 
