@@ -57,15 +57,25 @@ export default class SettingsPage extends Base {
         resultForm.bind('submit', (event) =>{
             event.preventDefault();
 
+            let data = {};
+            let OK = true;
             resultForm.removeErrors();
-
             resultForm.inputs.forEach((input) => {
                 let res = Validator.isValid(input.id, input.value)
-
                 if (res !== undefined && !res.res) {
                     resultForm.addError(input, res.error)
+                    OK = false;
                 }
             })
+
+            if (OK) {
+                resultForm.inputs.forEach((input) => {
+                    data[input.id] = input.value;
+                })
+            }
+
+            // TODO: AJAX
+
         })
     }
 }
