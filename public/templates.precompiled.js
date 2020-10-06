@@ -124,7 +124,7 @@
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
     templates['navbar.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-            return "<div class=\"navbar\">\r\n\r\n    <ul class=\"navbar__links\">\r\n        <li><a href=\"/\">Главная</a></li>\r\n        <li><a href=\"/profile\">Профиль</a></li>\r\n    </ul>\r\n</div>";
+            return "<div class=\"navbar\">\r\n\r\n    <ul class=\"navbar__links\">\r\n        <li><a href=\"/\">Главная</a></li>\r\n        <li><a href=\"/profile\">Профиль</a></li>\r\n        <li><a href=\"/signup\">Регистрация</a></li>\r\n        <li><a href=\"/login\">Вход</a></li>\r\n    </ul>\r\n</div>";
         },"useData":true});
 })();
 
