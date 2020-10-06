@@ -10,4 +10,12 @@ export default class Form {
     render() {
         return this.template(this.context)
     }
+
+    get element() {
+        return document.getElementById(this.context.id)
+    }
+
+    bind(event, callback) {
+        this.element.addEventListener(event, callback)
+    }
 }

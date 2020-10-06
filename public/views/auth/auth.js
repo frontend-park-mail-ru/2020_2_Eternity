@@ -25,8 +25,8 @@ export default class AuthRegPage extends Base {
 
         const form = new FormGenerator(actions[this.#pageType])
 
-        form.appendInput('email', 'form__input', placeholders['email'], '')
-        form.appendInput('password', 'form__input', placeholders['password'], '')
+        form.appendInput('email', 'form__input', placeholders['email'], '', '', 'email')
+        form.appendInput('password', 'form__input', placeholders['password'], '', '', 'password')
 
         form.appendButton('submit', 'Войти')
 

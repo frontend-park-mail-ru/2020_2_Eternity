@@ -7,13 +7,15 @@ export default class FormGenerator {
 
     action
     method
+    id
 
-    constructor(action, method = '') {
+    constructor(action, method = '', id= '') {
         this.action = action
         this.method = method
+        this.id = id
     }
 
-    appendInput(type, classes = 'form__input', label = '', placeholder = '', value = '') {
+    appendInput(type, classes = 'form__input', label = '', placeholder = '', value = '', id = '') {
         const inputContext = {
             type: type
         }
@@ -32,6 +34,10 @@ export default class FormGenerator {
 
         if (value.length > 0) {
             inputContext['value'] = value
+        }
+
+        if (value.length > 0) {
+            inputContext['id'] = id
         }
 
         this.elements.push(new Input(inputContext))
@@ -54,7 +60,7 @@ export default class FormGenerator {
         this.elements.push(element)
     }
 
-    renderAll() {
+    fill() {
         let elements = []
 
         this.elements.forEach((elem) => {
@@ -69,9 +75,14 @@ export default class FormGenerator {
         if (this.method.length > 0) {
             formContext['method'] = this.method
         }
+        if (this.id.length > 0) {
+            formContext['id'] = this.id
+        }
 
-        const form = new Form(formContext)
+        return new Form(formContext)
+    }
 
-        return form.render()
+    renderAll() {
+        return this.fill().render()
     }
 }

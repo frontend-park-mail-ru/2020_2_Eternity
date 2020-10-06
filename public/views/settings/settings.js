@@ -4,6 +4,7 @@ import Avatar from "../../components/avatar/avatar.js";
 import FileUpload from "../../components/input/file-upload/file-upload.js";
 
 import FormGenerator from "../../modules/tools/form_generator.js";
+import Validator from "../../modules/tools/validator.js"
 
 export default class SettingsPage extends Base {
     constructor(context = {}) {
@@ -28,7 +29,7 @@ export default class SettingsPage extends Base {
             fileUpload: 'Выбрать аватар',
         }
 
-        const form = new FormGenerator('')
+        const form = new FormGenerator('', '', 'edit')
 
         form.appendElement(new Avatar({
             avatarPath: response['avatarPath']
@@ -37,10 +38,10 @@ export default class SettingsPage extends Base {
             label: fieldsLabels['fileUpload']
         }))
 
-        form.appendInput('text', 'form__input', fieldsLabels['name'], '', response['name'])
-        form.appendInput('text', 'form__input', fieldsLabels['surname'], '', response['surname'])
-        form.appendInput('text', 'form__input', fieldsLabels['username'], '', response['username'])
-        form.appendInput('text', 'form__input', fieldsLabels['description'], '', response['description'])
+        form.appendInput('text', 'form__input', fieldsLabels['name'], '', response['name'], 'name')
+        form.appendInput('text', 'form__input', fieldsLabels['surname'], '', response['surname'], 'surname')
+        form.appendInput('text', 'form__input', fieldsLabels['username'], '', response['username'], 'username')
+        form.appendInput('text', 'form__input', fieldsLabels['description'], '', response['description'], 'description')
 
         form.appendButton('submit', 'Сохранить')
 
@@ -50,5 +51,10 @@ export default class SettingsPage extends Base {
 
         this.fillWith(data);
         super.render()
+
+        form.fill().bind('submit', (event) =>{
+            event.preventDefault();
+            console.log(event.target)
+        })
     }
 }
