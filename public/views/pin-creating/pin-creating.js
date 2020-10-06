@@ -16,12 +16,12 @@ export default class PinCreating extends Base {
             description: 'Pin description'
         }
 
-        const form = new FormGenerator('')
+        const form = new FormGenerator('', '', 'upload')
 
         form.appendElement(new PinUpload())
 
-        form.appendInput('text', 'form__input', '', fieldsLabels['title'])
-        form.appendInput('textarea', 'form__input','', fieldsLabels['title'])
+        form.appendInput('text', 'form__input', '', fieldsLabels['title'], '', 'title')
+        form.appendInput('textarea', 'form__input','', fieldsLabels['description'], '', 'description')
 
         form.appendButton('submit', 'Создать')
 
@@ -31,5 +31,18 @@ export default class PinCreating extends Base {
 
         this.fillWith(data);
         super.render()
+
+        let resultForm = form.fill();
+
+        resultForm.bind('submit', (event) =>{
+            event.preventDefault();
+
+            let data = {};
+            data['file'] = document.getElementById('file').files[0];
+            data['title'] = document.getElementById('title').value;
+            data['description'] = document.getElementById('description').value;
+
+            // TODO: AJAX
+        })
     }
 }

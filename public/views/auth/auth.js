@@ -1,6 +1,7 @@
 import Base from "../base.js";
 
 import FormGenerator from "../../modules/tools/form_generator.js";
+import Validator from "../../modules/tools/validator.js";
 
 export default class AuthRegPage extends Base {
     #pageType
@@ -36,5 +37,18 @@ export default class AuthRegPage extends Base {
 
         this.fillWith(data);
         super.render()
+
+        let resultForm = form.fill();
+
+        resultForm.bind('submit', (event) =>{
+            event.preventDefault();
+
+            let data = {};
+            data['email'] = document.getElementById('email').value;
+            data['password'] = document.getElementById('password').value;
+
+
+            // TODO: AJAX
+        })
     }
 }
