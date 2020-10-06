@@ -4,6 +4,7 @@ import Input from "../../components/input/input.js";
 
 export default class FormGenerator {
     elements = []
+    inputs = []
 
     action
     method
@@ -36,8 +37,9 @@ export default class FormGenerator {
             inputContext['value'] = value
         }
 
-        if (value.length > 0) {
+        if (id.length > 0) {
             inputContext['id'] = id
+            this.inputs.push(id)
         }
 
         this.elements.push(new Input(inputContext))
@@ -69,7 +71,8 @@ export default class FormGenerator {
 
         const formContext = {
             action: this.action,
-            elements: elements
+            elements: elements,
+            inputs: this.inputs
         }
 
         if (this.method.length > 0) {

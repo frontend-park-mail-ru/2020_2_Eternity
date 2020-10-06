@@ -45,6 +45,8 @@ export default class SettingsPage extends Base {
 
         form.appendButton('submit', 'Сохранить')
 
+        const resultForm = form.fill()
+
         const data = {
             form: form.renderAll(),
         }
@@ -52,9 +54,18 @@ export default class SettingsPage extends Base {
         this.fillWith(data);
         super.render()
 
-        form.fill().bind('submit', (event) =>{
+        resultForm.bind('submit', (event) =>{
             event.preventDefault();
-            console.log(event.target)
+
+            resultForm.removeErrors();
+
+            resultForm.inputs.forEach((input) => {
+                let res = Validator.isValid(input.id, input.value)
+
+                if (res !== undefined && !res.res) {
+                    resultForm.addError(input, res.error)
+                }
+            })
         })
     }
 }
