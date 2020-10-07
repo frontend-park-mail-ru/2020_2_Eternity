@@ -32,6 +32,7 @@ export default class PinCreating extends Base {
         this.fillWith(data);
         super.render()
 
+        form.elements[0].bindPreview();
         let resultForm = form.fill();
 
         resultForm.bind('submit', (event) =>{
@@ -43,6 +44,7 @@ export default class PinCreating extends Base {
             data['description'] = document.getElementById('description').value;
 
             // TODO: AJAX
+
         })
     }
 }

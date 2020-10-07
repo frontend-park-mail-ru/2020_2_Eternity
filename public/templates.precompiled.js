@@ -253,7 +253,9 @@
                 + alias4(((helper = (helper = lookupProperty(helpers,"action") || (depth0 != null ? lookupProperty(depth0,"action") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"action","hash":{},"data":data,"loc":{"start":{"line":1,"column":41},"end":{"line":1,"column":53}}}) : helper)))
                 + "\" "
                 + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"method") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":1,"column":55},"end":{"line":1,"column":97}}})) != null ? stack1 : "")
-                + ">\r\n"
+                + " enctype=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"enctype") || (depth0 != null ? lookupProperty(depth0,"enctype") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"enctype","hash":{},"data":data,"loc":{"start":{"line":1,"column":107},"end":{"line":1,"column":120}}}) : helper)))
+                + "\">\r\n"
                 + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"elements") : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":4,"column":13}}})) != null ? stack1 : "")
                 + "</form>";
         },"useData":true});
@@ -308,7 +310,6 @@
             };
 
             return ((stack1 = ((helper = (helper = lookupProperty(helpers,"navbar") || (depth0 != null ? lookupProperty(depth0,"navbar") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"navbar","hash":{},"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":1,"column":14}}}) : helper))) != null ? stack1 : "")
-                + "\r\n\r\n<div class=\"pin-creation-layout__image-input\">\r\n    <input type=\"file\" id=\"file\">\r\n</div>";
+                + "\r\n\r\n<div class=\"pin-creation-layout__image-input\">\r\n    <img class=\"pin-creation__img\" src=\"\" id=\"preview\" alt=\"\">\r\n    <a href=\"\" id=\"reset-preview\"><i class=\"fas fa-times\"></i></a>\r\n    <p class=\"pin-creation__upload__icon\"><i class=\"fas fa-file-upload\"></i></p>\r\n    <span>Нажмите для загрузки</span>\r\n    <input type=\"file\" id=\"file\">\r\n</div>";
         },"useData":true});
 })();
-

@@ -72,6 +72,7 @@ export default class FormGenerator {
         const formContext = {
             action: this.action,
             elements: elements,
+            enctype: 'multipart/form-data',
             inputs: this.inputs
         }
 

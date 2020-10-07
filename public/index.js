@@ -60,7 +60,7 @@ const routes = {
 };
 
 
-let router = new Router(application)
+export let router = new Router(application)
 Object.entries(routes).forEach(([href, controller]) => {
     router.bind(href, controller);
 })
