@@ -35,7 +35,12 @@ export default class AuthRegPage extends Base {
 
         const form = new FormGenerator(actions[this.#pageType], '', this.#pageType)
 
-        form.appendInput('email', 'form__input', placeholders['email'], '', '', 'email')
+        if (this.#pageType === 'registration') {
+            form.appendInput('email', 'form__input', placeholders['email'], '', '', 'email')
+        } else {
+            form.appendInput('text', 'form__input', 'Имя пользователя', 'Username', '', 'username')
+        }
+
         form.appendInput('password', 'form__input', placeholders['password'], '', '', 'password')
 
         form.appendButton('submit', 'Войти')
@@ -53,9 +58,13 @@ export default class AuthRegPage extends Base {
             event.preventDefault();
 
             let data = {};
-            data['email'] = document.getElementById('email').value;
+            if (this.#pageType === 'registration') {
+                data['email'] = document.getElementById('email').value;
+                data['username'] = data['email'].split('@')[0]
+            } else {
+                data['realname'] = document.getElementById('username').value;
+            }
             data['password'] = document.getElementById('password').value;
-            data['username'] = data['email'].split('@')[0]
 
             if (this.#pageType === 'registration') {
                 Request.signup(data['username'], data['email'], data['password'])
@@ -76,7 +85,7 @@ export default class AuthRegPage extends Base {
                         }
                     })
             } else if (this.#pageType === 'auth') {
-                Request.login(data['username'], data['password']).then((response) => {
+                Request.login(data['realname'], data['password']).then((response) => {
                     console.log(response.status)
                     if (response.ok) {
                         console.log(response.ok)

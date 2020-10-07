@@ -8,6 +8,7 @@ export const urls = {
     pinPost: `${apiPath}/user/pin`,
     updatePassword: `${apiPath}/user/profile/password`,
     updateProfile: `${apiPath}/user/profile`,
-    avatar: `${apiPath}/user/profile/avatar`
+    avatar: `${apiPath}/user/profile/avatar`,
+    pins: `${apiPath}/user/pin`
 }
 

@@ -212,11 +212,12 @@
                 return undefined
             };
 
-            return "<div class=\"form__input-file-upload\">\r\n    <span class=\"form__input-file-upload__label\">"
+            return "<div class=\"form__input-file-upload\">\r\n <span class=\"form__input-file-upload__label\">"
                 + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"label") || (depth0 != null ? lookupProperty(depth0,"label") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"label","hash":{},"data":data,"loc":{"start":{"line":2,"column":49},"end":{"line":2,"column":60}}}) : helper)))
-                + "</span>\r\n    <input type=\"file\">\r\n</div>";
+                + "</span>\r\n <input type=\"file\" id=\"file\">\r\n</div>";
         },"useData":true});
 })();
+
 
 
 // ФОРМА

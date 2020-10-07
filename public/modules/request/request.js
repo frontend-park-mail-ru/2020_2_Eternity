@@ -41,15 +41,16 @@ export default class Request {
         })
     }
 
-    static pinPost(title, content, imgLink) {
+    static pinPost(data) {
         return fetch(urls['pinPost'], {
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify({
+            /*body: JSON.stringify({
                 title: title,
                 content: content,
                 imgLink: imgLink
-            })
+            })*/
+            body: data
         })
     }
 
@@ -79,15 +80,21 @@ export default class Request {
         return fetch(urls['avatar'], {
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify({
-                image: file
-            })
+            body: file
         })
     }
 
     static getAvatar(imgLink) {
         return fetch(urls['avatar'], {
             method: 'GET',
+            credentials: 'include',
+        })
+    }
+
+    static getPin() {
+        return fetch(urls['pins'], {
+            method: 'GET',
+            mode: 'cors',
             credentials: 'include',
         })
     }
