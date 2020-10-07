@@ -2,6 +2,7 @@
   "name": "2020_2_Eternity",
   "version": "1.0.0",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.2"
   }
 }
