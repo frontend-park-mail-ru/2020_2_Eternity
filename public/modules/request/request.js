@@ -75,12 +75,12 @@ export default class Request {
         })
     }
 
-    static updateAvatar(imgLink) {
+    static updateAvatar(file) {
         return fetch(urls['avatar'], {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
-                imgLink: imgLink
+                image: file
             })
         })
     }
