@@ -25,7 +25,6 @@ export default class MainPage extends Base {
                 })
             }
 
-
             const fakePins = [
                 {
                     id: '1',
@@ -84,7 +83,22 @@ export default class MainPage extends Base {
                 },
                 {
                     id: '12',
+                    imgSrc: './././static/img/img1.jpg',
+                    pubDate: '30.09.2020'
+                },
+                {
+                    id: '13',
+                    imgSrc: './././static/img/img2.jpg',
+                    pubDate: '30.09.2020'
+                },
+                {
+                    id: '14',
                     imgSrc: './././static/img/img3.jpg',
+                    pubDate: '30.09.2020'
+                },
+                {
+                    id: '15',
+                    imgSrc: './././static/img/img4.jpg',
                     pubDate: '30.09.2020'
                 },
             ]

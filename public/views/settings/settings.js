@@ -19,11 +19,12 @@ export default class SettingsPage extends Base {
             return response.json()
         }).then((responseJSON) => {
             const profileData = {
-                avatarPath: './././static/img/img15.jpg',
+                avatarPath: responseJSON['avatar'],
                 name: responseJSON['username'],
                 surname: 'Rhod',
                 username: 'OHMYGOOSH',
                 description: 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
+                email: responseJSON['email']
             }
 
             const fieldsLabels = {
@@ -32,6 +33,7 @@ export default class SettingsPage extends Base {
                 username: 'Имя пользователя',
                 description: 'Сведения о вашем профиле',
                 fileUpload: 'Выбрать аватар',
+                email: 'email'
             }
 
             const form = new FormGenerator('', '', 'edit')
@@ -46,7 +48,10 @@ export default class SettingsPage extends Base {
             form.appendInput('text', 'form__input', fieldsLabels['name'], '', profileData['name'], 'name')
             form.appendInput('text', 'form__input', fieldsLabels['surname'], '', profileData['surname'], 'surname')
             form.appendInput('text', 'form__input', fieldsLabels['username'], '', profileData['username'], 'username')
+            form.appendInput('email', 'form__input', fieldsLabels['email'], '', profileData['email'], 'email')
             form.appendInput('text', 'form__input', fieldsLabels['description'], '', profileData['description'], 'description')
+            // form.appendInput('password', 'form__input', 'Текущий пароль', '', '', 'oldpswd')
+            // form.appendInput('password', 'form__input', 'Новый пароль', '', '', 'newpswd')
 
             form.appendButton('submit', 'Сохранить')
 
@@ -84,6 +89,10 @@ export default class SettingsPage extends Base {
                 formData.append('image', document.getElementById('file').files[0])
 
                 Request.updateAvatar(formData).then((response) => console.log(response.status))
+
+                console.log(data['name'], data['email'])
+                Request.updateProfile(data['name'], data['email']).then((response) => console.log(response.status))
+                //Request.updatePassword(data['oldpswd'], data['newpswd']).then((response) => console.log(response.status))
 
                 // TODO: AJAX
 

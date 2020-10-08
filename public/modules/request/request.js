@@ -59,15 +59,15 @@ export default class Request {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify({
-                oldPassword: oldPassword,
-                newPassword: newPassword
+                oldpassword: oldPassword,
+                newpassword: newPassword
             })
         })
     }
 
     static updateProfile(username, email) {
         return fetch(urls['updateProfile'], {
-            method: 'PUT',
+            method: 'POST',
             credentials: 'include',
             body: JSON.stringify({
                 username: username,
