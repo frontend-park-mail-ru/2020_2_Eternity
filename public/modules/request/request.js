@@ -67,7 +67,7 @@ export default class Request {
 
     static updateProfile(username, email) {
         return fetch(urls['updateProfile'], {
-            method: 'POST',
+            method: 'PUT',
             credentials: 'include',
             body: JSON.stringify({
                 username: username,
