@@ -7,6 +7,12 @@ export default class FileUpload extends Input {
     }
 
     render() {
+        const input = new Input({
+            type: 'file',
+            id: 'file',
+        })
+
+        this.context.input = input.render();
         return super.render()
     }
 }

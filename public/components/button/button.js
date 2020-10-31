@@ -1,13 +1,7 @@
-export default class Button {
-    context
-    template
+import BaseComponent from "../base_component.js";
 
+export default class Button extends BaseComponent {
     constructor(context = {}) {
-        this.context = context;
-        this.template = Handlebars.templates['button.hbs'];
-    }
-
-    render() {
-        return this.template(this.context)
+        super('button.hbs', context);
     }
 }
