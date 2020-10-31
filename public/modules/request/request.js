@@ -1,101 +1,100 @@
 import {urls} from './api.js'
 
+
 export default class Request {
-    static login(username, password) {
-        return fetch(urls['login'], {
-            method: 'POST',
+    static #request (path, method, ext={}) {
+        return fetch(urls[path], {
+            method: method,
             credentials: 'include',
-            mode: 'no-cors',
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
+            ...ext
         })
     }
 
+    static requestGET(path, ext={}) {
+        return Request.#request(path, 'GET', ext);
+    }
+
+    static requestPOST(path, ext={}) {
+        return Request.#request(path, 'POST', ext);
+    }
+
+    static requestPUT(path, ext={}) {
+        return Request.#request(path, 'PUT', ext);
+    }
+
+    static login(username, password) {
+        return this.requestPOST('login', {
+            mode: 'no-cors',
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            })
+        });
+    }
+
     static signup(username, email, password) {
-        return fetch(urls['signup'], {
-            method: 'POST',
-            credentials: 'include',
+        return this.requestPOST('signup', {
             mode: 'no-cors',
             body: JSON.stringify({
                 username: username,
                 email: email,
-                password: password
+                password: password,
             })
-        })
+        });
     }
 
     static logout() {
-        return fetch(urls['logout'], {
-            method: 'POST',
-            credentials: 'include',
-            mode: 'no-cors'
-        })
+        return this.requestPOST('logout', {
+            mode: 'no-cors',
+        });
     }
 
     static profile() {
-        return fetch(urls['profile'], {
-            method: 'GET',
-            credentials: 'include',
-        })
+        return this.requestGET('profile');
     }
 
     static pinPost(data) {
-        return fetch(urls['pinPost'], {
-            method: 'POST',
-            credentials: 'include',
+        return this.requestPOST('pinPost', {
+            body: data,
             /*body: JSON.stringify({
                 title: title,
                 content: content,
                 imgLink: imgLink
             })*/
-            body: data
-        })
+        });
     }
 
     static updatePassword(oldPassword, newPassword) {
-        return fetch(urls['updatePassword'], {
-            method: 'PUT',
-            credentials: 'include',
+        return this.requestPUT('updatePassword', {
             body: JSON.stringify({
                 oldpassword: oldPassword,
-                newpassword: newPassword
+                newpassword: newPassword,
             })
-        })
+        });
     }
 
     static updateProfile(username, email) {
-        return fetch(urls['updateProfile'], {
-            method: 'PUT',
-            credentials: 'include',
+        return this.requestPUT('updateProfile', {
             body: JSON.stringify({
                 username: username,
-                email: email
+                email: email,
             })
-        })
+        });
     }
 
     static updateAvatar(file) {
-        return fetch(urls['avatar'], {
-            method: 'POST',
-            credentials: 'include',
-            body: file
-        })
+        return this.requestPOST('avatar', {
+            body: file,
+        });
     }
 
     static getAvatar(imgLink) {
-        return fetch(urls['avatar'], {
-            method: 'GET',
-            credentials: 'include',
-        })
+        return this.requestGET('avatar');
     }
 
     static getPin() {
-        return fetch(urls['pins'], {
-            method: 'GET',
+        return this.requestGET('pins', {
             mode: 'cors',
-            credentials: 'include',
-        })
+        });
     }
 }
