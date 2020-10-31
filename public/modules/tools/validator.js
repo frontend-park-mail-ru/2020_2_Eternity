@@ -1,43 +1,51 @@
 class Validator {
+    //todo: вынести в consts (создать папку)
+    errors = {
+        empty: 'Строка не может быть пустой',
+        email: 'Некорректный e-mail',
+        alpha: 'Поле может содержать только буквенные символы и цифры',
+        password: 'Пароль должен содержать не менее 8 буквенных символов и цифр',
+    }
+
     constructor() {
-        this.NameSurnameRegExp = RegExp(/^[\w]+$/) //
-        this.UsernameRegExp = RegExp(/^[\w]/)
-        this.PasswordRegExp = RegExp(/^(?=.*[\w]).{8,}$/)
-
-        this.validators = {}
-        this.validators['name'] = this.checkNameSurname
-        this.validators['surname'] = this.checkNameSurname
-        this.validators['username'] = this.checkUsername
-        this.validators['password'] = this.checkPassword
+        this.AlphaNumRegExp = RegExp(/^[\w]+$/);
+        this.PasswordRegExp = RegExp(/^(?=.*[\w]).{8,50}$/);
+        this.EmailRegExp = RegExp(/^[.\w]+@([\w-]+\.)+[\w-]{2,4}$/);
     }
 
-    isValid(fieldName, fieldValue) {
-        if (!this.validators[fieldName]) {
-            console.log(`There is no validation for ${fieldName}`)
-            return
-        }
-
-        if (!fieldValue) {
-            return {res: false, error: 'Поле не может быть пустым'}
-        }
-
-        return this.validators[fieldName](fieldValue)
+    checkEmpty = (value) => {
+        return (typeof value === 'undefined') ? this.errors.empty : null;
     }
-
-    checkNameSurname = (value) => {
-        const check = this.NameSurnameRegExp.test(value)
-        return check ? {res: check} : {res: check, error: 'Имя и фамилия могут содержать только буквы'}
+    checkAlphabetNum = (value) => {
+        const ok = this.AlphaNumRegExp.test(value);
+        return ok ? null : this.errors.alpha;
     }
-
-    checkUsername = (value) => {
-        const check = this.UsernameRegExp.test(value)
-        return check ? {res: check} : {res: check, error: 'Имя пользователя содержит недопустимые символы'}
-    }
-
     checkPassword = (value) => {
-        const check = this.PasswordRegExp.test(value)
-        return check ? {res: check} : {res: check, error: 'Пароль должен содержать не менее 8 буквенных символов и цифр'}
+        const ok = this.PasswordRegExp.test(value);
+        return ok ? null : this.errors.password;
     }
+    checkEmail = (value) => {
+        const ok = this.EmailRegExp.test(value);
+        return ok ? null : this.errors.email;
+    }
+
+    compose = (...validators) => {
+        return (value) => {
+            let ok;
+            let errors = [];
+            validators.forEach((validator) => {
+                ok = validator.call(null, value);
+                if (ok in this.errors) {
+                    errors.push(ok);
+                }
+            });
+            return errors;
+        }
+    }
+
+    validateEmailField = this.compose(this.checkEmpty, this.checkEmail);
+    validatePasswordField = this.compose(this.checkEmpty, this.checkPassword);
+    validateUsernameField = this.compose(this.checkEmpty, this.checkAlphabetNum);
 }
 
 
