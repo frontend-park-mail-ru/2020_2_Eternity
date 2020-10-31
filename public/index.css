@@ -6,6 +6,7 @@
 @import "components/input/file-upload/file-upload.css";
 @import "components/form/form.css";
 @import "components/input/pin-upload/pin-upload.css";
+@import "components/error/error.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";

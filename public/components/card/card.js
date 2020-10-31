@@ -1,13 +1,7 @@
-export default class Card {
-    context
-    template
+import BaseComponent from "../base_component.js";
 
+export default class Card extends BaseComponent {
     constructor(context = {}) {
-        this.context = context;
-        this.template = Handlebars.templates['card.hbs'];
-    }
-
-    render() {
-        return this.template(this.context)
+        super('card.hbs', context);
     }
 }

@@ -1,7 +1,7 @@
 import BaseComponent from "../base_component.js";
 
-export default class Avatar extends BaseComponent {
+export default class Error extends BaseComponent {
     constructor(context = {}) {
-        super('avatar.hbs', context);
+        super('error.hbs', context);
     }
 }

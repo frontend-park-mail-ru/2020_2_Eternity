@@ -8,10 +8,7 @@ import SettingsPage from "./views/settings/settings.js";
 import AuthRegPage from "./views/auth/auth.js";
 import PinCreating from "./views/pin-creating/pin-creating.js";
 
-// TODO: ЭТО НАДО ПЕРЕДЕЛАТЬ (РОУТИНГ)
 import Router from "./modules/route/router.js";
-
-// const {ajaxGet, ajaxPost} = globalThis.AjaxModule;
 
 const application = document.getElementById('app');
 const nav = new Navbar();
@@ -22,7 +19,6 @@ function menuPage() {
 }
 
 function profilePage() {
-    // TODO: здесь должно быть наполнение profile.data из response в ajax
     const profile = new ProfilePage({navbar: nav.render()})
     profile.render()
 }
@@ -50,7 +46,6 @@ function pinCreatingPage() {
 
 // TODO: Господи, помоги с роутингом нормального человека
 const routes = {
-    '/2020_2_Eternity/public/index.html': menuPage,
     '/': menuPage,
     '/profile': profilePage,
     '/profile/edit': settingsPage,

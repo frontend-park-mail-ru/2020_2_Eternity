@@ -1,37 +1,58 @@
 import Input from "../input.js";
+import Image from "../_img/img.js";
+import ResetIcon from "../_reset-icon/reset.js";
 
 export default class PinUpload extends Input {
+    img
+    reset
+    input
+
     constructor(context = {}) {
         super(context)
         this.template = Handlebars.templates['pin-upload.hbs'];
     }
 
     render() {
-        return super.render()
-    }
-
-    bindPreview() {
-        const input = document.getElementById('file');
-        const img = document.getElementById('preview');
-        const reset = document.getElementById('reset-preview')
-
-        input.addEventListener('change', evt => {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                img.setAttribute('src', e.target.result);
-                img.setAttribute('style', 'opacity: 1')
-                reset.setAttribute('style', 'opacity: 1')
-            };
-            reader.readAsDataURL(input.files[0]);
+        this.img = new Image({
+            id: 'preview',
+            class: 'pin-creation__img',
         });
-
-        reset.addEventListener('click', (event) => {
-            event.preventDefault();
-            input.value = '';
-            img.setAttribute('src', '');
-            img.setAttribute('style', 'opacity: 0')
-            reset.setAttribute('style', 'opacity: 0')
+        this.input = new Input({
+            type: 'file',
+            id: 'file',
+        });
+        this.reset = new ResetIcon({
+            id: 'reset-preview',
         })
 
+        this.context = {
+            img: this.img.render(),
+            input: this.input.render(),
+            reset: this.reset.render(),
+        }
+
+        return super.render();
+    }
+
+   // TODO: event  bus
+    bindPreview() {
+        this.input.element.addEventListener('change', evt => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.img.show(e.target.result);
+                this.reset.show();
+            };
+            const file = this.input.element.files[0];
+            if (file && file.type.match('image.*')) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        this.reset.element.addEventListener('click', (event) => {
+            event.preventDefault();
+            this.input.value = '';
+            this.img.clear();
+            this.reset.hide();
+        });
     }
 }

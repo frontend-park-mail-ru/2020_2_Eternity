@@ -52,7 +52,7 @@
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
     templates['avatar.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
-            return "box-round-mini";
+            return "box-round_mini";
         },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
             var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -123,8 +123,21 @@
 // НАВБАР
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-    templates['navbar.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-            return "<div class=\"navbar\">\r\n\r\n    <ul class=\"navbar__links\">\r\n        <li><a href=\"/\">Главная</a></li>\r\n        <li><a href=\"/profile\">Профиль</a></li>\r\n        <li><a href=\"/signup\">Регистрация</a></li>\r\n        <li><a href=\"/login\">Вход</a></li>\r\n    </ul>\r\n</div>";
+    templates['navbar.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
+            return "        <li><a href=\"/profile\">Профиль</a></li>\r\n";
+        },"3":function(container,depth0,helpers,partials,data) {
+            return "        <li><a href=\"/signup\">Регистрация</a></li>\r\n        <li><a href=\"/login\">Вход</a></li>\r\n";
+        },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+            var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "<div class=\"navbar\">\r\n    <ul class=\"navbar__links\">\r\n        <li><a href=\"/\">Главная</a></li>\r\n"
+                + ((stack1 = lookupProperty(helpers,"if").call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? lookupProperty(depth0,"isAuthenticated") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data,"loc":{"start":{"line":4,"column":8},"end":{"line":9,"column":15}}})) != null ? stack1 : "")
+                + "    </ul>\r\n</div>";
         },"useData":true});
 })();
 
@@ -177,10 +190,9 @@
                 + alias4(((helper = (helper = lookupProperty(helpers,"value") || (depth0 != null ? lookupProperty(depth0,"value") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"value","hash":{},"data":data,"loc":{"start":{"line":3,"column":18},"end":{"line":3,"column":29}}}) : helper)))
                 + "\" id=\""
                 + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":3,"column":35},"end":{"line":3,"column":43}}}) : helper)))
-                + "\">\r\n</label>";
+                + "\">\r\n</label>\r\n";
         },"useData":true});
 })();
-
 
 // НАСТРОЙКИ
 (function() {
@@ -205,16 +217,18 @@
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
     templates['file-upload.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-            var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+            var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
                     return parent[propertyName];
                 }
                 return undefined
             };
 
-            return "<div class=\"form__input-file-upload\">\r\n <span class=\"form__input-file-upload__label\">"
-                + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"label") || (depth0 != null ? lookupProperty(depth0,"label") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"label","hash":{},"data":data,"loc":{"start":{"line":2,"column":49},"end":{"line":2,"column":60}}}) : helper)))
-                + "</span>\r\n <input type=\"file\" id=\"file\">\r\n</div>";
+            return "<div class=\"form__input-file-upload\">\r\n    <span class=\"form__input-file-upload__label\">"
+                + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"label") || (depth0 != null ? lookupProperty(depth0,"label") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"label","hash":{},"data":data,"loc":{"start":{"line":2,"column":49},"end":{"line":2,"column":60}}}) : helper)))
+                + "</span>\r\n    "
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"input") || (depth0 != null ? lookupProperty(depth0,"input") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"input","hash":{},"data":data,"loc":{"start":{"line":3,"column":4},"end":{"line":3,"column":17}}}) : helper))) != null ? stack1 : "")
+                + "\r\n</div>";
         },"useData":true});
 })();
 
@@ -263,6 +277,7 @@
 })();
 
 
+
 // АВТОРИЗАЦИЯ
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
@@ -279,6 +294,7 @@
                 + "\r\n</div>";
         },"useData":true});
 })();
+
 
 
 // СОЗДАНИЕ ПИНА
@@ -299,18 +315,91 @@
         },"useData":true});
 })();
 
+
+
 // ИНПУТ ПИНА
 (function() {
     var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
     templates['pin-upload.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-            var stack1, helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+            var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
                     return parent[propertyName];
                 }
                 return undefined
             };
 
-            return ((stack1 = ((helper = (helper = lookupProperty(helpers,"navbar") || (depth0 != null ? lookupProperty(depth0,"navbar") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"navbar","hash":{},"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":1,"column":14}}}) : helper))) != null ? stack1 : "")
-                + "\r\n\r\n<div class=\"pin-creation-layout__image-input\">\r\n    <img class=\"pin-creation__img\" src=\"\" id=\"preview\" alt=\"\">\r\n    <a href=\"\" id=\"reset-preview\"><i class=\"fas fa-times\"></i></a>\r\n    <p class=\"pin-creation__upload__icon\"><i class=\"fas fa-file-upload\"></i></p>\r\n    <span>Нажмите для загрузки</span>\r\n    <input type=\"file\" id=\"file\">\r\n</div>";
+            return ((stack1 = ((helper = (helper = lookupProperty(helpers,"navbar") || (depth0 != null ? lookupProperty(depth0,"navbar") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"navbar","hash":{},"data":data,"loc":{"start":{"line":1,"column":0},"end":{"line":1,"column":14}}}) : helper))) != null ? stack1 : "")
+                + "\r\n\r\n<div class=\"pin-creation-layout__image-input\">\r\n    "
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"img") || (depth0 != null ? lookupProperty(depth0,"img") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"img","hash":{},"data":data,"loc":{"start":{"line":4,"column":4},"end":{"line":4,"column":15}}}) : helper))) != null ? stack1 : "")
+                + "\r\n\r\n    "
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"reset") || (depth0 != null ? lookupProperty(depth0,"reset") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"reset","hash":{},"data":data,"loc":{"start":{"line":6,"column":4},"end":{"line":6,"column":17}}}) : helper))) != null ? stack1 : "")
+                + "\r\n\r\n    <p class=\"pin-creation__upload__icon\"><i class=\"fas fa-file-upload\"></i></p>\r\n    <span>Нажмите для загрузки</span>\r\n\r\n    "
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"input") || (depth0 != null ? lookupProperty(depth0,"input") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"input","hash":{},"data":data,"loc":{"start":{"line":11,"column":4},"end":{"line":11,"column":17}}}) : helper))) != null ? stack1 : "")
+                + "\r\n\r\n<!--    <img class=\"pin-creation__img\" src=\"\" id=\"preview\" alt=\"\">-->\r\n<!--    -->\r\n<!--    <a href=\"\" id=\"reset-preview\"><i class=\"fas fa-times\"></i></a>-->\r\n\r\n\r\n<!--    <input type=\"file\" id=\"file\">-->\r\n\r\n</div>";
+        },"useData":true});
+})();
+
+
+//ОШИБКА
+(function() {
+    var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+    templates['error.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+            var helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "<div class=\"error\">\r\n    "
+                + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"errMessage") || (depth0 != null ? lookupProperty(depth0,"errMessage") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"errMessage","hash":{},"data":data,"loc":{"start":{"line":2,"column":4},"end":{"line":2,"column":20}}}) : helper)))
+                + "\r\n</div>";
+        },"useData":true});
+})();
+
+
+
+// ИЗОБРАЖЕНИЕ (для пин-аплоад формы)
+(function() {
+    var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+    templates['img.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+            var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "<img class=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"class") || (depth0 != null ? lookupProperty(depth0,"class") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"class","hash":{},"data":data,"loc":{"start":{"line":1,"column":12},"end":{"line":1,"column":23}}}) : helper)))
+                + "\" src=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"src") || (depth0 != null ? lookupProperty(depth0,"src") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"src","hash":{},"data":data,"loc":{"start":{"line":1,"column":30},"end":{"line":1,"column":39}}}) : helper)))
+                + "\" id=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":1,"column":45},"end":{"line":1,"column":53}}}) : helper)))
+                + "\" alt=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"alt") || (depth0 != null ? lookupProperty(depth0,"alt") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"alt","hash":{},"data":data,"loc":{"start":{"line":1,"column":60},"end":{"line":1,"column":69}}}) : helper)))
+                + "\">";
+        },"useData":true});
+})();
+
+
+
+
+// КНОПКА СБРОСА ПРЕВЬЮ
+(function() {
+    var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+    templates['reset.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+            var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "<a href=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"href") || (depth0 != null ? lookupProperty(depth0,"href") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"href","hash":{},"data":data,"loc":{"start":{"line":1,"column":9},"end":{"line":1,"column":19}}}) : helper)))
+                + "\" id=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":1,"column":25},"end":{"line":1,"column":33}}}) : helper)))
+                + "\"><i class=\"fas fa-times\"></i></a>";
         },"useData":true});
 })();
