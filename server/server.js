@@ -1,5 +1,6 @@
 const express = require('express')
 const proxy = require('express-http-proxy');
+const path = require('path')
 const app = express()
 const port = 3000
 const apiUrl = '127.0.0.1:8008'
@@ -11,8 +12,9 @@ app.use('/api', (req, res, next) => {
     proxy(modifiedURL)(req, res, next)
 })
 
-app.get('/', (request, response) => {
-    response.sendFile(`${__dirname}/../public/index.html`)
+app.get('/*', (request, response) => {
+    console.log(request.url)
+    response.sendFile(path.resolve(`${__dirname}/../public/index.html`))
 })
 
 app.listen(port, (err) => {
