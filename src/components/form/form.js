@@ -1,10 +1,12 @@
+import template from './form.hbs'
+
 export default class Form {
     context
     template
 
     constructor(context = {}) {
         this.context = context;
-        this.template = Handlebars.templates['form.hbs'];
+        this.template = template;
     }
 
     render() {

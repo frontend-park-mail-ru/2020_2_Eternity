@@ -9,26 +9,11 @@ module.exports = {
         main: './src/index.js'
     },
     output: {
-        filename: '[name].[contenthash].js',
-        path: path.resolve(__dirname, './dist'),
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new CopyPlugin({
-            patterns: [
-                { from: './public/static/img', to: 'img'},
-            ]
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'index.[contenthash].css',
-        }),
-        new HtmlWebpackPlugin({
-            inject: false,
-            template: './src/index.html',
-            filename: 'index.html'
-        }),
-    ],
+
     module: {
         rules: [
             {
@@ -43,7 +28,8 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+                use: ['style-loader', 'css-loader'],
                 exclude: /node_modules/,
             },
             {
@@ -55,6 +41,24 @@ module.exports = {
             },
         ]
     },
+
+    plugins: [
+        new CleanWebpackPlugin(),
+        new CopyPlugin({
+            patterns: [
+                { from: './public/static/img', to: 'img'},
+            ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'index.css',
+        }),
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: './src/index.html',
+            filename: 'index.html'
+        }),
+    ],
+
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,

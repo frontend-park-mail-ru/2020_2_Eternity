@@ -1,0 +1,52 @@
+<div class="wrapper">
+    <div class="container">
+
+        <div class="gallery-card">
+            <button class="close"><i class="fa fa-times"></i></button>
+
+            <section class="gallery-image">{{{ pin }}}</section>
+            <section class="gallery-info">
+
+                <h2>{{ title }}</h2>
+
+                <div class="gallery-author">
+                    {{ avatar }}
+                    <!-- TODO: ссылку на профиль -->
+                    <a href="">{{ username }}</a>
+                </div>
+
+                <p class="gallery-description">
+                    {{ description }}
+                </p>
+
+                <div class="gallery-actions">
+                    <span><i class="fa fa-heart"></i> {{ likes }}</span>
+                    <span><i class="fa fa-comment"></i> {{ comments }}</span>
+                </div>
+
+                <div class="gallery-tags">
+                    {{#each tags}}
+                        <a href="">{{this}}</a>
+                    {{/each}}
+                </div>
+
+                <hr>
+
+                <div class="gallery-comments">
+                    <div class="comment-add">
+                        {{{ input }}}
+                    </div>
+
+<!--                TODO: перекрывается со счетчиком переделать-->
+                    {{#each comments}}
+                        <div class="comment">
+                            <a href="">{{comment.author}}</a><span>: {{comment.text}} </span>
+                        </div>
+                    {{/each}}
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+</div>

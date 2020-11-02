@@ -2,11 +2,11 @@
     <ul class="navbar__links">
         <li><a href="/">Главная</a></li>
         {{#if isAuthenticated}}
-            <li><a href="/signup">Регистрация</a></li>
-            <li><a href="/login">Вход</a></li>
-        {{else}}
             <li><a href="/profile">Профиль</a></li>
             <li><a href="/logout">Выход</a></li>
+        {{else}}
+            <li><a href="/signup">Регистрация</a></li>
+            <li><a href="/login">Вход</a></li>
         {{/if}}
     </ul>
 </div>
