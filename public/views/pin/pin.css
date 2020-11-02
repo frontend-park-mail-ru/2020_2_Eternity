@@ -1,0 +1,115 @@
+.wrapper {
+    text-align: center;
+}
+
+.container {
+    display: inline-block;
+}
+
+.close {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 14px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    outline: 0;
+}
+
+.gallery-card {
+    margin-top: 40px;
+    display: grid;
+    width: 1100px;
+    height: 750px;
+    box-shadow: 1px 2px 4px #aaa;
+    position: relative;
+    border-radius: 25px;
+    overflow: hidden;
+
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-template-areas: 'image info';
+}
+
+.gallery-image {
+    position: relative;
+    grid-area: image;
+    overflow: hidden;
+}
+
+.gallery-image img {
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.gallery-info {
+    grid-area: info;
+    padding: 20px 20px 20px 25px;
+    text-align: left;
+}
+
+.gallery-author img {
+    height: 1em;
+    border-radius: 25px;
+}
+
+.gallery-title {
+    margin-top: 10px;
+}
+
+.gallery-description {
+    margin: 20px 0 15px;
+    font-size: 15px;
+}
+
+.gallery-actions, .gallery-tags {
+    margin-bottom: 15px;
+}
+
+.gallery-actions span {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.gallery-tags a {
+    margin: 0 2px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .8);
+    background-color: #eee;
+    padding: 4px;
+    border-radius: 3px;
+}
+
+.gallery-tags a:hover {
+    text-decoration: none;
+    background-color: #ddd;
+}
+
+.gallery-comments {
+    margin-top: 15px;
+}
+
+.comment-add {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.comment-add-user {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: calc(100% - 20px);
+    outline: 0;
+    background-color: #fafafa;
+    border-radius: 3px;
+}
+
+.comment {
+    margin-top: 8px;
+    font-size: 15px;
+}

@@ -109,8 +109,8 @@
                 return undefined
             };
 
-            return "<div class=\"card\">\r\n    <a href=\"pin/"
-                + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":2,"column":17},"end":{"line":2,"column":25}}}) : helper)))
+            return "<div class=\"card\">\r\n    <a href=\"/pin/"
+                + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":2,"column":18},"end":{"line":2,"column":26}}}) : helper)))
                 + "\">\r\n        <img class=\"card__img\" src=\""
                 + alias4(((helper = (helper = lookupProperty(helpers,"imgSrc") || (depth0 != null ? lookupProperty(depth0,"imgSrc") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"imgSrc","hash":{},"data":data,"loc":{"start":{"line":3,"column":36},"end":{"line":3,"column":48}}}) : helper)))
                 + "\" alt=\"\">\r\n\r\n        <div class=\"card__content\">\r\n            <button class=\"card__like\"><i class=\"far fa-heart\"></i></button>\r\n            <span class=\"card__time\">\r\n                <i class=\"far fa-calendar-alt\"></i> <span>"
@@ -401,5 +401,60 @@
                 + "\" id=\""
                 + alias4(((helper = (helper = lookupProperty(helpers,"id") || (depth0 != null ? lookupProperty(depth0,"id") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data,"loc":{"start":{"line":1,"column":25},"end":{"line":1,"column":33}}}) : helper)))
                 + "\"><i class=\"fas fa-times\"></i></a>";
+        },"useData":true});
+})();
+
+
+
+
+//ПРОСМОТР ПИНА
+(function() {
+    var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+    templates['pin.hbs'] = template({"1":function(container,depth0,helpers,partials,data) {
+            return "                        <a href=\"\">"
+                + container.escapeExpression(container.lambda(depth0, depth0))
+                + "</a>\r\n";
+        },"3":function(container,depth0,helpers,partials,data) {
+            var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "                        <div class=\"comment\">\r\n                            <a href=\"\">"
+                + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"comment") : depth0)) != null ? lookupProperty(stack1,"author") : stack1), depth0))
+                + "</a><span>: "
+                + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"comment") : depth0)) != null ? lookupProperty(stack1,"text") : stack1), depth0))
+                + " </span>\r\n                        </div>\r\n";
+        },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+            var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+                if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+                    return parent[propertyName];
+                }
+                return undefined
+            };
+
+            return "<div class=\"wrapper\">\r\n    <div class=\"container\">\r\n\r\n        <div class=\"gallery-card\">\r\n            <button class=\"close\"><i class=\"fa fa-times\"></i></button>\r\n\r\n            <section class=\"gallery-image\">"
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"pin") || (depth0 != null ? lookupProperty(depth0,"pin") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pin","hash":{},"data":data,"loc":{"start":{"line":7,"column":43},"end":{"line":7,"column":54}}}) : helper))) != null ? stack1 : "")
+                + "</section>\r\n            <section class=\"gallery-info\">\r\n\r\n                <h2>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":10,"column":20},"end":{"line":10,"column":31}}}) : helper)))
+                + "</h2>\r\n\r\n                <div class=\"gallery-author\">\r\n                    "
+                + alias4(((helper = (helper = lookupProperty(helpers,"avatar") || (depth0 != null ? lookupProperty(depth0,"avatar") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"avatar","hash":{},"data":data,"loc":{"start":{"line":13,"column":20},"end":{"line":13,"column":32}}}) : helper)))
+                + "\r\n                    <!-- TODO: ссылку на профиль -->\r\n                    <a href=\"\">"
+                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":15,"column":31},"end":{"line":15,"column":45}}}) : helper)))
+                + "</a>\r\n                </div>\r\n\r\n                <p class=\"gallery-description\">\r\n                    "
+                + alias4(((helper = (helper = lookupProperty(helpers,"description") || (depth0 != null ? lookupProperty(depth0,"description") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data,"loc":{"start":{"line":19,"column":20},"end":{"line":19,"column":37}}}) : helper)))
+                + "\r\n                </p>\r\n\r\n                <div class=\"gallery-actions\">\r\n                    <span><i class=\"fa fa-heart\"></i>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"likes") || (depth0 != null ? lookupProperty(depth0,"likes") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"likes","hash":{},"data":data,"loc":{"start":{"line":23,"column":53},"end":{"line":23,"column":64}}}) : helper)))
+                + "</span>\r\n                    <span><i class=\"fa fa-comment\"></i>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"comments") || (depth0 != null ? lookupProperty(depth0,"comments") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comments","hash":{},"data":data,"loc":{"start":{"line":24,"column":55},"end":{"line":24,"column":69}}}) : helper)))
+                + "</span>\r\n                </div>\r\n\r\n                <div class=\"gallery-tags\">\r\n"
+                + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"tags") : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":28,"column":20},"end":{"line":30,"column":29}}})) != null ? stack1 : "")
+                + "                </div>\r\n\r\n                <hr>\r\n\r\n                <div class=\"gallery-comments\">\r\n                    <div class=\"comment-add\">\r\n                        "
+                + ((stack1 = ((helper = (helper = lookupProperty(helpers,"input") || (depth0 != null ? lookupProperty(depth0,"input") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"input","hash":{},"data":data,"loc":{"start":{"line":37,"column":24},"end":{"line":37,"column":37}}}) : helper))) != null ? stack1 : "")
+                + "\r\n                    </div>\r\n\r\n"
+                + ((stack1 = lookupProperty(helpers,"each").call(alias1,(depth0 != null ? lookupProperty(depth0,"comments") : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data,"loc":{"start":{"line":40,"column":20},"end":{"line":44,"column":29}}})) != null ? stack1 : "")
+                + "                </div>\r\n\r\n            </section>\r\n        </div>\r\n\r\n    </div>\r\n</div>";
         },"useData":true});
 })();

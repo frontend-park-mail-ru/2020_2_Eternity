@@ -1,3 +1,7 @@
+import eventBus from "../tools/eventBus.js";
+import {Events} from "../consts/events.js";
+import {routes} from "../consts/routes.js";
+
 export default class Router {
     container
 
@@ -6,6 +10,7 @@ export default class Router {
     routes
 
     current
+    currentController
     state
 
     /**
@@ -34,9 +39,11 @@ export default class Router {
         this.routes = [];
         if (settings.routes && settings.routes.length > 0) {
             settings.routes.forEach((route) => {
-                this.bind(route.path, route.handler);
+                this.add(route.path, route.controller);
             })
         }
+
+        eventBus.on(Events.pathChanged, this.go.bind(this));
     }
 
     /**
@@ -54,8 +61,47 @@ export default class Router {
         return path.toString().replace(/\/$/, '').replace(/^\//, '');
     }
 
+
     /**
-     * Выделяет URI относительно root
+     * Конвертирует path в выражение для consts/routes
+     *
+     * @param {string} path
+     * @returns {string}
+     */
+    parseRule(path) {
+        if (typeof path !== 'string') {
+            return routes.mainPage;
+        }
+
+        return path.replace(/\d+/, ':num');
+    }
+
+    /**
+     * Парсит строку запроса и возвращает параметры запроса в виде объекта
+     *
+     * @param {string} queryString - path+query
+     * @returns {Object}
+     */
+    parseQuery(queryString) {
+        let query = {}
+        if (typeof queryString !== 'string') {
+            return query;
+        }
+
+        const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&')
+
+        pairs.forEach((pair) => {
+            const parts = pair.split('=');
+            if (parts[0] !== '') {
+                query[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || '');
+            }
+        })
+
+        return query;
+    }
+
+    /**
+     * Выделяет URI относительно root (без параметров)
      *
      * @returns {string}
      */
@@ -72,19 +118,19 @@ export default class Router {
      * Связывает path с обработчиком и добавляет в routes
      *
      * @param {string} path
-     * @param {function} callback
+     * @param {*} controller
      * @returns {Router}
      */
-    bind(path, callback) {
+    add(path, controller) {
         this.routes.push({
             path: path,
-            handler: callback,
+            controller: controller,
         })
         return this;
     }
 
     /**
-     * Удалить пару {path: обработчик} из routes
+     * Удалить пару {path: controller} из routes
      *
      * @param {string} path
      * @returns {Router}
@@ -110,15 +156,34 @@ export default class Router {
     }
 
     /**
+     * Возвращает HTMLAnchorElement, для которого необходимо перейти по ссылке (пин, ссылка)
+     *
+     * @param target
+     * @returns {HTMLAnchorElement}
+     */
+    checkAnchor(target) {
+        if (target instanceof HTMLAnchorElement) {
+            return target;
+        }
+        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
+            return target.parentElement;
+        }
+        return target;
+    }
+
+    /**
      * Запуск роутера на прослушивание событий изменения URI
      */
     start() {
         this.container.addEventListener('click', (evt) => {
-            const {target} = evt;
+            let {target} = evt;
+            target = this.checkAnchor(target);
 
             if (target instanceof HTMLAnchorElement) {
                 evt.preventDefault();
                 this.navigateTo(target.pathname, this.state);
+            } else {
+                evt.preventDefault();
             }
         });
 
@@ -142,6 +207,7 @@ export default class Router {
         if (path === this.getFragment()) {
             return;
         }
+        // TODO: обновление контента страницы по запросу
         window.history.pushState(state, '', this.root + this.clearSlashes(path));
         this.check();
         return this;
@@ -153,16 +219,18 @@ export default class Router {
      * @returns {boolean}
      */
     check() {
-        let fragment = this.getFragment();
+        const fragment = this.getFragment();
 
         return this.routes.some(route => {
-            const match = fragment.match(route.path);
+            const match = this.parseRule(fragment).match(route.path);
 
             if (match) {
                 match.shift();
-                this.current = fragment;
                 this.state = null;
-                route.handler.apply(this, match);
+
+                this.current = fragment;
+                this.currentController = route.controller;
+                route.controller.on();
             }
 
             return false;
@@ -193,6 +261,10 @@ export default class Router {
      */
     refresh() {
        const path = this.getFragment();
-       return this.navigateTo(path, this.state)
+       return this.navigateTo(path, this.state);
+    }
+
+    go(data={}) {
+        this.navigateTo(data.path);
     }
 }

@@ -1,6 +1,7 @@
 import {urls} from './api.js'
 
 
+// TODO: разбить на логические блоки (PinRequest, UserRequest, Desk и тд)
 export default class Request {
     static #request (path, method, ext={}) {
         return fetch(urls[path], {
@@ -53,17 +54,6 @@ export default class Request {
         return this.requestGET('profile');
     }
 
-    static pinPost(data) {
-        return this.requestPOST('pinPost', {
-            body: data,
-            /*body: JSON.stringify({
-                title: title,
-                content: content,
-                imgLink: imgLink
-            })*/
-        });
-    }
-
     static updatePassword(oldPassword, newPassword) {
         return this.requestPUT('updatePassword', {
             body: JSON.stringify({
@@ -95,6 +85,17 @@ export default class Request {
     static getPin() {
         return this.requestGET('pins', {
             mode: 'cors',
+        });
+    }
+
+    static pinPost(data) {
+        return this.requestPOST('pinPost', {
+            body: data,
+            /*body: JSON.stringify({
+                title: title,
+                content: content,
+                imgLink: imgLink
+            })*/
         });
     }
 }

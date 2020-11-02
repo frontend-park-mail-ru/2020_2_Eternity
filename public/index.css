@@ -13,6 +13,7 @@
 @import "views/main/main.css";
 @import "views/auth/auth.css";
 @import "views/pin-creating/pin-creating.css";
+@import "views/pin/pin.css";
 
 @media (max-width: 575px) {
     html {
