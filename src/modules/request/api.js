@@ -1,4 +1,4 @@
-const apiPath = 'api'
+export const apiPath = 'api'
 
 export const urls = {
     signup: `${apiPath}/user/signup`,

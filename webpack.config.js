@@ -63,6 +63,12 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 3000,
-        public: 'localhost:3000'
+        historyApiFallback: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8008',
+                pathRewrite: { '^/api': '' },
+            },
+        }
     },
 };

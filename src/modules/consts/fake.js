@@ -78,7 +78,7 @@ export const fakePins = [
 
 
 export const fakePin = {
-    imgSrc: './img/img15.jpg',
+    imgSrc: '../img/img13.jpg',
     title: '⊂(´• ω •`⊂)',
     avatar: './img/img4.jpg',
     username: 'RUBY RHOAD',

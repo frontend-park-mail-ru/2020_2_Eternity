@@ -1,13 +1,12 @@
-import template from "./pin.hbs"
+import template from "./pin.hbs";
 
 import Base from "../base.js";
 
 import Input from "../../components/input/input.js";
-import Image from "../../components/input/_img/img.js";
 
 
 export default class PinPage extends Base {
-    constructor(context = {}) {
+    constructor(context={}) {
         super('Просмотр пина', context, null);
         this.template = template;
     }
@@ -17,18 +16,14 @@ export default class PinPage extends Base {
             id: 'comment',
             type: 'text',
             customClasses: 'comment-add-user',
-            placeholder: 'Напишите что-нибудь!',
-        })
-        const pin = new Image({
-            src: this.context.imgSrc,
         })
 
         const data = {
             ...this.context,
             input: userComment.render(),
-            pin: pin.render(),
         }
+
         this.fillWith(data);
-        super.render()
+        document.getElementById('app').innerHTML = this.template(this.context);
     }
 }

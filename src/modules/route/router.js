@@ -182,9 +182,13 @@ export default class Router {
             if (target instanceof HTMLAnchorElement) {
                 evt.preventDefault();
                 this.navigateTo(target.pathname, this.state);
-            } else {
-                evt.preventDefault();
             }
+            // TODO: если этого else не будет, то будет плохо при переходе по пинам с главной :)
+            //       если ткнуть по сердечку или card-content блоку попасть, например
+            //       но без этого не будут работать кнопки ugh
+            // else {
+            //     evt.preventDefault();
+            // }
         });
 
         window.addEventListener('popstate', () => {

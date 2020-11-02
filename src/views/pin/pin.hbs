@@ -4,7 +4,7 @@
         <div class="gallery-card">
             <button class="close"><i class="fa fa-times"></i></button>
 
-            <section class="gallery-image">{{{ pin }}}</section>
+            <section class="gallery-image"><img src="{{ imgSrc }}" alt=""></section>
             <section class="gallery-info">
 
                 <h2>{{ title }}</h2>
@@ -24,11 +24,6 @@
                     <span><i class="fa fa-comment"></i> {{ comments }}</span>
                 </div>
 
-                <div class="gallery-tags">
-                    {{#each tags}}
-                        <a href="">{{this}}</a>
-                    {{/each}}
-                </div>
 
                 <hr>
 
@@ -36,13 +31,6 @@
                     <div class="comment-add">
                         {{{ input }}}
                     </div>
-
-<!--                TODO: перекрывается со счетчиком переделать-->
-                    {{#each comments}}
-                        <div class="comment">
-                            <a href="">{{comment.author}}</a><span>: {{comment.text}} </span>
-                        </div>
-                    {{/each}}
                 </div>
 
             </section>

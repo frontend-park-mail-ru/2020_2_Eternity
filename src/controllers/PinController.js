@@ -1,5 +1,4 @@
 import BaseController from "./base_controller.js";
-
 import PinPage from "../views/pin/pin.js";
 
 import eventBus from "../modules/tools/eventBus.js";
