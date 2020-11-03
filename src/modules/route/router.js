@@ -73,11 +73,11 @@ export default class Router {
             return routes.mainPage;
         }
 
-        return path.replace(/\d+/, ':num');
+        return path.replaceAll(/\d+/gi, ':num');
     }
 
     /**
-     * Парсит строку запроса и возвращает параметры запроса в виде объекта
+     * Парсит строку запроса (window.location.search) и возвращает параметры запроса в виде объекта
      *
      * @param {string} queryString - path+query
      * @returns {Object}
@@ -88,13 +88,9 @@ export default class Router {
             return query;
         }
 
-        const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&')
-
-        pairs.forEach((pair) => {
-            const parts = pair.split('=');
-            if (parts[0] !== '') {
-                query[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1] || '');
-            }
+        const params = new URLSearchParams(queryString);
+        params.forEach((value, key) => {
+            query[key] = value;
         })
 
         return query;
@@ -230,7 +226,9 @@ export default class Router {
 
             if (match) {
                 match.shift();
-                this.state = null;
+                if (this.currentController) {
+                    this.currentController.off();
+                }
 
                 this.current = fragment;
                 this.currentController = route.controller;
@@ -264,6 +262,9 @@ export default class Router {
      * @returns {this}
      */
     refresh() {
+        if (!this.current) {
+            return this;
+        }
         const path = this.getFragment();
         return this.navigateTo(path, this.state);
     }
