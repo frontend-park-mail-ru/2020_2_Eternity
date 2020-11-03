@@ -9,7 +9,7 @@ export default class Router {
     mode
     routes
 
-    current
+    currentLocation
     currentController
     state
 
@@ -72,8 +72,7 @@ export default class Router {
         if (typeof path !== 'string') {
             return routes.mainPage;
         }
-
-        return path.replaceAll(/\d+/gi, ':num');
+        return path.replace(/\d+/g, ':num');
     }
 
     /**
@@ -95,6 +94,8 @@ export default class Router {
 
         return query;
     }
+
+
 
     /**
      * Выделяет URI относительно root (без параметров)
@@ -230,7 +231,7 @@ export default class Router {
                     this.currentController.off();
                 }
 
-                this.current = fragment;
+                this.currentLocation = fragment;
                 this.currentController = route.controller;
                 route.controller.on();
             }
@@ -262,13 +263,17 @@ export default class Router {
      * @returns {this}
      */
     refresh() {
-        if (!this.current) {
+        if (!this.currentLocation) {
             return this;
         }
         const path = this.getFragment();
         return this.navigateTo(path, this.state);
     }
 
+    /**
+     * Callback на Events.pathChanged
+     * @param data
+     */
     go(data={}) {
         this.navigateTo(data.path);
     }
