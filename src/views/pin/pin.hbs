@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <div class="container">
+
+        <div class="gallery-card">
+            <button class="close"><i class="fa fa-times"></i></button>
+
+            <section class="gallery-image"><img src="{{ imgSrc }}" alt=""></section>
+            <section class="gallery-info">
+
+                <h2>{{ title }}</h2>
+
+                <div class="gallery-author">
+                    {{ avatar }}
+                    <!-- TODO: ссылку на профиль -->
+                    <a href="">{{ username }}</a>
+                </div>
+
+                <p class="gallery-description">
+                    {{ description }}
+                </p>
+
+                <div class="gallery-actions">
+                    <span><i class="fa fa-heart"></i> {{ likes }}</span>
+                    <span><i class="fa fa-comment"></i> {{ comments }}</span>
+                </div>
+
+
+                <hr>
+
+                <div class="gallery-comments">
+                    <div class="comment-add">
+                        {{{ input }}}
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+</div>

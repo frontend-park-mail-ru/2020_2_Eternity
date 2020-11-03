@@ -1,0 +1,20 @@
+.pin-creation-layout {
+    margin: auto;
+    padding: 1.5rem;
+    width: 700px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid rgba(233, 236, 239, 0.1);
+    border-radius: 20px;
+    background: #efefef;
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8);
+}
+
+.pin-creation-layout__column {
+    width: 500px;
+}
