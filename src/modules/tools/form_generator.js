@@ -39,11 +39,18 @@ export default class FormGenerator {
      * @return {Form} Новая форма
      */
     createForm() {
+        let renderedElements = [];
+
+        this.elements.forEach((element) => {
+            renderedElements.push(element.render());
+        });
+
         const formContext = {
-            elements: this.elements,
+            id: this.id,
+            elements: renderedElements,
             enctype: 'multipart/form-data' // TODO: delete
         };
 
-        return new Form(formContext);
+        return new Form(formContext, this.elements);
     }
 }
