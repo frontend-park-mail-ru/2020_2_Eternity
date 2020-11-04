@@ -1,92 +1,56 @@
 import Form from "../../components/form/form.js";
-import Button from "../../components/button/button.js";
-import Input from "../../components/input/input.js";
 
+/**
+ * @class Класс генерирует новую форму
+ */
 export default class FormGenerator {
-    elements = []
-    inputs = []
+    elements;
+    id;
 
-    action
-    method
-    id
+    /**
+     * Конструирует заготовку для формы с заданными id и элементами
+     *
+     * @constructor
+     * @param {string} [id] Id формы
+     * @param {...Object} elements Массив готовых элементов
+     */
+    constructor(id= '', ...elements) {
+        this.id = id;
+        this.elements = new Map();
 
-    constructor(action, method = '', id= '') {
-        this.action = action
-        this.method = method
-        this.id = id
+        elements.forEach(element => {
+            this.elements.set(element.context.id, element);
+        });
     }
 
-    appendInput(type, classes = 'form__input', label = '', placeholder = '', value = '', id = '') {
-        const inputContext = {
-            type: type
-        }
-
-        if (classes.length > 0) {
-            inputContext['customClasses'] = classes
-        }
-
-        if (placeholder.length > 0) {
-            inputContext['placeholder'] = placeholder
-        }
-
-        if (label.length > 0) {
-            inputContext['label'] = label
-        }
-
-        if (value.length > 0) {
-            inputContext['value'] = value
-        }
-
-        if (id.length > 0) {
-            inputContext['id'] = id
-            this.inputs.push(id)
-        }
-
-        this.elements.push(new Input(inputContext))
+    /**
+     * Добавляет новый готовый элемент в форму
+     *
+     * @param {Object} element Сгенерированный элемент
+     * @param {string} id Id этого элемента
+     */
+    appendElement(element, id) {
+        this.elements.set(id, element);
     }
 
-    appendButton(type, text, classes = '') {
-        const buttonContext = {
-            type: type,
-            btnText: text
-        }
+    /**
+     * Генерирует готовую форму
+     *
+     * @return {Form} Новая форма
+     */
+    createForm() {
+        let renderedElements = [];
 
-        if (classes.length > 0) {
-            buttonContext['extraClasses'] = classes
-        }
-
-        this.elements.push(new Button(buttonContext))
-    }
-
-    appendElement(element) {
-        this.elements.push(element)
-    }
-
-    fill() {
-        let elements = []
-
-        this.elements.forEach((elem) => {
-            elements.push(elem.render())
-        })
+        this.elements.forEach((element) => {
+            renderedElements.push(element.render());
+        });
 
         const formContext = {
-            action: this.action,
-            elements: elements,
-            enctype: 'multipart/form-data',
-            inputs: this.inputs
-        }
+            id: this.id,
+            elements: renderedElements,
+            enctype: 'multipart/form-data' // TODO: delete
+        };
 
-        if (this.method.length > 0) {
-            formContext['method'] = this.method
-        }
-        if (this.id.length > 0) {
-            formContext['id'] = this.id
-        }
-
-        return new Form(formContext)
-    }
-
-    renderAll() {
-        return this.fill().render()
+        return new Form(formContext, this.elements);
     }
 }

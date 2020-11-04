@@ -1,32 +1,58 @@
 import template from './form.hbs'
 
+/**
+ * @class Класс, представляющий форму`
+ */
 export default class Form {
-    context
-    template
+    elements;
+    context;
+    template;
 
-    constructor(context = {}) {
+    /**
+     * Конструирует новую форму с контекстом
+     *
+     * @constructor
+     * @param {Object} [context] Содержимое формы
+     * @param {Map} [elements]
+     */
+    constructor(context = {}, elements = new Map()) {
+        this.elements = elements;
         this.context = context;
         this.template = template;
     }
 
+    /**
+     * Генерирует набор html-тегов, заполненных контекстом
+     *
+     * @return //TODO: понять и простить
+     */
     render() {
-        return this.template(this.context)
+        return this.template(this.context);
     }
 
-    get element() {
-        return document.getElementById(this.context.id)
+    /**
+     * Возвращает js-элемент, принадлежащий форме
+     *
+     * @return {Object} Элемент
+     */
+    getElement(id) {
+        return this.context.elements.get(id)
     }
 
-    get inputs() {
-        let result = []
-        this.context.inputs.forEach((input) => {
-            result.push(document.getElementById(input))
-        })
+    /**
+     * Коллбэк, обрабатывающий событий
+     *
+     * @callback handler
+     * @param {Object} event
+     */
 
-        return result
-    }
-
+    /**
+     * Связывает событие с коллбэком
+     *
+     * @param {string} event Тип события
+     * @param {handler} callback
+     */
     bind(event, callback) {
-        this.element.addEventListener(event, callback)
+        document.getElementById(this.context.id).addEventListener(event, callback);
     }
 }
