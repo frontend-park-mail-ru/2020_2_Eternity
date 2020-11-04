@@ -21,8 +21,8 @@
 .gallery-card {
     margin-top: 40px;
     display: grid;
-    width: 1100px;
-    height: 750px;
+    width: 70vw;
+    height: 85vh;
     box-shadow: 1px 2px 4px #aaa;
     position: relative;
     border-radius: 25px;
@@ -41,10 +41,10 @@
 .gallery-image img {
     position: relative;
     background-position: center;
-    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
     height: 100%;
     width: 100%;
-    object-fit: cover;
 }
 
 .gallery-info {

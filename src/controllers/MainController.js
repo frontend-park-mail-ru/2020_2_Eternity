@@ -8,12 +8,8 @@ export default class MainController extends BaseController {
         super(new MainPage());
     }
 
-    on() {
+    on(data={}) {
         this.view.fillWith({pins: fakePins});
-        this.view.render();
-    }
-
-    off() {
-        this.view.clear();
+        super.on();
     }
 }

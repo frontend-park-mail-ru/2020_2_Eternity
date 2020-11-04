@@ -1,10 +1,12 @@
 import template from "./pin-upload.hbs"
 
 import Input from "../input.js";
+import BaseComponent from "../../base_component.js";
 import Image from "../_img/img.js";
 import ResetIcon from "../_reset-icon/reset.js";
 
-export default class PinUpload extends Input {
+
+export default class PinUpload extends BaseComponent {
     img
     reset
     input

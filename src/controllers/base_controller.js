@@ -5,5 +5,10 @@ export default class BaseController {
         this.view = view;
     }
 
-
+    on(){
+        this.view.render();
+    }
+    off(){
+        this.view.clear();
+    }
 }

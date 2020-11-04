@@ -1,19 +1,26 @@
 import template from "./file-upload.hbs"
 
 import Input from "../input.js";
+import BaseComponent from "../../base_component.js";
 
-export default class FileUpload extends Input {
+export default class FileUpload extends BaseComponent {
+    input
+
     constructor(context = {}) {
         super(template, context);
     }
 
     render() {
-        const input = new Input({
+        this.input = new Input({
             type: 'file',
             id: 'file',
         })
 
-        this.context.input = input.render();
+        this.context.input = this.input.render();
         return super.render()
+    }
+
+    get value() {
+        return this.input.element.files[0];
     }
 }

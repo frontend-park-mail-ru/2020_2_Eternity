@@ -5,20 +5,16 @@ import eventBus from "../modules/tools/eventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
-import {fakePin} from "../modules/consts/fake.js"
+import PinModel from "../models/PinModel.js";
 
-// TODO: PinModel, PinRequests, +UserModel for author avatar
 export default class PinController extends BaseController {
     constructor() {
         super(new PinPage());
     }
 
-    on() {
-        this.view.fillWith({...fakePin});
-        this.view.render();
-    }
-
-    off() {
-        this.view.clear();
+    on(data={}) {
+        const pin = PinModel.getPin(data);
+        this.view.fillWith(pin);
+        super.on();
     }
 }
