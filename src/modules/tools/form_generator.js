@@ -1,24 +1,33 @@
 import Form from "../../components/form/form.js";
 
+/**
+ * @class Класс генерирует новую форму
+ */
 export default class FormGenerator {
     elements;
     id;
 
     /**
-     * Конструирует новую форму с заданным id
+     * Конструирует заготовку для формы с заданными id и элементами
      *
-     * @param {string} [id]
+     * @constructor
+     * @param {string} [id] Id формы
+     * @param {...Object} elements Массив готовых элементов
      */
-    constructor(id= '') {
+    constructor(id= '', ...elements) {
         this.id = id;
         this.elements = new Map();
+
+        elements.forEach(element => {
+            this.elements.set(element.context.id, element);
+        });
     }
 
     /**
      * Добавляет новый готовый элемент в форму
      *
-     * @param {Object} element
-     * @param {string} id
+     * @param {Object} element Сгенерированный элемент
+     * @param {string} id Id этого элемента
      */
     appendElement(element, id) {
         this.elements.set(id, element);
@@ -27,7 +36,7 @@ export default class FormGenerator {
     /**
      * Генерирует готовую форму
      *
-     * @return {Form}
+     * @return {Form} Новая форма
      */
     createForm() {
         const formContext = {
