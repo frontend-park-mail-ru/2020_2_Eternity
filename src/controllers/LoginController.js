@@ -8,19 +8,12 @@ import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
 export default class LoginController extends BaseController {
-    constructor() {
-        super(new AuthRegPage('auth'));
+    constructor(type) {
+        super(new AuthRegPage(type));
 
         eventBus.on(Events.userLogin, this.onLogin.bind(this));
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
-    }
-
-    on() {
-        this.view.render();
-    }
-
-    off() {
-        this.view.clear();
+        eventBus.on(Events.userSignup, this.onSignup.bind(this));
     }
 
     onLogin(data={}) {
@@ -28,15 +21,24 @@ export default class LoginController extends BaseController {
             if (!response.error) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
             }
-        })
+        }).catch((error) => console.log(error));
     }
 
     onLogout(data={}) {
+        data.event.preventDefault();
         UserModel.logout().then((response) => {
             if (response.ok) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 //todo: тут обновить шапку с флагом неавторизации eventBus.emit()
             }
-        })
+        }).catch((error) => console.log(error));
+    }
+
+    onSignup(data={}) {
+        UserModel.reg(data).then((response) => {
+            if (!response.error) {
+                eventBus.emit(Events.pathChanged, {path: routes.mainPage});
+            }
+        }).catch((error) => console.log(error));
     }
 }

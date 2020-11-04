@@ -5,7 +5,8 @@ import Base from "../base.js";
 import Card from "../../components/card/card.js";
 import Navbar from "../../components/navbar/navbar.js";
 
-import Request from "../../modules/request/request.js";
+import eventBus from "../../modules/tools/eventBus.js";
+import {Events} from "../../modules/consts/events.js";
 
 
 export default class MainPage extends Base {
@@ -13,6 +14,7 @@ export default class MainPage extends Base {
         super('Главная', context, null);
         this.template = template;
     }
+
 
     render() {
         const nav = new Navbar();
@@ -30,18 +32,9 @@ export default class MainPage extends Base {
 
         this.fillWith(data);
         super.render()
+
+        nav.logoutLink.addEventListener('click', () => {
+            eventBus.emit(Events.userLogout, {});
+        });
     }
 }
-
-
-
-
-
-// let pins = []
-// for (let i = 0; i < responseJSON.length; i++) {
-//     pins.push({
-//         id: responseJSON[i]['id'],
-//         pubData: '07.10.2020',
-//         imgSrc: 'http://127.0.0.1:8008' + responseJSON[i]['img_link']
-//     })
-// }

@@ -1,8 +1,18 @@
 import request from "../modules/request/request.js";
-
+import {fakeUser} from "../modules/consts/fake.js";
+import {resolvePlugin} from "@babel/core/lib/config/files/index-browser";
 
 class UserModel {
     constructor() {}
+
+    // TODO: а точно норм?
+    checkSession() {
+        return request.profile().then((response) => {
+            return response.json().then((rjson) => {
+                return rjson;
+            });
+        })
+    }
 
     reg(data={}) {
         return request.signup(data.username, data.email, data.password).then((response) => {
@@ -24,7 +34,8 @@ class UserModel {
 
     getProfile() {
         return request.profile().then((response) => {
-            return response.json();
+            //return response.json();
+            return fakeUser;
         })
     }
 

@@ -61,7 +61,6 @@ export default class Router {
         return path.toString().replace(/\/$/, '').replace(/^\//, '');
     }
 
-
     /**
      * Конвертирует path в выражение для consts/routes
      *
@@ -95,7 +94,37 @@ export default class Router {
         return query;
     }
 
+    /**
+     * Парсит пути вида path/:id и возвращает объект {path: id} (как в parseQuery)
+     * ! :id может быть :num (pin) или :word (username) !
+     *
+     * @param path
+     * @returns {{}}
+     */
+    parsePathWithId(path) {
+        let param = {};
+        if (typeof path !== 'string') {
+            return param;
+        }
+        if (path.match(/^[a-z]+\/\d+$/g)) {
+            const parts = path.split('/');
+            param[parts[0]] = parts[1];
+            return param;
+        }
+    }
 
+    /**
+     * Возвращает объект query с параметрами для запроса
+     *
+     * @param {string} fragment - Текущий путь для проверки в parsePathWithId
+     * @returns {{}}
+     */
+    getQuerySet(fragment) {
+        const id = this.parsePathWithId(this.clearSlashes(fragment));
+        const search = this.parseQuery(window.location.search);
+
+        return {...id, ...search}
+    }
 
     /**
      * Выделяет URI относительно root (без параметров)
@@ -158,7 +187,7 @@ export default class Router {
      * @param target
      * @returns {HTMLAnchorElement}
      */
-    checkAnchor(target) {
+    checkRouteAnchor(target) {
         if (target instanceof HTMLAnchorElement) {
             return target;
         }
@@ -174,7 +203,7 @@ export default class Router {
     start() {
         this.container.addEventListener('click', (evt) => {
             let {target} = evt;
-            target = this.checkAnchor(target);
+            target = this.checkRouteAnchor(target);
 
             if (target instanceof HTMLAnchorElement) {
                 evt.preventDefault();
@@ -189,11 +218,10 @@ export default class Router {
         });
 
         window.addEventListener('popstate', () => {
-            this.check();
+            this.checkRoute();
         });
 
-
-        this.check();
+        this.checkRoute();
     }
 
     /**
@@ -205,12 +233,12 @@ export default class Router {
      * @returns {*}
      */
     navigateTo(path = '', state = null) {
+        // TODO: обновление контента страницы по запросу на эту же страницу?
         if (path === this.getFragment()) {
             return;
         }
-        // TODO: обновление контента страницы по запросу
         window.history.pushState(state, '', this.root + this.clearSlashes(path));
-        this.check();
+        this.checkRoute();
         return this;
     }
 
@@ -219,11 +247,12 @@ export default class Router {
      *
      * @returns {boolean}
      */
-    check() {
+    checkRoute() {
         const fragment = this.getFragment();
 
         return this.routes.some(route => {
             const match = this.parseRule(fragment).match(route.path);
+            const query = this.getQuerySet(fragment);
 
             if (match) {
                 match.shift();
@@ -233,7 +262,7 @@ export default class Router {
 
                 this.currentLocation = fragment;
                 this.currentController = route.controller;
-                route.controller.on();
+                route.controller.on(query);
             }
 
             return false;

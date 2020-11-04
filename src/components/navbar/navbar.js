@@ -6,4 +6,8 @@ export default class Navbar extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
     }
+
+    get logoutLink() {
+        return document.getElementById('logout');
+    }
 }

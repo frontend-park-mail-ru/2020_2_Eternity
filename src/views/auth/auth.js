@@ -36,9 +36,7 @@ export default class AuthRegPage extends Base {
         } else {
             form.appendInput('text', 'form__input', 'Имя пользователя', 'Username', '', 'username')
         }
-
         form.appendInput('password', 'form__input', placeholders['password'], '', '', 'password')
-
         form.appendButton('submit', 'Войти')
 
         const data = {
@@ -54,12 +52,18 @@ export default class AuthRegPage extends Base {
             event.preventDefault();
 
             let data = {};
-            // TODO: по хорошему тут нужно делать разные формы, я пока попробую только для входа..
+            // TODO: по хорошему тут нужно делать разные формы..
             if (this.#pageType === 'auth') {
                 data.username = document.getElementById('username').value;
                 data.password = document.getElementById('password').value;
+                eventBus.emit(Events.userLogin, data);
+            } else {
+                data.email = document.getElementById('email').value;
+                data.password = document.getElementById('password').value;
+                data.username = data.email.split('@')[0];
+                eventBus.emit(Events.userSignup, data);
             }
-            eventBus.emit(Events.userLogin, data);
+
         })
     }
 }

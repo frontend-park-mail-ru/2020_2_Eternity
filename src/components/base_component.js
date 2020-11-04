@@ -10,4 +10,8 @@ export default class BaseComponent {
     render() {
         return this.template(this.context)
     }
+
+    get component() {
+        return this.context;
+    }
 }

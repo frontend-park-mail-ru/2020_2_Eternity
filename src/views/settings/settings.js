@@ -4,11 +4,14 @@ import Base from "../base.js";
 
 import Avatar from "../../components/avatar/avatar.js";
 import FileUpload from "../../components/input/file-upload/file-upload.js";
+import Navbar from "../../components/navbar/navbar.js";
 import Input from "../../components/input/input.js";
 
 import FormGenerator from "../../modules/tools/form_generator.js";
 import Validator from "../../modules/tools/validator.js"
-import Request from "../../modules/request/request.js";
+import eventBus from "../../modules/tools/eventBus.js";
+import {Events} from "../../modules/consts/events.js";
+
 
 export default class SettingsPage extends Base {
     constructor(context = {}) {
@@ -17,88 +20,90 @@ export default class SettingsPage extends Base {
     }
 
     render() {
-        Request.profile().then((response) => {
-            console.log(response)
-            return response.json()
-        }).then((responseJSON) => {
-            const profileData = {
-                avatarPath: responseJSON['avatar'],
-                name: responseJSON['username'],
-                surname: 'Rhod',
-                username: 'OHMYGOOSH',
-                description: 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
-                email: responseJSON['email']
-            }
+        const navbar = new Navbar();
 
-            const fieldsLabels = {
-                name: 'Имя',
-                surname: 'Фамилия',
-                username: 'Имя пользователя',
-                description: 'Сведения о вашем профиле',
-                fileUpload: 'Выбрать аватар',
-                email: 'email'
-            }
+        const fieldsLabels = {
+            name: 'Имя',
+            surname: 'Фамилия',
+            username: 'Имя пользователя',
+            description: 'Сведения о вашем профиле',
+            fileUpload: 'Выбрать аватар',
+            email: 'email'
+        }
 
-            const form = new FormGenerator('', '', 'edit')
+        const form = new FormGenerator('', '', 'edit')
 
-            form.appendElement(new Avatar({
-                avatarPath: profileData['avatarPath']
-            }))
-            form.appendElement(new FileUpload({
-                label: fieldsLabels['fileUpload']
-            }))
+        form.appendElement(new Avatar({
+            imgSrc: this.context.avatarPath,
+        }))
 
-            form.appendInput('text', 'form__input', fieldsLabels['name'], '', profileData['name'], 'name')
-            form.appendInput('text', 'form__input', fieldsLabels['surname'], '', profileData['surname'], 'surname')
-            form.appendInput('text', 'form__input', fieldsLabels['username'], '', profileData['username'], 'username')
-            form.appendInput('email', 'form__input', fieldsLabels['email'], '', profileData['email'], 'email')
-            form.appendInput('text', 'form__input', fieldsLabels['description'], '', profileData['description'], 'description')
-            // form.appendInput('password', 'form__input', 'Текущий пароль', '', '', 'oldpswd')
-            // form.appendInput('password', 'form__input', 'Новый пароль', '', '', 'newpswd')
+        const fileUpload = new FileUpload({
+            label: fieldsLabels.fileUpload,
+        })
+        form.appendElement(fileUpload);
 
-            form.appendButton('submit', 'Сохранить')
+        form.appendInput('text', 'form__input', fieldsLabels['name'], '', this.context.name, 'name')
+        form.appendInput('text', 'form__input', fieldsLabels['surname'], '', this.context.surname, 'surname')
+        form.appendInput('text', 'form__input', fieldsLabels['username'], '', this.context.username, 'username')
+        form.appendInput('email', 'form__input', fieldsLabels['email'], '', this.context.email, 'email')
+        form.appendInput('text', 'form__input', fieldsLabels['description'], '', this.context.description, 'description')
+        // form.appendInput('password', 'form__input', 'Текущий пароль', '', '', 'oldpswd')
+        // form.appendInput('password', 'form__input', 'Новый пароль', '', '', 'newpswd')
 
-            const resultForm = form.fill()
+        form.appendButton('submit', 'Сохранить')
 
-            const data = {
-                form: form.renderAll(),
-            }
+        const resultForm = form.fill()
 
-            this.fillWith(data);
-            super.render()
+        const data = {
+            navbar: navbar.render(),
+            form: form.renderAll()
+        }
 
-            resultForm.bind('submit', (event) =>{
-                event.preventDefault();
+        this.fillWith(data);
+        super.render()
 
-                let data = {};
-                let OK = true;
-                resultForm.inputs.forEach((input) => {
-                    input.resetError();
-                    let res = Validator.isValid(input.id, input.value)
-                    if (res !== undefined && !res.res) {
-                        input.addError(res.error)
-                        OK = false;
-                    }
-                })
+        resultForm.bind('submit', (event) => {
+            let values = {};
+            resultForm.inputs.forEach((input) => {
+                values[input.id] = input.value;
+            })
+            values.file = fileUpload.value;
+            eventBus.emit(Events.profileUpdate, {event: event, ...values});
+        })
 
-                if (OK) {
-                    resultForm.inputs.forEach((input) => {
-                        data[input.id] = input.value;
-                    })
-                }
 
-                data['file'] = document.getElementById('file').files[0]
-                let formData = new FormData()
-                formData.append('image', document.getElementById('file').files[0])
-
-                Request.updateAvatar(formData).then((response) => console.log(response.status))
-
-                console.log(data['name'], data['email'])
-                Request.updateProfile(data['name'], data['email']).then((response) => console.log(response.status))
-                //Request.updatePassword(data['oldpswd'], data['newpswd']).then((response) => console.log(response.status))
-
-            });
-
-        });
     }
 }
+
+
+// resultForm.bind('submit', (event) =>{
+//     event.preventDefault();
+//
+//     let data = {};
+//     let OK = true;
+//     resultForm.inputs.forEach((input) => {
+//         input.resetError();
+//         let res = Validator.isValid(input.id, input.value)
+//         if (res !== undefined && !res.res) {
+//             input.addError(res.error)
+//             OK = false;
+//         }
+//     })
+//
+//     if (OK) {
+//         resultForm.inputs.forEach((input) => {
+//             data[input.id] = input.value;
+//         })
+//     }
+//
+//     data['file'] = document.getElementById('file').files[0]
+//     let formData = new FormData()
+//     formData.append('image', document.getElementById('file').files[0])
+//
+//     Request.updateAvatar(formData).then((response) => console.log(response.status))
+//
+//     console.log(data['name'], data['email'])
+//     Request.updateProfile(data['name'], data['email']).then((response) => console.log(response.status))
+//     //Request.updatePassword(data['oldpswd'], data['newpswd']).then((response) => console.log(response.status))
+//
+// });

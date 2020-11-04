@@ -24,6 +24,6 @@ export default class PinPage extends Base {
         }
 
         this.fillWith(data);
-        document.getElementById('app').innerHTML = this.template(this.context);
+        super.render();
     }
 }

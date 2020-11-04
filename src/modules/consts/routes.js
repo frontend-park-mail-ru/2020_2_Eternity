@@ -5,5 +5,6 @@ export const routes = {
     pinCreatingPage: '/create-pin',
     pinPage: '/pin/:num',
     loginPage: '/login',
+    logout: '/logout',
     regPage: '/signup',
 };

@@ -5,10 +5,11 @@ export const urls = {
     login: `${apiPath}/user/login`,
     logout: `${apiPath}/user/logout`,
     profile: `${apiPath}/user/profile`,
-    pinPost: `${apiPath}/user/pin`,
     updatePassword: `${apiPath}/user/profile/password`,
-    updateProfile: `api/user/profile`,
+    updateProfile: `${apiPath}/user/profile`,
     avatar: `${apiPath}/user/profile/avatar`,
-    pins: `${apiPath}/user/pin`
+    pinPost: `${apiPath}/user/pin`,
+    pins: `${apiPath}/user/pin`,
+
 }
 
