@@ -36,7 +36,7 @@ export default class Form {
      * @return {Object} Элемент
      */
     getElement(id) {
-        return this.context.elements.get(id)
+        return this.elements.get(id)
     }
 
     /**
