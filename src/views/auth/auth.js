@@ -7,48 +7,73 @@ import Validator from "../../modules/tools/validator.js";
 
 import eventBus from "../../modules/tools/eventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
 
 export default class AuthRegPage extends Base {
-    #pageType
+    #form;
+    #pageType;
 
     constructor(pageType, context = {}) {
         super('Авторизация', context, null);
         this.template = template;
 
-        this.#pageType = pageType
+        this.#pageType = pageType;
     }
 
     render() {
-        const actions = {
-            auth: '',
-            registration: ''
-        }
-
-        const placeholders = {
-            email: 'Адрес электронной почты',
-            password: 'Пароль'
-        }
-
-        const form = new FormGenerator(actions[this.#pageType], '', this.#pageType)
+        let elements = [];
 
         if (this.#pageType === 'registration') {
-            form.appendInput('email', 'form__input', placeholders['email'], '', '', 'email')
-        } else {
-            form.appendInput('text', 'form__input', 'Имя пользователя', 'Username', '', 'username')
+            elements.push(new Input({
+                label: 'Адрес электронной почты',
+                type: 'email',
+                customClasses: 'form__input',
+                placeholder: 'example@email.com',
+                id: 'email'
+            }));
         }
-        form.appendInput('password', 'form__input', placeholders['password'], '', '', 'password')
-        form.appendButton('submit', 'Войти')
+
+        elements.push(new Input({
+            label: 'Логин',
+            type: 'text',
+            customClasses: 'form__input',
+            placeholder: 'Username',
+            id: 'username'
+        }));
+
+        elements.push(new Input({
+            label: 'Пароль',
+            type: 'password',
+            customClasses: 'form__input',
+            placeholder: 'Password',
+            id: 'password'
+        }));
+
+        if (this.#pageType === 'registration') {
+            elements.push(new Button({
+                id: 'submit',
+                type: 'submit',
+                btnText: 'Зарегистрироваться'
+            }));
+        } else {
+            elements.push(new Button({
+                id: 'submit',
+                type: 'submit',
+                btnText: 'Войти'
+            }));
+        }
+
+        this.#form = new FormGenerator(this.#pageType, ...elements).createForm();
 
         const data = {
-            form: form.renderAll(),
-        }
+            form: this.#form.render()
+        };
 
         this.fillWith(data);
-        super.render()
+        super.render();
 
-        let resultForm = form.fill();
-
-        resultForm.bind('submit', (event) => {
+        this.#form.bind('submit', (event) => {
             event.preventDefault();
 
             let data = {};
