@@ -26,6 +26,7 @@ export default class Input extends BaseComponent {
     }
 
     resetError() {
+        this.err = null;
         this.element.parentNode.querySelector('.error').remove();
     }
 
