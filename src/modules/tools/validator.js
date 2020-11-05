@@ -34,8 +34,8 @@ class Validator {
             let ok;
             let errors = [];
             validators.forEach((validator) => {
-                ok = validator.call(null, value);
-                if (ok in this.errors) {
+                ok = validator(value);
+                if (ok) {
                     errors.push(ok);
                 }
             });

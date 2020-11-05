@@ -7,66 +7,137 @@ import Validator from "../../modules/tools/validator.js";
 
 import eventBus from "../../modules/tools/eventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
 
+/**
+ * @class View, отвечающая за авторизацию
+ */
 export default class AuthRegPage extends Base {
-    #pageType
+    #form;
+    #pageType;
 
+    /**
+     * Конструирует новую страницу для авторизации или регистрации
+     *
+     * @constructor
+     * @param {('registration'|'auth')} pageType Тип конструируемой страницы
+     * @param {Object} [context] Контекст, содержащий элементы страницы
+     */
     constructor(pageType, context = {}) {
         super('Авторизация', context, null);
         this.template = template;
 
-        this.#pageType = pageType
+        this.#pageType = pageType;
     }
 
+    /**
+     * Генерирует набор html-тегов, заполненных контекстом
+     *
+     * @return //TODO: понять и простить
+     */
     render() {
-        const actions = {
-            auth: '',
-            registration: ''
-        }
-
-        const placeholders = {
-            email: 'Адрес электронной почты',
-            password: 'Пароль'
-        }
-
-        const form = new FormGenerator(actions[this.#pageType], '', this.#pageType)
+        let elements = [];
 
         if (this.#pageType === 'registration') {
-            form.appendInput('email', 'form__input', placeholders['email'], '', '', 'email')
-        } else {
-            form.appendInput('text', 'form__input', 'Имя пользователя', 'Username', '', 'username')
+            elements.push(new Input({
+                label: 'Адрес электронной почты',
+                type: 'email',
+                customClasses: 'form__input',
+                placeholder: 'example@email.com',
+                id: 'email'
+            }));
         }
-        form.appendInput('password', 'form__input', placeholders['password'], '', '', 'password')
-        form.appendButton('submit', 'Войти')
+
+        elements.push(new Input({
+            label: 'Логин',
+            type: 'text',
+            customClasses: 'form__input',
+            placeholder: 'Username',
+            id: 'username'
+        }));
+
+        elements.push(new Input({
+            label: 'Пароль',
+            type: 'password',
+            customClasses: 'form__input',
+            placeholder: 'Password',
+            id: 'password'
+        }));
+
+        if (this.#pageType === 'registration') {
+            elements.push(new Button({
+                id: 'submit',
+                type: 'submit',
+                btnText: 'Зарегистрироваться'
+            }));
+        } else {
+            elements.push(new Button({
+                id: 'submit',
+                type: 'submit',
+                btnText: 'Войти'
+            }));
+        }
+
+        this.#form = new FormGenerator(this.#pageType, ...elements).createForm();
 
         const data = {
-            form: form.renderAll(),
-        }
+            form: this.#form.render()
+        };
 
         this.fillWith(data);
-        super.render()
+        super.render();
 
-        let resultForm = form.fill();
-
-        resultForm.bind('submit', (event) => {
+        this.#form.bind('submit', (event) => {
             event.preventDefault();
 
-            let data = {};
-            // TODO: по хорошему тут нужно делать разные формы..
-            if (this.#pageType === 'auth') {
-                data.username = document.getElementById('username').value;
-                data.password = document.getElementById('password').value;
-                eventBus.emit(Events.userLogin, data);
-            } else {
-                data.email = document.getElementById('email').value;
-                data.password = document.getElementById('password').value;
-                data.username = data.email.split('@')[0];
-                eventBus.emit(Events.userSignup, data);
+            this.#form.elements.forEach((element) => {
+                if (element instanceof Input && element.error) {
+                    element.resetError();
+                }
+            });
+
+            let data = {
+                username: this.#form.getElement('username').element.value,
+                password: this.#form.getElement('password').element.value
+            };
+
+            Validator.validateUsernameField(data.username).forEach((error) => {
+                this.#form.getElement('username').addError(error);
+            });
+
+            Validator.validatePasswordField(data.password).forEach((error) => {
+                this.#form.getElement('password').addError(error);
+            });
+
+            if (this.#pageType === 'registration') {
+                data.email = this.#form.getElement('email').element.value;
+                Validator.validateEmailField(data.email).forEach((error) => {
+                    this.#form.getElement('email').addError(error);
+                });
             }
 
+            if (![...this.#form.elements.values()].some((element) => {
+                if (element instanceof Input) {
+                    return element.error;
+                }
+            })) {
+                if (this.#pageType === 'registration') {
+                    eventBus.emit(Events.userSignup, data);
+                } else {
+                    eventBus.emit(Events.userLogin, data);
+                }
+            }
         })
     }
 }
+
+// TODO: Разбить на две отдельные формы;
+//       Не делать генерацию каждый раз при вызове render();
+//       Привязывать события вне view;
+//       Получать сами значения через js, а не через element.value;
+//       Значения должны также храниться сразу в js?;
+
 
 
 //let data = {};
