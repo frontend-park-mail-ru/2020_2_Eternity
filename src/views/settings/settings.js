@@ -11,9 +11,12 @@ import FormGenerator from "../../modules/tools/form_generator.js";
 import Validator from "../../modules/tools/validator.js"
 import eventBus from "../../modules/tools/eventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Button from "../../components/button/button";
 
 
 export default class SettingsPage extends Base {
+    #form;
+
     constructor(context = {}) {
         super('Редактирование профиля', context, null);
         this.template = template;
@@ -31,47 +34,85 @@ export default class SettingsPage extends Base {
             email: 'email'
         }
 
-        const form = new FormGenerator('', '', 'edit')
+        let elements = [];
 
-        form.appendElement(new Avatar({
+        elements.push(new Avatar({
             imgSrc: this.context.avatarPath,
-        }))
+            id: 'avatar'
+        }));
 
-        const fileUpload = new FileUpload({
+        elements.push(new FileUpload({
             label: fieldsLabels.fileUpload,
-        })
-        form.appendElement(fileUpload);
+            id: 'file' // TODO: fix
+        }));
 
-        form.appendInput('text', 'form__input', fieldsLabels['name'], '', this.context.name, 'name')
-        form.appendInput('text', 'form__input', fieldsLabels['surname'], '', this.context.surname, 'surname')
-        form.appendInput('text', 'form__input', fieldsLabels['username'], '', this.context.username, 'username')
-        form.appendInput('email', 'form__input', fieldsLabels['email'], '', this.context.email, 'email')
-        form.appendInput('text', 'form__input', fieldsLabels['description'], '', this.context.description, 'description')
+        elements.push(new Input({
+            label: fieldsLabels['name'],
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.name,
+            id: 'name'
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['surname'],
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.surname,
+            id: 'surname'
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['email'],
+            type: 'email',
+            customClasses: 'form__input',
+            value: this.context.email,
+            id: 'email'
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['description'],
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.description,
+            id: 'description'
+        }));
+
+        elements.push(new Button({
+            id: 'submit',
+            type: 'submit',
+            btnText: 'Сохранить'
+        }));
+
         // form.appendInput('password', 'form__input', 'Текущий пароль', '', '', 'oldpswd')
         // form.appendInput('password', 'form__input', 'Новый пароль', '', '', 'newpswd')
 
-        form.appendButton('submit', 'Сохранить')
-
-        const resultForm = form.fill()
+        this.#form = new FormGenerator('settings', ...elements).createForm();
 
         const data = {
             navbar: navbar.render(),
-            form: form.renderAll()
+            form: this.#form.render()
         }
 
         this.fillWith(data);
         super.render()
 
-        resultForm.bind('submit', (event) => {
+        this.#form.bind('submit', (event) => {
+            // TODO: Инпуты и информацию из них придется хранить отдельно;
+            //       Вероятно, генератор форм не нужен;
+
             let values = {};
-            resultForm.inputs.forEach((input) => {
-                values[input.id] = input.value;
+            this.#form.elements.forEach((element) => {
+                if (element instanceof Input) {
+                    values[element.context.id] = element.element.value;
+                }
+
+                if (element instanceof FileUpload) {
+                    values.file = element.value
+                }
             })
-            values.file = fileUpload.value;
             eventBus.emit(Events.profileUpdate, {event: event, ...values});
         })
-
-
     }
 }
 
