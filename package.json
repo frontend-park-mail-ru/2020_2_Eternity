@@ -1,5 +1,5 @@
 {
-  "name": "2020_2_Eternity",
+  "name": "2020_2_eternity",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -19,6 +19,7 @@
     "copy-webpack-plugin": "^6.2.1",
     "css-loader": "^5.0.0",
     "file-loader": "^6.2.0",
+    "is-port-reachable": "^3.0.0",
     "mini-css-extract-plugin": "^1.2.1",
     "request": "^2.88.2",
     "sass-loader": "^10.0.4",
