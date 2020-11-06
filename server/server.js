@@ -20,14 +20,14 @@ console.log('Backend address is', apiUrl);
 app.use(express.static(`${__dirname}/../dist`));
 
 app.use('/api', (req, res, next) => {
+    console.log(req.ip, 'api request', req.url);
     const modifiedURL = `${req.protocol}://${apiUrl}${req.url}`;
-    console.log(modifiedURL);
     proxy(modifiedURL)(req, res, next);
 });
 
-app.get('/*', (request, response) => {
-    console.log(request.url);
-    response.sendFile(path.resolve(`${__dirname}/../dist/index.html`));
+app.get('/*', (req, res) => {
+    console.log(req.ip, 'page request', req.url);
+    res.sendFile(path.resolve(`${__dirname}/../dist/index.html`));
 });
 
 app.listen(port, () => {
