@@ -14,12 +14,14 @@ class EventBus {
 
     off(event, callback) {
         if (this.listeners[event]) {
-            this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
+            this.listeners[event] = this.listeners[event].filter((listener) => listener.name !== callback.name);
         }
     }
 
     emit(event, data) {
         if (this.listeners[event]) {
+            console.log(event, ' emitted')
+            console.log('listeners for event: ', this.listeners[event])
             this.listeners[event].forEach((listener) => listener(data));
         }
         return this;

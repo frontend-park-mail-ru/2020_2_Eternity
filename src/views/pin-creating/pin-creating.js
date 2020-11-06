@@ -3,10 +3,17 @@ import template from "./pin-creating.hbs"
 import Base from "../base.js";
 
 import PinUpload from "../../components/input/pin-upload/pin-upload.js";
+import Navbar from "../../components/navbar/navbar.js";
 
 import FormGenerator from "../../modules/tools/form_generator.js";
 import Request from "../../modules/request/request.js";
 import {router} from "../../index.js";
+import eventBus from "../../modules/tools/eventBus.js";
+import {Events} from "../../modules/consts/events.js";
+import Avatar from "../../components/avatar/avatar";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
+
 
 export default class PinCreating extends Base {
     constructor(context = {}) {
@@ -15,48 +22,57 @@ export default class PinCreating extends Base {
     }
 
     render() {
+        const navbar = new Navbar();
         const fieldsLabels = {
-            title: 'Title',
-            description: 'Pin description'
+            title: 'Название',
+            description: 'Описание'
         }
 
-        const form = new FormGenerator('', '', 'upload')
+        let elements = [];
 
-        form.appendElement(new PinUpload())
+        elements.push(new PinUpload());
+        elements.push(new Input({
+            label: fieldsLabels.title,
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.title,
+            id: 'title'
+        }));
 
-        form.appendInput('text', 'form__input', '', fieldsLabels['title'], '', 'title')
-        form.appendInput('textarea', 'form__input','', fieldsLabels['description'], '', 'description')
+        elements.push(new Input({
+            label: fieldsLabels.description,
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.description,
+            id: 'description'
+        }));
 
-        form.appendButton('submit', 'Создать')
+        elements.push(new Button({
+            id: 'submit',
+            type: 'submit',
+            btnText: 'Создать'
+        }));
+
+        const form = new FormGenerator('pin-creating', ...elements).createForm();
 
         const data = {
-            form: form.renderAll(),
+            navbar: navbar.render(),
+            form: form.render(),
         }
 
         this.fillWith(data);
         super.render()
 
-        form.elements[0].bindPreview();
-        let resultForm = form.fill();
+        elements[0].bindPreview();
 
-        resultForm.bind('submit', (event) =>{
-            event.preventDefault();
-
+        form.bind('submit', (event) => {
             let data = {};
             data['title'] = document.getElementById('title').value;
             data['description'] = document.getElementById('description').value;
+            //data = JSON.stringify(data);
+            data['file'] = document.getElementById('file').files[0];
 
-            let formData = new FormData()
-            formData.append('img', document.getElementById('file').files[0])
-            formData.append('data', JSON.stringify(data))
-
-            Request.pinPost(formData).then((response) => {
-                console.log(response.status)
-                router.open('/')
-            })
-
-            // TODO: AJAX
-
+            eventBus.emit(Events.pinCreating, {event: event, ...data});
         })
     }
 }

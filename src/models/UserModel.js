@@ -34,8 +34,8 @@ class UserModel {
 
     getProfile() {
         return request.profile().then((response) => {
-            //return response.json();
-            return fakeUser;
+            return response.json();
+            //return fakeUser;
         })
     }
 
@@ -47,7 +47,13 @@ class UserModel {
     }
 
     updateAvatar(data={}) {
-        return request.updateAvatar(data.file).then((response) => {
+        return request.updateAvatar(data).then((response) => {
+            return response.json();
+        })
+    }
+
+    updatePassword(data={}) {
+        return request.updatePassword(data.oldpassword, data.newpassword).then((response) => {
             return response.json();
         })
     }

@@ -1,7 +1,7 @@
 import {urls} from './api.js'
 
 
-// TODO: разбить на логические блоки (PinRequest, UserRequest, Desk и тд)
+// TODO: разбить на логические блоки (PinRequest, UserRequest, Board и тд)
 export default class Request {
     static request (path, method, ext={}) {
         return fetch(urls[path], {
@@ -74,7 +74,7 @@ export default class Request {
 
     static updateAvatar(file) {
         return this.requestPOST('avatar', {
-            body: file,
+            body: {image: file},
         });
     }
 

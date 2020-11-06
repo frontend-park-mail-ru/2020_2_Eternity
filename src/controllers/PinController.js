@@ -17,4 +17,6 @@ export default class PinController extends BaseController {
         this.view.fillWith(pin);
         super.on();
     }
+
+
 }

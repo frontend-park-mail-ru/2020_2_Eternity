@@ -62,19 +62,6 @@ export default class Router {
     }
 
     /**
-     * Конвертирует path в выражение для consts/routes
-     *
-     * @param {string} path
-     * @returns {string}
-     */
-    parseRule(path) {
-        if (typeof path !== 'string') {
-            return routes.mainPage;
-        }
-        return path.replace(/\d+/g, ':num');
-    }
-
-    /**
      * Парсит строку запроса (window.location.search) и возвращает параметры запроса в виде объекта
      *
      * @param {string} queryString - path+query
@@ -106,7 +93,7 @@ export default class Router {
         if (typeof path !== 'string') {
             return param;
         }
-        if (path.match(/^[a-z]+\/\d+$/g)) {
+        if (path.match(routes.pinPage)) {
             const parts = path.split('/');
             param[parts[0]] = parts[1];
             return param;
@@ -251,7 +238,8 @@ export default class Router {
         const fragment = this.getFragment();
 
         return this.routes.some(route => {
-            const match = this.parseRule(fragment).match(route.path);
+            //const match = this.parseRule(fragment).match(route.path);
+            const match = fragment.match(route.path);
             const query = this.getQuerySet(fragment);
 
             if (match) {

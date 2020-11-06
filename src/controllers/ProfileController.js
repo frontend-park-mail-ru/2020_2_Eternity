@@ -17,42 +17,61 @@ export default class ProfileController extends BaseController {
         if (type === 'edit') {
             super(new SettingsPage());
         }
-
-        eventBus.on(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
-        eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
-        // eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
-        eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
     }
 
     on(data={}) {
+        eventBus.on(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
+        eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
+        eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
+        eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
+
         let userInfo = {};
         UserModel.getProfile().then((response) => {
+            if (!response.avatarPath) {
+                response.avatarPath = '/img/default.svg'
+            }
             this.view.fillWith(response);
             this.view.render();
         }).catch((error) => console.log(error));
         super.on();
     }
 
+    off() {
+        eventBus.off(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
+        eventBus.off(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
+        eventBus.off(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
+        eventBus.off(Events.profileUpdate, this.onUpdateProfile.bind(this));
+
+        super.off();
+    }
+
     onUserInfoUpdate(data={}) {
         UserModel.updateProfile(data).then((response) => {
-            console.log('info update')
+            this.view.fillWith(response);
+            console.log('profile updated: ', response.username);
         }).catch((error) => console.log(error));
     }
 
     onUserAvatarUpdate(data={}) {
         UserModel.updateAvatar(data).then((response) => {
             // TODO: обновить аватар в шапке и вообще добавить его туда :D event bus emit
-            console.log('avatar update')
+            this.view.context.avatarPath = URL.createObjectURL(data);
+            this.view.render();
         }).catch((error) => console.log(error));
     }
 
-    // TODO: onUserPasswordUpdate
+    onUserPasswordUpdate(data={}) {
+        UserModel.updatePassword(data).then((response) => {
+            console.log('password updated: ', response.username);
+        }).catch((error) => console.log(error));
+    }
 
     onUpdateProfile(data={}) {
         data.event.preventDefault();
-        if (data.file) {
-            eventBus.emit(Events.userAvatarUpdate, data.file);
+        if (data['file']) {
+            eventBus.emit(Events.userAvatarUpdate, data['file']);
         }
+        // TODO: добавить eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldpassword, newpassword: data.newpassword})
         eventBus.emit(Events.userInfoUpdate, data);
     }
 }

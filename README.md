@@ -4,7 +4,7 @@
 
 [Trello](https://trello.com/b/Z3Uu6dLl/eternity-тп-2-2020)
 
-[]()
+[Полюбоваться картинками (деплой)](http://pinterest-tp.tk/)
 
 ---
 

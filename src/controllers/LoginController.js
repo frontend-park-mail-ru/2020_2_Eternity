@@ -10,10 +10,22 @@ import {routes} from "../modules/consts/routes.js";
 export default class LoginController extends BaseController {
     constructor(type) {
         super(new AuthRegPage(type));
+    }
 
+    on() {
         eventBus.on(Events.userLogin, this.onLogin.bind(this));
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
         eventBus.on(Events.userSignup, this.onSignup.bind(this));
+
+        super.on();
+    }
+
+    off() {
+        eventBus.off(Events.userLogin, this.onLogin.bind(this));
+        eventBus.off(Events.userLogout, this.onLogout.bind(this));
+        eventBus.off(Events.userSignup, this.onSignup.bind(this));
+
+        super.off();
     }
 
     onLogin(data={}) {

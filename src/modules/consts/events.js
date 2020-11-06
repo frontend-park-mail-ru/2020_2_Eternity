@@ -10,6 +10,8 @@ export const Events = {
     userPasswordUpdate: 'userPasswordUpdate',
     profileUpdate: 'profileUpdate',
 
+    pinCreating: 'pinCreating',
+    boardCreating: 'boardCreating',
 
 
 }
