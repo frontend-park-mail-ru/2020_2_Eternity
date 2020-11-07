@@ -1,4 +1,4 @@
-import request from "../modules/request/request.js";
+import request from "../modules/request/Request.js";
 import {fakeUser} from "../modules/consts/fake.js";
 import {resolvePlugin} from "@babel/core/lib/config/files/index-browser";
 

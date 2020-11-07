@@ -1,11 +1,11 @@
 import template from "./auth.hbs"
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
-import FormGenerator from "../../modules/tools/form_generator.js";
-import Validator from "../../modules/tools/validator.js";
+import FormGenerator from "../../modules/tools/FormGenerator.js";
+import Validator from "../../modules/tools/Validator.js";
 
-import eventBus from "../../modules/tools/eventBus.js";
+import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Input from "../../components/input/input";
 import Button from "../../components/button/button";
@@ -13,7 +13,7 @@ import Button from "../../components/button/button";
 /**
  * @class View, отвечающая за авторизацию
  */
-export default class AuthRegPage extends Base {
+export default class AuthRegPage extends BaseView {
     #form;
     #pageType;
 

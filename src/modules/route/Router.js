@@ -1,4 +1,4 @@
-import eventBus from "../tools/eventBus.js";
+import eventBus from "../tools/EventBus.js";
 import {Events} from "../consts/events.js";
 import {routes} from "../consts/routes.js";
 
@@ -130,7 +130,7 @@ export default class Router {
     /**
      * Связывает path с обработчиком и добавляет в routes
      *
-     * @param {string} path
+     * @param {RegExp | string} path
      * @param {*} controller
      * @returns {Router}
      */

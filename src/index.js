@@ -3,13 +3,14 @@
 import './index.css'
 
 import {routes} from "./modules/consts/routes.js"
-import Router from "./modules/route/router.js";
+import Router from "./modules/route/Router.js";
 
 import MainController from "./controllers/MainController.js"
 import LoginController from "./controllers/LoginController.js"
 import PinController from "./controllers/PinController.js";
 import ProfileController from "./controllers/ProfileController.js";
 import CreateController from "./controllers/CreateController.js";
+import SessionController from "./controllers/SessionController.js";
 
 const application = document.getElementById('app');
 

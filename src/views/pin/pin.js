@@ -1,11 +1,11 @@
 import template from "./pin.hbs";
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
 import Input from "../../components/input/input.js";
 
 
-export default class PinPage extends Base {
+export default class PinPage extends BaseView {
     constructor(context={}) {
         super('Просмотр пина', context, null);
         this.template = template;

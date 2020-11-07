@@ -1,28 +1,24 @@
 import template from "./pin-creating.hbs"
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
+import Input from "../../components/input/input.js";
+import Button from "../../components/button/button.js";
 import PinUpload from "../../components/input/pin-upload/pin-upload.js";
-import Navbar from "../../components/navbar/navbar.js";
 
-import FormGenerator from "../../modules/tools/form_generator.js";
-import Request from "../../modules/request/request.js";
-import {router} from "../../index.js";
-import eventBus from "../../modules/tools/eventBus.js";
+import FormGenerator from "../../modules/tools/FormGenerator.js";
+import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
-import Avatar from "../../components/avatar/avatar";
-import Input from "../../components/input/input";
-import Button from "../../components/button/button";
 
 
-export default class PinCreating extends Base {
+
+export default class PinCreating extends BaseView {
     constructor(context = {}) {
         super('Новый пин', context, null);
         this.template = template;
     }
 
     render() {
-        const navbar = new Navbar();
         const fieldsLabels = {
             title: 'Название',
             description: 'Описание'
@@ -56,7 +52,6 @@ export default class PinCreating extends Base {
         const form = new FormGenerator('pin-creating', ...elements).createForm();
 
         const data = {
-            navbar: navbar.render(),
             form: form.render(),
         }
 

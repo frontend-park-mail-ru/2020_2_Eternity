@@ -1,6 +1,6 @@
 import template from "./navbar.hbs"
 
-import BaseComponent from "../base_component.js";
+import BaseComponent from "../BaseComponent.js";
 
 export default class Navbar extends BaseComponent {
     constructor(context = {}) {

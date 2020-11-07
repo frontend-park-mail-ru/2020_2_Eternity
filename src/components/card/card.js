@@ -1,6 +1,6 @@
 import template from "./card.hbs"
 
-import BaseComponent from "../base_component.js";
+import BaseComponent from "../BaseComponent.js";
 
 export default class Card extends BaseComponent {
     constructor(context = {}) {

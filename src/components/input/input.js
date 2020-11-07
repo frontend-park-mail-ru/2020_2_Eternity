@@ -1,6 +1,6 @@
 import template from "./input.hbs"
 
-import BaseComponent from "../base_component.js";
+import BaseComponent from "../BaseComponent.js";
 import Error from "../error/error.js";
 
 export default class Input extends BaseComponent {

@@ -20,8 +20,6 @@ class EventBus {
 
     emit(event, data) {
         if (this.listeners[event]) {
-            console.log(event, ' emitted')
-            console.log('listeners for event: ', this.listeners[event])
             this.listeners[event].forEach((listener) => listener(data));
         }
         return this;

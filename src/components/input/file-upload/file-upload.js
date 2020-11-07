@@ -1,7 +1,7 @@
 import template from "./file-upload.hbs"
 
 import Input from "../input.js";
-import BaseComponent from "../../base_component.js";
+import BaseComponent from "../../BaseComponent.js";
 
 export default class FileUpload extends BaseComponent {
     input

@@ -1,20 +1,20 @@
 import template from "./settings.hbs"
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
 import Avatar from "../../components/avatar/avatar.js";
 import FileUpload from "../../components/input/file-upload/file-upload.js";
 import Navbar from "../../components/navbar/navbar.js";
 import Input from "../../components/input/input.js";
 
-import FormGenerator from "../../modules/tools/form_generator.js";
-import Validator from "../../modules/tools/validator.js"
-import eventBus from "../../modules/tools/eventBus.js";
+import FormGenerator from "../../modules/tools/FormGenerator.js";
+import Validator from "../../modules/tools/Validator.js"
+import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Button from "../../components/button/button";
 
 
-export default class SettingsPage extends Base {
+export default class SettingsPage extends BaseView {
     #form;
 
     constructor(context = {}) {
@@ -23,8 +23,6 @@ export default class SettingsPage extends Base {
     }
 
     render() {
-        const navbar = new Navbar();
-
         const fieldsLabels = {
             name: 'Имя',
             surname: 'Фамилия',
@@ -90,7 +88,6 @@ export default class SettingsPage extends Base {
         this.#form = new FormGenerator('settings', ...elements).createForm();
 
         const data = {
-            navbar: navbar.render(),
             form: this.#form.render()
         }
 

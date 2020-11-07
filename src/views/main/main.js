@@ -1,15 +1,11 @@
 import template from './main.hbs'
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
 import Card from "../../components/card/card.js";
-import Navbar from "../../components/navbar/navbar.js";
-
-import eventBus from "../../modules/tools/eventBus.js";
-import {Events} from "../../modules/consts/events.js";
 
 
-export default class MainPage extends Base {
+export default class MainPage extends BaseView {
     constructor(context = {}) {
         super('Главная', context, null);
         this.template = template;
@@ -17,8 +13,6 @@ export default class MainPage extends Base {
 
 
     render() {
-        const nav = new Navbar();
-
         let list = [];
         this.context.pins.forEach((pin) => {
             const card = new Card(pin);
@@ -26,15 +20,10 @@ export default class MainPage extends Base {
         });
 
         const data = {
-            navbar: nav.render(),
             pins: list,
         }
 
         this.fillWith(data);
         super.render()
-
-        nav.logoutLink.addEventListener('click', () => {
-            eventBus.emit(Events.userLogout, {});
-        });
     }
 }

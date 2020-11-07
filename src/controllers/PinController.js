@@ -1,7 +1,7 @@
-import BaseController from "./base_controller.js";
+import BaseController from "./BaseController.js";
 import PinPage from "../views/pin/pin.js";
 
-import eventBus from "../modules/tools/eventBus.js";
+import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 

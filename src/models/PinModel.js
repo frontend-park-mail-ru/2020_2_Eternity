@@ -1,4 +1,4 @@
-import request from "../modules/request/request.js";
+import request from "../modules/request/Request.js";
 import {fakePin} from "../modules/consts/fake.js";
 
 class PinModel {

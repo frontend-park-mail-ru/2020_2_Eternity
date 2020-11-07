@@ -1,4 +1,4 @@
-import BaseController from "./base_controller.js";
+import BaseController from "./BaseController.js";
 import MainPage from "../views/main/main.js";
 
 import {fakePins} from "../modules/consts/fake.js"

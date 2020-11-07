@@ -1,6 +1,6 @@
 import template from "./profile.hbs"
 
-import Base from "../base.js";
+import BaseView from "../BaseView.js";
 
 import Avatar from "../../components/avatar/avatar.js";
 import Button from "../../components/button/button.js";
@@ -10,14 +10,13 @@ import Board from "../../components/board/board.js";
 
 import {fakeBoard} from "../../modules/consts/fake.js";
 
-export default class ProfilePage extends Base {
+export default class ProfilePage extends BaseView {
     constructor(context = {}) {
         super('Профиль', context, null);
         this.template = template;
     }
 
     render() {
-        const navbar = new Navbar();
         const avatar = new Avatar({
             imgSrc: this.context.avatarPath,
         });
@@ -29,7 +28,6 @@ export default class ProfilePage extends Base {
         })
         const board = new Board({...fakeBoard});
         const data = {
-            navbar: navbar.render(),
             avatar: avatar.render(),
             btnMessage: btnMessage.render(),
             btnSub: btnSub.render(),

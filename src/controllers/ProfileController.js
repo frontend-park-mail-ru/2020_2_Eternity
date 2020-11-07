@@ -1,10 +1,10 @@
-import BaseController from "./base_controller.js";
+import BaseController from "./BaseController.js";
 
 import UserModel from "../models/UserModel.js"
 import ProfilePage from "../views/profile/profile.js";
 import SettingsPage from "../views/settings/settings.js";
 
-import eventBus from "../modules/tools/eventBus.js";
+import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
