@@ -2,6 +2,7 @@ import Navbar from "../components/navbar/navbar.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
+import UserModel from "../models/UserModel";
 
 export default class BaseView {
     context
@@ -10,18 +11,18 @@ export default class BaseView {
     #app
 
     constructor(title, context = {}, template) {
-        this.navbar = new Navbar();
-
         document.title = title;
         this.template = template;
         this.context = context;
-        this.context['navbar'] = this.navbar.render();
 
         this.#app = document.getElementById('app')
     }
 
     render() {
-        this.#app.innerHTML = this.template(this.context)
+        this.navbar = new Navbar();
+        this.context['navbar'] = this.navbar.render();
+
+        this.#app.innerHTML = this.template(this.context);
 
         // TODO: вынести обработчик наружу и добавить событие обновления шапки отдельно
         this.navbar.logoutLink.addEventListener('click', (event) => {

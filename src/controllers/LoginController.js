@@ -7,6 +7,8 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
+import SessionController from "./SessionController";
+
 export default class LoginController extends BaseController {
     constructor(type) {
         super(new AuthRegPage(type));
@@ -30,6 +32,7 @@ export default class LoginController extends BaseController {
         UserModel.login(data).then((response) => {
             if (!response.error) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
+                SessionController.on();
             }
         }).catch((error) => console.log(error));
     }
