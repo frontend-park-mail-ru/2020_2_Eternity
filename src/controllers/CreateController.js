@@ -19,17 +19,22 @@ export default class CreateController extends BaseController {
         super.on();
     }
 
-    onPinCreating(data={}) {
+    onPinCreating(data = {}) {
         data.event.preventDefault();
         // TODO: да емае, загрузка файлов ни аватарки ни пина не работает, я наверное делаю неправильно
-        PinModel.createPin(data).then((response) => {
+
+        let formData = new FormData;
+        formData.append('img', data.file);
+        formData.append('data', JSON.stringify({
+            title: data.title,
+            content: data.description
+        }));
+
+        PinModel.createPin(formData).then((response) => {
             if (!response.error) {
                 console.log('new pin!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
             }
         }).catch((error) => console.log(error))
     }
-
-
-
 }
