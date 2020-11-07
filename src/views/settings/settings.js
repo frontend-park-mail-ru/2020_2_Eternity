@@ -35,7 +35,7 @@ export default class SettingsPage extends BaseView {
         let elements = [];
 
         elements.push(new Avatar({
-            imgSrc: this.context.avatarPath,
+            imgSrc: this.context.avatar,
             id: 'avatar'
         }));
 
@@ -105,7 +105,10 @@ export default class SettingsPage extends BaseView {
                 }
 
                 if (element instanceof FileUpload) {
-                    values.file = element.value
+                    let formData = new FormData();
+                    formData.append('image', element.value);
+                    values.file = formData;
+                    values.localFile = element.value;
                 }
             })
             eventBus.emit(Events.profileUpdate, {event: event, ...values});

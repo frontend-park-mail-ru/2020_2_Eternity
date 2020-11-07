@@ -18,7 +18,7 @@ export default class ProfilePage extends BaseView {
 
     render() {
         const avatar = new Avatar({
-            imgSrc: this.context.avatarPath,
+            imgSrc: this.context.avatar,
         });
         const btnMessage = new Button({
             btnText: 'Сообщение'

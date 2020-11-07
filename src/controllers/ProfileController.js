@@ -27,8 +27,8 @@ export default class ProfileController extends BaseController {
 
         let userInfo = {};
         UserModel.getProfile().then((response) => {
-            if (!response.avatarPath) {
-                response.avatarPath = '/img/default.svg'
+            if (!response.avatar) {
+                response.avatar = '/img/default.svg'
             }
             this.view.fillWith(response);
             this.view.render();
@@ -53,9 +53,9 @@ export default class ProfileController extends BaseController {
     }
 
     onUserAvatarUpdate(data={}) {
-        UserModel.updateAvatar(data).then((response) => {
+        UserModel.updateAvatar(data['file']).then((response) => {
             // TODO: обновить аватар в шапке и вообще добавить его туда :D event bus emit
-            this.view.context.avatarPath = URL.createObjectURL(data);
+            this.view.context.avatar = URL.createObjectURL(data['localFile']);
             this.view.render();
         }).catch((error) => console.log(error));
     }
@@ -69,7 +69,7 @@ export default class ProfileController extends BaseController {
     onUpdateProfile(data={}) {
         data.event.preventDefault();
         if (data['file']) {
-            eventBus.emit(Events.userAvatarUpdate, data['file']);
+            eventBus.emit(Events.userAvatarUpdate, data);
         }
         // TODO: добавить eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldpassword, newpassword: data.newpassword})
         eventBus.emit(Events.userInfoUpdate, data);

@@ -74,7 +74,7 @@ export default class Request {
 
     static updateAvatar(file) {
         return this.requestPOST('avatar', {
-            body: {image: file},
+            body: file
         });
     }
 
