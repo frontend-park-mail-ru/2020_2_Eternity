@@ -1,0 +1,9 @@
+.chat {
+    display: grid;
+    grid-template-areas: "sidebar messages";
+}
+
+.messages__content {
+    grid-area: messages;
+    width: calc(100%);
+}

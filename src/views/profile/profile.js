@@ -20,17 +20,10 @@ export default class ProfilePage extends BaseView {
         const avatar = new Avatar({
             imgSrc: this.context.avatar,
         });
-        const btnMessage = new Button({
-            btnText: 'Сообщение'
-        })
-        const btnSub = new Button({
-            btnText: 'Подписаться'
-        })
+
         const board = new Board({...fakeBoard});
         const data = {
             avatar: avatar.render(),
-            btnMessage: btnMessage.render(),
-            btnSub: btnSub.render(),
             board: board.render()
         }
 

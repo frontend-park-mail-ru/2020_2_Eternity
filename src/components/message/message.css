@@ -1,0 +1,45 @@
+.sidebar__message {
+    display: grid;
+    grid-template-areas: "avatar content info";
+    align-items: center;
+    padding-right: 20px;
+}
+
+.sidebar__message__content {
+    grid-area: content;
+    overflow: hidden;
+    padding-left: 3px;
+}
+
+.sidebar__message__info {
+    grid-area: info;
+}
+
+.sidebar__message__content__user {
+    font-weight: bold;
+}
+.sidebar__message__content__text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+.badge {
+    display: block;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    background-color: #0CCE6B;
+
+    color: white;
+    font-size: small;
+    text-align: center;
+
+    margin: auto;
+}
+

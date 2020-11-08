@@ -6,4 +6,6 @@ export const routes = {
     pinPage: /pin\/\d+$/,
     loginPage: /^\/login$/,
     regPage: /^\/signup$/,
+
+    chatPage: /^\/messages$/,
 };

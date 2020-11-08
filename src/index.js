@@ -11,6 +11,7 @@ import PinController from "./controllers/PinController.js";
 import ProfileController from "./controllers/ProfileController.js";
 import CreateController from "./controllers/CreateController.js";
 import SessionController from "./controllers/SessionController.js";
+import ChatController from "./controllers/ChatController.js";
 
 const application = document.getElementById('app');
 
@@ -23,4 +24,5 @@ router
     .add(routes.pinCreatingPage, new CreateController)
     .add(routes.profilePage, new ProfileController('view'))
     .add(routes.settingsPage, new ProfileController('edit'))
+    .add(routes.chatPage, new ChatController)
 router.start();
