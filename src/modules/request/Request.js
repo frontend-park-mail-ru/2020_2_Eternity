@@ -124,4 +124,8 @@ export default class Request {
             credentials: 'include'
         });
     }
+
+    static getAllPins() {
+        return this.requestGET('feed');
+    }
 }

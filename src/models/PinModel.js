@@ -20,6 +20,12 @@ class PinModel {
             return response.json();
         })
     }
+
+    getAllPins() {
+        return request.getAllPins().then((response) => {
+            return response.json();
+        })
+    }
 }
 
 export default new PinModel();

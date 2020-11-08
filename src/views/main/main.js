@@ -14,10 +14,13 @@ export default class MainPage extends BaseView {
 
     render() {
         let list = [];
-        this.context.pins.forEach((pin) => {
-            const card = new Card(pin);
-            list.push(card.render());
-        });
+
+        if (this.context.pins) {
+            this.context.pins.forEach((pin) => {
+                const card = new Card(pin);
+                list.push(card.render());
+            });
+        }
 
         const data = {
             pins: list,
