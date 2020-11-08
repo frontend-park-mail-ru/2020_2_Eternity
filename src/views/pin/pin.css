@@ -6,17 +6,17 @@
     display: inline-block;
 }
 
-.close {
-    background: none;
-    border: none;
-    color: #aaa;
-    font-size: 14px;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    cursor: pointer;
-    outline: 0;
-}
+/*.close {*/
+/*    background: none;*/
+/*    border: none;*/
+/*    color: #aaa;*/
+/*    font-size: 14px;*/
+/*    position: absolute;*/
+/*    top: 5px;*/
+/*    right: 10px;*/
+/*    cursor: pointer;*/
+/*    outline: 0;*/
+/*}*/
 
 .gallery-card {
     margin-top: 40px;

@@ -178,7 +178,7 @@ export default class Router {
         if (target instanceof HTMLAnchorElement) {
             return target;
         }
-        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
+        if (target && target.parentElement instanceof HTMLAnchorElement) {
             return target.parentElement;
         }
         return target;

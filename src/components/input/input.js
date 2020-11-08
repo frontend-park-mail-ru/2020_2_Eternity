@@ -34,6 +34,10 @@ export default class Input extends BaseComponent {
         return document.getElementById(this.context.id);
     }
 
+    get value() {
+        return this.element.value;
+    }
+
     get error() {
         return this.err;
     }

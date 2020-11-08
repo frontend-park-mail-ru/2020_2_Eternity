@@ -121,8 +121,28 @@ export const fakeUser = {
 
 
 export const fakeBoard = {
-    name: 'Красивый заголовок который ну уж точно не поместится в блок верно ведь да?',
+    title: 'Красивый заголовок который ну уж точно не поместится в блок верно ведь да?',
+    username: 'examplee',
+    description: 'Это доска пользователя с оооочень длинным заголовком',
     date: '05.11.2020',
+    pins: [
+        {
+            id: '11',
+            imgSrc: '/img/img11.jpg'
+        },
+        {
+            id: '7',
+            imgSrc: '/img/img7.jpg'
+        },
+        {
+            id: '5',
+            imgSrc: '/img/img5.jpg'
+        },
+        {
+            id: '10',
+            imgSrc: '/img/img10.jpg'
+        },
+    ],
     coverPins: [
         {
             id: '11',
@@ -135,6 +155,6 @@ export const fakeBoard = {
         {
             id: '5',
             imgSrc: '/img/img5.jpg'
-        }
-    ]
+        },
+    ],
 }

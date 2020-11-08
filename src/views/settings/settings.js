@@ -4,7 +4,6 @@ import BaseView from "../BaseView.js";
 
 import Avatar from "../../components/avatar/avatar.js";
 import FileUpload from "../../components/input/file-upload/file-upload.js";
-import Navbar from "../../components/navbar/navbar.js";
 import Input from "../../components/input/input.js";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
@@ -12,6 +11,7 @@ import Validator from "../../modules/tools/Validator.js"
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Button from "../../components/button/button";
+import Textarea from "../../components/input/textarea/textarea";
 
 
 export default class SettingsPage extends BaseView {
@@ -68,12 +68,12 @@ export default class SettingsPage extends BaseView {
             id: 'email'
         }));
 
-        elements.push(new Input({
-            label: fieldsLabels['description'],
-            type: 'text',
-            customClasses: 'form__input',
+        elements.push(new Textarea({
+            label: fieldsLabels.description,
+            rows: 7,
+            class: 'form__input',
             value: this.context.description,
-            id: 'description'
+            id: 'description',
         }));
 
         elements.push(new Button({

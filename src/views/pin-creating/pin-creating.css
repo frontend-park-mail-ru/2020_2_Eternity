@@ -1,4 +1,4 @@
-.pin-creation-layout {
+.creation-layout {
     margin: auto;
     padding: 1.5rem;
     width: 700px;
@@ -15,6 +15,6 @@
     -5px -5px 6px rgba(255, 255, 255, 0.8);
 }
 
-.pin-creation-layout__column {
+.creation-layout__column {
     width: 500px;
 }
