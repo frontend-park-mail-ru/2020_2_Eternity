@@ -40,7 +40,7 @@ export default class LoginController extends BaseController {
     onSignup(data={}) {
         UserModel.reg(data).then((response) => {
             if (!response.error) {
-                eventBus.emit(Events.pathChanged, {path: routes.mainPage});
+                this.onLogin(data);
             }
         }).catch((error) => console.log(error));
     }
