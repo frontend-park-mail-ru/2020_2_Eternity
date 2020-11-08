@@ -10,6 +10,8 @@ import {routes} from "../modules/consts/routes.js";
 
 
 export default class ProfileController extends BaseController {
+    type;
+
     constructor(type) {
         if (type === 'view') {
             super(new ProfilePage());
@@ -17,6 +19,7 @@ export default class ProfileController extends BaseController {
         if (type === 'edit') {
             super(new SettingsPage());
         }
+        this.type = type;
     }
 
     on(data={}) {
@@ -25,8 +28,7 @@ export default class ProfileController extends BaseController {
         eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
 
-
-        UserModel.getUserProfile(data).then((response) => {
+         (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
             if (!response.avatar) {
                 response.avatar = '/img/default.svg'
             }
@@ -70,6 +72,11 @@ export default class ProfileController extends BaseController {
         data.event.preventDefault();
         if (data['file']) {
             eventBus.emit(Events.userAvatarUpdate, data);
+        }
+
+        if (data['oldPassword'] && data['newPassword']) {
+            eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldPassword, newpassword: data.newPassword});
+            console.log(data.oldPassword, data.newPassword);
         }
         // TODO: добавить eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldpassword, newpassword: data.newpassword})
         eventBus.emit(Events.userInfoUpdate, data);

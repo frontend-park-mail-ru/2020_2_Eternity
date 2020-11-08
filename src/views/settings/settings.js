@@ -29,7 +29,9 @@ export default class SettingsPage extends BaseView {
             username: 'Имя пользователя',
             description: 'Сведения о вашем профиле',
             fileUpload: 'Выбрать аватар',
-            email: 'email'
+            email: 'Адрес электронной почты',
+            oldPassword: 'Текущий пароль',
+            newPassword: 'Новый пароль'
         }
 
         let elements = [];
@@ -42,6 +44,14 @@ export default class SettingsPage extends BaseView {
         elements.push(new FileUpload({
             label: fieldsLabels.fileUpload,
             id: 'file' // TODO: fix
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['username'],
+            type: 'text',
+            customClasses: 'form__input',
+            value: this.context.username,
+            id: 'username'
         }));
 
         elements.push(new Input({
@@ -74,6 +84,22 @@ export default class SettingsPage extends BaseView {
             class: 'form__input',
             value: this.context.description,
             id: 'description',
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['oldPassword'],
+            type: 'password',
+            customClasses: 'form__input',
+            value: this.context.oldPassword,
+            id: 'oldPassword'
+        }));
+
+        elements.push(new Input({
+            label: fieldsLabels['newPassword'],
+            type: 'password',
+            customClasses: 'form__input',
+            value: this.context.newPassword,
+            id: 'newPassword'
         }));
 
         elements.push(new Button({
