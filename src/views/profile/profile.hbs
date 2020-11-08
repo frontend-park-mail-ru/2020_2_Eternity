@@ -4,7 +4,9 @@
     <div class="profile-card__content">
 
         <div class="profile-card__user-avatar">
-            <a href="/profile/edit" class="profile__btn-edit"><i class="fas fa-pen"></i></a>
+            {{#if edit}}
+                <a href="/profile/edit" class="profile__btn-edit"><i class="fas fa-pen"></i></a>
+            {{/if}}
             {{{ avatar }}}
         </div>
 
@@ -14,10 +16,12 @@
                 <li>@{{ username }}</li>
                 <li>{{ description }}</li>
                 <li><a href="">{{ followers }} подписчиков</a> • <a href="">{{ following }} подписок</a></li>
-                <li>
-                    <a href="/messages">Сообщение</a>
-                    <a href="">Подписаться</a>
-                </li>
+                {{#if show}}
+                    <li>
+                        <a href="/messages">Сообщение</a>
+                        <a href="">Подписаться</a>
+                    </li>
+                {{/if}}
             </ul>
         </div>
 
@@ -25,8 +29,10 @@
 </div>
 
 <div class="profile-desk">
-    <a href="/create-pin">Создать пин <i class="fas fa-plus"></i></a>
-    <a href="/create-board">Создать доску <i class="fas fa-clipboard"></i></a>
+    {{#if edit}}
+        <a href="/create-pin">Создать пин <i class="fas fa-plus"></i></a>
+        <a href="/create-board">Создать доску <i class="fas fa-clipboard"></i></a>
+    {{/if}}
     <div class="profile-desk__grid">
         {{#each pins}}
             <a href="pin/{{ this.id }}" class="profile-desk__grid__card">

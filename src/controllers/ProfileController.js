@@ -8,6 +8,7 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
+import Navbar from "../components/navbar/navbar.js";
 
 export default class ProfileController extends BaseController {
     type;
@@ -29,6 +30,19 @@ export default class ProfileController extends BaseController {
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
 
          (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
+            if (Navbar.context.isAuth) {
+                if (Navbar.context.username === response.username) {
+                    response.edit = true;
+                    response.show = false;
+                } else {
+                    response.edit = false;
+                    response.show = true;
+                }
+            } else {
+                response.edit = false;
+                response.show = false;
+            }
+
             if (!response.avatar) {
                 response.avatar = '/img/default.svg'
             }
