@@ -10,6 +10,8 @@
 @import "components/board/board.css";
 @import "components/toggle/toggle.css";
 @import "components/toggle/_labeled-toggle/labeled-toggle.css";
+@import "components/sidebar/sidebar.css";
+@import "components/message/message.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";
@@ -17,6 +19,8 @@
 @import "views/auth/auth.css";
 @import "views/pin-creating/pin-creating.css";
 @import "views/pin/pin.css";
+@import "views/chat/chat.css";
+
 @import "views/board/board.css";
 
 @media (max-width: 575px) {

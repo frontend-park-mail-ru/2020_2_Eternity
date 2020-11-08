@@ -12,6 +12,7 @@ import BoardController from "./controllers/BoardController.js";
 import ProfileController from "./controllers/ProfileController.js";
 import CreateController from "./controllers/CreateController.js";
 import SessionController from "./controllers/SessionController.js";
+import ChatController from "./controllers/ChatController.js";
 
 const application = document.getElementById('app');
 
@@ -26,5 +27,6 @@ router
     .add(routes.boardCreatingPage, new CreateController('board'))
     .add(routes.profilePage, new ProfileController('view'))
     .add(routes.settingsPage, new ProfileController('edit'))
+    .add(routes.chatPage, new ChatController)
 router.start();
 
