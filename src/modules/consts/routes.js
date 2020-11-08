@@ -6,7 +6,7 @@ export const routes = {
     pinPage: /pin\/\d+$/,
 
     // TODO:
-    boardPage: /^\/user\/board$/,
+    boardPage: /board\/\d+$/,
     boardCreatingPage: /^\/create-board$/,
 
     loginPage: /^\/login$/,

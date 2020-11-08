@@ -3,7 +3,7 @@ import {urls} from './api.js'
 
 // TODO: разбить на логические блоки (PinRequest, UserRequest, Board и тд)
 export default class Request {
-    static request (path, method, ext={}) {
+    static request(path, method, ext = {}) {
         return fetch(urls[path], {
             method: method,
             credentials: 'include',
@@ -11,15 +11,15 @@ export default class Request {
         })
     }
 
-    static requestGET(path, ext={}) {
+    static requestGET(path, ext = {}) {
         return Request.request(path, 'GET', ext);
     }
 
-    static requestPOST(path, ext={}) {
+    static requestPOST(path, ext = {}) {
         return Request.request(path, 'POST', ext);
     }
 
-    static requestPUT(path, ext={}) {
+    static requestPUT(path, ext = {}) {
         return Request.request(path, 'PUT', ext);
     }
 
@@ -106,5 +106,12 @@ export default class Request {
                 content: content
             })
         })
+    }
+
+    static board(id) {
+        return fetch(urls['board'].replace(':id', id), {
+            method: 'GET',
+            credentials: 'include'
+        });
     }
 }

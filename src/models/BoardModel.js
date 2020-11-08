@@ -5,7 +5,9 @@ class BoardModel {
     constructor() {}
 
     getBoard(data={}) {
-        return fakeBoard
+        return request.board(data.board).then((response) => {
+            return response.json();
+        });
     }
 
     createBoard(data={}) {

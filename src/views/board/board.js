@@ -5,17 +5,19 @@ import Card from "../../components/card/card";
 
 
 export default class BoardPage extends BaseView {
-    constructor(context={}) {
+    constructor(context = {}) {
         super('Доска пользователя', context, null);
         this.template = template;
     }
 
     render() {
         let list = [];
-        this.context.pins.forEach((pin) => {
-            const card = new Card(pin);
-            list.push(card.render());
-        });
+        if (this.context.pins) {
+            this.context.pins.forEach((pin) => {
+                const card = new Card(pin);
+                list.push(card.render());
+            });
+        }
 
         const data = {
             ...this.context,

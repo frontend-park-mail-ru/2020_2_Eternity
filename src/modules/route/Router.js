@@ -98,6 +98,11 @@ export default class Router {
             param[parts[0]] = parts[1];
             return param;
         }
+        if (path.match(routes.boardPage)) {
+            const parts = path.split('/');
+            param[parts[0]] = parts[1];
+            return param;
+        }
     }
 
     /**

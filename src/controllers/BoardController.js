@@ -14,10 +14,11 @@ export default class BoardController extends BaseController {
     }
 
     on(data={}) {
-        const board = BoardModel.getBoard(data);
-        this.view.fillWith(board);
+        BoardModel.getBoard(data).then((response) => {
+            this.view.fillWith(response);
+            this.view.render();
+        }).catch((error) => console.log(error));
+
         super.on();
     }
-
-
 }
