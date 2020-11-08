@@ -6,17 +6,23 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
+import Navbar from "../components/navbar/navbar.js";
+
 class SessionController extends BaseController {
     constructor() {
         super();
+
+        eventBus.on(Events.navbarChanged, Navbar.change.bind(Navbar, this));
+
         UserModel.getProfile().then((response) => {
             if (!response.error) {
-                this.on();
+                this.on(response);
             }
         });
     }
 
-    on() {
+    on(data={}) {
+        eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
     }
 

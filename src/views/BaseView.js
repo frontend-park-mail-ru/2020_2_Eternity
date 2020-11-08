@@ -16,18 +16,16 @@ export default class BaseView {
         this.context = context;
 
         this.#app = document.getElementById('app')
+
+        this.navbar = Navbar;
     }
 
     render() {
-        this.navbar = new Navbar();
         this.context['navbar'] = this.navbar.render();
-
         this.#app.innerHTML = this.template(this.context);
 
         // TODO: вынести обработчик наружу и добавить событие обновления шапки отдельно
-        this.navbar.logoutLink.addEventListener('click', (event) => {
-            eventBus.emit(Events.userLogout, {event: event});
-        });
+        // this.navbar.logoutLink.addEventListener('click', Navbar.logoutClick);
     }
 
     clear() {

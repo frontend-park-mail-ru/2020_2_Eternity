@@ -1,5 +1,6 @@
 export const Events = {
     pathChanged: 'pathChanged',
+    refresh: 'refresh',
 
     userLogin: 'userLogin',
     userLogout: 'userLogout',
@@ -13,5 +14,5 @@ export const Events = {
     pinCreating: 'pinCreating',
     boardCreating: 'boardCreating',
 
-
+    navbarChanged: 'navbarChanged',
 }

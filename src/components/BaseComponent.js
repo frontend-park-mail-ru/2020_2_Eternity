@@ -11,7 +11,7 @@ export default class BaseComponent {
         return this.template(this.context)
     }
 
-    get component() {
+    get context() {
         return this.context;
     }
 }

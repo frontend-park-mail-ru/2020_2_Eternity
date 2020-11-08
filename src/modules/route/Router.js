@@ -96,8 +96,11 @@ export default class Router {
         if (path.match(routes.pinPage)) {
             const parts = path.split('/');
             param[parts[0]] = parts[1];
-            return param;
         }
+        if (path.match(routes.profilePage)) {
+            param['username'] = path.substr(1);
+        }
+        return param;
     }
 
     /**

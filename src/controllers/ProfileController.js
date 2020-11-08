@@ -25,8 +25,8 @@ export default class ProfileController extends BaseController {
         eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
 
-        let userInfo = {};
-        UserModel.getProfile().then((response) => {
+
+        UserModel.getUserProfile(data).then((response) => {
             if (!response.avatar) {
                 response.avatar = '/img/default.svg'
             }

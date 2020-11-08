@@ -24,3 +24,4 @@ router
     .add(routes.profilePage, new ProfileController('view'))
     .add(routes.settingsPage, new ProfileController('edit'))
 router.start();
+
