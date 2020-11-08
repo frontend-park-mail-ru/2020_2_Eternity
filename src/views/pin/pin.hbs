@@ -9,12 +9,8 @@
             <section class="gallery-image"><img src="{{ imgSrc }}" alt=""></section>
             <section class="gallery-info">
 
-                <h2>{{ title }}</h2>
-
-                <div class="gallery-author">
-                    <!-- {{ avatar }} TODO: ссылку на профиль -->
-                    <a href="">{{ username }}</a>
-                </div>
+                <h2 class="gallery-title">{{ title }}</h2>
+                <span class="gallery-author">Автор: <a href="" >{{ username }}</a></span>
 
                 <p class="gallery-description">
                     {{ description }}
@@ -25,17 +21,26 @@
                     <span><i class="fa fa-comment"></i> {{ comments }}</span>
                 </div>
 
-
                 <hr>
 
-                <div class="gallery-comments">
-                    <div class="comment-add">
-                        {{{ input }}}
-                    </div>
+                <div class="comment-add">
+                    {{{ input }}}
+                    {{{ btnComment }}}
                 </div>
 
             </section>
+
         </div>
+
+        {{#if commentList}}
+            <div class="gallery-comments">
+                <ul class="gallery-comments-list" id="commentList">
+                    {{#each commentList}}
+                        <li>{{{ this }}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/if}}
 
     </div>
 </div>

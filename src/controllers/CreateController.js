@@ -45,7 +45,6 @@ export default class CreateController extends BaseController {
 
     onPinCreating(data = {}) {
         data.event.preventDefault();
-        // TODO: да емае, загрузка файлов ни аватарки ни пина не работает, я наверное делаю неправильно
 
         let formData = new FormData;
         formData.append('img', data.file);

@@ -10,4 +10,8 @@ export default class Textarea extends BaseComponent {
     get value() {
         return document.getElementById(this.context.id).value;
     }
+
+    clear() {
+        this.element.value = '';
+    }
 }

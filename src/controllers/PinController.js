@@ -6,6 +6,8 @@ import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
 import PinModel from "../models/PinModel.js";
+import CommentModel from "../models/CommentModel.js";
+import EventBus from "../modules/tools/EventBus";
 
 export default class PinController extends BaseController {
     constructor() {
@@ -13,10 +15,31 @@ export default class PinController extends BaseController {
     }
 
     on(data={}) {
-        const pin = PinModel.getPin(data);
-        this.view.fillWith(pin);
+        PinModel.getPin(data).then((response) => {
+            if (response) {
+                this.view.fillWith(response);
+                this.view.render();
+
+                PinModel.getPinComments(data).then((response) => {
+                    if (response) {
+                        this.view.fillWith({commentList: response.reverse()});
+                        this.view.render();
+                    }
+                });
+
+            } else {
+                eventBus.emit(Events.pathChanged, routes.mainPage);
+            }
+        }).catch((error) => console.log(error));
+
         super.on();
+
+        eventBus.on(Events.pinComment, this.onPinComment.bind(this));
     }
 
-
+    onPinComment(data={}) {
+        CommentModel.createComment(data).then((response) => {
+            this.view.addCommentToList(response);
+        })
+    }
 }
