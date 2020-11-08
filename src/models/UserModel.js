@@ -46,7 +46,7 @@ class UserModel {
     }
 
     updateProfile(data={}) {
-        return request.updateProfile(data.username, data.email).then((response) => {
+        return request.updateProfile(data.username, data.email, data.name, data.surname, data.description).then((response) => {
             return response.json();
         })
         // TODO: update password

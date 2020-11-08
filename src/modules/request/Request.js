@@ -70,11 +70,14 @@ export default class Request {
         });
     }
 
-    static updateProfile(username, email) {
+    static updateProfile(username, email, name, surname, description) {
         return this.requestPUT('updateProfile', {
             body: JSON.stringify({
                 username: username,
                 email: email,
+                name: name,
+                surname: surname,
+                description: description
             })
         });
     }

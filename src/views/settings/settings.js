@@ -126,7 +126,7 @@ export default class SettingsPage extends BaseView {
 
             let values = {};
             this.#form.elements.forEach((element) => {
-                if (element instanceof Input) {
+                if (element instanceof Input || element instanceof Textarea) {
                     values[element.context.id] = element.element.value;
                 }
 

@@ -7,7 +7,11 @@ export default class Textarea extends BaseComponent {
         super(template, context);
     }
 
+    get element() {
+        return document.getElementById(this.context.id);
+    }
+
     get value() {
-        return document.getElementById(this.context.id).value;
+        return this.element.value;
     }
 }
