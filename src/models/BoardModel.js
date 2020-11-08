@@ -9,8 +9,9 @@ class BoardModel {
     }
 
     createBoard(data={}) {
-    //    TODO: create board request
-        return {};
+        return request.boardPost(data.title, data.description).then((response) => {
+            return response.json();
+        })
     }
 }
 

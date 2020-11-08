@@ -10,6 +10,6 @@ export const urls = {
     avatar: `/${apiPath}/user/profile/avatar`,
     pinPost: `/${apiPath}/user/pin`,
     pins: `/${apiPath}/user/pin`,
-
+    boardPost: `/${apiPath}/board`,
 }
 

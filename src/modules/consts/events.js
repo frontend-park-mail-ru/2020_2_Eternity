@@ -11,7 +11,5 @@ export const Events = {
     profileUpdate: 'profileUpdate',
 
     pinCreating: 'pinCreating',
-    boardCreating: 'boardCreating',
-
-
+    boardCreating: 'boardCreating'
 }

@@ -98,4 +98,13 @@ export default class Request {
             })*/
         });
     }
+
+    static boardPost(title, content) {
+        return this.requestPOST('boardPost', {
+            body: JSON.stringify({
+                title: title,
+                content: content
+            })
+        })
+    }
 }

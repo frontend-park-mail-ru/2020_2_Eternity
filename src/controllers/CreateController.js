@@ -29,14 +29,7 @@ export default class CreateController extends BaseController {
     onBoardCreating(data = {}) {
         data.event.preventDefault();
 
-        let formData = new FormData;
-        formData.append('img', data.file);
-        formData.append('data', JSON.stringify({
-            title: data.title,
-            content: data.description
-        }));
-
-        BoardModel.createBoard(formData).then((response) => {
+        BoardModel.createBoard(data).then((response) => {
             if (!response.error) {
                 console.log('new board!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
