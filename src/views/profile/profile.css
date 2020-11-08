@@ -41,6 +41,10 @@
   text-align: right;
 }
 
+.profile-desk > a:first-child {
+  margin-right: 20px;
+}
+
 .profile-desk__grid {
   max-width: 100%;
   display: grid;

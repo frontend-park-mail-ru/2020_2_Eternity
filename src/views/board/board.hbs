@@ -1,0 +1,19 @@
+{{{ navbar }}}
+
+<div class="board__info">
+    <h2>{{ title }}</h2>
+    <p>@<a href="">{{ username }}</a></p>
+    <p>{{ content }}</p>
+</div>
+
+<div class="board__content">
+    <a href="">Добавить пин <i class="fas fa-plus"></i></a>
+
+    <div class="content-grid">
+        {{#each pins}}
+            <div class="content-grid__item">
+                {{{ this }}}
+            </div>
+        {{/each}}
+    </div>
+</div>

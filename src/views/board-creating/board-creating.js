@@ -1,20 +1,20 @@
-import template from "./pin-creating.hbs"
+import template from "./board-creating.hbs"
 
 import BaseView from "../BaseView.js";
 
 import Input from "../../components/input/input.js";
 import Button from "../../components/button/button.js";
 import Textarea from "../../components/input/textarea/textarea.js";
-import PinUpload from "../../components/input/pin-upload/pin-upload.js";
+import LabeledToggle from "../../components/toggle/_labeled-toggle/labeled-toggle.js";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 
 
-export default class PinCreating extends BaseView {
+export default class BoardCreating extends BaseView {
     constructor(context = {}) {
-        super('Новый пин', context, null);
+        super('Создать доску', context, null);
         this.template = template;
     }
 
@@ -26,7 +26,6 @@ export default class PinCreating extends BaseView {
 
         let elements = [];
 
-        elements.push(new PinUpload());
         elements.push(new Input({
             label: fieldsLabels.title,
             type: 'text',
@@ -39,8 +38,13 @@ export default class PinCreating extends BaseView {
             label: fieldsLabels.description,
             rows: 7,
             class: 'form__input',
-            value: this.context.description,
-            id: 'description'
+            id: 'description',
+        }));
+
+        elements.push(new LabeledToggle({
+            label: 'Сделать доску приватной?',
+            small: 'Другие пользователи не смогут увидеть ее',
+            id: 'private',
         }));
 
         elements.push(new Button({
@@ -49,25 +53,22 @@ export default class PinCreating extends BaseView {
             btnText: 'Создать'
         }));
 
-        const form = new FormGenerator('pin-creating', ...elements).createForm();
+        const form = new FormGenerator('board-creating', ...elements).createForm();
 
         const data = {
-            form: form.render(),
+            form: form.render()
         }
 
         this.fillWith(data);
         super.render()
 
-        elements[0].bindPreview();
-
         form.bind('submit', (event) => {
             let data = {};
             data['title'] = document.getElementById('title').value;
             data['description'] = document.getElementById('description').value;
-            //data = JSON.stringify(data);
-            data['file'] = document.getElementById('file').files[0];
+            data['private'] = form.getElement('private').value;
 
-            eventBus.emit(Events.pinCreating, {event: event, ...data});
+            eventBus.emit(Events.boardCreating, {event: event, ...data});
         })
     }
 }

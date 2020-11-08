@@ -98,6 +98,11 @@ export default class Router {
             param[parts[0]] = parts[1];
             return param;
         }
+        if (path.match(routes.boardPage)) {
+            const parts = path.split('/');
+            param[parts[0]] = parts[1];
+            return param;
+        }
     }
 
     /**
@@ -178,7 +183,7 @@ export default class Router {
         if (target instanceof HTMLAnchorElement) {
             return target;
         }
-        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
+        if (target && target.parentElement instanceof HTMLAnchorElement) {
             return target.parentElement;
         }
         return target;
