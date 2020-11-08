@@ -53,7 +53,7 @@ export default class PinPage extends BaseView {
         this.btnComment.element.addEventListener('click', () => {
             const data = {
                 is_root: true,
-                content: userComment.value,
+                content: this.userComment.value,
                 // TODO: господи уберите id и дайте норм ключи
                 pin_id: this.context.id,
             }
