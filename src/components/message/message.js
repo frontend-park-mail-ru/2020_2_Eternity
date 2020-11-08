@@ -6,9 +6,4 @@ export default class Message extends BaseComponent {
      constructor(context = {}) {
         super(template, context);
     }
-
-    render() {
-
-         return super.render();
-    }
 }

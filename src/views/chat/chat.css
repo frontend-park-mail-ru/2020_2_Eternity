@@ -1,9 +1,50 @@
 .chat {
-    display: grid;
-    grid-template-areas: "sidebar messages";
+    display: flex;
+    height: 100% !important;
 }
 
 .messages__content {
+    margin-left: 290px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
     grid-area: messages;
-    width: calc(100%);
 }
+.messages__content::before {
+    content: '';
+    margin-bottom: auto;
+}
+
+.messages__content ul {
+    overflow: auto;
+    list-style: none;
+    padding-right: 20px;
+}
+.messages__wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+.messages__content__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+    height: 60px;
+
+    position: fixed;
+    right: auto;
+    bottom: 0;
+}
+
+.messages__content__footer input {
+    width: 1050px;
+}
+.messages__content__footer button {
+    height: 40px;
+}
+
