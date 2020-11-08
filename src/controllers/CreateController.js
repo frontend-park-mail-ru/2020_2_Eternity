@@ -26,6 +26,12 @@ export default class CreateController extends BaseController {
         super.on();
     }
 
+    off() {
+        eventBus.off(Events.pinCreating, this.onPinCreating.bind(this));
+        eventBus.off(Events.boardCreating, this.onBoardCreating.bind(this));
+        super.off();
+    }
+
     onBoardCreating(data = {}) {
         data.event.preventDefault();
 
