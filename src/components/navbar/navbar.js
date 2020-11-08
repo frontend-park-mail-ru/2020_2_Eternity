@@ -31,6 +31,10 @@ class Navbar extends BaseComponent {
 
         let navbar = document.getElementById('navbar');
         navbar.innerHTML = this.render();
+
+        if (this.logoutLink) {
+            this.logoutLink.addEventListener('click', this.logoutClick);
+        }
     }
 
     logoutClick = (event) => {
