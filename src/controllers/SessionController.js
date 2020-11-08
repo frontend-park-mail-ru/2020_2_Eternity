@@ -12,7 +12,7 @@ class SessionController extends BaseController {
     constructor() {
         super();
 
-        eventBus.on(Events.navbarChanged, Navbar.change.bind(Navbar, this));
+        eventBus.on(Events.navbarChanged, Navbar.change.bind(Navbar));
 
         UserModel.getProfile().then((response) => {
             if (!response.error) {
@@ -27,6 +27,7 @@ class SessionController extends BaseController {
     }
 
     off() {
+        eventBus.emit(Events.navbarChanged, {isAuth: false});
         eventBus.off(Events.userLogout, this.onLogout.bind(this));
     }
 
@@ -39,7 +40,6 @@ class SessionController extends BaseController {
                 console.log('logout success')
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 this.off();
-                //todo: тут обновить шапку с флагом неавторизации eventBus.emit()
             }
         }).catch((error) => console.log(error));
     }

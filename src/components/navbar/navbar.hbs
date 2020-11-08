@@ -1,7 +1,7 @@
 <div class="navbar" id="navbar">
     <ul class="navbar__links">
         <li><a href="/">Главная</a></li>
-        {{#if isAuthenticated}}
+        {{#if isAuth}}
             <li><a href="/@{{username}}">Профиль</a></li>
             <li><a href="" id="logout">Выход</a></li>
         {{else}}

@@ -25,7 +25,9 @@ export default class BaseView {
         this.#app.innerHTML = this.template(this.context);
 
         // TODO: вынести обработчик наружу и добавить событие обновления шапки отдельно
-        // this.navbar.logoutLink.addEventListener('click', Navbar.logoutClick);
+        if (this.navbar.logoutLink) {
+            this.navbar.logoutLink.addEventListener('click', Navbar.logoutClick);
+        }
     }
 
     clear() {

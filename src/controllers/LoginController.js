@@ -32,7 +32,7 @@ export default class LoginController extends BaseController {
         UserModel.login(data).then((response) => {
             if (!response.error) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
-                SessionController.on();
+                SessionController.on(response);
             }
         }).catch((error) => console.log(error));
     }

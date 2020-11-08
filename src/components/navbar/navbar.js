@@ -16,6 +16,7 @@ class Navbar extends BaseComponent {
         return document.getElementById('logout');
     }
 
+/*
     static change = (navbar, data={}) => {
         console.log('data:', data)
         console.log('context before:', navbar.context)
@@ -23,16 +24,16 @@ class Navbar extends BaseComponent {
         console.log(navbar);
         console.log('context after:', navbar.context)
     }
+*/
 
     change (data={}) {
-        console.log('data:', data)
-        console.log('context before:', this.context)
         this.context = data;
-        console.log(this);
-        console.log('context after:', this.context)
+
+        let navbar = document.getElementById('navbar');
+        navbar.innerHTML = this.render();
     }
 
-    static logoutClick = (event) => {
+    logoutClick = (event) => {
         eventBus.emit(Events.userLogout, {event: event});
     }
 }
