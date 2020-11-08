@@ -130,7 +130,7 @@ export default class SettingsPage extends BaseView {
                     values[element.context.id] = element.element.value;
                 }
 
-                if (element instanceof FileUpload) {
+                if (element instanceof FileUpload && element.value) {
                     let formData = new FormData();
                     formData.append('image', element.value);
                     values.file = formData;
