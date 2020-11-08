@@ -1,12 +1,10 @@
-<div class="navbar">
+<div class="navbar" id="navbar">
     <ul class="navbar__links">
         <li><a href="/">Главная</a></li>
-        {{#if isAuthenticated}}
-            <li><a href="/profile">Профиль</a></li>
-            <li><a href="/logout">Выход</a></li>
-        {{else}}
-            <li><a href="/profile">Профиль</a></li>
+        {{#if isAuth}}
+            <li><a href="/@{{username}}">Профиль</a></li>
             <li><a href="" id="logout">Выход</a></li>
+        {{else}}
             <li><a href="/signup">Регистрация</a></li>
             <li><a href="/login">Вход</a></li>
         {{/if}}

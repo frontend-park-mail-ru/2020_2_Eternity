@@ -39,6 +39,12 @@ class UserModel {
         })
     }
 
+    getUserProfile(data={}) {
+        return request.getUserProfile(data.username).then((response) => {
+            return response.json();
+        })
+    }
+
     updateProfile(data={}) {
         return request.updateProfile(data.username, data.email).then((response) => {
             return response.json();

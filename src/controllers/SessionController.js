@@ -6,21 +6,28 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
+import Navbar from "../components/navbar/navbar.js";
+
 class SessionController extends BaseController {
     constructor() {
         super();
+
+        eventBus.on(Events.navbarChanged, Navbar.change.bind(Navbar));
+
         UserModel.getProfile().then((response) => {
             if (!response.error) {
-                this.on();
+                this.on(response);
             }
         });
     }
 
-    on() {
+    on(data={}) {
+        eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
     }
 
     off() {
+        eventBus.emit(Events.navbarChanged, {isAuth: false});
         eventBus.off(Events.userLogout, this.onLogout.bind(this));
     }
 
@@ -33,7 +40,6 @@ class SessionController extends BaseController {
                 console.log('logout success')
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 this.off();
-                //todo: тут обновить шапку с флагом неавторизации eventBus.emit()
             }
         }).catch((error) => console.log(error));
     }

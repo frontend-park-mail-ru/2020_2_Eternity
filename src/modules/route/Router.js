@@ -103,6 +103,10 @@ export default class Router {
             param[parts[0]] = parts[1];
             return param;
         }
+        if (path.match(routes.profilePage)) {
+            param['username'] = path.substr(1);
+            return param;
+        }
     }
 
     /**
@@ -183,7 +187,7 @@ export default class Router {
         if (target instanceof HTMLAnchorElement) {
             return target;
         }
-        if (target && target.parentElement instanceof HTMLAnchorElement) {
+        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
             return target.parentElement;
         }
         return target;

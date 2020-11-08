@@ -54,6 +54,13 @@ export default class Request {
         return this.requestGET('profile');
     }
 
+    static getUserProfile(username) {
+        return fetch(urls.userProfile.replace(':username', username), {
+            method: 'GET',
+            credentials: 'include',
+        })
+    }
+
     static updatePassword(oldPassword, newPassword) {
         return this.requestPUT('updatePassword', {
             body: JSON.stringify({

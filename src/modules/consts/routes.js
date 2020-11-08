@@ -1,6 +1,6 @@
 export const routes = {
     mainPage: /^\/$/,
-    profilePage: /^\/profile$/,
+    profilePage: /@\w+$/,
     settingsPage: /^\/profile\/edit$/,
     pinCreatingPage: /^\/create-pin$/,
     pinPage: /pin\/\d+$/,
