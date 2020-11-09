@@ -30,7 +30,16 @@ module.exports = {
             {
                 test: /\.css$/,
                 // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'postcss-loader'
+                ],
                 exclude: /node_modules/,
             },
             {
@@ -47,7 +56,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
-                { from: './public/static/img', to: 'img'},
+                {from: './public/static/img', to: 'img'},
             ]
         }),
         new MiniCssExtractPlugin({
@@ -58,6 +67,7 @@ module.exports = {
             template: './src/index.html',
             filename: 'index.html'
         }),
+        require('autoprefixer')
     ],
 
     devServer: {
@@ -68,7 +78,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://localhost:8008',
-                pathRewrite: { '^/api': '' },
+                pathRewrite: {'^/api': ''},
             },
         }
     },
