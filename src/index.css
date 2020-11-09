@@ -13,6 +13,7 @@
 @import "components/sidebar/sidebar.css";
 @import "components/message/message.css";
 @import "components/comment/comment.css";
+@import "components/select/select.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";
