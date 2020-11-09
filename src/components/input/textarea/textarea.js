@@ -14,4 +14,8 @@ export default class Textarea extends BaseComponent {
     get value() {
         return this.element.value;
     }
+
+    clear() {
+        this.element.value = '';
+    }
 }

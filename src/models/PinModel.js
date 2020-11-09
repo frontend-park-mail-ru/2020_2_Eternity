@@ -1,12 +1,22 @@
 import request from "../modules/request/Request.js";
-import {fakePin} from "../modules/consts/fake.js";
 
 class PinModel {
     constructor() {}
 
     getPin(data={}) {
-        fakePin.imgSrc = fakePin.imgSrc.replace(/\d+/, data['pin']);
-        return {...fakePin}
+        return request.getPin(data['pin']).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+    }
+
+    getPinComments(data={}) {
+        return request.getPinComments(data['pin']).then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
     }
 
     createPin(data={}) {

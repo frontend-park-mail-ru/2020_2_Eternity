@@ -12,6 +12,7 @@
 @import "components/toggle/_labeled-toggle/labeled-toggle.css";
 @import "components/sidebar/sidebar.css";
 @import "components/message/message.css";
+@import "components/comment/comment.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";

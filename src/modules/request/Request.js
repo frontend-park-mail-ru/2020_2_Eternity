@@ -4,7 +4,7 @@ import {urls} from './api.js'
 // TODO: разбить на логические блоки (PinRequest, UserRequest, Board и тд)
 export default class Request {
     static request(path, method, ext = {}) {
-        return fetch(urls[path], {
+        return fetch(path, {
             method: method,
             credentials: 'include',
             ...ext
@@ -24,7 +24,7 @@ export default class Request {
     }
 
     static login(username, password) {
-        return this.requestPOST('login', {
+        return this.requestPOST(urls.login, {
             mode: 'no-cors',
             body: JSON.stringify({
                 username: username,
@@ -34,7 +34,7 @@ export default class Request {
     }
 
     static signup(username, email, password) {
-        return this.requestPOST('signup', {
+        return this.requestPOST(urls.signup, {
             mode: 'no-cors',
             body: JSON.stringify({
                 username: username,
@@ -45,24 +45,21 @@ export default class Request {
     }
 
     static logout() {
-        return this.requestPOST('logout', {
+        return this.requestPOST(urls.logout, {
             mode: 'no-cors',
         });
     }
 
     static profile() {
-        return this.requestGET('profile');
+        return this.requestGET(urls.profile);
     }
 
     static getUserProfile(username) {
-        return fetch(urls.userProfile.replace(':username', username), {
-            method: 'GET',
-            credentials: 'include',
-        })
+        return this.requestGET(urls.userProfile.replace(':username', username), {});
     }
 
     static updatePassword(oldPassword, newPassword) {
-        return this.requestPUT('updatePassword', {
+        return this.requestPUT(urls.updatePassword, {
             body: JSON.stringify({
                 oldpassword: oldPassword,
                 newpassword: newPassword,
@@ -71,7 +68,7 @@ export default class Request {
     }
 
     static updateProfile(username, email, name, surname, description) {
-        return this.requestPUT('updateProfile', {
+        return this.requestPUT(urls.updateProfile, {
             body: JSON.stringify({
                 username: username,
                 email: email,
@@ -83,17 +80,17 @@ export default class Request {
     }
 
     static updateAvatar(file) {
-        return this.requestPOST('avatar', {
+        return this.requestPOST(urls.avatar, {
             body: file
         });
     }
 
     static getAvatar(imgLink) {
-        return this.requestGET('avatar');
+        return this.requestGET(urls.avatar);
     }
 
-    static getPin() {
-        return this.requestGET('pins', {
+    static getPin(id) {
+        return this.requestGET(urls.pin.replace(':id', id), {
             mode: 'cors',
         });
     }
@@ -110,29 +107,35 @@ export default class Request {
     }
 
     static boardPost(title, content) {
-        return this.requestPOST('boardPost', {
+        return this.requestPOST(urls.boardPost, {
             body: JSON.stringify({
                 title: title,
                 content: content
             })
-        })
+        });
     }
 
     static board(id) {
-        return fetch(urls['board'].replace(':id', id), {
-            method: 'GET',
-            credentials: 'include'
+        return this.requestGET(urls.board.replace(':id', id), {});
+    }
+
+    static getPinComments(id) {
+        return this.requestGET(urls.pinComments.replace(':id', id), {});
+    }
+
+    static commentPost(data={}) {
+        return this.requestPOST(urls.pinCommentPost, {
+            body: JSON.stringify({
+                ...data
+            })
         });
     }
 
     static getAllPins() {
-        return this.requestGET('feed');
+        return this.requestGET(urls.feed);
     }
 
     static getUserPins(username) {
-        return fetch(urls['pins'].replace(':username', username), {
-            method: 'GET',
-            credentials: 'include'
-        });
+        return this.requestGET(urls.pins.replace(':username', username), {});
     }
 }
