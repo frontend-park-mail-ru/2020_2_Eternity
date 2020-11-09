@@ -4,6 +4,7 @@ import BaseComponent from "../BaseComponent.js";
 
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import ButtonLink from "../button/_button-link/button-link";
 
 
 class Navbar extends BaseComponent {
@@ -15,16 +16,6 @@ class Navbar extends BaseComponent {
     get logoutLink() {
         return document.getElementById('logout');
     }
-
-/*
-    static change = (navbar, data={}) => {
-        console.log('data:', data)
-        console.log('context before:', navbar.context)
-        navbar.context = data;
-        console.log(navbar);
-        console.log('context after:', navbar.context)
-    }
-*/
 
     change (data={}) {
         this.context = data;

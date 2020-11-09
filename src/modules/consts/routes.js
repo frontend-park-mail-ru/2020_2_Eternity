@@ -13,4 +13,5 @@ export const routes = {
     regPage: /^\/signup$/,
 
     chatPage: /^\/messages$/,
+    searchPage: /^\/search$/,
 };

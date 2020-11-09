@@ -14,3 +14,25 @@
 .btn__link_sub {
     background-color: #0cce6b;
 }
+
+.btn__link__common {
+    position: fixed;
+    display: flex;
+
+    margin: 15px 10px;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 25px;
+
+    background-color: #efefef;
+    font-weight: normal;
+}
+
+.btn__link__common:hover {
+    text-decoration: none;
+}
