@@ -128,4 +128,11 @@ export default class Request {
     static getAllPins() {
         return this.requestGET('feed');
     }
+
+    static getUserPins(username) {
+        return fetch(urls['pins'].replace(':username', username), {
+            method: 'GET',
+            credentials: 'include'
+        });
+    }
 }

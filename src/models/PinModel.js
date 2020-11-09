@@ -16,7 +16,7 @@ class PinModel {
     }
 
     getUserPins(data={}) {
-        return request.getPin().then((response) => {
+        return request.getUserPins(data.username).then((response) => {
             return response.json();
         })
     }

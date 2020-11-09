@@ -33,8 +33,21 @@
         <a href="/create-pin">Создать пин <i class="fas fa-plus"></i></a>
         <a href="/create-board">Создать доску <i class="fas fa-clipboard"></i></a>
     {{/if}}
-    <div class="profile-desk__grid">
+
+    <div class="profile-toggler">
+        {{{ toggle }}}
+    </div>
+
+    <div class="content-grid" id="pins">
         {{#each pins}}
+            <div class="content-grid__item">
+                {{{ this }}}
+            </div>
+        {{/each}}
+    </div>
+
+    <div class="profile-desk__grid" id="boards">
+        {{#each boards}}
             <a href="pin/{{ this.id }}" class="profile-desk__grid__card">
                 <img src="{{ this.imgSrc }}" alt="">
             </a>

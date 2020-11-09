@@ -112,3 +112,8 @@
 .profile__btn-edit > i {
   pointer-events: none;
 }
+
+.profile-toggler {
+  margin: auto 5px auto auto;
+  width: 250px;
+}

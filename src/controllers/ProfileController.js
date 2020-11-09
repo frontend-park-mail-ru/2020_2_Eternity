@@ -9,6 +9,7 @@ import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
 import Navbar from "../components/navbar/navbar.js";
+import PinModel from "../models/PinModel";
 
 export default class ProfileController extends BaseController {
     type;
@@ -23,13 +24,13 @@ export default class ProfileController extends BaseController {
         this.type = type;
     }
 
-    on(data={}) {
+    on(data = {}) {
         eventBus.on(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
         eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
 
-         (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
+        (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
             if (Navbar.context.isAuth) {
                 if (Navbar.context.username === response.username) {
                     response.edit = true;
@@ -46,8 +47,18 @@ export default class ProfileController extends BaseController {
             if (!response.avatar) {
                 response.avatar = '/img/default.svg'
             }
-            this.view.fillWith(response);
-            this.view.render();
+
+            if (this.type === 'view') {
+                PinModel.getUserPins(data).then((pinsResponse) => {
+                    this.view.fillWith({pins: pinsResponse});
+
+                    this.view.fillWith(response);
+                    this.view.render();
+                })
+            } else {
+                this.view.fillWith(response);
+                this.view.render();
+            }
         }).catch((error) => console.log(error));
         super.on();
     }
@@ -61,14 +72,14 @@ export default class ProfileController extends BaseController {
         super.off();
     }
 
-    onUserInfoUpdate(data={}) {
+    onUserInfoUpdate(data = {}) {
         UserModel.updateProfile(data).then((response) => {
             this.view.fillWith(response);
             console.log('profile updated: ', response.username);
         }).catch((error) => console.log(error));
     }
 
-    onUserAvatarUpdate(data={}) {
+    onUserAvatarUpdate(data = {}) {
         UserModel.updateAvatar(data['file']).then((response) => {
             // TODO: обновить аватар в шапке и вообще добавить его туда :D event bus emit
             this.view.context.avatar = URL.createObjectURL(data['localFile']);
@@ -76,13 +87,13 @@ export default class ProfileController extends BaseController {
         }).catch((error) => console.log(error));
     }
 
-    onUserPasswordUpdate(data={}) {
+    onUserPasswordUpdate(data = {}) {
         UserModel.updatePassword(data).then((response) => {
             console.log('password updated: ', response.username);
         }).catch((error) => console.log(error));
     }
 
-    onUpdateProfile(data={}) {
+    onUpdateProfile(data = {}) {
         data.event.preventDefault();
         if (data['file']) {
             eventBus.emit(Events.userAvatarUpdate, data);
