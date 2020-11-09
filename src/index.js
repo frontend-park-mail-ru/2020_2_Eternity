@@ -17,6 +17,14 @@ import SessionController from "./controllers/SessionController.js";
 
 const application = document.getElementById('app');
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(() => {
+            console.log('serviceWorker registered');
+        }).catch((error) => console.log(error));
+    })
+}
+
 export let router = new Router(application)
 router
     .add(routes.mainPage, new MainController)
