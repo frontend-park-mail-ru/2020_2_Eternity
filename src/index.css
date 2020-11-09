@@ -14,6 +14,8 @@
 @import "components/message/message.css";
 @import "components/comment/comment.css";
 @import "components/select/select.css";
+@import "components/button/_button-link/button-link.css";
+@import "components/input/search/search.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";
@@ -22,6 +24,7 @@
 @import "views/pin-creating/pin-creating.css";
 @import "views/pin/pin.css";
 @import "views/chat/chat.css";
+@import "views/search/search-view.css";
 
 @import "views/board/board.css";
 

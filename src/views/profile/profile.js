@@ -5,6 +5,7 @@ import BaseView from "../BaseView.js";
 import Avatar from "../../components/avatar/avatar.js";
 import Button from "../../components/button/button.js";
 import Navbar from "../../components/navbar/navbar.js";
+import ButtonLink from "../../components/button/_button-link/button-link.js";
 
 import Board from "../../components/board/board.js";
 
@@ -13,6 +14,8 @@ import Card from "../../components/card/card";
 import LabeledToggle from "../../components/toggle/_labeled-toggle/labeled-toggle";
 import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
+import {routes} from "../../modules/consts/routes";
+
 
 export default class ProfilePage extends BaseView {
     constructor(context = {}) {
@@ -27,6 +30,14 @@ export default class ProfilePage extends BaseView {
         const avatar = new Avatar({
             imgSrc: this.context.avatar,
         });
+        const btnLinkMessages = new ButtonLink({
+            href: '/messages',
+            text: 'Сообщение',
+        })
+        const btnLinkSub = new ButtonLink({
+            id: 'follow',
+            text: 'Подписаться',
+        })
 
         const toggle = new LabeledToggle({
             id: 'toggle',
@@ -52,7 +63,9 @@ export default class ProfilePage extends BaseView {
             toggle: toggle.render(),
             avatar: avatar.render(),
             boards: boards,
-            pins: pins
+            pins: pins,
+            btnLinkMessages: btnLinkMessages.render(),
+            btnLinkSub: btnLinkSub.render(),
         }
 
         this.fillWith(data);
@@ -78,5 +91,7 @@ export default class ProfilePage extends BaseView {
                 eventBus.emit(Events.follow, {event: event});
             })
         }
+
+        btnLinkSub.bind('btn__link_sub');
     }
 }
