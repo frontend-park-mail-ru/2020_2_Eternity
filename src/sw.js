@@ -1,7 +1,8 @@
 let CACHE_NAME = 'offline-fallback';
 let urlsToCache = [
     '/',
-    '/img',
+    '/static',
+    '/images'
 ]
 
 self.addEventListener('install', (event) => {
