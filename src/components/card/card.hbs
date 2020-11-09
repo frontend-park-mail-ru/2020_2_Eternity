@@ -8,5 +8,11 @@
                 <i class="far fa-calendar-alt"></i> <span>{{ pubDate }}</span>
             </span>
         </div>
+
+        {{#if onBoard}}
+            <div class="card__delete">
+                <button class="card__delete-button"><i class="far fa-trash-alt"></i></button>
+            </div>
+        {{/if }}
     </a>
 </div>

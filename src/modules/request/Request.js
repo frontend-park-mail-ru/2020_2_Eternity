@@ -142,4 +142,17 @@ export default class Request {
     static getUserBoards(username) {
         return this.requestGET(urls.boards.replace(':username', username), {});
     }
+
+    static attachPin(boardId, pinId) {
+        return this.requestPOST(urls.attachPin, {
+            body: JSON.stringify({
+                board_id: boardId,
+                pin_id: pinId
+            })
+        });
+    }
+
+    static getBoardPins(id) {
+        return this.requestGET(urls.boardPins.replace(':id', id), {});
+    }
 }

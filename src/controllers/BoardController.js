@@ -6,6 +6,8 @@ import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
 import BoardModel from "../models/BoardModel.js";
+import CommentModel from "../models/CommentModel";
+import PinModel from "../models/PinModel";
 
 
 export default class BoardController extends BaseController {
@@ -16,9 +18,21 @@ export default class BoardController extends BaseController {
     on(data={}) {
         BoardModel.getBoard(data).then((response) => {
             this.view.fillWith(response);
-            this.view.render();
+
+            PinModel.getBoardPins(data).then((pinsResponse) => {
+                this.view.fillWith({pins: pinsResponse});
+                this.view.render();
+            })
         }).catch((error) => console.log(error));
 
         super.on();
+    }
+
+    onPinAttach(data={}) {
+        CommentModel.createComment(data).then((response) => {
+            if (!response.error) {
+                this.view.addCommentToList(response);
+            }
+        })
     }
 }
