@@ -26,7 +26,6 @@ class Navbar extends BaseComponent {
 
         this.context.notification = this.notification.render();
 
-
         let navbar = document.getElementById('navbar');
         navbar.innerHTML = this.render();
 
