@@ -30,6 +30,7 @@ export default class ProfileController extends BaseController {
         eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
+        eventBus.on(Events.follow, this.onFollow.bind(this));
 
         (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
             if (Navbar.context.isAuth) {
@@ -72,6 +73,7 @@ export default class ProfileController extends BaseController {
         eventBus.off(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.off(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.off(Events.profileUpdate, this.onUpdateProfile.bind(this));
+        eventBus.off(Events.follow, this.onFollow.bind(this));
 
         super.off();
     }
@@ -109,5 +111,15 @@ export default class ProfileController extends BaseController {
         }
         // TODO: добавить eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldpassword, newpassword: data.newpassword})
         eventBus.emit(Events.userInfoUpdate, data);
+    }
+
+    onFollow(data = {}) {
+        data.event.preventDefault();
+        UserModel.followUser(this.view.context.username).then((response) => {
+            if (!response.error) {
+                this.view.context.followers++;
+                this.view.render();
+            }
+        }).catch((error) => console.log(error));
     }
 }

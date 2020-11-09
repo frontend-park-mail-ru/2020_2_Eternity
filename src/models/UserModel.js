@@ -42,7 +42,7 @@ class UserModel {
     getUserProfile(data={}) {
         return request.getUserProfile(data.username).then((response) => {
             return response.json();
-        })
+        });
     }
 
     updateProfile(data={}) {
@@ -64,6 +64,11 @@ class UserModel {
         })
     }
 
+    followUser(data = {}) {
+        return request.followUser(data).then((response) => {
+            return response.json();
+        });
+    }
 }
 
 export default new UserModel();
