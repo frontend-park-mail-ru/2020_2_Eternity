@@ -1,0 +1,18 @@
+.labeled-toggle {
+    display: grid;
+    grid-template-areas: ".     toggle"
+                         "small toggle";
+    margin: 20px 0;
+}
+
+.labeled-toggle .toggle {
+    margin-left: auto;
+}
+
+.labeled-toggle > p:last-child {
+    grid-area: small;
+
+    font-size: small;
+    color: #a3a5a7;
+    margin: 0;
+}

@@ -1,0 +1,39 @@
+.form__input {
+    margin: 0.5rem auto;
+    padding-left: 1rem;
+    box-sizing: border-box;
+
+    width: 100%;
+    min-height: 2.5rem;
+    border: none;
+    outline: none;
+    resize: none;
+
+    background-color: #efefef;
+    border-radius: 25px;
+
+    box-shadow: inset 5px 5px 6px rgba(214, 214, 214, 0.6),
+    inset -5px -5px 6px rgba(255, 255, 255, 0.8);
+
+    font-size: 1rem;
+}
+
+.form__input-label > textarea {
+    padding-top: 10px;
+}
+
+.form__input::placeholder {
+    color: #9f9f9f;
+}
+
+.form__input:focus {
+    box-shadow: inset 7px 7px 6px rgba(200, 200, 200, 0.6),
+                inset -7px -7px 6px rgba(255, 255, 255, 0.8);
+}
+
+.form__input-label {
+    display: inline;
+    margin-left: 5px;
+
+    color: #000000;
+}

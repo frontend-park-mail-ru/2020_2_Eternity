@@ -1,0 +1,58 @@
+{{{ navbar }}}
+
+<div class="profile-card">
+    <div class="profile-card__content">
+
+        <div class="profile-card__user-avatar">
+            {{#if edit}}
+                <a href="/profile/edit" class="profile__btn-edit"><i class="fas fa-pen"></i></a>
+            {{/if}}
+            {{{ avatar }}}
+        </div>
+
+        <div class="profile-card__user-info">
+            <ul>
+                <li>{{ name }} {{ surname }}</li>
+                <li>@{{ username }}</li>
+                <li>{{ description }}</li>
+                <li><a href="">{{ followers }} подписчиков</a> • <a href="">{{ following }} подписок</a></li>
+                {{#if show}}
+                    <li>
+                        {{{ btnLinkMessages }}}
+                        {{{ btnLinkSub }}}
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="profile-desk">
+    {{#if edit}}
+        <a href="/create-pin">Создать пин <i class="fas fa-plus"></i></a>
+        <a href="/create-board">Создать доску <i class="fas fa-clipboard"></i></a>
+    {{/if}}
+
+    <div class="profile-toggler">
+        {{{ toggle }}}
+    </div>
+
+    <div id="pins">
+        <div class="content-grid">
+            {{#each pins}}
+                <div class="content-grid__item">
+                    {{{ this }}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div id="boards">
+        <div class="profile-desk__grid">
+            {{#each boards}}
+                {{{ this }}}
+            {{/each}}
+        </div>
+    </div>
+</div>

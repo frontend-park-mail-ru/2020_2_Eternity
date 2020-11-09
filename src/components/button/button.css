@@ -1,0 +1,61 @@
+.btn {
+    border: 1px solid rgba(233, 236, 239, 0.1);
+    padding: .75rem 1.25rem;
+    margin: .1rem .4rem;
+    font-size: 0.875rem;
+    border-radius: 25px;
+    background: #efefef;
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8);
+    /*transition: all .3s ease-in-out;*/
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    cursor: pointer;
+    border-color: rgba(214, 214, 214, 0.6);
+}
+
+.btn:focus {
+    outline: none !important;
+}
+
+.btn:disabled {
+    background-color: rgb(233, 236, 239);
+    border-color: rgb(233, 236, 239);
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.btn:not(:disabled):active {
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8),
+    inset 0 3px 5px rgba(0, 0, 0, 0.125) !important;
+}
+
+.btn:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 7px;
+    /*background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);*/
+    content: '';
+    /*transition: all .3s ease-out;*/
+}
+
+.btn:active:after {
+    width: 100%;
+}
+
+.btn-round {
+    position: relative;
+    font-size: 1.3rem;
+    height: 42px;
+    width: 42px;
+    justify-content: center;
+    padding: 8px 0;
+    border-radius: 100%;
+}
