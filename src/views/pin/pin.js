@@ -57,7 +57,7 @@ export default class PinPage extends BaseView {
 
         const attachBtn = new Button({
             id: 'attachPin',
-            btnText: 'Добавить на доску',
+            btnText: '+',
             type: 'submit'
         });
 

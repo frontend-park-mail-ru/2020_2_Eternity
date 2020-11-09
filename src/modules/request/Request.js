@@ -155,4 +155,12 @@ export default class Request {
     static getBoardPins(id) {
         return this.requestGET(urls.boardPins.replace(':id', id), {});
     }
+
+    static followUser(username) {
+        return this.requestPOST(urls.follow, {
+            body: JSON.stringify({
+                username: username
+            })
+        });
+    }
 }

@@ -11,6 +11,8 @@ import Board from "../../components/board/board.js";
 import {fakeBoard} from "../../modules/consts/fake.js";
 import Card from "../../components/card/card";
 import LabeledToggle from "../../components/toggle/_labeled-toggle/labeled-toggle";
+import eventBus from "../../modules/tools/EventBus";
+import {Events} from "../../modules/consts/events";
 
 export default class ProfilePage extends BaseView {
     constructor(context = {}) {
@@ -69,6 +71,12 @@ export default class ProfilePage extends BaseView {
                     pins.style.display = 'block';
                 }
             });
+        }
+
+        if (document.getElementById('follow')) {
+            document.getElementById('follow').addEventListener('click', (event) => {
+                eventBus.emit(Events.follow, {event: event});
+            })
         }
     }
 }
