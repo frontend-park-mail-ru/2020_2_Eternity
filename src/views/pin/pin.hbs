@@ -28,19 +28,21 @@
                     {{{ btnAttach }}}
                 {{/if}}
 
-                <div class="pin__comment__add">
-                    {{{ input }}}
-                    {{{ btnComment }}}
-                </div>
+                {{#if auth}}
+                    <div class="pin__comment__add">
+                        {{{ input }}}
+                        {{{ btnComment }}}
+                    </div>
+                {{/if}}
 
             </section>
 
         </div>
 
-        {{#if commentList}}
+        {{#if commentListRendered}}
             <div class="pin__comments__list">
                 <ul class="pin__comments" id="commentList">
-                    {{#each commentList}}
+                    {{#each commentListRendered}}
                         <li>{{{ this }}}</li>
                     {{/each}}
                 </ul>
