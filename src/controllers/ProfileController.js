@@ -10,6 +10,7 @@ import {routes} from "../modules/consts/routes.js";
 
 import Navbar from "../components/navbar/navbar.js";
 import PinModel from "../models/PinModel";
+import BoardModel from "../models/BoardModel";
 
 export default class ProfileController extends BaseController {
     type;
@@ -48,15 +49,18 @@ export default class ProfileController extends BaseController {
                 response.avatar = '/img/default.svg'
             }
 
+            this.view.fillWith(response);
+
             if (this.type === 'view') {
                 PinModel.getUserPins(data).then((pinsResponse) => {
                     this.view.fillWith({pins: pinsResponse});
 
-                    this.view.fillWith(response);
-                    this.view.render();
-                })
+                    BoardModel.getUserBoards(data).then((boardsResponse) => {
+                        this.view.fillWith({boards: boardsResponse});
+                        this.view.render();
+                    });
+                });
             } else {
-                this.view.fillWith(response);
                 this.view.render();
             }
         }).catch((error) => console.log(error));

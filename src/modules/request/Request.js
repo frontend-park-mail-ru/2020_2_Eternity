@@ -96,7 +96,7 @@ export default class Request {
     }
 
     static pinPost(data) {
-        return this.requestPOST('pinPost', {
+        return this.requestPOST(urls.pinPost, {
             body: data,
             /*body: JSON.stringify({
                 title: title,
@@ -137,5 +137,9 @@ export default class Request {
 
     static getUserPins(username) {
         return this.requestGET(urls.pins.replace(':username', username), {});
+    }
+
+    static getUserBoards(username) {
+        return this.requestGET(urls.boards.replace(':username', username), {});
     }
 }

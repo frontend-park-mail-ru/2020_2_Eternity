@@ -15,6 +15,12 @@ class BoardModel {
             return response.json();
         })
     }
+
+    getUserBoards(data={}) {
+        return request.getUserBoards(data.username).then((response) => {
+            return response.json();
+        })
+    }
 }
 
 export default new BoardModel();
