@@ -39,7 +39,9 @@ export default class PinController extends BaseController {
 
     onPinComment(data={}) {
         CommentModel.createComment(data).then((response) => {
-            this.view.addCommentToList(response);
+            if (!response.error) {
+                this.view.addCommentToList(response);
+            }
         })
     }
 }

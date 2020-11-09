@@ -64,7 +64,13 @@ export default class PinPage extends BaseView {
     addCommentToList(data={}) {
         const newComment = new Comment(data);
         this.context.commentList.unshift(newComment.render());
-        document.getElementById('commentList').innerHTML = this.context.commentList;
+
+        let result = '';
+        this.context.commentList.forEach((elem) => {
+            result += elem;
+        })
+        document.getElementById('commentList').innerHTML = result;
+
         this.userComment.clear();
     }
 }
