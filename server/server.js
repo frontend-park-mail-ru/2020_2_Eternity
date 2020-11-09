@@ -17,6 +17,11 @@ console.log('Backend address is', apiUrl);
     }
 })();
 
+app.use('/sw.js', (req, res) => {
+    console.log(req.ip, 'sw request', req.url);
+    res.sendFile(path.resolve(`${__dirname}/../src/sw.js`));
+});
+
 app.use(express.static(`${__dirname}/../dist`));
 
 app.use('/api', (req, res, next) => {
