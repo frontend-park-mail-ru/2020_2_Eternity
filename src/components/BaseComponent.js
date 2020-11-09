@@ -14,4 +14,8 @@ export default class BaseComponent {
     get context() {
         return this.context;
     }
+
+    get element() {
+        return document.getElementById(this.context.id);
+    }
 }

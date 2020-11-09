@@ -1,0 +1,16 @@
+.btn__link {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+
+    background-color: #efefef;
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8);
+    transition: .5s all ease-in-out;
+
+    font-weight: normal;
+}
+
+.btn__link_sub {
+    background-color: #0cce6b;
+}
