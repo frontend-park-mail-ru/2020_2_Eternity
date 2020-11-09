@@ -18,6 +18,11 @@ const application = document.getElementById('app');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (let registration of registrations) {
+                registration.unregister();
+            }
+        });
         navigator.serviceWorker.register('./sw.js').then(() => {
             console.log('serviceWorker registered');
         }).catch((error) => console.log(error));
