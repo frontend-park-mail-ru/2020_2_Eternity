@@ -36,6 +36,12 @@ class PinModel {
             return response.json();
         })
     }
+
+    getBoardPins(data = {}) {
+        return request.getBoardPins(data.board).then((response) => {
+            return response.json();
+        });
+    }
 }
 
 export default new PinModel();

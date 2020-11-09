@@ -13,6 +13,7 @@ export const Events = {
     pinCreating: 'pinCreating',
     boardCreating: 'boardCreating',
     pinComment: 'pinComment',
+    pinAttach: 'pinAttach',
 
     navbarChanged: 'navbarChanged',
 }

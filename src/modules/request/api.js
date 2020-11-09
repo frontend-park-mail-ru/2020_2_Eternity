@@ -17,6 +17,9 @@ export const urls = {
 
     boardPost: `/${apiPath}/board`,
     board: `/${apiPath}/board/:id`,
+    boards: `/${apiPath}/boards/:username`,
+    attachPin: `/${apiPath}/attach`,
+    boardPins: `/${apiPath}/pins/board/:id`,
 
     pin: `/${apiPath}/user/pin/:id`,
     pinPost: `/${apiPath}/user/pin`,

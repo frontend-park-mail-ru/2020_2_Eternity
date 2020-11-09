@@ -30,10 +30,40 @@
     color: white;
     padding: 15px;
     width: 85%;
+}
 
+.card__delete {
+    position: absolute;
+    opacity: 0;
+    bottom: 0;
+    float: right;
+    transition: all .3s ease-in-out;
+    padding: 15px 0 15px 190px;
+    width: 85%;
+}
+
+.card__delete-button {
+    color: #ED213A;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.card__delete:focus {
+    outline: none !important;
+}
+
+.card__delete-button :hover {
+    transform: scale(1.2);
 }
 
 .card:hover .card__content {
+    opacity: 1;
+}
+
+.card:hover .card__delete {
     opacity: 1;
 }
 

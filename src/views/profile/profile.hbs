@@ -38,21 +38,21 @@
         {{{ toggle }}}
     </div>
 
-    <div class="content-grid" id="pins">
-        {{#each pins}}
-            <div class="content-grid__item">
-                {{{ this }}}
-            </div>
-        {{/each}}
+    <div id="pins">
+        <div class="content-grid">
+            {{#each pins}}
+                <div class="content-grid__item">
+                    {{{ this }}}
+                </div>
+            {{/each}}
+        </div>
     </div>
 
-    <div class="profile-desk__grid" id="boards">
-        {{#each boards}}
-            <a href="pin/{{ this.id }}" class="profile-desk__grid__card">
-                <img src="{{ this.imgSrc }}" alt="">
-            </a>
-        {{/each}}
+    <div id="boards">
+        <div class="profile-desk__grid">
+            {{#each boards}}
+                {{{ this }}}
+            {{/each}}
+        </div>
     </div>
 </div>
-
-{{{ board }}}

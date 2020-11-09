@@ -19,7 +19,8 @@ export default class ProfilePage extends BaseView {
     }
 
     render() {
-        let list = [];
+        let pins = [];
+        let boards = [];
 
         const avatar = new Avatar({
             imgSrc: this.context.avatar,
@@ -31,20 +32,25 @@ export default class ProfilePage extends BaseView {
             small: 'Переключить представление'
         });
 
-        const board = new Board({...fakeBoard});
-
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
                 const card = new Card(pin);
-                list.push(card.render());
+                pins.push(card.render());
+            });
+        }
+
+        if (this.context.boards) {
+            this.context.boards.forEach((board) => {
+                const card = new Board(board);
+                boards.push(card.render());
             });
         }
 
         const data = {
             toggle: toggle.render(),
             avatar: avatar.render(),
-            board: board.render(),
-            pins: list
+            boards: boards,
+            pins: pins
         }
 
         this.fillWith(data);
