@@ -16,6 +16,7 @@
 @import "components/select/select.css";
 @import "components/button/_button-link/button-link.css";
 @import "components/input/search/search.css";
+@import "components/notifications/notifications.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";
