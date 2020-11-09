@@ -18,7 +18,7 @@
 /*    outline: 0;*/
 /*}*/
 
-.gallery-card {
+.pin__card {
     display: grid;
     width: 60vw;
     height: 80vh;
@@ -32,13 +32,13 @@
     grid-template-areas: 'image info';
 }
 
-.gallery-image {
+.pin__card__image {
     position: relative;
     grid-area: image;
     overflow: hidden;
 }
 
-.gallery-image img {
+.pin__card__image img {
     position: relative;
     background-position: center;
     background-size: cover;
@@ -47,34 +47,34 @@
     width: 100%;
 }
 
-.gallery-info {
+.pin__info {
     grid-area: info;
     padding: 0 20px 20px 25px;
     text-align: left;
 }
 
-.gallery-title {
+.pin__info__title {
     margin-bottom: 10px;
 }
-.gallery-author {
+.pin__info__author {
     font-size: small;
 }
 
-.gallery-description {
+.pin__info__description {
     margin: 20px 0 15px;
     font-size: 15px;
 }
 
-.gallery-actions, .gallery-tags {
+.pin__info__actions, .pin__info__tags {
     margin-bottom: 15px;
 }
 
-.gallery-actions span {
+.pin__info__actions span {
     margin-right: 10px;
     font-size: 14px;
 }
 
-.gallery-tags a {
+.pin__info__tags a {
     margin: 0 2px;
     font-size: 14px;
     color: rgba(0, 0, 0, .8);
@@ -83,27 +83,18 @@
     border-radius: 3px;
 }
 
-.gallery-tags a:hover {
+.pin__info__tags a:hover {
     text-decoration: none;
     background-color: #ddd;
 }
 
-.comment-add {
+.pin__comment__add {
     display: block;
     margin-bottom: 20px;
-}
-
-.comment-add-user {
-    display: block;
-    border: 1px solid #ccc;
-    padding: 10px;
     width: calc(100% - 20px);
-    outline: 0;
-    background-color: #fafafa;
-    border-radius: 3px;
 }
 
-.gallery-comments {
+.pin__comments__list {
     width: 60vw;
     height: 55vh;
     margin: 25px auto;
@@ -119,24 +110,24 @@
     padding: 20px;
 }
 
-.gallery-comments::-webkit-scrollbar {
+.pin__comments__list::-webkit-scrollbar {
     width: 8px;
     background-color: #f1f1f1;
 }
-.gallery-comments::-webkit-scrollbar-track {
+.pin__comments__list::-webkit-scrollbar-track {
     box-shadow: inset 2px 2px 3px rgba(214, 214, 214, 0.6),
     inset -2px -2px 3px rgba(255, 255, 255, 0.8);
     border-radius: 10px;
 }
-.gallery-comments::-webkit-scrollbar-thumb {
+.pin__comments__list::-webkit-scrollbar-thumb {
     background: #dddddd;
     border-radius: 10px;
 }
-.gallery-comments::-webkit-scrollbar-thumb:hover {
+.pin__comments__list::-webkit-scrollbar-thumb:hover {
     background: #cbcbcb;
 }
 
-.gallery-comments-list {
+.pin__comments {
     list-style: none;
     padding-left: 0;
 }
