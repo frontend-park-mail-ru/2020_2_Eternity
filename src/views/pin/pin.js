@@ -8,6 +8,7 @@ import Comment from "../../components/comment/comment.js";
 
 import EventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Select from "../../components/select/select";
 
 export default class PinPage extends BaseView {
     userComment
@@ -39,15 +40,24 @@ export default class PinPage extends BaseView {
              comments.push(c.render());
         })
 
+        const select = new Select({
+            id: 'select',
+            placeholder: 'Доступные доски',
+            options: ['1', '2', '3', '1', '2', '3', '1', '2', '3'],
+        })
+
         const data = {
             ...this.context,
             input: this.userComment.render(),
             btnComment: this.btnComment.render(),
             commentList: comments,
+            select: select.render(),
         }
 
         this.fillWith(data);
         super.render();
+
+        select.bind();
 
         // TODO: где и как биндить по человечески?
         this.btnComment.element.addEventListener('click', () => {
