@@ -40,11 +40,24 @@ export default class PinPage extends BaseView {
              comments.push(c.render());
         })
 
+        let options = [];
+        if (this.context.options) {
+            this.context.options.forEach((option) => {
+                options.push({title: option.title, id: option.id});
+            });
+        }
+
         const select = new Select({
             id: 'select',
             placeholder: 'Доступные доски',
-            options: ['1', '2', '3', '1', '2', '3', '1', '2', '3'],
+            options: options,
         })
+
+        const attachBtn = new Button({
+            id: 'attachPin',
+            btnText: 'Добавить на доску',
+            type: 'submit'
+        });
 
         const data = {
             ...this.context,
@@ -52,14 +65,24 @@ export default class PinPage extends BaseView {
             btnComment: this.btnComment.render(),
             commentList: comments,
             select: select.render(),
+            btnAttach: attachBtn.render()
         }
 
         this.fillWith(data);
         super.render();
 
-        select.bind();
+        if (this.context.show) {
+            select.bind();
+
+            attachBtn.element.addEventListener('click', () => {
+                select.getSelectedValues().forEach((value) => {
+                    EventBus.emit(Events.pinAttach, {pin_id: this.context.id, board_id: value});
+                });
+            })
+        }
 
         // TODO: где и как биндить по человечески?
+
         this.btnComment.element.addEventListener('click', () => {
             const data = {
                 is_root: true,

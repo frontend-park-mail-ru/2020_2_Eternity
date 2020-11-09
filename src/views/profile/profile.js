@@ -56,16 +56,19 @@ export default class ProfilePage extends BaseView {
         this.fillWith(data);
         super.render()
 
-        document.getElementById('toggle').addEventListener('click', () => {
-            let boards = document.getElementById('boards');
-            let pins = document.getElementById('pins'); // TODO: Это очень не хорошо, но пока так
-            if (toggle.value) {
-                boards.style.display = 'block';
-                pins.style.display = 'none';
-            } else {
-                boards.style.display = 'none';
-                pins.style.display = 'block';
-            }
-        }).bind(this);
+        if (document.getElementById('toggle')) {
+            document.getElementById('toggle').addEventListener('click', () => {
+                let boards = document.getElementById('boards');
+                let pins = document.getElementById('pins'); // TODO: Это очень не хорошо, но пока так
+
+                if (toggle.value) {
+                    boards.style.display = 'block';
+                    pins.style.display = 'none';
+                } else {
+                    boards.style.display = 'none';
+                    pins.style.display = 'block';
+                }
+            });
+        }
     }
 }

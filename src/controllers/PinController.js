@@ -8,6 +8,8 @@ import {routes} from "../modules/consts/routes.js";
 import PinModel from "../models/PinModel.js";
 import CommentModel from "../models/CommentModel.js";
 import EventBus from "../modules/tools/EventBus";
+import UserModel from "../models/UserModel";
+import BoardModel from "../models/BoardModel";
 
 export default class PinController extends BaseController {
     constructor() {
@@ -27,6 +29,20 @@ export default class PinController extends BaseController {
                     }
                 });
 
+                this.view.context.show = false;
+
+                UserModel.getProfile().then((profileResponse) => {
+                    if (profileResponse) {
+                        BoardModel.getUserBoards(profileResponse).then((boardResponse) => {
+                            if (boardResponse) {
+                                this.view.context.show = true;
+                                this.view.fillWith({options: boardResponse});
+                                this.view.render();
+                            }
+                        });
+                    }
+                });
+
             } else {
                 eventBus.emit(Events.pathChanged, routes.mainPage);
             }
@@ -35,10 +51,19 @@ export default class PinController extends BaseController {
         super.on();
 
         eventBus.on(Events.pinComment, this.onPinComment.bind(this));
+        eventBus.on(Events.pinAttach, this.onPinAttach.bind(this));
     }
 
     onPinComment(data={}) {
         CommentModel.createComment(data).then((response) => {
+            if (!response.error) {
+                this.view.addCommentToList(response);
+            }
+        })
+    }
+
+    onPinAttach(data={}) {
+        BoardModel.attachPin(data).then((response) => {
             if (!response.error) {
                 this.view.addCommentToList(response);
             }

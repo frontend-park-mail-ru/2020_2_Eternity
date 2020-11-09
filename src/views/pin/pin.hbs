@@ -4,13 +4,13 @@
     <div class="container">
 
         <div class="pin__card">
-<!--            <button class="close"><i class="fa fa-times"></i></button>-->
+            <!--            <button class="close"><i class="fa fa-times"></i></button>-->
 
             <section class="pin__card__image"><img src="{{ img_link }}" alt=""></section>
             <section class="pin__info">
 
                 <h2 class="pin__info__title">{{ title }}</h2>
-                <span class="pin__info__author">Автор: <a href="" >{{ username }}</a></span>
+                <span class="pin__info__author">Автор: <a href="">{{ username }}</a></span>
 
                 <p class="pin__info__description">
                     {{ content }}
@@ -23,7 +23,10 @@
 
                 <hr>
 
-                {{{ select }}}
+                {{#if show}}
+                    {{{ select }}}
+                    {{{ btnAttach }}}
+                {{/if}}
 
                 <div class="pin__comment__add">
                     {{{ input }}}
