@@ -1,5 +1,7 @@
 <div class="navbar" id="navbar">
     <ul class="navbar__links">
+        <li>{{{ notification }}}</li>
+
         <li><a href="/">Главная</a></li>
         {{#if isAuth}}
             <li><a href="/@{{username}}">Профиль</a></li>

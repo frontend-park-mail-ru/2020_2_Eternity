@@ -14,6 +14,7 @@
 @import "components/message/message.css";
 @import "components/comment/comment.css";
 @import "components/select/select.css";
+@import "components/notifications/notifications.css";
 
 @import "views/profile/profile.css";
 @import "views/settings/settings.css";
