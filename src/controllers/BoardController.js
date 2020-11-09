@@ -27,12 +27,4 @@ export default class BoardController extends BaseController {
 
         super.on();
     }
-
-    onPinAttach(data={}) {
-        CommentModel.createComment(data).then((response) => {
-            if (!response.error) {
-                this.view.addCommentToList(response);
-            }
-        })
-    }
 }
