@@ -22,8 +22,33 @@ class SessionController extends BaseController {
     }
 
     on(data={}) {
-        eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
-        eventBus.on(Events.userLogout, this.onLogout.bind(this));
+        fetch('/api/notifications', {
+            method: 'GET',
+            credentials: 'include',
+            mode: 'cors',
+        }).then((response) => {
+            return response.json()
+        }).then((response) => {
+            //console.log(response);
+            console.log(response.length);
+            eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username, num: response.length});
+            eventBus.on(Events.userLogout, this.onLogout.bind(this));
+        })
+
+
+        let timerId = setInterval(() => {
+            fetch('/api/notifications', {
+                method: 'GET',
+                credentials: 'include',
+                mode: 'cors',
+            }).then((response) => {
+                return response.json()
+            }).then((response) => {
+                //console.log(response);
+                console.log(response.length);
+                eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username, num: response.length});
+            })
+        }, 10000);
     }
 
     off() {

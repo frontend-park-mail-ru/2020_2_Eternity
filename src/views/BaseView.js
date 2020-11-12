@@ -28,6 +28,14 @@ export default class BaseView {
         if (this.navbar.logoutLink) {
             this.navbar.logoutLink.addEventListener('click', Navbar.logoutClick);
         }
+
+        /*if (document.getElementById('showNotifs')) {
+            document.getElementById('showNotifs').addListener(() => {
+                for (let i = 0; i < 5; ++i) {
+                    console.log(i);
+                }
+            })
+        }*/
     }
 
     clear() {

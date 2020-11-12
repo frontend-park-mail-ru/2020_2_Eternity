@@ -3,8 +3,9 @@
     <a href="/search" class="btn__link__common"><i class="fas fa-search"></i></a>
 
     <ul class="navbar__links">
-        <li>{{{ notification }}}</li>
-
+        {{#if isAuth}}
+            <li><a href="" id="showNotifs"><i class="far fa-bell"> {{ num }}</i></a></li>
+        {{/if}}
         <li><a href="/">Главная</a></li>
         {{#if isAuth}}
             <li><a href="/@{{username}}">Профиль</a></li>
