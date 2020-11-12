@@ -14,8 +14,11 @@
 @import "components/message/message.css";
 @import "components/comment/comment.css";
 @import "components/select/select.css";
+<<<<<<< HEAD
 @import "components/button/_button-link/button-link.css";
 @import "components/input/search/search.css";
+=======
+>>>>>>> 98ac1357f524441a7ad558a9f24f7ed58ebeb038
 @import "components/notifications/notifications.css";
 
 @import "views/profile/profile.css";
