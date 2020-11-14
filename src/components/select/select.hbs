@@ -1,15 +1,26 @@
-<div class="select__container">
-    <div class="select__button" id="show">
-        <div class="select__button__label">Доступные доски</div>
-    </div>
+<!--<div class="select__container">-->
+<!--    <div class="select__button" id="show">-->
+<!--        <div class="select__button__label">Доступные доски</div>-->
+<!--    </div>-->
 
-    <div class="select__list no-display" id="list">
-        <ul id="{{id}}">
-            {{#each options}}
-                <li class="select__list__item">{{this.title}}</li>
-            {{/each}}
-        </ul>
-    </div>
+<!--    <div class="select__list no-display" id="list">-->
+<!--        <ul id="{{id}}">-->
+<!--            {{#each options}}-->
+<!--                <li class="select__list__item">{{this.title}}</li>-->
+<!--            {{/each}}-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="dropdown">
+    <a href="" class="pin__info__select btn__link__common" id="dropdown"><i class="fas fa-clipboard"></i></a>
+    <ul class="dropdown-el" id="dropdown-list">
+        {{#each options}}
+            <li class="select__list__item">
+                <label> <span>{{this.title}}</span> <input type="checkbox" value="{{this.id}}"> </label>
+            </li>
+        {{/each}}
+    </ul>
 </div>
 
 

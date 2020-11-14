@@ -1,11 +1,11 @@
 .navbar {
     position: fixed;
-    z-index: 999;
+    z-index: 50;
     top: 0;
     left: 0;
     color: white;
     width: 100%;
-    height: 70px;
+    height: 60px;
     background-color: #1A1A1A;
 }
 
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     padding: 0 40px;
-    height: 70px;
+    height: 60px;
 }
 
 .navbar__links a {

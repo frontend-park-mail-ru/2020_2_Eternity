@@ -2,6 +2,9 @@ import template from "./select.hbs"
 
 import BaseComponent from "../BaseComponent.js";
 
+import EventBus from "../../modules/tools/EventBus.js";
+import {Events} from "../../modules/consts/events.js";
+
 export default class Select extends BaseComponent {
     map;
 
@@ -12,15 +15,22 @@ export default class Select extends BaseComponent {
         this.context.options.forEach((value) => {
             this.map.set(value.title, value.id);
         });
+
+
     }
 
-    bind() {
-        document.getElementById('show').addEventListener('click', (event) => {
-            document.getElementById('list').classList.toggle('no-display');
+    bind(pinId) {
+        document.getElementById('dropdown').addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            document.querySelector('.dropdown-el').classList.toggle('expanded');
         })
 
-        document.getElementById(this.context.id).addEventListener('click', (event) => {
-            event.target.classList.toggle('checked');
+        document.getElementById('dropdown-list').addEventListener('click', (event) => {
+            if (!event.target.closest('li.select__list__item').classList.contains('checked')) {
+                event.target.closest('li.select__list__item').classList.add('checked');
+                EventBus.emit(Events.pinAttach, {pin_id: pinId, board_id: parseInt(event.target.value, 10)});
+            }
         })
     }
 

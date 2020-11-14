@@ -1,84 +1,84 @@
 export const fakePins = [
     {
         id: '1',
-        imgSrc: '/img/img5.jpg',
+        img_link: '/img/img5.jpg',
         pubDate: '13.09.2020'
     },
     {
         id: '2',
-        imgSrc: '/img/img6.jpg',
+        img_link: '/img/img6.jpg',
         pubDate: '01.09.2020'
     },
     {
         id: '3',
-        imgSrc: '/img/img7.jpg',
+        img_link: '/img/img7.jpg',
         pubDate: '02.10.2020'
     },
     {
         id: '4',
-        imgSrc: '/img/img8.jpg',
+        img_link: '/img/img8.jpg',
         pubDate: '29.09.2020'
     },
     {
         id: '5',
-        imgSrc: '/img/img9.jpg',
+        img_link: '/img/img9.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '6',
-        imgSrc: '/img/img10.jpg',
+        img_link: '/img/img10.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '7',
-        imgSrc: '/img/img11.jpg',
+        img_link: '/img/img11.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '8',
-        imgSrc: '/img/img12.jpg',
+        img_link: '/img/img12.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '9',
-        imgSrc: '/img/img13.jpg',
+        img_link: '/img/img13.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '10',
-        imgSrc: '/img/img14.jpg',
+        img_link: '/img/img14.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '11',
-        imgSrc: '/img/img15.jpg',
+        img_link: '/img/img15.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '12',
-        imgSrc: '/img/img1.jpg',
+        img_link: '/img/img1.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '13',
-        imgSrc: '/img/img2.jpg',
+        img_link: '/img/img2.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '14',
-        imgSrc: '/img/img3.jpg',
+        img_link: '/img/img3.jpg',
         pubDate: '30.09.2020'
     },
     {
         id: '15',
-        imgSrc: '/img/img4.jpg',
+        img_link: '/img/img4.jpg',
         pubDate: '30.09.2020'
     },
 ]
 
 
 export const fakePin = {
-    imgSrc: '/img/img13.jpg',
+    img_link: '/img/img13.jpg',
     title: '⊂(´• ω •`⊂)',
     avatar: '/img/img4.jpg',
     username: 'RUBY RHOAD',
@@ -102,19 +102,19 @@ export const fakeUser = {
     pins: [
         {
             id: '11',
-            imgSrc: '/img/img11.jpg'
+            img_link: '/img/img11.jpg'
         },
         {
             id: '7',
-            imgSrc: '/img/img7.jpg'
+            img_link: '/img/img7.jpg'
         },
         {
             id: '5',
-            imgSrc: '/img/img5.jpg'
+            img_link: '/img/img5.jpg'
         },
         {
             id: '10',
-            imgSrc: '/img/img10.jpg'
+            img_link: '/img/img10.jpg'
         },
     ]
 }
@@ -128,33 +128,33 @@ export const fakeBoard = {
     pins: [
         {
             id: '11',
-            imgSrc: '/img/img11.jpg'
+            img_link: '/img/img11.jpg'
         },
         {
             id: '7',
-            imgSrc: '/img/img7.jpg'
+            img_link: '/img/img7.jpg'
         },
         {
             id: '5',
-            imgSrc: '/img/img5.jpg'
+            img_link: '/img/img5.jpg'
         },
         {
             id: '10',
-            imgSrc: '/img/img10.jpg'
+            img_link: '/img/img10.jpg'
         },
     ],
     coverPins: [
         {
             id: '11',
-            imgSrc: '/img/img11.jpg'
+            img_link: '/img/img11.jpg'
         },
         {
             id: '7',
-            imgSrc: '/img/img7.jpg'
+            img_link: '/img/img7.jpg'
         },
         {
             id: '5',
-            imgSrc: '/img/img5.jpg'
+            img_link: '/img/img5.jpg'
         },
     ],
 }

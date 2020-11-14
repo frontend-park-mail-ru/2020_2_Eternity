@@ -1,43 +1,53 @@
 .wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
     text-align: center;
+    font-size: 0;
+}
+.wrapper::before {
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    content: '';
 }
 
 .container {
+    margin-top: 60px;
     display: inline-block;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: left;
 }
 
-/*.close {*/
-/*    background: none;*/
-/*    border: none;*/
-/*    color: #aaa;*/
-/*    font-size: 14px;*/
-/*    position: absolute;*/
-/*    top: 5px;*/
-/*    right: 10px;*/
-/*    cursor: pointer;*/
-/*    outline: 0;*/
-/*}*/
-
 .pin__card {
-    display: grid;
     width: 60vw;
-    height: 80vh;
-    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
-    -5px -5px 6px rgba(255, 255, 255, 0.8);
+    height: 85vh;
+
     position: relative;
+
     border-radius: 25px;
     overflow: hidden;
+    font-size: 16px;
 
-    grid-template-columns: 0.6fr 1fr;
-    grid-template-areas: 'image info';
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8);
+
+    display: grid;
+    grid-template-areas: 'image info'
+                         'image comments'
+                         'image actions';
+    grid-template-columns: .5fr .5fr;
+    grid-template-rows: min-content;
 }
 
 .pin__card__image {
-    position: relative;
     grid-area: image;
     overflow: hidden;
 }
-
 .pin__card__image img {
     position: relative;
     background-position: center;
@@ -47,87 +57,56 @@
     width: 100%;
 }
 
+
 .pin__info {
     grid-area: info;
-    padding: 0 20px 20px 25px;
-    text-align: left;
-}
 
+    padding: 0 20px 10px 20px;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: left;
+
+    border-bottom: #e0e0e0 1px solid;
+}
 .pin__info__title {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .pin__info__author {
     font-size: small;
 }
-
 .pin__info__description {
-    margin: 20px 0 15px;
-    font-size: 15px;
+    margin: 5px 0;
 }
 
-.pin__info__actions, .pin__info__tags {
-    margin-bottom: 15px;
-}
 
-.pin__info__actions span {
-    margin-right: 10px;
-    font-size: 14px;
+.pin__comments__wrap {
+    grid-area: comments;
+    margin-bottom: 70px;
+    overflow-y: auto;
 }
-
-.pin__info__tags a {
-    margin: 0 2px;
-    font-size: 14px;
-    color: rgba(0, 0, 0, .8);
-    background-color: #eee;
-    padding: 4px;
-    border-radius: 3px;
-}
-
-.pin__info__tags a:hover {
-    text-decoration: none;
-    background-color: #ddd;
-}
-
-.pin__comment__add {
-    display: block;
-    margin-bottom: 20px;
-    width: calc(100% - 20px);
-}
-
-.pin__comments__list {
-    width: 60vw;
-    height: 55vh;
-    margin: 25px auto;
+.pin__comments {
+    padding: 0 10px;
     text-align: start;
 
-    overflow-y: auto;
+    list-style: none;
+}
 
-    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
-                -5px -5px 6px rgba(255, 255, 255, 0.8);
-    border-radius: 25px;
+
+.pin__comment__add {
+    grid-area: actions;
+
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     box-sizing: border-box;
-    padding: 20px;
-}
+    height: 70px;
+    margin: 10px 0;
+    padding: 10px;
 
-.pin__comments__list::-webkit-scrollbar {
-    width: 8px;
-    background-color: #f1f1f1;
-}
-.pin__comments__list::-webkit-scrollbar-track {
-    box-shadow: inset 2px 2px 3px rgba(214, 214, 214, 0.6),
-    inset -2px -2px 3px rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-}
-.pin__comments__list::-webkit-scrollbar-thumb {
-    background: #dddddd;
-    border-radius: 10px;
-}
-.pin__comments__list::-webkit-scrollbar-thumb:hover {
-    background: #cbcbcb;
-}
-
-.pin__comments {
-    list-style: none;
-    padding-left: 0;
+    display: grid;
+    grid-template-areas: 'input btn';
+    grid-template-columns: .75fr .25fr;
 }

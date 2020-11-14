@@ -1,15 +1,24 @@
 .btn {
-    border: 1px solid rgba(233, 236, 239, 0.1);
-    padding: .75rem 1.25rem;
-    margin: .1rem .4rem;
-    font-size: 0.875rem;
-    border-radius: 25px;
-    background: #efefef;
-    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
-    -5px -5px 6px rgba(255, 255, 255, 0.8);
-    /*transition: all .3s ease-in-out;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
+
+    padding: .75rem 1.25rem;
+    margin: .1rem .4rem;
+    height: max-content;
+
+    font-size: 0.875rem;
+
+    border-radius: 25px;
+
+    background: #efefef;
+    border: 1px solid rgba(233, 236, 239, 0.1);
+    box-shadow: 5px 5px 6px rgba(214, 214, 214, 0.6),
+    -5px -5px 6px rgba(255, 255, 255, 0.8);
 }
 
 .btn:hover {

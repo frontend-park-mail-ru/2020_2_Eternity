@@ -18,6 +18,7 @@ export default class PinPage extends BaseView {
         super('Просмотр пина', context, null);
         this.template = template;
         this.context.commentList = [];
+        this.commentListRendered = [];
     }
 
     render() {
@@ -25,7 +26,8 @@ export default class PinPage extends BaseView {
             id: 'userComment',
             class: 'form__input',
             maxLength: 250,
-            rows: 3,
+            rows: 2,
+            placeholder: 'Ваш комментарий...'
         })
 
         this.btnComment = new Button({
@@ -74,13 +76,13 @@ export default class PinPage extends BaseView {
         super.render();
 
         if (this.context.show) {
-            select.bind();
+            select.bind(this.context.id);
 
-            attachBtn.element.addEventListener('click', () => {
-                select.getSelectedValues().forEach((value) => {
-                    EventBus.emit(Events.pinAttach, {pin_id: this.context.id, board_id: value});
-                });
-            })
+            // attachBtn.element.addEventListener('click', () => {
+            //     select.getSelectedValues().forEach((value) => {
+            //         EventBus.emit(Events.pinAttach, {pin_id: this.context.id, board_id: value});
+            //     });
+            // })
         }
 
         // TODO: где и как биндить по человечески?
@@ -100,7 +102,7 @@ export default class PinPage extends BaseView {
 
     addCommentToList(data = {}) {
         const newComment = new Comment(data);
-        this.context.commentListRendered.unshift(newComment.render());
+        this.context.commentListRendered.push(newComment.render());
 
         let result = '';
         this.context.commentListRendered.forEach((elem) => {
