@@ -24,7 +24,7 @@ export default class MainPage extends BaseView {
     render() {
         let list = [];
 
-        this.context.pins = fakePins;
+        // this.context.pins = fakePins;
 
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
