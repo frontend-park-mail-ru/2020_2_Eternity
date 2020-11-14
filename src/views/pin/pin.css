@@ -46,12 +46,12 @@
 
 .pin__card__image {
     grid-area: image;
+    height: inherit;
     overflow: hidden;
 }
 .pin__card__image img {
     position: relative;
-    background-position: center;
-    background-size: cover;
+    object-position: center;
     object-fit: cover;
     height: 100%;
     width: 100%;
