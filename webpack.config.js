@@ -28,26 +28,41 @@ module.exports = {
                 loader: "handlebars-loader",
                 exclude: /node_modules/,
             },
+            // {
+            //     test: /\.css$/,
+            //     // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+            //     use: [
+            //         'style-loader',
+            //         {
+            //             loader: 'css-loader',
+            //             options: {
+            //                 importLoaders: 1
+            //             }
+            //         },
+            //         'postcss-loader'
+            //     ],
+            //     exclude: /node_modules/,
+            // },
             {
-                test: /\.css$/,
-                // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+                test:/\.s[ac]ss$/,
                 use: [
                     'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1
-                        }
-                    },
-                    'postcss-loader'
-                ],
-                exclude: /node_modules/,
+                    'css-loader',
+                    'sass-loader',
+                ]
             },
             {
                 test: /\.(svg|png|jpe?g|)$/,
                 loader: "file-loader",
                 options: {
                     name: '../img/[name].[ext]',
+                },
+            },
+            {
+                test: /\.(ttf|woff|woff2)$/,
+                loader: "file-loader",
+                options: {
+                    name: '../fonts/[name].[ext]',
                 },
             },
         ]
@@ -58,11 +73,12 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {from: './public/static/img', to: 'img'},
+                {from: './public/static/fonts', to: 'fonts'},
             ]
         }),
-        new MiniCssExtractPlugin({
-            filename: 'index.css',
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: 'index.scss',
+        // }),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',

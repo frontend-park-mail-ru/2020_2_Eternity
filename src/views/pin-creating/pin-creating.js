@@ -3,13 +3,13 @@ import template from "./pin-creating.hbs"
 import BaseView from "../BaseView.js";
 
 import Input from "../../components/input/input.js";
-import Button from "../../components/button/button.js";
 import Textarea from "../../components/input/textarea/textarea.js";
 import PinUpload from "../../components/input/pin-upload/pin-upload.js";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import ImageUpload from "../../components/ImageUpload/ImageUpload";
 
 
 export default class PinCreating extends BaseView {
@@ -26,7 +26,7 @@ export default class PinCreating extends BaseView {
 
         let elements = [];
 
-        elements.push(new PinUpload());
+
         elements.push(new Input({
             label: fieldsLabels.title,
             type: 'text',
@@ -43,22 +43,16 @@ export default class PinCreating extends BaseView {
             id: 'description'
         }));
 
-        elements.push(new Button({
-            id: 'submit',
-            type: 'submit',
-            btnText: 'Создать'
-        }));
 
         const form = new FormGenerator('pin-creating', ...elements).createForm();
 
         const data = {
+            pinUpload: new ImageUpload({id: 'pinup'}).render(),
             form: form.render(),
         }
 
         this.fillWith(data);
         super.render()
-
-        elements[0].bindPreview();
 
         form.bind('submit', (event) => {
             let data = {};

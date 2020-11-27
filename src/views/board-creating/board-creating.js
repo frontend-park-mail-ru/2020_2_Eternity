@@ -3,9 +3,8 @@ import template from "./board-creating.hbs"
 import BaseView from "../BaseView.js";
 
 import Input from "../../components/input/input.js";
-import Button from "../../components/button/button.js";
 import Textarea from "../../components/input/textarea/textarea.js";
-import LabeledToggle from "../../components/toggle/_labeled-toggle/labeled-toggle.js";
+import LabeledToggle from "../../components/Toggle-NEEDRENAME/LabeledToggle/LabeledToggle.js";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
@@ -47,13 +46,9 @@ export default class BoardCreating extends BaseView {
             id: 'private',
         }));
 
-        elements.push(new Button({
-            id: 'submit',
-            type: 'submit',
-            btnText: 'Создать'
-        }));
 
-        const form = new FormGenerator('board-creating', ...elements).createForm();
+
+        const form = new FormGenerator('Board-creating', ...elements).createForm();
 
         const data = {
             form: form.render()

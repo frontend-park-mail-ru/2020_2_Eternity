@@ -15,7 +15,7 @@
 
 .profile-card__user-info {
   text-align: center;
-  line-height: .8rem;
+  line-height: 0.8rem;
 }
 
 .profile-card__user-info ul {
@@ -34,7 +34,6 @@
   font-weight: bold;
 }
 
-
 .profile-desk {
   height: 100%;
   padding: 1rem;
@@ -48,18 +47,10 @@
 .profile-desk__grid {
   max-width: 100%;
   display: grid;
-  grid-gap: 2em;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
   margin: 20px auto;
   padding: 1em;
-}
-
-.profile-desk__grid > * {
-  display: inline-block;
-  max-width: 300px;
-  max-height: 200px;
-  margin: 0 10px;
 }
 
 .profile-desk__grid__card {
@@ -67,10 +58,8 @@
   display: flex;
   margin: 0 auto;
   grid-gap: 1em;
-
   text-decoration: none;
-  background: rgba(255, 255, 255, 1);
-
+  background: white;
   border-radius: 25px;
   overflow: hidden;
   position: relative;
@@ -79,11 +68,9 @@
 .profile-desk__grid__card img {
   max-width: 100%;
   max-height: 100%;
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   object-fit: cover;
 }
 
@@ -117,3 +104,5 @@
   margin: auto 5px auto auto;
   width: 250px;
 }
+
+/*# sourceMappingURL=profile.css.map */

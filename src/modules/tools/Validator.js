@@ -14,7 +14,7 @@ class Validator {
     }
 
     checkEmpty = (value) => {
-        return (typeof value === 'undefined') ? this.errors.empty : null;
+        return (value === '') ? this.errors.empty : null;
     }
     checkAlphabetNum = (value) => {
         const ok = this.AlphaNumRegExp.test(value);

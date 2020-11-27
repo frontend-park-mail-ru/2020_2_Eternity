@@ -8,7 +8,8 @@ import Validator from "../../modules/tools/Validator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Input from "../../components/input/input";
-import Button from "../../components/button/button";
+import Button from "../../components/Button-NEEDRENAME/Button";
+
 
 /**
  * @class View, отвечающая за авторизацию
@@ -69,13 +70,13 @@ export default class AuthRegPage extends BaseView {
             elements.push(new Button({
                 id: 'submit',
                 type: 'submit',
-                btnText: 'Зарегистрироваться'
+                text: 'Зарегистрироваться'
             }));
         } else {
             elements.push(new Button({
                 id: 'submit',
                 type: 'submit',
-                btnText: 'Войти'
+                text: 'Войти'
             }));
         }
 

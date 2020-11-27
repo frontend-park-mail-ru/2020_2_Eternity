@@ -3,8 +3,7 @@ import template from "./pin.hbs";
 import BaseView from "../BaseView.js";
 
 import Textarea from "../../components/input/textarea/textarea.js";
-import Button from "../../components/button/button.js";
-import Comment from "../../components/comment/comment.js";
+import Comment from "../../components/Comment/Comment.js";
 
 import EventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
@@ -27,7 +26,7 @@ export default class PinPage extends BaseView {
             class: 'form__input',
             maxLength: 250,
             rows: 2,
-            placeholder: 'Ваш комментарий...'
+            placeholder: 'Добавить комментарий'
         })
 
         this.btnComment = new Button({
@@ -57,19 +56,12 @@ export default class PinPage extends BaseView {
             options: options,
         })
 
-        const attachBtn = new Button({
-            id: 'attachPin',
-            btnText: '+',
-            type: 'submit'
-        });
-
         const data = {
             ...this.context,
             input: this.userComment.render(),
             btnComment: this.btnComment.render(),
             commentListRendered: comments,
             select: select.render(),
-            btnAttach: attachBtn.render()
         }
 
         this.fillWith(data);
@@ -77,12 +69,6 @@ export default class PinPage extends BaseView {
 
         if (this.context.show) {
             select.bind(this.context.id);
-
-            // attachBtn.element.addEventListener('click', () => {
-            //     select.getSelectedValues().forEach((value) => {
-            //         EventBus.emit(Events.pinAttach, {pin_id: this.context.id, board_id: value});
-            //     });
-            // })
         }
 
         // TODO: где и как биндить по человечески?

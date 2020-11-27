@@ -2,20 +2,19 @@ import template from "./settings.hbs"
 
 import BaseView from "../BaseView.js";
 
-import Avatar from "../../components/avatar/avatar.js";
-import FileUpload from "../../components/input/file-upload/file-upload.js";
+import Avatar from "../../components/Avatar/Avatar.js";
+import FileUpload from "../../components/FileUpload/FileUpload.js";
 import Input from "../../components/input/input.js";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import Validator from "../../modules/tools/Validator.js"
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
-import Button from "../../components/button/button";
 import Textarea from "../../components/input/textarea/textarea";
 
 
 export default class SettingsPage extends BaseView {
-    #form;
+    form;
 
     constructor(context = {}) {
         super('Редактирование профиля', context, null);
@@ -38,12 +37,11 @@ export default class SettingsPage extends BaseView {
 
         elements.push(new Avatar({
             imgSrc: this.context.avatar,
-            id: 'avatar'
+            id: this.context.username,
         }));
 
         elements.push(new FileUpload({
             label: fieldsLabels.fileUpload,
-            id: 'file' // TODO: fix
         }));
 
         elements.push(new Input({
@@ -102,30 +100,25 @@ export default class SettingsPage extends BaseView {
             id: 'newPassword'
         }));
 
-        elements.push(new Button({
-            id: 'submit',
-            type: 'submit',
-            btnText: 'Сохранить'
-        }));
 
         // form.appendInput('password', 'form__input', 'Текущий пароль', '', '', 'oldpswd')
         // form.appendInput('password', 'form__input', 'Новый пароль', '', '', 'newpswd')
 
-        this.#form = new FormGenerator('settings', ...elements).createForm();
+        this.form = new FormGenerator('settings', ...elements).createForm();
 
         const data = {
-            form: this.#form.render()
+            form: this.form.render()
         }
 
         this.fillWith(data);
         super.render()
 
-        this.#form.bind('submit', (event) => {
+        this.form.bind('submit', (event) => {
             // TODO: Инпуты и информацию из них придется хранить отдельно;
             //       Вероятно, генератор форм не нужен;
 
             let values = {};
-            this.#form.elements.forEach((element) => {
+            this.form.elements.forEach((element) => {
                 if (element instanceof Input || element instanceof Textarea) {
                     values[element.context.id] = element.element.value;
                 }
@@ -141,36 +134,3 @@ export default class SettingsPage extends BaseView {
         })
     }
 }
-
-
-// resultForm.bind('submit', (event) =>{
-//     event.preventDefault();
-//
-//     let data = {};
-//     let OK = true;
-//     resultForm.inputs.forEach((input) => {
-//         input.resetError();
-//         let res = Validator.isValid(input.id, input.value)
-//         if (res !== undefined && !res.res) {
-//             input.addError(res.error)
-//             OK = false;
-//         }
-//     })
-//
-//     if (OK) {
-//         resultForm.inputs.forEach((input) => {
-//             data[input.id] = input.value;
-//         })
-//     }
-//
-//     data['file'] = document.getElementById('file').files[0]
-//     let formData = new FormData()
-//     formData.append('image', document.getElementById('file').files[0])
-//
-//     Request.updateAvatar(formData).then((response) => console.log(response.status))
-//
-//     console.log(data['name'], data['email'])
-//     Request.updateProfile(data['name'], data['email']).then((response) => console.log(response.status))
-//     //Request.updatePassword(data['oldpswd'], data['newpswd']).then((response) => console.log(response.status))
-//
-// });

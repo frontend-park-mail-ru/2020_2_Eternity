@@ -1,4 +1,4 @@
-import Navbar from "../components/navbar/navbar.js";
+import Navbar from "../components/Navbar-NEEDRENAME/Navbar.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -36,6 +36,15 @@ export default class BaseView {
                 }, 1000)
             })
         }
+
+        const burgerMenu = document.getElementById("burger");
+        const navbarMenu = document.getElementById("menu");
+        // Responsive Navbar Toggle
+        burgerMenu.addEventListener("click", function () {
+            navbarMenu.classList.toggle("active");
+            burgerMenu.classList.toggle("active");
+        });
+
     }
 
     clear() {

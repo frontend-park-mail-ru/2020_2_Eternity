@@ -3,10 +3,9 @@ import template from './search-view.hbs'
 import BaseView from "../BaseView.js";
 
 import Input from "../../components/input/input.js";
-import Card from "../../components/card/card.js";
+import Cardd from "../../components/card/cardd.js";
 
 import {fakePins} from "../../modules/consts/fake.js";
-import Button from "../../components/button/button";
 
 export default class SearchView extends BaseView {
     constructor(context = {}) {
@@ -17,7 +16,7 @@ export default class SearchView extends BaseView {
     render() {
         let list = [];
         fakePins.forEach((pin) => {
-            const card = new Card(pin);
+            const card = new Cardd(pin);
             list.push(card.render());
         });
         const input = new Input({
@@ -25,14 +24,10 @@ export default class SearchView extends BaseView {
             type: 'text',
             customClasses: 'form__input',
         })
-        const btn = new Button({
-            btnText: 'Искать',
-        })
 
         const data = {
             pins: list,
             input: input.render(),
-            btn: btn.render(),
         }
 
         this.fillWith(data);

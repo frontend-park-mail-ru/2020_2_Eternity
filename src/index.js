@@ -1,6 +1,6 @@
 'use strict'
 
-import './index.css'
+import './index.scss'
 
 import {routes} from "./modules/consts/routes.js"
 import Router from "./modules/route/Router.js";

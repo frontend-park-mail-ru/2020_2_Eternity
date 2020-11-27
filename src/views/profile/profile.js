@@ -2,16 +2,11 @@ import template from "./profile.hbs"
 
 import BaseView from "../BaseView.js";
 
-import Avatar from "../../components/avatar/avatar.js";
-import Button from "../../components/button/button.js";
-import Navbar from "../../components/navbar/navbar.js";
-import ButtonLink from "../../components/button/_button-link/button-link.js";
+import Avatar from "../../components/Avatar/Avatar.js";
+import Board from "../../components/Board/Board.js";
+import Cardd from "../../components/card/cardd";
+import LabeledToggle from "../../components/Toggle-NEEDRENAME/LabeledToggle/LabeledToggle";
 
-import Board from "../../components/board/board.js";
-
-import {fakeBoard} from "../../modules/consts/fake.js";
-import Card from "../../components/card/card";
-import LabeledToggle from "../../components/toggle/_labeled-toggle/labeled-toggle";
 import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 import {routes} from "../../modules/consts/routes";
@@ -29,15 +24,8 @@ export default class ProfilePage extends BaseView {
 
         const avatar = new Avatar({
             imgSrc: this.context.avatar,
+            id: this.context.username,
         });
-        const btnLinkMessages = new ButtonLink({
-            href: '/messages',
-            text: 'Сообщение',
-        })
-        const btnLinkSub = new ButtonLink({
-            id: 'follow',
-            text: 'Подписаться',
-        })
 
         const toggle = new LabeledToggle({
             id: 'toggle',
@@ -47,7 +35,7 @@ export default class ProfilePage extends BaseView {
 
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
-                const card = new Card(pin);
+                const card = new Cardd(pin);
                 pins.push(card.render());
             });
         }
@@ -64,8 +52,6 @@ export default class ProfilePage extends BaseView {
             avatar: avatar.render(),
             boards: boards,
             pins: pins,
-            btnLinkMessages: btnLinkMessages.render(),
-            btnLinkSub: btnLinkSub.render(),
         }
 
         this.fillWith(data);
@@ -92,6 +78,6 @@ export default class ProfilePage extends BaseView {
             })
         }
 
-        btnLinkSub.bind('btn__link_sub');
+
     }
 }

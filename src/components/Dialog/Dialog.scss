@@ -1,0 +1,50 @@
+.dialog {
+    display: grid;
+    grid-template-areas: "avatar content info";
+    align-items: center;
+    padding: 5px 10px;
+    margin: 10px auto;
+}
+.dialog_unread {
+    background-color: #f5f5f5;
+}
+.dialog__content {
+    grid-area: content;
+    overflow: hidden;
+    padding: 0 10px;
+}
+.dialog__content__user {
+    font-weight: bolder;
+}
+.dialog__content__text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dialog__info {
+    grid-area: info;
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    font-size: smaller;
+}
+.dialog__info__count {
+    position: absolute;
+    bottom: 0;
+
+    display: inline-block;
+    max-width: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    background-color: #0cce6b;
+    border-radius: 25px;
+    padding: 0 6px;
+    color: white;
+}

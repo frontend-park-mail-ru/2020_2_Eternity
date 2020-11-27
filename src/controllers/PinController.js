@@ -27,7 +27,7 @@ export default class PinController extends BaseController {
 
                 PinModel.getPinComments(data).then((commentsResponse) => {
                     if (commentsResponse) {
-                        this.view.fillWith({commentList: commentsResponse.reverse()});
+                        this.view.fillWith({commentList: commentsResponse});
                         this.view.render();
                     }
                 });

@@ -1,21 +1,17 @@
 {{{ navbar }}}
 
 <div class="chat">
-    {{{ sidebar }}}
+   {{{sidebar}}}
 
-    <div class="messages__content">
+    <div class="chat__window content__expand">
         <div></div>
 
-        <ul>
-            <li class="messages__wrap">{{{ cm }}}</li>
-            <li class="messages__wrap">{{{ cm }}}</li>
-            <li class="messages__wrap">{{{ cmme }}}</li>
-            <li class="messages__wrap">{{{ cm }}}</li>
-            <li class="messages__wrap">{{{ cmme }}}</li>
-            <li class="messages__wrap">{{{ cm }}}</li>
-            <li class="messages__wrap">{{{ cmme }}}</li>
+        <ul class="chat__window__messages">
+            {{#each messageList}}
+                <li class="chat__message__wrap {{#if received}}message__received{{/if}}">{{{this}}}</li>
+            {{/each}}
         </ul>
 
-        <div class="messages__content__footer">{{{ msgInput }}} {{{ btnSend }}}</div>
+        <div class="chat__window__footer">{{{ msgInput }}} {{{ btnSend }}}</div>
     </div>
 </div>

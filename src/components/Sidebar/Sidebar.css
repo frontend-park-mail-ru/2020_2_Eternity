@@ -1,0 +1,90 @@
+.sidebar {
+  width: 60px;
+  height: calc(100vh - 60px);
+  position: fixed;
+  left: 0;
+  top: 60px;
+  grid-area: sidebar;
+  background: #fff;
+  z-index: 999;
+  transition: 0.3s ease-in-out;
+}
+
+.sidebar__content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: inherit;
+}
+
+.sidebar__content::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar__list {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 75px;
+}
+
+.sidebar__list__item {
+  list-style: none;
+  position: relative;
+  width: 300px;
+  height: 75px;
+}
+
+.sidebar__list__item > a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  transition: 0.3s all ease-in-out;
+}
+
+.sidebar__list__item > a:hover {
+  text-decoration: none;
+}
+
+.sidebar__list__item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.sidebar__toggler__icon {
+  display: block;
+  width: 60px;
+  text-align: center;
+  color: #bdbdbd;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.expand {
+  width: 300px;
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
+
+.sidebar__toggler {
+  position: absolute;
+  width: 100%;
+  height: 75px;
+  justify-content: end;
+  align-items: center;
+  top: 0;
+  display: flex;
+  background-color: #fff;
+  z-index: 1;
+}
+
+/*# sourceMappingURL=Sidebar.css.map */

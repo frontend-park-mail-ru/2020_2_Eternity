@@ -37,7 +37,7 @@ export default class CreateController extends BaseController {
 
         BoardModel.createBoard(data).then((response) => {
             if (!response.error) {
-                console.log('new board!')
+                console.log('new Board!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
             }
         }).catch((error) => console.log(error))

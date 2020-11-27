@@ -1,0 +1,25 @@
+.notification {
+    position: relative;
+}
+.notification__bell {
+    color: white;
+}
+.notification__count {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+
+    display: inline-block;
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: white;
+    background-color: #0cce6b;
+    border-radius: 25px;
+    padding: 0 5px;
+    font-size: smaller;
+
+    transition: all .3s ease-in-out;
+}

@@ -1,7 +1,7 @@
 import template from "./board.hbs";
 
 import BaseView from "../BaseView.js";
-import Card from "../../components/card/card";
+import Cardd from "../../components/card/cardd";
 
 
 export default class BoardPage extends BaseView {
@@ -14,7 +14,7 @@ export default class BoardPage extends BaseView {
         let list = [];
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
-                const card = new Card(pin);
+                const card = new Cardd(pin);
                 list.push(card.render());
             });
         }

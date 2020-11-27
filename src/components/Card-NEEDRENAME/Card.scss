@@ -1,0 +1,61 @@
+.card__link {
+    display: inline-flex;
+}
+.card {
+    overflow: hidden;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
+
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    position: relative;
+
+    will-change: transform;
+    transition: all .3s ease-in-out;
+}
+.card:hover {
+    transform: scale(1.01);
+    box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, .2);
+}
+.card:hover .card__actions {
+    opacity: 1;
+}
+
+.card__img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 16px 19px;
+
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+
+.card__actions__like {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    background-color: transparent;
+
+    fill: #f1f1f1;
+    transition: all .3s ease-in-out;
+}
+.card__actions__like:hover, .card__actions__like__active {
+    fill: #d62829;
+    opacity: 1;
+}
+.card__actions__like:focus {
+    outline: none;
+}

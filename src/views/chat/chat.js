@@ -1,14 +1,14 @@
 import template from './chat.hbs'
 
 import BaseView from "../BaseView.js";
-import Sidebar from "../../components/sidebar/sidebar.js";
-import Avatar from "../../components/avatar/avatar.js";
-import Message from "../../components/message/message.js";
-import ChatMessage from "../../components/message/_chat-message/chat-message.js";
-import Input from "../../components/input/input.js";
-import Button from "../../components/button/button.js";
+import Sidebar from "../../components/Sidebar/Sidebar.js";
+import Avatar from "../../components/Avatar/Avatar.js";
+import Dialog from "../../components/Dialog/Dialog.js";
+import Message from "../../components/Dialog/Message/Message.js";
 
 
+import {fakeMessage} from "../../modules/consts/fake"
+import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
 
 export default class ChatPage extends BaseView {
     constructor(context = {}) {
@@ -19,30 +19,22 @@ export default class ChatPage extends BaseView {
 
     render() {
         const avatar = new Avatar({
+            img_link: '/img/img15.jpg',
             middle: true,
-            imgSrc: '/img/img15.jpg',
         })
-        const fakeMessage = {
-            username: 'example',
-            text: 'Hello! How are you? O you iz Anglii, of course, you have some tea',
-            time: '12:58',
-        }
-        const message = new Message({avatar: avatar.render(), ...fakeMessage});
 
-        const cm = new ChatMessage(fakeMessage);
-        const cmme = new ChatMessage({...fakeMessage, my: true});
+        const message = new Dialog({avatar: avatar.render(), ...fakeMessage});
+        const cm = new Message(fakeMessage);
+        const cmme = new Message({...fakeMessage, own: true});
 
         const sidebar = new Sidebar({
             id: 'sidebar',
-            messages: [message.render(), message.render(), message.render()],
+            messages: [message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render()],
         })
-        const msgInput = new Input({
+        const msgInput = new Textarea({
             id: 'msgInput',
-            customClasses: 'form__input'
-        })
-        const btnSend = new Button({
-            id: 'btnSend',
-            btnText: 'Отправить',
+            customInput: 'input-group__field_noresize',
+            label: 'Сообщение',
         })
 
         const data = {
@@ -50,11 +42,8 @@ export default class ChatPage extends BaseView {
             cm: cm.render(),
             cmme: cmme.render(),
             msgInput: msgInput.render(),
-            btnSend: btnSend.render(),
         }
         this.fillWith(data);
         super.render()
-
-        sidebar.bindToggler();
     }
 }

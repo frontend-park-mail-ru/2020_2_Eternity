@@ -7,7 +7,7 @@ export default class Popup extends BaseComponent {
     constructor(context={}) {
         super(template, context);
 
-        let defaultConfig = {
+        const defaultConfig = {
             withShadow: true,
 
             closeOnCloseBtn: true,
@@ -34,7 +34,7 @@ export default class Popup extends BaseComponent {
         this.scrollPosition = 0;
         this.checkOverlay = false;
 
-        this.startAnchor = null;
+        this.origin = null;
 
         this._focusElements = [
             'a[href]',
@@ -71,16 +71,16 @@ export default class Popup extends BaseComponent {
      *      - catchFocus - если true: переключать фокус на элементы внутри окна по Tab
      */
     startListeners() {
-        document.addEventListener("click", function (event) {
+        document.addEventListener('click', function (event) {
             if (this.settings.closeOnCloseBtn && event.target.closest('[data-close]')) {
                 this.close();
                 return;
             }
-            this.startAnchor = event.target.closest("[" + this.settings.linkAttributeName + "]");
-            if (this.startAnchor) {
+            this.origin = event.target.closest('[' + this.settings.linkAttributeName + ']');
+            if (this.origin) {
                 event.preventDefault();
                 // targetSelector - #id окна, который будет открываться
-                const targetSelector = this.startAnchor.getAttribute(this.settings.linkAttributeName);
+                const targetSelector = this.origin.getAttribute(this.settings.linkAttributeName);
                 this.open(targetSelector);
             }
         }.bind(this));
@@ -99,7 +99,7 @@ export default class Popup extends BaseComponent {
     /**
      * Event Listener для mouseclick
      * Проверяет клик (нажать/отпустить клавишу) по оверлею (wrap)
-     * Нужно, чтобы закрытие не срабатывало, когда нажали, например, на оврелей, а отпустили в модальном окне
+     * Нужно, чтобы закрытие не срабатывало, когда нажали, например, на оверлей, а отпустили в модальном окне
      */
     closeOnOverlayBind() {
         document.addEventListener('mousedown', (event) => {

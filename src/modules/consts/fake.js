@@ -158,3 +158,10 @@ export const fakeBoard = {
         },
     ],
 }
+
+
+export const fakeMessage = {
+    username: 'example',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum vulputate diam, ac ornare diam. Vestibulum sit amet porttitor magna, et auctor risus. Suspendisse in ultricies eros.',
+    time: '12:58',
+}

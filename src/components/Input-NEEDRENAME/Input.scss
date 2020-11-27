@@ -1,0 +1,69 @@
+.input-group {
+    position: relative;
+}
+.input-group__field {
+    min-height: 44px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    font-weight: 400;
+    font-size: 1rem;
+    resize: vertical;
+
+    transition: all .2s ease-in-out, height 0ms;
+}
+.input-group__field::-webkit-scrollbar {
+    display: none;
+}
+.input-group__field_noresize {
+    resize: none;
+}
+.input-group__field:focus {
+    outline: none;
+    border: 1px solid #0086e4;
+}
+.input-group__field:not(:placeholder-shown) + .input-group__label,
+.input-group__field:focus + .input-group__label {
+    color: #0086e4;
+    background-color: #ffffff;
+    padding: 0;
+    font-size: .9rem;
+    top: -5px;
+    left: 15px;
+    line-height: 10px;
+}
+.input-group__label {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    line-height: 40px;
+    color: #e0e0e0;
+    padding: 0 5px;
+    transition: all .2s ease-in-out;
+}
+.input-group__field:not(:placeholder-shown):not(:focus) + .input-group__label {
+    color: #e0e0e0;
+}
+
+.error {
+    color: #F8333C;
+    display: flex;
+    min-height: 20px;
+    font-size: .9rem;
+    padding-left: 15px;
+    align-items: center;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+.error_show {
+    opacity: 1;
+}
+.input-group__field_error {
+    border-color: #F8333C !important;
+}
+.input-group__field:not(:placeholder-shown) + .input-group__label_error,
+.input-group__field:focus + .input-group__label_error {
+    color: #F8333C !important;
+}
