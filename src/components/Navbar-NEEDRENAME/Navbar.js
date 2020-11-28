@@ -8,6 +8,8 @@ import NotificationBell from "../NotificationBell/NotificationBell";
 
 
 class Navbar extends BaseComponent {
+    burger
+    menu
     notificationBell
 
     constructor(context = {}) {
@@ -15,6 +17,24 @@ class Navbar extends BaseComponent {
         this.context.isAuthenticated = false;
         this.notificationBell = new NotificationBell({id: 'showNotifications'})
         this.context.notification = this.notificationBell.render();
+
+        document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
+    }
+
+    checkBurgerToggleClick(event) {
+        if (event.target.closest('#burger')) {
+            this.burger = event.target.closest('#burger');
+            this.menu = document.getElementById('menu');
+            return true;
+        }
+        return false;
+    }
+
+    changeMobileMenuViewBind(event) {
+        if (this.checkBurgerToggleClick(event)) {
+            this.menu.classList.toggle('active');
+            this.burger.classList.toggle('active');
+        }
     }
 
     get logoutLink() {
@@ -25,8 +45,10 @@ class Navbar extends BaseComponent {
         this.context = data;
         this.context.notification = this.notificationBell.render();
 
-        let navbar = document.getElementById('navbar');
-        navbar.innerHTML = this.render();
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            navbar.innerHTML = this.render();
+        }
 
         if (this.logoutLink) {
             this.logoutLink.addEventListener('click', this.logoutClick);

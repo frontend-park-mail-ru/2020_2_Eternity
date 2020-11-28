@@ -70,11 +70,12 @@ export default class Button extends BaseComponent {
         }
     }
 
-    bindClickButtonListener(callback) {
+    bindClickButtonListener(callback, idBinded) {
         document.addEventListener('click', (event) => {
             if (this.checkBtnClick(event)) {
-                event.preventDefault();
-                callback();
+                if (event.target.id === idBinded) {
+                    callback();
+                }
             }
         })
     }

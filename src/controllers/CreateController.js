@@ -1,6 +1,6 @@
 import BaseController from "./BaseController.js";
-import PinCreating from "../views/pin-creating/pin-creating.js";
-import BoardCreating from "../views/board-creating/board-creating.js";
+import PinCreate from "../views/PinCreate/PinCreate.js";
+import BoardCreate from "../views/BoardCreate/BoardCreate.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -13,10 +13,10 @@ import BoardModel from "../models/BoardModel.js";
 export default class CreateController extends BaseController {
     constructor(type) {
         if (type === 'pin') {
-            super(new PinCreating());
+            super(new PinCreate());
         }
         if (type === 'board') {
-            super(new BoardCreating());
+            super(new BoardCreate());
         }
     }
 

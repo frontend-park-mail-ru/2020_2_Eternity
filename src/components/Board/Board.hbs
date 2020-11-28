@@ -1,14 +1,12 @@
-<a href="/board/{{id}}">
-    <div class="board">
-        <section class="board__card">
-            {{#each coverPins}}
-                <img src="{{ this.imgSrc }}" alt="">
-            {{/each}}
-        </section>
-        <section>
-            <h2 class="board__title">{{ title }}</h2>
-            <p class="board__date">{{ date }}</p>
-        </section>
-    </div>
+<a href="/board/{{id}}" class="board">
+    <section class="board__card">
+        {{#each coverPins}}
+            <img src="{{ this.imgSrc }}" alt="">
+        {{/each}}
+    </section>
+    <section>
+        <h2 class="board__title">{{ title }}</h2>
+        <p class="board__date">{{ date }}</p>
+    </section>
 </a>
 

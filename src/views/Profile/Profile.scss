@@ -1,0 +1,188 @@
+@use "../layout/desk";
+
+@mixin largescreen {
+  @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
+}
+
+.profile {
+  &-card {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 12vh auto 20px;
+    border-radius: 12px;
+
+    &__user-avatar {
+      position: relative;
+      display: inline-block;
+    }
+
+    &__user-info {
+      text-align: center;
+      line-height: 1.5rem;
+      padding: 0;
+      margin: 15px auto;
+      list-style-type: none;
+
+      li:last-child {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+      }
+
+      li:first-child {
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+
+      .btn {
+        margin: 0 5px;
+      }
+    }
+  }
+
+  &__edit {
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  &-desk {
+    height: 100%;
+    padding: 1rem;
+    text-align: right;
+
+    &__create {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      background-color: white;
+      border-radius: 25px;
+      box-shadow: 0 3px 10px rgba(26, 26, 26, 0.08);
+      padding: 0 .5em;
+      margin-left: 1em;
+
+      &__linktext {
+        display: none;
+      }
+
+      a {
+        display: block;
+        line-height: 3em;
+        background-color: white;
+        box-sizing: border-box;
+        height: 3em;
+        padding: 0 1em;
+        border-radius: 25px;
+      }
+
+      @include largescreen {
+        justify-content: flex-end;
+        background-color: transparent;
+        box-shadow: none;
+
+        a:first-child {
+          margin-right: 20px;
+        }
+
+        &__linktext {
+          display: inline-flex;
+        }
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: center;
+
+    @include largescreen {
+      justify-content: space-between;
+    }
+  }
+
+  &-tabs {
+    height: 3rem;
+    width: 13rem;
+    margin: 1em 0;
+    background: #fff;
+    font-weight: 600;
+    border-radius: 25px;
+    box-shadow: 0 3px 10px rgba(26, 26, 26, 0.08);
+
+    ul {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      flex-grow: 1;
+      padding: 0;
+      justify-content: center;
+      position: relative;
+    }
+
+    label {
+      position: relative;
+      font-size: 0;
+      line-height: 1rem;
+      border-radius: 25px;
+      width: 1rem;
+      padding: 1rem;
+      transition: all .3s ease;
+      color: transparent;
+      text-align: center;
+      cursor: pointer;
+
+      svg {
+        position: absolute;
+        left: 1rem;
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+    }
+    input:checked + label {
+      background: rgba(26, 26, 26, .25);
+      font-size: 1rem;
+      width: 3rem;
+      color: black;
+      padding-inline-start: 3rem;
+      transition:
+              padding-inline-start .3s .25s linear,
+              width .3s .25s linear,
+              color .3s .5s linear,
+              font-size 0s linear,
+              background .3s linear;
+      svg {
+        //fill: ;
+      }
+    }
+    label:hover svg {
+      //fill: ;
+    }
+    input:focus + label {
+      outline: none;
+    }
+  }
+}

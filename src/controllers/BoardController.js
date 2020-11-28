@@ -1,5 +1,5 @@
 import BaseController from "./BaseController.js";
-import BoardPage from "../views/board/board.js";
+import BoardPage from "../views/Board/Board.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";

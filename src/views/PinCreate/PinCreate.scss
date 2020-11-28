@@ -1,0 +1,25 @@
+@use "../layout/layout";
+
+.upload {
+    .wrap {
+        flex-direction: column;
+        width: 100%;
+        margin: 5px;
+
+        &__left {
+            display: flex;
+            width: 100%;
+            height: 15rem;
+        }
+
+        @include layout.largescreen {
+            flex-direction: row;
+
+            &__left {
+                display: flex;
+                width: 45%;
+                height: 100%;
+            }
+        }
+    }
+}

@@ -38,7 +38,7 @@ export default class ImageUpload extends BaseComponent {
             customButton: 'btn_round btn_round_mini btn_red image-upload__reset',
             text: Icons.remove,
         })
-        this.reset.bindClickButtonListener(this.resetPreviewBind.bind(this));
+        this.reset.bindClickButtonListener(this.resetPreviewBind.bind(this), this.reset.context.id);
 
         this.context.img = this.img.render();
         this.context.input = this.inputField.render();
@@ -47,12 +47,14 @@ export default class ImageUpload extends BaseComponent {
     }
 
     resetPreviewBind() {
-        this.uploadArea.classList.remove('image-upload_error');
-        this.reset.hide();
-        this.img.clear();
-        this.inputField.clear();
-        this.labelIcon.innerHTML = Icons.upload;
-        this.labelText.innerHTML = 'Нажмите или перетащите файл для загрузки';
+        if (this.uploadArea) {
+            this.uploadArea.classList.remove('image-upload_error');
+            this.reset.hide();
+            this.img.clear();
+            this.inputField.clear();
+            this.labelIcon.innerHTML = Icons.upload;
+            this.labelText.innerHTML = 'Нажмите или перетащите файл для загрузки';
+        }
     }
 
 

@@ -15,24 +15,22 @@
 @import "components/Button-NEEDRENAME/Button.scss";
 @import "components/ImageUpload/ImageUpload.scss";
 @import "components/Checkbox/Checkbox.scss";
-
-/*@import "components/Navbar-NEEDRENAME/Navbar.css";
-/*@import "components/navbar/navbar.css";*/
 @import "components/Navbar-NEEDRENAME/Navbar.scss";
 
 
 @import "components/form/form.scss";
 
 
-@import "views/profile/profile.scss";
-@import "views/settings/settings.scss";
+@import "views/Profile/Profile";
+@import "views/Settings/Settings";
 @import "views/main/main.scss";
-@import "views/auth/auth.scss";
-@import "views/pin-creating/pin-creating.scss";
+@import "views/Auth/Auth";
+@import "views/PinCreate/PinCreate";
+@import "views/BoardCreate/BoardCreate";
 @import "views/pin/pin.scss";
 @import "views/chat/chat.scss";
 @import "views/search/search-view.scss";
-@import "views/board/board.scss";
+@import "views/Board/Board";
 
 @media (max-width: 575px) {
     html {

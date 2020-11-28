@@ -65,7 +65,7 @@ export default class Popup extends BaseComponent {
      *      - href[data-modal] - открытие модального окна по клику на ссылку с атрибутом data-modal
      *      - btn close - закрытие модального окна по нажатию Х в окне
      *
-     * согласно settings:
+     * согласно Settings:
      *      - closeOnOverlay - если true: закрывать окно по клику вне окна
      *      - closeOnEsc - если true: закрывать окно по Esc
      *      - catchFocus - если true: переключать фокус на элементы внутри окна по Tab

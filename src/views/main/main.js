@@ -61,7 +61,5 @@ export default class MainPage extends BaseView {
 
         this.fillWith(data);
         super.render()
-
-        EventBus.emit(Events.newNotifications, {num: 3})
     }
 }

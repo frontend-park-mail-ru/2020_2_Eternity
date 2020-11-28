@@ -1,0 +1,23 @@
+{{{navbar}}}
+
+<div class="layout__container">
+    <div class="wrap">
+        <div class="wrap__left">
+            <img src="/img/img11.jpg">
+        </div>
+
+        <div class="wrap__right">
+            <div class="wrap__right__title">
+                <h1 class="wrap__right__title__large">{{#if reg}}Регистрация{{else}}Вход{{/if}}</h1>
+                <p class="wrap__right__title__small">
+                    {{#if reg}}
+                        Уже зарегистрированы? <span><a href="/login">Войдите</a></span>
+                    {{else}}
+                        Нет аккаунта? <span><a href="/signup">Зарегистрируйтесь</a></span>
+                    {{/if}}
+                </p>
+            </div>
+            {{{form}}}
+        </div>
+    </div>
+</div>
