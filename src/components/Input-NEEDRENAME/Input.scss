@@ -24,6 +24,9 @@
     outline: none;
     border: 1px solid #0086e4;
 }
+.input-group__field:placeholder-shown {
+    text-overflow: ellipsis;
+}
 .input-group__field:not(:placeholder-shown) + .input-group__label,
 .input-group__field:focus + .input-group__label {
     color: #0086e4;

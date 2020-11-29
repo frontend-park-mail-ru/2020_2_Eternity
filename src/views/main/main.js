@@ -18,6 +18,7 @@ import {Events} from "../../modules/consts/events";
 import Button from "../../components/Button-NEEDRENAME/Button";
 import {Icons} from "../../modules/consts/icons";
 import Checkbox from "../../components/Checkbox/Checkbox";
+import Search from "../../components/Search/Search";
 
 
 export default class MainPage extends BaseView {
@@ -33,9 +34,8 @@ export default class MainPage extends BaseView {
             content: 'hello, its me',
         });
         this.card = new Card();
-        this.test = new Dropdown({
-            id: 'dropdown1',
-            title: 'fsdsfsdfsd'
+        this.test = new Search({
+            placeholder: '@пользователь или название'
         })
     }
 
