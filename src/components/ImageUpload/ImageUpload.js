@@ -86,7 +86,6 @@ export default class ImageUpload extends BaseComponent {
     }
 
     dragoverBind(event) {
-        console.log(event.target)
         if (this.checkTargetForDrag(event)) {
             this.uploadArea.classList.add('image-upload_dropping');
         }
