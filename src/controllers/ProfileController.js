@@ -8,7 +8,7 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
-import Navbar from "../components/Navbar-NEEDRENAME/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import PinModel from "../models/PinModel";
 import BoardModel from "../models/BoardModel";
 

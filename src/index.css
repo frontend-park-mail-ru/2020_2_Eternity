@@ -1118,6 +1118,7 @@
     border-bottom: none;
     border-right: none;
     border-left: none;
+    box-shadow: 0 7px 8px 0 rgba(26, 26, 26, 0.01);
     transform: translateY(52px);
   }
   .search__toggle:checked ~ .search__field .search__close {
@@ -2030,18 +2031,6 @@
 .chat__window__footer .input-group {
   width: 80%;
   margin-right: 5px;
-}
-
-.search__container {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 70px;
-}
-
-.search__container input {
-  width: 900px;
 }
 
 .desk__grid {

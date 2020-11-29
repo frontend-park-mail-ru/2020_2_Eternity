@@ -4,13 +4,13 @@ import BaseView from "../BaseView.js";
 
 import Avatar from "../../components/Avatar/Avatar.js";
 import Board from "../../components/Board/Board.js";
-import Card from "../../components/Card-NEEDRENAME/Card";
+import Card from "../../components/Card/Card";
+import Button from "../../components/Button/Button";
 
 import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 import {routes} from "../../modules/consts/routes";
 import {fakePins} from "../../modules/consts/fake";
-import Button from "../../components/Button-NEEDRENAME/Button";
 
 
 export default class ProfilePage extends BaseView {

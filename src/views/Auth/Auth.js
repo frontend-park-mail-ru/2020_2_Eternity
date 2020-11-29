@@ -2,8 +2,8 @@ import template from "./Auth.hbs"
 
 import BaseView from "../BaseView.js";
 
-import Input from "../../components/Input-NEEDRENAME/Input";
-import Button from "../../components/Button-NEEDRENAME/Button";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import Validator from "../../modules/tools/Validator.js";

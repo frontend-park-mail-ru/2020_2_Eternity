@@ -1,24 +1,23 @@
 @import "components/Avatar/Avatar.scss";
 @import "components/FileUpload/FileUpload.scss";
 @import "components/Popup/Popup.scss";
-@import "components/Input-NEEDRENAME/Input.scss";
-@import "components/Card-NEEDRENAME/Card.scss";
+@import "components/Input/Input.scss";
+@import "components/Card/Card.scss";
 @import "components/Board/Board.scss";
 @import "components/Dropdown/Dropdown.scss";
-@import "components/Toggle-NEEDRENAME/Toggle.scss";
-@import "components/Toggle-NEEDRENAME/LabeledToggle/LabeledToggle.scss";
+@import "components/Toggle/Toggle";
+@import "components/Toggle/LabeledToggle/LabeledToggle.scss";
 @import "components/NotificationBell/NotificationBell.scss";
 @import "components/Comment/Comment.scss";
 @import "components/Dialog/Dialog.scss";
 @import "components/Dialog/Message/Message.scss";
 @import "components/Sidebar/Sidebar.scss";
-@import "components/Button-NEEDRENAME/Button.scss";
+@import "components/Button/Button.scss";
 @import "components/ImageUpload/ImageUpload.scss";
 @import "components/Checkbox/Checkbox.scss";
-@import "components/Navbar-NEEDRENAME/Navbar.scss";
+@import "components/Navbar/Navbar.scss";
 @import "components/Search/Search.scss";
 @import "components/Userbar/Userbar.scss";
-
 @import "components/form/form.scss";
 
 @import "views/Profile/Profile";
@@ -29,7 +28,6 @@
 @import "views/BoardCreate/BoardCreate";
 @import "views/Pin/Pin";
 @import "views/Chat/Chat";
-@import "views/search/search-view.scss";
 @import "views/Board/Board";
 
 @media (max-width: 575px) {

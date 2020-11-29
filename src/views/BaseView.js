@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar-NEEDRENAME/Navbar.js";
+import Navbar from "../components/Navbar/Navbar.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";

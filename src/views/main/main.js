@@ -2,24 +2,9 @@ import template from './main.hbs'
 
 import BaseView from "../BaseView.js";
 
-import Card from "../../components/Card-NEEDRENAME/Card.js";
-import Cardd from "../../components/card/cardd.js";
+import Card from "../../components/Card/Card.js";
 import Popup from "../../components/Popup/Popup.js";
 import {fakePins} from "../../modules/consts/fake.js";
-import FileUpload from "../../components/FileUpload/FileUpload.js";
-import Input from "../../components/Input-NEEDRENAME/Input.js";
-import Validator from "../../modules/tools/Validator";
-import Dropdown from "../../components/Dropdown/Dropdown";
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea.js";
-import Toggle from "../../components/Toggle-NEEDRENAME/Toggle";
-import LabeledToggle from "../../components/Toggle-NEEDRENAME/LabeledToggle/LabeledToggle";
-import EventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
-import Button from "../../components/Button-NEEDRENAME/Button";
-import {Icons} from "../../modules/consts/icons";
-import Checkbox from "../../components/Checkbox/Checkbox";
-import Search from "../../components/Search/Search";
-import Userbar from "../../components/Userbar/Userbar";
 
 
 export default class MainPage extends BaseView {
@@ -35,10 +20,6 @@ export default class MainPage extends BaseView {
             content: 'hello, its me',
         });
         this.card = new Card();
-        this.test = new Userbar({
-            username: 'adfkladkflajdslgkjasdg',
-            img_link: '/img/img3.jpg',
-        })
     }
 
 
@@ -57,8 +38,6 @@ export default class MainPage extends BaseView {
         const data = {
             pins: list,
             popup: this.popupPinView.render(),
-
-            test: this.test.render()
         }
 
         this.fillWith(data);

@@ -2,15 +2,14 @@ import template from "./PinCreate.hbs"
 
 import BaseView from "../BaseView.js";
 
-import Input from "../../components/Input-NEEDRENAME/Input";
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
+import Input from "../../components/Input/Input";
+import Textarea from "../../components/Textarea/Textarea";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
+import Button from "../../components/Button/Button";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
-import Button from "../../components/Button-NEEDRENAME/Button";
-
 
 
 export default class PinCreate extends BaseView {
