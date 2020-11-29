@@ -4,9 +4,8 @@
     }
 }
 @mixin breakpoints {
-    @media only screen and (max-device-width: 800px) and (max-width: 800px)
-                        and (min-device-width: 768px) and (min-width: 768px)
-                        and (max-device-width: 460px) and (max-width: 460px){
+    @media only screen and (max-device-width: 460px) and (max-width: 460px),
+    only screen  and (max-device-width: 880px) and (max-width: 880px) and (min-device-width: 768px) and (min-width: 768px) {
         @content;
     }
 }
@@ -45,6 +44,31 @@
 
                 &--submit {
                     display: flex;
+                }
+            }
+        }
+
+        @include breakpoints {
+            ~ .search__field {
+                position: fixed;
+                background-color: white;
+                left: 0;
+                margin: 0;
+                height: 50px;
+                width: 100%;
+                border-radius: 0;
+                border-bottom: none;
+                border-right: none;
+                border-left: none;
+
+                transform: translateY(52px);
+
+                .search__close {
+                    left: 10px;
+                    z-index: 1;
+                }
+                .search__input {
+                    padding: 5px 15px 5px 40px;
                 }
             }
         }

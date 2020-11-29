@@ -19,6 +19,7 @@ import Button from "../../components/Button-NEEDRENAME/Button";
 import {Icons} from "../../modules/consts/icons";
 import Checkbox from "../../components/Checkbox/Checkbox";
 import Search from "../../components/Search/Search";
+import Userbar from "../../components/Userbar/Userbar";
 
 
 export default class MainPage extends BaseView {
@@ -34,8 +35,9 @@ export default class MainPage extends BaseView {
             content: 'hello, its me',
         });
         this.card = new Card();
-        this.test = new Search({
-            placeholder: '@пользователь или название'
+        this.test = new Userbar({
+            username: 'adfkladkflajdslgkjasdg',
+            img_link: '/img/img3.jpg',
         })
     }
 
