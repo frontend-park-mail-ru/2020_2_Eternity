@@ -1,3 +1,9 @@
+@mixin largescreen {
+    @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+        @content;
+    }
+}
+
 .chat {
     display: flex;
     height: calc(100vh - 80px);
@@ -12,7 +18,9 @@
     transition: all .3s ease-in-out;
 }
 .content__expand {
-    padding-left: 300px;
+    @include largescreen {
+        padding-left: 300px;
+    }
 }
 
 .chat__window__messages {
@@ -21,9 +29,9 @@
     flex: 1 1 auto;
 
     overflow-y: auto;
-    height: calc(100% - 80px);
+    height: calc(100% - 120px);
     list-style: none;
-    padding: 0 20px;
+    padding: 0 20px 20px;
     margin: 0;
 }
 .chat__window__messages::-webkit-scrollbar {
@@ -42,7 +50,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-    height: 60px;
+    box-sizing: border-box;
+    padding: 20px;
     width: 100%;
+    background-color: white;
+
+    .input-group {
+        width: 80%;
+        margin-right: 5px;
+    }
 }

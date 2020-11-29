@@ -40,6 +40,7 @@ export default class PinPage extends BaseView {
         })
         this.userComment = new Textarea({
             id: 'userComment',
+            customInput: 'input-group__field_noresize',
             maxLength: 250,
             rows: 2,
             label: 'Добавить комментарий'
@@ -90,9 +91,9 @@ export default class PinPage extends BaseView {
         this.fillWith(data);
         super.render();
 
-        if (this.context.show) {
-            select.bind(this.context.id);
-        }
+        // if (this.context.show) {
+        //     select.bind(this.context.id);
+        // }
 
         // TODO: где и как биндить по человечески?
         if (this.context.auth) {
