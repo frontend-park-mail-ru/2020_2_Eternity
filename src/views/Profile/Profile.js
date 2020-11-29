@@ -44,7 +44,9 @@ export default class ProfilePage extends BaseView {
         const btnEdit = new Button({
             id: 'edit',
             text: '<i class="fas fa-pen"></i>',
-            customButton: 'btn_round profile__edit'
+            customButton: 'btn_round profile__edit',
+            link: true,
+            href: '/profile/edit',
         })
         this.pinCard = new Card();
         this.boardCard = new Board();

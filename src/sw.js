@@ -1,7 +1,7 @@
 let CACHE_NAME = 'offline-fallback';
 let urlsToCache = [
     '/',
-    '/pin/'
+    '/Pin/'
 ]
 
 self.addEventListener('install', (event) => {

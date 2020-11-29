@@ -33,9 +33,9 @@ export default class MainPage extends BaseView {
             content: 'hello, its me',
         });
         this.card = new Card();
-        this.test = new Checkbox({
-            id: 'chec',
-            text: 'fsdsfsdfsd'
+        this.test = new Dropdown({
+            id: 'dropdown1',
+            title: 'fsdsfsdfsd'
         })
     }
 

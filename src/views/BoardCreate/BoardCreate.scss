@@ -1,7 +1,9 @@
-@use "../layout/layout";
+@use "../layoutPresets/layout";
 
 .board-creation {
   .wrap {
+    max-width: 600px;
+    min-height: 430px;
 
     &__right {
       width: 100%;

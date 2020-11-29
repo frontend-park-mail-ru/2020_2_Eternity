@@ -18,7 +18,7 @@ export default class PinUpload extends BaseComponent {
     render() {
         this.img = new Image({
             id: 'preview',
-            class: 'pin-creation__img',
+            class: 'Pin-creation__img',
         });
         this.input = new Input({
             type: 'file',

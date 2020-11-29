@@ -55,7 +55,7 @@ export default class CreateController extends BaseController {
 
         PinModel.createPin(formData).then((response) => {
             if (!response.error) {
-                console.log('new pin!')
+                console.log('new Pin!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
             }
         }).catch((error) => console.log(error))
