@@ -230,9 +230,12 @@ export default class Router {
      */
     navigateTo(path = '', state = null) {
         // TODO: обновление контента страницы по запросу на эту же страницу?
-        if (path === this.getFragment()) {
+
+        // TODO: Надо будет вернуть этот кусок кода, поняв как определять параметры страницы
+        /*if (path === this.getFragment()) {
+            // console.log(this.getFragment());
             return;
-        }
+        }*/
         window.history.pushState(state, '', this.root + this.clearSlashes(path));
         this.checkRoute();
         return this;

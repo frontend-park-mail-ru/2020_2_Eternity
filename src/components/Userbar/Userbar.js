@@ -6,9 +6,13 @@ import Avatar from "../Avatar/Avatar";
 export default class Userbar extends BaseComponent {
     avatar
 
-     constructor(context = {}) {
+    constructor(context = {}) {
         super(template, context);
-        this.avatar = new Avatar({img_link: context.img_link, middle: true});
+
+        this.avatar = new Avatar({
+            img_link: context.avatar ? context.avatar : '/img/default.svg',
+            middle: true
+        });
     }
 
     render() {

@@ -48,6 +48,20 @@ class PinModel {
             return response.json();
         })
     }
+
+    getAllSearchData(data = {}) {
+        return request.getSearchData(data.type, data.content).then((response) => {
+            return response.json();
+        })
+    }
+
+    getNextSearchData(data = {}) {
+        return request.getSearchData(data.type, data.content, data.lastPin).then((response) => {
+            return response.json();
+        })
+    }
 }
+
+
 
 export default new PinModel();

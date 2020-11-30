@@ -22,5 +22,7 @@ export const Events = {
     newNotifications: 'newNotifications',
     clearNotifications: 'clearNotifications',
 
-    feedNext: 'feedNext'
+    feedNext: 'feedNext',
+
+    search: 'search'
 }

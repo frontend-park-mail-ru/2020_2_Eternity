@@ -13,6 +13,7 @@ export const urls = {
     userProfile: `/${apiPath}/userpage/:username`,
 
     feed: `/${apiPath}/feed:option`,
+    search: `/${apiPath}/search?type=:type&content=:content:last`,
     pins: `/${apiPath}/user/pins/:username`,
 
     boardPost: `/${apiPath}/board`,

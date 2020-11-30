@@ -35,6 +35,14 @@ export default class BaseView {
                 }, 1000)
             })
         }
+
+        if (document.getElementById('search')) {
+            document.getElementById('search').addEventListener('click', (event) => {
+                event.preventDefault();
+
+                eventBus.emit(Events.search, {request: this.navbar.search.value});
+            });
+        }
     }
 
     clear() {

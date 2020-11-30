@@ -17,6 +17,8 @@ import Checkbox from "../../components/Checkbox/Checkbox";
 import eventBus from "../../modules/tools/EventBus";
 import Search from "../../components/Search/Search";
 
+import Userbar from "../../components/Userbar/Userbar";
+
 
 export default class MainPage extends BaseView {
     popupPinView
@@ -25,6 +27,7 @@ export default class MainPage extends BaseView {
     list = []
     listenerMutex
     fillingMutex
+    users = []
 
     constructor(context = {}) {
         super('Главная', context, null);
@@ -61,6 +64,14 @@ export default class MainPage extends BaseView {
     }
 
     render() {
+        if (this.context.protoUsers) {
+            this.context.protoUsers.forEach((user) => {
+               this.users.push(new Userbar(user).render());
+            });
+
+            this.context.protoUsers = [];   
+        }
+
         if (this.context.protoPins) {
             this.context.protoPins.forEach((pin) => {
                 let card = new Card(pin);
@@ -76,6 +87,7 @@ export default class MainPage extends BaseView {
         const data = {
             pins: this.list,
             popup: this.popupPinView.render(),
+            users: this.users,
 
             test: this.test.render()
         }
@@ -105,6 +117,7 @@ export default class MainPage extends BaseView {
             this.listenerMutex = false;
 
             window.addEventListener('scroll', () => {
+                console.log('WORK');
                 this.fillEmptyPlace();
             });
         }

@@ -163,4 +163,11 @@ export default class Request {
             })
         });
     }
+
+    static getSearchData(type, content, lastPin = '') {
+        return this.requestGET(urls.search
+            .replace(':last', lastPin ? `&?last=${lastPin}` : '')
+            .replace(':type', type)
+            .replace(':content', content), {});
+    }
 }
