@@ -6,15 +6,11 @@ import Card from "../../components/Card/Card.js";
 import Popup from "../../components/Popup/Popup.js";
 import {fakePins} from "../../modules/consts/fake.js";
 import FileUpload from "../../components/FileUpload/FileUpload.js";
-import Input from "../../components/Input-NEEDRENAME/Input.js";
 import Validator from "../../modules/tools/Validator";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea.js";
-import Toggle from "../../components/Toggle-NEEDRENAME/Toggle";
-import LabeledToggle from "../../components/Toggle-NEEDRENAME/LabeledToggle/LabeledToggle";
+
 import EventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
-import Button from "../../components/Button-NEEDRENAME/Button";
 import {Icons} from "../../modules/consts/icons";
 import Checkbox from "../../components/Checkbox/Checkbox";
 
@@ -98,8 +94,10 @@ export default class MainPage extends BaseView {
                     pin.setAttribute('style', `min-height: ${height}`);
                 }
             }, 10);
-            pin.onload = () => {
-                pin.style.removeProperty('min-height')
+            if (pin) {
+                pin.onload = () => {
+                    pin.style.removeProperty('min-height')
+                }
             }
         });
 
