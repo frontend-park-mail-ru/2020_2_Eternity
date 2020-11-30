@@ -10,7 +10,7 @@ import CommentModel from "../models/CommentModel.js";
 import EventBus from "../modules/tools/EventBus";
 import UserModel from "../models/UserModel";
 import BoardModel from "../models/BoardModel";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../components/Navbar/Navbar";
 
 export default class PinController extends BaseController {
     constructor() {

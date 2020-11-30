@@ -4,9 +4,9 @@ import BaseView from "../BaseView.js";
 
 import Avatar from "../../components/Avatar/Avatar.js";
 import FileUpload from "../../components/FileUpload/FileUpload.js";
-import Input from "../../components/Input-NEEDRENAME/Input";
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
-import Button from "../../components/Button-NEEDRENAME/Button";
+import Input from "../../components/Input/Input";
+import Textarea from "../../components/Textarea/Textarea";
+import Button from "../../components/Button/Button";
 
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import Validator from "../../modules/tools/Validator.js"

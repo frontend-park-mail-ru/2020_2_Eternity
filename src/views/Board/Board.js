@@ -1,7 +1,7 @@
 import template from "./Board.hbs";
 
 import BaseView from "../BaseView.js";
-import Card from "../../components/Card-NEEDRENAME/Card";
+import Card from "../../components/Card/Card";
 
 
 export default class BoardPage extends BaseView {

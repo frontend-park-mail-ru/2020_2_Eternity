@@ -5,11 +5,10 @@ import Sidebar from "../../components/Sidebar/Sidebar.js";
 import Avatar from "../../components/Avatar/Avatar.js";
 import Dialog from "../../components/Dialog/Dialog.js";
 import Message from "../../components/Dialog/Message/Message.js";
-
+import Textarea from "../../components/Textarea/Textarea";
+import Button from "../../components/Button/Button";
 
 import {fakeMessage} from "../../modules/consts/fake"
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
-import Button from "../../components/Button-NEEDRENAME/Button";
 import {Icons} from "../../modules/consts/icons";
 
 export default class ChatPage extends BaseView {

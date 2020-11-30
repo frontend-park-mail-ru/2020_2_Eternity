@@ -19,7 +19,7 @@ class Navbar extends BaseComponent {
         this.context.isAuthenticated = false;
         this.notificationBell = new NotificationBell({id: 'showNotifications'})
         this.context.notification = this.notificationBell.render();
-        this.search = new Search({placeholder: 'Введите @пользователя или название пина для поиска'});
+        this.search = new Search({id: 'searchForm', placeholder: 'Введите @пользователя или название пина для поиска'});
         this.context.search = this.search.render();
 
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));

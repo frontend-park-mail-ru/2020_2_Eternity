@@ -2,8 +2,7 @@ import template from './main.hbs'
 
 import BaseView from "../BaseView.js";
 
-import Card from "../../components/Card-NEEDRENAME/Card.js";
-import Cardd from "../../components/card/cardd.js";
+import Card from "../../components/Card/Card.js";
 import Popup from "../../components/Popup/Popup.js";
 import {fakePins} from "../../modules/consts/fake.js";
 import FileUpload from "../../components/FileUpload/FileUpload.js";

@@ -2,8 +2,8 @@ import template from "./Pin.hbs";
 
 import BaseView from "../BaseView.js";
 
-import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
-import Button from "../../components/Button-NEEDRENAME/Button";
+import Textarea from "../../components/Textarea/Textarea";
+import Button from "../../components/Button/Button";
 import Comment from "../../components/Comment/Comment";
 import Avatar from "../../components/Avatar/Avatar";
 import Dropdown from "../../components/Dropdown/Dropdown";
