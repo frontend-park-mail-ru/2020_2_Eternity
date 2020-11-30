@@ -1,0 +1,15 @@
+.desk__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-auto-rows: 20rem;
+  grid-gap: 2rem;
+  margin: 20px auto;
+  padding: 0;
+
+  li {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+  }
+}

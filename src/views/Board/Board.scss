@@ -1,0 +1,21 @@
+@use "../layoutPresets/desk";
+
+.board {
+    &__info {
+        max-width: 600px;
+        text-align: center;
+        margin: auto;
+        padding: 20px 0;
+
+        h2 {
+            margin: 0 0 10px;
+            color: black;
+        }
+        p {
+            margin: .5rem;
+        }
+    }
+    &__content {
+        text-align: right;
+    }
+}

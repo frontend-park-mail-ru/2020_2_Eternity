@@ -1,14 +1,14 @@
 import BaseController from "./BaseController.js";
 
 import UserModel from "../models/UserModel.js"
-import ProfilePage from "../views/profile/profile.js";
-import SettingsPage from "../views/settings/settings.js";
+import ProfilePage from "../views/Profile/Profile.js";
+import SettingsPage from "../views/Settings/Settings.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
-import Navbar from "../components/navbar/navbar.js";
+import Navbar from "../components/Navbar-NEEDRENAME/Navbar";
 import PinModel from "../models/PinModel";
 import BoardModel from "../models/BoardModel";
 
@@ -81,7 +81,7 @@ export default class ProfileController extends BaseController {
     onUserInfoUpdate(data = {}) {
         UserModel.updateProfile(data).then((response) => {
             this.view.fillWith(response);
-            console.log('profile updated: ', response.username);
+            console.log('Profile updated: ', response.username);
         }).catch((error) => console.log(error));
     }
 

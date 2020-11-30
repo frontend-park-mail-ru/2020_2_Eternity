@@ -1,0 +1,124 @@
+@use "../layoutPresets/layout";
+
+.pin {
+    &__board {
+        position: absolute;
+        top: .5em;
+        right: .5rem;
+    }
+
+    &__info {
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 1em;
+        border-bottom: 1px solid #d6d6d6;
+        &__title {
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        &__author {
+            display: inline-flex;
+            justify-content: flex-start;
+            align-items: center;
+            .avatar {
+                margin: 0 5px;
+            }
+        }
+    }
+
+    &__form {
+        position: absolute;
+        bottom: 0;
+
+        display: flex;
+        width: 100%;
+        min-height: 109px;
+        justify-content: center;
+        align-items: center;
+
+        .input-group {
+            box-sizing: border-box;
+            margin: 10px;
+            width: 85%;
+        }
+    }
+
+    &__comments {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: calc(85vh - 240px);
+        min-height: 160px;
+
+        padding: 0;
+        margin: -1px 0;
+        list-style: none;
+
+        overflow-y: auto;
+
+        &__empty {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 5em;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #bebebe;
+        }
+
+        @include layout.largescreen {
+            height: calc(100% - 240px);
+            min-height: calc(100% - 240px);
+            max-height: 400px;
+        }
+    }
+
+    .wrap {
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        margin: 5px;
+
+        &__left {
+            display: flex;
+            width: 100%;
+            height: 88vh;
+            border-radius: 25px;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        &__right {
+            position: relative;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0;
+            height: 85vh;
+            min-height: 400px;
+        }
+
+        @include layout.largescreen {
+            flex-direction: row;
+            max-width: 850px;
+
+            &__left {
+                display: flex;
+                width: 45%;
+                height: 100%;
+
+                img {
+                }
+            }
+            &__right {
+                height: 100%;
+            }
+        }
+    }
+}

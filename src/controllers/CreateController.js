@@ -1,6 +1,6 @@
 import BaseController from "./BaseController.js";
-import PinCreating from "../views/pin-creating/pin-creating.js";
-import BoardCreating from "../views/board-creating/board-creating.js";
+import PinCreate from "../views/PinCreate/PinCreate.js";
+import BoardCreate from "../views/BoardCreate/BoardCreate.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -13,10 +13,10 @@ import BoardModel from "../models/BoardModel.js";
 export default class CreateController extends BaseController {
     constructor(type) {
         if (type === 'pin') {
-            super(new PinCreating());
+            super(new PinCreate());
         }
         if (type === 'board') {
-            super(new BoardCreating());
+            super(new BoardCreate());
         }
     }
 
@@ -37,7 +37,7 @@ export default class CreateController extends BaseController {
 
         BoardModel.createBoard(data).then((response) => {
             if (!response.error) {
-                console.log('new board!')
+                console.log('new Board!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
             }
         }).catch((error) => console.log(error))
@@ -55,7 +55,7 @@ export default class CreateController extends BaseController {
 
         PinModel.createPin(formData).then((response) => {
             if (!response.error) {
-                console.log('new pin!')
+                console.log('new Pin!')
                 eventBus.emit(Events.pathChanged, routes.profilePage);
             }
         }).catch((error) => console.log(error))

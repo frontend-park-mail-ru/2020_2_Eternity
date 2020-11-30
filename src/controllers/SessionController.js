@@ -6,7 +6,7 @@ import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
-import Navbar from "../components/navbar/navbar.js";
+import Navbar from "../components/Navbar-NEEDRENAME/Navbar";
 
 class SessionController extends BaseController {
     constructor() {

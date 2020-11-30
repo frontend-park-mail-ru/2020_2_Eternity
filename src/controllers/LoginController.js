@@ -1,7 +1,7 @@
 import BaseController from "./BaseController.js";
 
 import UserModel from "../models/UserModel.js"
-import AuthRegPage from "../views/auth/auth.js";
+import AuthRegPage from "../views/Auth/Auth.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";

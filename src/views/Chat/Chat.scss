@@ -1,0 +1,62 @@
+@mixin largescreen {
+    @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+        @content;
+    }
+}
+
+.chat {
+    display: flex;
+    height: calc(100vh - 80px);
+    position: relative;
+}
+.chat__window {
+    display: inline-block;
+    width: 100%;
+    padding-left: 60px;
+    overflow: hidden;
+
+    transition: all .3s ease-in-out;
+}
+.content__expand {
+    @include largescreen {
+        padding-left: 300px;
+    }
+}
+
+.chat__window__messages {
+    display: flex;
+    flex-direction: column-reverse;
+    flex: 1 1 auto;
+
+    overflow-y: auto;
+    height: calc(100% - 120px);
+    list-style: none;
+    padding: 0 20px 20px;
+    margin: 0;
+}
+.chat__window__messages::-webkit-scrollbar {
+    display: none;
+}
+.chat__message__wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-self: flex-end;
+}
+.message__received {
+    align-self: flex-start;
+}
+.chat__window__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 100%;
+    background-color: white;
+
+    .input-group {
+        width: 80%;
+        margin-right: 5px;
+    }
+}

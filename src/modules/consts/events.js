@@ -18,4 +18,9 @@ export const Events = {
     pinAttach: 'pinAttach',
 
     navbarChanged: 'navbarChanged',
+
+    newNotifications: 'newNotifications',
+    clearNotifications: 'clearNotifications',
+
+    feedNext: 'feedNext'
 }

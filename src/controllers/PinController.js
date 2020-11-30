@@ -1,5 +1,5 @@
 import BaseController from "./BaseController.js";
-import PinPage from "../views/pin/pin.js";
+import PinPage from "../views/Pin/Pin.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -27,7 +27,7 @@ export default class PinController extends BaseController {
 
                 PinModel.getPinComments(data).then((commentsResponse) => {
                     if (commentsResponse) {
-                        this.view.fillWith({commentList: commentsResponse.reverse()});
+                        this.view.fillWith({commentList: commentsResponse});
                         this.view.render();
                     }
                 });

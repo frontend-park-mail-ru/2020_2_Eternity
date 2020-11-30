@@ -1,7 +1,6 @@
 import template from "./input.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-import Error from "../error/error.js";
 
 export default class Input extends BaseComponent {
     err

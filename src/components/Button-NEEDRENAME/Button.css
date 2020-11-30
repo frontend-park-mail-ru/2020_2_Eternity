@@ -1,0 +1,113 @@
+.btn {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 1.5rem;
+  overflow: hidden;
+  color: #1A1A1A;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  border-radius: 25px;
+  transition: all 0.3s ease-out;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+  text-decoration: none;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn_round {
+  padding: 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.btn_round_mini {
+  width: 24px;
+  height: 24px;
+}
+
+.btn_with-icon svg {
+  display: inline-block;
+  float: none;
+  height: 50%;
+  font-size: inherit;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn[disabled] {
+  cursor: default !important;
+  color: #9e9e9e !important;
+  background-color: #cdcdcd !important;
+  box-shadow: none !important;
+}
+
+.btn[disabled]:hover {
+  background-color: #cdcdcd !important;
+}
+
+/* ------- COLORS ------- */
+.btn_red {
+  color: #fafafa;
+  background-color: #d62829;
+}
+
+.btn_red:hover {
+  background-color: #c51718;
+}
+
+.btn_green {
+  color: #fafafa;
+  background-color: #ccf6c8;
+}
+
+.btn_green:hover {
+  background-color: #b7f1b2;
+}
+
+.btn_blue {
+  color: #fafafa;
+  background-color: #0086e4;
+}
+
+.btn_blue:hover {
+  background-color: #0066d9;
+}
+
+/* -------------------------------------------------------- SEARCH BTN IN NAVBAR */
+.btn__link__common {
+  position: absolute;
+  display: flex;
+  margin: 8px 10px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  border-radius: 25px;
+  background-color: #efefef;
+  font-weight: normal;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn__link__common:hover {
+  text-decoration: none;
+  background-color: #ccf6c8;
+}
+
+/*# sourceMappingURL=Button.css.map */

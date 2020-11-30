@@ -1,11 +1,13 @@
 .search__container {
-    display: block;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 70px;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 70px;
 }
 
 .search__container input {
-    width: 900px;
+  width: 900px;
 }
+
+/*# sourceMappingURL=search-view.css.map */

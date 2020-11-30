@@ -83,7 +83,7 @@ export default class Router {
 
     /**
      * Парсит пути вида path/:id и возвращает объект {path: id} (как в parseQuery)
-     * ! :id может быть :num (pin) или :word (username) !
+     * ! :id может быть :num (Pin) или :word (username) !
      *
      * @param path
      * @returns {{}}

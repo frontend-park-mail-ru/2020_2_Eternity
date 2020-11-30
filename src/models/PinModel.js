@@ -42,6 +42,12 @@ class PinModel {
             return response.json();
         });
     }
+
+    getNextFeedPins(data = {}) {
+        return request.getAllPins(data.lastPin).then((response) => {
+            return response.json();
+        })
+    }
 }
 
 export default new PinModel();

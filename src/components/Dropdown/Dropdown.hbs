@@ -1,0 +1,8 @@
+<ul class="dropdown" id="{{id}}">
+    <span class="dropdown__title">{{title}}</span>
+    {{#each options}}
+        <li class="dropdown__item">
+            <label><span>{{this.title}}</span> <input type="checkbox" value="{{this.id}}"> </label>
+        </li>
+    {{/each}}
+</ul>

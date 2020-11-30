@@ -1,4 +1,4 @@
-import Navbar from "../components/navbar/navbar.js";
+import Navbar from "../components/Navbar-NEEDRENAME/Navbar.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -16,7 +16,6 @@ export default class BaseView {
         this.context = context;
 
         this.#app = document.getElementById('app')
-
         this.navbar = Navbar;
     }
 
