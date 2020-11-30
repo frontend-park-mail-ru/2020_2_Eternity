@@ -159,7 +159,7 @@ export default class Request {
     static followUser(username) {
         return this.requestPOST(urls.follow, {
             body: JSON.stringify({
-                username: username
+                username: username,
             })
         });
     }

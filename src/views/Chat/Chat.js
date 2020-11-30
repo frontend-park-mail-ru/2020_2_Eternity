@@ -10,6 +10,8 @@ import Button from "../../components/Button/Button";
 
 import {fakeMessage} from "../../modules/consts/fake"
 import {Icons} from "../../modules/consts/icons";
+import EventBus from "../../modules/tools/EventBus";
+import {Events} from "../../modules/consts/events";
 
 export default class ChatPage extends BaseView {
     sidebar
@@ -17,6 +19,8 @@ export default class ChatPage extends BaseView {
     constructor(context = {}) {
         super('Сообщения', context, null);
         this.template = template;
+
+        EventBus.on(Events.messageReceived, this.addMessage.bind(this));
     }
 
 
@@ -25,14 +29,10 @@ export default class ChatPage extends BaseView {
             img_link: '/img/img15.jpg',
             middle: true,
         })
-
         const message = new Dialog({avatar: avatar.render(), ...fakeMessage});
-        const cm = new Message(fakeMessage);
-        const cmme = new Message({...fakeMessage, own: true});
 
         this.sidebar = new Sidebar({
             id: 'sidebar',
-            messages: [message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render()],
         })
         const msgInput = new Textarea({
             id: 'msgInput',
@@ -45,7 +45,7 @@ export default class ChatPage extends BaseView {
             text: Icons.send,
         })
 
-        const messageList = [cmme.render()]
+        const messageList = []
 
         this.checkWindowWidth();
         window.addEventListener('resize', () => {
@@ -60,8 +60,13 @@ export default class ChatPage extends BaseView {
         this.fillWith(data);
         super.render()
 
+        document.getElementById('send').addEventListener('click', () => {
+            EventBus.emit(Events.messageSend, {text: msgInput.value});
+            msgInput.clear();
+        })
 
-        this.addMessage(cm.context, false);
+        // TODO: ЭТО ПРИВЯЗАТЬ НА СОБЫТИЕ Events.createChat, в него пихать инфу о собеседнике
+        // this.sidebar.addItem(message.render())
     }
 
     checkWindowWidth() {
@@ -75,14 +80,14 @@ export default class ChatPage extends BaseView {
         }
     }
 
-    addMessage(msg, owner) {
+    addMessage(data={}) {
         const msgList = document.getElementById('message-list');
         if (msgList) {
-            const newMsg = new Message({...msg, own: owner});
+            const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
             let liMsg = document.createElement('li');
 
             liMsg.classList.add('chat__message__wrap');
-            if (!owner) {
+            if (!data.owner) {
                 liMsg.classList.add('message__received');
             }
             liMsg.innerHTML = newMsg.render();

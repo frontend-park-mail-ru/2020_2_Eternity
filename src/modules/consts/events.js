@@ -21,4 +21,7 @@ export const Events = {
 
     newNotifications: 'newNotifications',
     clearNotifications: 'clearNotifications',
+
+    messageSend: 'messageSend',
+    messageReceived: 'messageReceived',
 }
