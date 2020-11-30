@@ -33,18 +33,10 @@ export default class MainPage extends BaseView {
         super('Главная', context, null);
         this.template = template;
 
-        this.popupPinView = new Popup({
-            id: 'pinView',
-            content: 'hello, its me',
-        });
-
         // this.card = new Card();
         this.test = new Dropdown({
             id: 'dropdown1',
-            title: 'fsdsfsdfsd'
-        });
-        this.test = new Search({
-            placeholder: '@пользователь или название'
+            title: 'Доступные доски'
         });
 
         this.lastPin = 0;
@@ -86,10 +78,8 @@ export default class MainPage extends BaseView {
 
         const data = {
             pins: this.list,
-            popup: this.popupPinView.render(),
             users: this.users,
-
-            test: this.test.render()
+            dropdown: this.test.render(),
         }
 
         this.fillWith(data);
