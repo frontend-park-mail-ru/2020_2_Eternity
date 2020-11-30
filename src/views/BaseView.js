@@ -14,6 +14,7 @@ export default class BaseView {
         document.title = title;
         this.template = template;
         this.context = context;
+        this.notificationLock = true;
 
         this.#app = document.getElementById('app')
         this.navbar = Navbar;
@@ -27,20 +28,14 @@ export default class BaseView {
         if (this.navbar.logoutLink) {
             this.navbar.logoutLink.addEventListener('click', Navbar.logoutClick);
         }
-        if (document.getElementById('showNotifs')) {
-            document.getElementById('showNotifs').addEventListener('click', (event) => {
-                event.preventDefault();
-                setTimeout(() => {
-                    eventBus.emit(Events.navbarChanged, {num: '3'})
-                }, 1000)
-            })
-        }
 
         if (document.getElementById('search')) {
             document.getElementById('search').addEventListener('click', (event) => {
                 event.preventDefault();
 
-                eventBus.emit(Events.search, {request: this.navbar.search.value});
+                if (this.navbar.search.value) {
+                    eventBus.emit(Events.search, {request: this.navbar.search.value});
+                }
             });
         }
     }

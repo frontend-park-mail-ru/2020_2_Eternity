@@ -170,4 +170,8 @@ export default class Request {
             .replace(':type', type)
             .replace(':content', content), {});
     }
+
+    static getNotifications() {
+        return this.requestGET(urls.notifications, {});
+    }
 }

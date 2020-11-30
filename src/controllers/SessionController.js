@@ -8,7 +8,11 @@ import {routes} from "../modules/consts/routes.js";
 
 import Navbar from "../components/Navbar/Navbar";
 
+import Request from "../modules/request/Request";
+
 class SessionController extends BaseController {
+    notification
+
     constructor() {
         super();
 
@@ -23,11 +27,20 @@ class SessionController extends BaseController {
     }
 
     on(data = {}) {
+        this.notification = setInterval(() => {
+            Request.getNotifications().then((response) => {
+                return response.json();
+            }).then((responseJSON) => {
+                eventBus.emit(Events.newNotifications, {num: responseJSON.length});
+            });
+        }, 1000);
+
         eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
     }
 
     off() {
+        clearInterval(this.notification);
         eventBus.emit(Events.navbarChanged, {isAuth: false});
         eventBus.off(Events.userLogout, this.onLogout.bind(this));
     }

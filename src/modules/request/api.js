@@ -28,6 +28,8 @@ export const urls = {
 
     pinCommentPost: `/${apiPath}/pin/comments`,
 
-    follow: `/${apiPath}/follow`
+    follow: `/${apiPath}/follow`,
+
+    notifications: `/${apiPath}/notifications`
 }
 

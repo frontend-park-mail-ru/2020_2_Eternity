@@ -16,6 +16,7 @@ export default class NotificationBell extends BaseComponent {
 
     setNotificationsCount(data) {
         if (this.element) {
+            this.context.num = data.num;
             this.element.querySelector('.notification__count').innerHTML = data.num;
             this.countNews = data.num;
         }
