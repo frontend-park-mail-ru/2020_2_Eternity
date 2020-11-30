@@ -12,7 +12,7 @@ export const urls = {
     profile: `/${apiPath}/user/profile`,
     userProfile: `/${apiPath}/userpage/:username`,
 
-    feed: `/${apiPath}/feed`,
+    feed: `/${apiPath}/feed:option`,
     pins: `/${apiPath}/user/pins/:username`,
 
     boardPost: `/${apiPath}/board`,

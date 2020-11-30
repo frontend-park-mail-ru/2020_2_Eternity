@@ -57,11 +57,14 @@ export default class PinCreate extends BaseView {
         super.render()
 
         form.bind('submit', (event) => {
+            event.preventDefault();
             let data = {};
             data['title'] = document.getElementById('title').value;
             data['description'] = document.getElementById('description').value;
             //data = JSON.stringify(data);
-            data['file'] = document.getElementById('file').files[0];
+            data['file'] = document.getElementById('pinImageUpload').files[0];
+            console.log('hello');
+
 
             eventBus.emit(Events.pinCreating, {event: event, ...data});
         })

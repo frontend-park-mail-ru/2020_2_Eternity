@@ -131,8 +131,8 @@ export default class Request {
         });
     }
 
-    static getAllPins() {
-        return this.requestGET(urls.feed);
+    static getAllPins(lastPin) {
+        return this.requestGET(urls.feed.replace(':option', lastPin ? `?last=${lastPin}` : ''), {});
     }
 
     static getUserPins(username) {

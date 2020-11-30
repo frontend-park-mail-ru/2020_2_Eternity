@@ -50,7 +50,6 @@ export default class Button extends BaseComponent {
 
     checkBtnClick(event) {
         if (event.target instanceof HTMLElement && event.target.closest('.btn')) {
-            event.preventDefault();
             this.button = event.target.closest('.btn');
             return true;
         }
