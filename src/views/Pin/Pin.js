@@ -13,7 +13,6 @@ import {Events} from "../../modules/consts/events.js";
 import {Icons} from "../../modules/consts/icons";
 
 
-
 export default class PinPage extends BaseView {
     userComment
     btnComment

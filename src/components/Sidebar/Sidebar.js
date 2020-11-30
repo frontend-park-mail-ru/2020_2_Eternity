@@ -74,4 +74,19 @@ export default class Sidebar extends BaseComponent {
             this.toggler.firstElementChild.classList.toggle('rotate');
         }
     }
+
+    /**
+     * Добавляет в список новый элемент
+     * @param rendered - component.render()
+     */
+    addItem(rendered) {
+        this.getAside();
+        if (this.aside) {
+            const list = this.aside.querySelector('.sidebar__list');
+            let item = document.createElement('li');
+            item.classList.add('sidebar__list__item');
+            item.innerHTML = rendered;
+            list.append(item);
+        }
+    }
 }

@@ -24,5 +24,8 @@ export const Events = {
 
     feedNext: 'feedNext',
 
-    search: 'search'
+    search: 'search',
+
+    messageSend: 'messageSend',
+    messageReceived: 'messageReceived',
 }

@@ -65,7 +65,7 @@ class UserModel {
     }
 
     followUser(data = {}) {
-        return request.followUser(data).then((response) => {
+        return request.followUser(data.username).then((response) => {
             return response.json();
         });
     }

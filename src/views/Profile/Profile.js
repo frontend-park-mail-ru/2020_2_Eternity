@@ -111,4 +111,10 @@ export default class ProfilePage extends BaseView {
     changeDeskContent(newContent) {
         document.getElementById('desk-content').innerHTML = newContent;
     }
+    changeUserFollowersNum(num) {
+        document.getElementById('userFollowers').innerHTML = num + ' подписчиков';
+    }
+    changeUserFollowingsNum(num) {
+        document.getElementById('userFollowings').innerHTML = num + ' подписок';
+    }
 }
