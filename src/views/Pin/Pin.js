@@ -28,6 +28,8 @@ export default class PinPage extends BaseView {
     }
 
     render() {
+        console.log(this.context)
+
         this.dropdown = new Dropdown({
             id: 'boardList',
             title: 'Доступные доски',
@@ -61,6 +63,7 @@ export default class PinPage extends BaseView {
         this.comment = new Comment();
         let comments = [];
         this.context.commentList.forEach((c) => {
+            c.username = c.Username;
             this.comment.context = c;
             comments.push(this.comment.render());
         })
@@ -109,8 +112,12 @@ export default class PinPage extends BaseView {
 
     addCommentToList(data = {}) {
         this.comment.context = data;
+        this.comment.context.username = this.comment.context.Username;
         this.context.commentListRendered.push(this.comment.render());
-        document.getElementById('commentList').innerHTML = this.context.commentListRendered.join('');
+        let li = document.createElement('li');
+        let ul = document.getElementById('commentList')
+        li.innerHTML = this.comment.render();
+        ul.append(li);
         this.userComment.clear();
     }
 }
