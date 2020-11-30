@@ -35,11 +35,13 @@ export default class ProfilePage extends BaseView {
         });
         const btnSub = new Button({
             id: 'follow',
-            text: 'Подписаться'
+            text: 'Подписаться',
         })
         const btnMessage = new Button({
             id: 'message',
-            text: 'Сообщение'
+            text: 'Сообщение',
+            link: true,
+            href: '/messages',
         })
         const btnEdit = new Button({
             id: 'edit',

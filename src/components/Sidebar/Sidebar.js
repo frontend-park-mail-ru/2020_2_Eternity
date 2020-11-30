@@ -9,6 +9,7 @@ export default class Sidebar extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
         this.startListeners();
+        this.context.expand = true; // по умолчанию раскрыт
     }
 
     startListeners() {
@@ -46,6 +47,28 @@ export default class Sidebar extends BaseComponent {
             this.aside.classList.toggle('expand');
         }
     }
+
+    getAside() {
+        if (this.element) {
+            this.toggler = document.getElementById('sidebar-toggler');
+            this.aside = this.toggler.closest('aside');
+        }
+    }
+    deleteExpand() {
+        this.getAside();
+        if (this.aside) {
+            this.aside.classList.remove('expand');
+            this.toggler.querySelector('.sidebar__toggler__icon').classList.add('rotate');
+        }
+    }
+    addExpand() {
+        this.getAside();
+        if (this.aside) {
+            this.aside.classList.add('expand');
+            this.toggler.querySelector('.sidebar__toggler__icon').classList.remove('rotate');
+        }
+    }
+
     rotateToggler() {
         if (this.toggler) {
             this.toggler.firstElementChild.classList.toggle('rotate');

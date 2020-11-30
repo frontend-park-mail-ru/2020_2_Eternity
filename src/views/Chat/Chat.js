@@ -1,4 +1,4 @@
-import template from './chat.hbs'
+import template from './Chat.hbs'
 
 import BaseView from "../BaseView.js";
 import Sidebar from "../../components/Sidebar/Sidebar.js";
@@ -9,8 +9,12 @@ import Message from "../../components/Dialog/Message/Message.js";
 
 import {fakeMessage} from "../../modules/consts/fake"
 import Textarea from "../../components/Textarea-NEEDRENAME/Textarea";
+import Button from "../../components/Button-NEEDRENAME/Button";
+import {Icons} from "../../modules/consts/icons";
 
 export default class ChatPage extends BaseView {
+    sidebar
+
     constructor(context = {}) {
         super('Сообщения', context, null);
         this.template = template;
@@ -27,7 +31,7 @@ export default class ChatPage extends BaseView {
         const cm = new Message(fakeMessage);
         const cmme = new Message({...fakeMessage, own: true});
 
-        const sidebar = new Sidebar({
+        this.sidebar = new Sidebar({
             id: 'sidebar',
             messages: [message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render(), message.render()],
         })
@@ -36,14 +40,54 @@ export default class ChatPage extends BaseView {
             customInput: 'input-group__field_noresize',
             label: 'Сообщение',
         })
+        const btnSend = new Button({
+            id: 'send',
+            customButton: 'btn_with-icon btn_round',
+            text: Icons.send,
+        })
 
+        const messageList = [cmme.render()]
+
+        this.checkWindowWidth();
+        window.addEventListener('resize', () => {
+            this.checkWindowWidth();
+        });
         const data = {
-            sidebar: sidebar.render(),
-            cm: cm.render(),
-            cmme: cmme.render(),
+            sidebar: this.sidebar.render(),
+            messageList: messageList,
             msgInput: msgInput.render(),
+            btnSend: btnSend.render(),
         }
         this.fillWith(data);
         super.render()
+
+
+        this.addMessage(cm.context, false);
+    }
+
+    checkWindowWidth() {
+        const width = document.documentElement.clientWidth;
+        if (width <= 768) {
+            this.sidebar.context.expand = false;
+            this.sidebar.deleteExpand();
+        } else {
+            this.sidebar.context.expand = true;
+            this.sidebar.addExpand();
+        }
+    }
+
+    addMessage(msg, owner) {
+        const msgList = document.getElementById('message-list');
+        if (msgList) {
+            const newMsg = new Message({...msg, own: owner});
+            let liMsg = document.createElement('li');
+
+            liMsg.classList.add('chat__message__wrap');
+            if (!owner) {
+                liMsg.classList.add('message__received');
+            }
+            liMsg.innerHTML = newMsg.render();
+            msgList.prepend(liMsg);
+        }
     }
 }

@@ -1,4 +1,4 @@
-{{{ navbar }}}
+{{{navbar}}}
 
 <div class="chat">
    {{{sidebar}}}
@@ -6,12 +6,12 @@
     <div class="chat__window content__expand">
         <div></div>
 
-        <ul class="chat__window__messages">
+        <ul class="chat__window__messages" id="message-list">
             {{#each messageList}}
                 <li class="chat__message__wrap {{#if received}}message__received{{/if}}">{{{this}}}</li>
             {{/each}}
         </ul>
 
-        <div class="chat__window__footer">{{{ msgInput }}} {{{ btnSend }}}</div>
+        <div class="chat__window__footer">{{{msgInput}}} {{{btnSend}}}</div>
     </div>
 </div>
