@@ -556,11 +556,13 @@
 }
 
 .dialog {
-  display: grid;
-  grid-template-areas: "avatar content info";
+  display: flex;
   align-items: center;
   padding: 5px 10px;
   margin: 10px auto;
+}
+.dialog .avatar {
+  min-width: 40px;
 }
 
 .dialog_unread {
@@ -568,8 +570,8 @@
 }
 
 .dialog__content {
-  grid-area: content;
   overflow: hidden;
+  width: 100%;
   padding: 0 10px;
 }
 
@@ -585,7 +587,6 @@
 }
 
 .dialog__info {
-  grid-area: info;
   display: flex;
   position: relative;
   height: 100%;

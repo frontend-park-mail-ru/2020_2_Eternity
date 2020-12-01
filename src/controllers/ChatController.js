@@ -8,17 +8,27 @@ import UserModel from "../models/UserModel";
 export default class ChatController extends BaseController {
     constructor() {
         super(new ChatPage());
-    }
-
-    on() {
-        EventBus.on(Events.messageSend, this.onMessageSend.bind(this));
-        EventBus.on(Events.chatCreated, this.onChatCreating.bind(this));
 
         ChatModel.connect().then((response) => {
             if (response.ok) {
                 console.log('websocket-соединение установлено, можно чатица');
             }
         }).catch((error) => console.log(error))
+    }
+
+    on() {
+        EventBus.on(Events.messageSend, this.onMessageSend.bind(this));
+        EventBus.on(Events.chatCreated, this.onChatCreating.bind(this));
+
+        ChatModel.getUserChats().then((response) => {
+            if (!response.error) {
+                console.log(response);
+                this.view.formDialogList(response);
+            }
+        })
+
+        // ChatModel.getLastMessages(1)
+        // ChatModel.getHistoryMessages(1, 10);
 
         super.on();
     }
@@ -29,11 +39,6 @@ export default class ChatController extends BaseController {
     }
 
     onMessageSend(data={}) {
-        // UserModel.getProfile().then((response) => {
-        //     if (!response.error) {
-        //
-        //     }
-        // });
         ChatModel.send(data.chatId, data.text);
     }
     onChatCreating(data={}) {

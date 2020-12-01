@@ -21,16 +21,12 @@ export default class ChatPage extends BaseView {
         this.template = template;
 
         EventBus.on(Events.messageReceived, this.addMessage.bind(this));
+        EventBus.on(Events.chatLastMessagesReceived, this.formChatContent.bind(this));
+        EventBus.on(Events.userChatsReceived, this.formDialogList.bind(this));
     }
 
 
     render() {
-        const avatar = new Avatar({
-            img_link: '/img/img15.jpg',
-            middle: true,
-        })
-        const message = new Dialog({avatar: avatar.render(), ...fakeMessage});
-
         this.sidebar = new Sidebar({
             id: 'sidebar',
         })
@@ -83,15 +79,52 @@ export default class ChatPage extends BaseView {
     addMessage(data={}) {
         const msgList = document.getElementById('message-list');
         if (msgList) {
-            const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
-            let liMsg = document.createElement('li');
-
-            liMsg.classList.add('chat__message__wrap');
-            if (!data.owner) {
-                liMsg.classList.add('message__received');
-            }
-            liMsg.innerHTML = newMsg.render();
+            const liMsg = this.createMessageToWindow(data);
             msgList.prepend(liMsg);
         }
+    }
+    formChatContent(data={}) {
+        const msgList = document.getElementById('message-list');
+        if (msgList) {
+            let res = '';
+            data.list.forEach((m) => {
+                const liMsg = this.createMessageToWindow(m);
+                res += liMsg.outerHTML;
+            })
+            msgList.insertAdjacentHTML('beforeend', res);
+        }
+    }
+    createMessageToWindow(data={}) {
+        const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
+        const liMsg = document.createElement('li');
+
+        liMsg.classList.add('chat__message__wrap');
+        if (!data.owner) {
+            liMsg.classList.add('message__received');
+        }
+        liMsg.innerHTML = newMsg.render();
+        return liMsg;
+    }
+    // todo: добавить radio под список и туда id
+    formDialogList(list) {
+        const avatar = new Avatar({
+            img_link: '/img/default.svg',
+            middle: true,
+        })
+        let res = [];
+        list.forEach((d) => {
+            if (d.collocutor_ava) {
+                avatar.context.img_link = d.collocutor_ava;
+            }
+            let t = new Date(d.last_msg_time);
+            const dialog = new Dialog({
+                avatar: avatar.render(),
+                text: d.last_msg_content,
+                time: t.getHours() + ':' + t.getMinutes(),
+                username: d.collocutor_name
+            });
+            res.push(dialog.render());
+        })
+        this.sidebar.formSidebarContent(res);
     }
 }

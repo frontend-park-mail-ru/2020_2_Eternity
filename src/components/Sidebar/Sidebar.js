@@ -82,11 +82,29 @@ export default class Sidebar extends BaseComponent {
     addItem(rendered) {
         this.getAside();
         if (this.aside) {
-            const list = this.aside.querySelector('.sidebar__list');
-            let item = document.createElement('li');
-            item.classList.add('sidebar__list__item');
-            item.innerHTML = rendered;
-            list.append(item);
+            const item = this.createItem(rendered);
+            this.aside.querySelector('.sidebar__list').append(item.outerHTML);
         }
+    }
+    formSidebarContent(list) {
+        this.getAside();
+        if (this.aside) {
+            const s = this.aside.querySelector('.sidebar__list');
+            let res = '';
+            list.forEach((r) => {
+                const item = this.createItem(r);
+                res += item.outerHTML;
+            })
+            s.insertAdjacentHTML('beforeend', res);
+        }
+    }
+    createItem(rendered) {
+        const item = document.createElement('li');
+        item.classList.add('sidebar__list__item');
+        const selectable = document.createElement('input');
+        selectable.type = 'radio';
+
+        item.innerHTML = rendered;
+        return item;
     }
 }
