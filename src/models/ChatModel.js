@@ -5,16 +5,25 @@ import {Events} from "../modules/consts/events";
 import UserModel from "./UserModel";
 
 class ChatModel {
-    // TODO: адрес бэка
-    socket = new WebSocket('ws://localhost:8008/chat/ws');
+    socket
 
     constructor() {
-        EventBus.on(Events.userLogin, this.initWS.bind(this));
+        EventBus.on(Events.userLogin, this.connect.bind(this));
         // TODO: закрыть WS по логауту
         // EventBus.on(Events.userLogout, )
         this.initWS();
     }
 
+    connect() {
+        return request.createWSConnect().then((response) => {
+            if (response.ok) {
+                // TODO: адрес бэка в конфиг какой нибудь вынести
+                this.socket = new WebSocket('ws://localhost:8008/ws');
+                this.initWS();
+            }
+            return response;
+        })
+    }
     initWS() {
         UserModel.getProfile().then((response) => {
             if (!response.error) {
@@ -23,18 +32,25 @@ class ChatModel {
         })
     }
 
-    send(text, owner) {
-        // TODO: упростить owner (в WS он уже есть)
-        ws.sendMessage(this.socket, text, owner);
+    send(chatId, text) {
+        ws.sendMessage(this.socket, chatId, text);
     }
-    // id чата наверное
-    startChat(id) {
+    getLastMessages(chatId = 1) {
+        ws.sendGetLastMessages(this.socket, chatId)
     }
-    getHistory(id) {
+    getHistoryMessages(chatId=1, lastMessageId=10) {
+        ws.sendGetHistoryMessages(this.socket, chatId, lastMessageId);
     }
-    getChats() {
+    createChat(username) {
+        return request.createChat(username).then((response) => {
+            return response.json();
+        })
     }
-
+    getUserChats() {
+        return request.getUserChats().then((response) => {
+            return response.json();
+        })
+    }
 
 }
 

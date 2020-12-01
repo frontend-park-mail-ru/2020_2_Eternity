@@ -116,9 +116,8 @@ export default class ProfileController extends BaseController {
     onFollow(data = {}) {
         data.event.preventDefault();
         UserModel.followUser({username: this.view.context.username}).then((response) => {
-            if (!response.error) {
-                console.log(response)
-                this.view.changeUserFollowersNum(this.view.context.followers++);
+            if (response.ok) {
+                this.view.changeUserFollowersNum(++this.view.context.followers);
             }
         }).catch((error) => console.log(error));
     }

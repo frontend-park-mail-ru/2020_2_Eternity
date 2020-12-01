@@ -1287,15 +1287,16 @@
 }
 .profile-card__user-info {
   text-align: center;
-  line-height: 1.5rem;
+  line-height: 1.7rem;
   padding: 0;
   margin: 15px auto;
   list-style-type: none;
 }
 .profile-card__user-info li:last-child {
-  margin-top: 20px;
+  margin-top: 0.7rem;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 .profile-card__user-info li:first-child {
   font-size: 1.3rem;

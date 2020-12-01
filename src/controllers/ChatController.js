@@ -12,18 +12,33 @@ export default class ChatController extends BaseController {
 
     on() {
         EventBus.on(Events.messageSend, this.onMessageSend.bind(this));
+        EventBus.on(Events.chatCreated, this.onChatCreating.bind(this));
+
+        ChatModel.connect().then((response) => {
+            if (response.ok) {
+                console.log('websocket-соединение установлено, можно чатица');
+            }
+        }).catch((error) => console.log(error))
+
         super.on();
     }
     off() {
         EventBus.off(Events.messageSend, this.onMessageSend.bind(this));
+        EventBus.off(Events.chatCreated, this.onChatCreating.bind(this));
         super.off();
     }
 
     onMessageSend(data={}) {
-        UserModel.getProfile().then((response) => {
-            if (!response.error) {
-                ChatModel.send(data.text, response.username);
-            }
-        });
+        // UserModel.getProfile().then((response) => {
+        //     if (!response.error) {
+        //
+        //     }
+        // });
+        ChatModel.send(data.chatId, data.text);
+    }
+    onChatCreating(data={}) {
+        ChatModel.createChat(data.username).then((response) => {
+            console.log(response);
+        })
     }
 }

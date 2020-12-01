@@ -61,7 +61,7 @@ export default class ChatPage extends BaseView {
         super.render()
 
         document.getElementById('send').addEventListener('click', () => {
-            EventBus.emit(Events.messageSend, {text: msgInput.value});
+            EventBus.emit(Events.messageSend, {chatId: 1, text: msgInput.value});
             msgInput.clear();
         })
 

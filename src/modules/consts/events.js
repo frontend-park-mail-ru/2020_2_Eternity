@@ -28,4 +28,5 @@ export const Events = {
 
     messageSend: 'messageSend',
     messageReceived: 'messageReceived',
+    chatCreated: 'chatCreated',
 }

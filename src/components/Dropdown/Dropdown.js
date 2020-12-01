@@ -32,9 +32,11 @@ export default class Dropdown extends BaseComponent {
                 event.preventDefault();
                 const targetSelector = this.origin.getAttribute(this.settings.linkAttributeName);
                 this.dropdown = document.getElementById(targetSelector);
-                // переоткрытие под другим источником
                 this.hide();
-                this.show();
+                // this.show();
+                this.getPositionByOrigin()
+                this.dropdown.classList.add('dropdown__active');
+                this.isOpened = true;
             }
         }.bind(this));
 
@@ -56,8 +58,11 @@ export default class Dropdown extends BaseComponent {
 
     closeOnClickOutsideBind() {
         document.addEventListener('click', (event) => {
-            if (this.isOpened && ((event.target instanceof HTMLElement && !event.target.closest('.dropdown')) || !event.target instanceof HTMLElement)) {
-                this.hide();
+            if ((this.isOpened && (event.target instanceof HTMLElement && !event.target.closest('.dropdown')) || !event.target instanceof HTMLElement)) {
+                // this.dropdown.scrollTo(0,0)
+                // this.flushSelectedItems();
+                // this.dropdown.classList.remove('dropdown__active');
+                // this.isOpened = false;
             }
         })
     }

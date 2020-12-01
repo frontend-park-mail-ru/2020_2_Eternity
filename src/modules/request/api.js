@@ -28,6 +28,10 @@ export const urls = {
 
     pinCommentPost: `/${apiPath}/pin/comments`,
 
-    follow: `/${apiPath}/follow`
+    follow: `/${apiPath}/follow`,
+
+    ws: `/ws`,
+    userChats: `/${apiPath}/chat`,
+    chatById: `/${apiPath}/chat/:id`,
 }
 
