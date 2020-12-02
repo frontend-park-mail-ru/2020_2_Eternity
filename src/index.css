@@ -1043,6 +1043,9 @@
     display: none;
   }
 }
+.navbar .navbrand__messages-icon {
+  margin: 2rem;
+}
 .navbar .menu {
   list-style: none;
   height: 0;
@@ -2014,6 +2017,15 @@
   padding: 0 20px 20px;
   margin: 0;
 }
+.chat__window__messages__help {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  color: #cbcbcb;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
 .chat__window__messages::-webkit-scrollbar {
   display: none;
@@ -2042,6 +2054,10 @@
 .chat__window__footer .input-group {
   width: 80%;
   margin-right: 5px;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .desk__grid {

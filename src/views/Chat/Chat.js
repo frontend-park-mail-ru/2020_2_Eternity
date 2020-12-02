@@ -91,6 +91,9 @@ export default class ChatPage extends BaseView {
     formChatContent(data={}) {
         const msgList = document.getElementById('message-list');
         if (msgList) {
+            if (msgList.nextElementSibling.classList.contains('hidden')) {
+                msgList.nextElementSibling.classList.remove('hidden')
+            }
             let res = '';
             data.list.forEach((m) => {
                 const liMsg = this.createMessageToWindow(m);
@@ -120,7 +123,8 @@ export default class ChatPage extends BaseView {
         this.sidebar.formSidebarContent(res);
     }
     addDialog(data={}) {
-        this.sidebar.addItem(this.createDialogToWindow(data));
+        const newDialog = this.createDialogToWindow(data);
+        this.sidebar.addItem(newDialog.rendered, newDialog.value);
     }
     createDialogToWindow(data={}) {
         const avatar = new Avatar({
