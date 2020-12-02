@@ -19,6 +19,12 @@ export default class ChatController extends BaseController {
     on() {
         EventBus.on(Events.messageSend, this.onMessageSend.bind(this));
         EventBus.on(Events.chatCreated, this.onChatCreating.bind(this));
+        EventBus.on(Events.messageReceived, this.onMessageReceived.bind(this));
+        EventBus.on(Events.chatGetLastMessages, this.onGetChatLastMessages.bind(this));
+        EventBus.on(Events.chatLastMessagesReceived, this.onListMessagesReceived.bind(this));
+        EventBus.on(Events.chatGetHistoryMessages, this.onGetChatHistoryMessages.bind(this));
+        EventBus.on(Events.chatHistoryReceived, this.onListMessagesReceived.bind(this));
+        EventBus.on(Events.getNewChatNotification, this.onGetNewChatNotification.bind(this));
 
         ChatModel.getUserChats().then((response) => {
             if (!response.error) {
@@ -27,14 +33,17 @@ export default class ChatController extends BaseController {
             }
         })
 
-        // ChatModel.getLastMessages(1)
-        // ChatModel.getHistoryMessages(1, 10);
-
         super.on();
     }
     off() {
         EventBus.off(Events.messageSend, this.onMessageSend.bind(this));
         EventBus.off(Events.chatCreated, this.onChatCreating.bind(this));
+        EventBus.off(Events.messageReceived, this.onMessageReceived.bind(this));
+        EventBus.off(Events.chatGetLastMessages, this.onGetChatLastMessages.bind(this));
+        EventBus.off(Events.chatLastMessagesReceived, this.onListMessagesReceived.bind(this));
+        EventBus.off(Events.chatGetHistoryMessages, this.onGetChatHistoryMessages.bind(this));
+        EventBus.off(Events.chatHistoryReceived, this.onListMessagesReceived.bind(this));
+        EventBus.off(Events.getNewChatNotification, this.onGetNewChatNotification.bind(this));
         super.off();
     }
 
@@ -44,6 +53,22 @@ export default class ChatController extends BaseController {
     onChatCreating(data={}) {
         ChatModel.createChat(data.username).then((response) => {
             console.log(response);
+            this.view.addDialog(response);
         })
+    }
+    onGetNewChatNotification(data={}) {
+        this.view.addDialog(data);
+    }
+    onGetChatLastMessages(data={}) {
+        ChatModel.getLastMessages(data.chatId)
+    }
+    onGetChatHistoryMessages(data={}) {
+        ChatModel.getHistoryMessages(data.chatId, data.lastMessageId)
+    }
+    onMessageReceived(data={}) {
+        this.view.addMessage(data)
+    }
+    onListMessagesReceived(data={}) {
+        this.view.formChatContent(data)
     }
 }

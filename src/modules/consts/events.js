@@ -19,6 +19,7 @@ export const Events = {
 
     navbarChanged: 'navbarChanged',
 
+    addNotification: 'addNotification',
     newNotifications: 'newNotifications',
     clearNotifications: 'clearNotifications',
 
@@ -29,7 +30,9 @@ export const Events = {
     messageSend: 'messageSend',
     messageReceived: 'messageReceived',
     chatCreated: 'chatCreated',
-    userChatsReceived: 'userChatsReceived',
+    getNewChatNotification: 'getNewChatNotification',
+    chatGetLastMessages: 'chatGetLastMessages',
+    chatGetHistoryMessages: 'chatGetHistoryMessages',
     chatLastMessagesReceived: 'chatLastMessagesReceived',
     chatHistoryReceived: 'chatHistoryReceived',
 }

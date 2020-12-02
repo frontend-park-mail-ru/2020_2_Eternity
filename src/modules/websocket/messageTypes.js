@@ -10,4 +10,9 @@ export const responseTypeWS = {
     deleteMessage: 'DeleteMessageResp',
     getLastMessages: 'GetLastNMessagesResp',
     getHistoryMessages: 'GetNMessagesBeforeResp',
+    noteComment: 'NoteCommentResp',
+    notePin: 'NotePinResp',
+    noteFollow: 'NoteFollowResp',
+    noteChat: 'NoteChatResp',
+    noteMessage: 'NoteMessageResp',
 }

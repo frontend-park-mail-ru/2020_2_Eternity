@@ -19,12 +19,7 @@ export default class ChatPage extends BaseView {
     constructor(context = {}) {
         super('Сообщения', context, null);
         this.template = template;
-
-        EventBus.on(Events.messageReceived, this.addMessage.bind(this));
-        EventBus.on(Events.chatLastMessagesReceived, this.formChatContent.bind(this));
-        EventBus.on(Events.userChatsReceived, this.formDialogList.bind(this));
     }
-
 
     render() {
         this.sidebar = new Sidebar({
@@ -60,9 +55,13 @@ export default class ChatPage extends BaseView {
             EventBus.emit(Events.messageSend, {chatId: 1, text: msgInput.value});
             msgInput.clear();
         })
-
-        // TODO: ЭТО ПРИВЯЗАТЬ НА СОБЫТИЕ Events.createChat, в него пихать инфу о собеседнике
-        // this.sidebar.addItem(message.render())
+        // todo: по хорошему sidebar надо переписать, чтоб можно было обращаться к инпутам через него
+        document.addEventListener('change', (event) => {
+            if (event.target instanceof HTMLInputElement && event.target.closest('.sidebar__list__item__radio')) {
+                const chatId = event.target.value;
+                EventBus.emit(Events.chatGetLastMessages, {chatId: chatId})
+            }
+        })
     }
 
     checkWindowWidth() {
@@ -103,28 +102,35 @@ export default class ChatPage extends BaseView {
             liMsg.classList.add('message__received');
         }
         liMsg.innerHTML = newMsg.render();
-        return liMsg;
+        return liMsg
     }
-    // todo: добавить radio под список и туда id
+
     formDialogList(list) {
+        let res = [];
+        list.forEach((d) => {
+            const item = this.createDialogToWindow(d);
+            res.push(item);
+        })
+        this.sidebar.formSidebarContent(res);
+    }
+    addDialog(data={}) {
+        this.sidebar.addItem(this.createDialogToWindow(data));
+    }
+    createDialogToWindow(data={}) {
         const avatar = new Avatar({
             img_link: '/img/default.svg',
             middle: true,
         })
-        let res = [];
-        list.forEach((d) => {
-            if (d.collocutor_ava) {
-                avatar.context.img_link = d.collocutor_ava;
-            }
-            let t = new Date(d.last_msg_time);
-            const dialog = new Dialog({
-                avatar: avatar.render(),
-                text: d.last_msg_content,
-                time: t.getHours() + ':' + t.getMinutes(),
-                username: d.collocutor_name
-            });
-            res.push(dialog.render());
-        })
-        this.sidebar.formSidebarContent(res);
+        if (data.collocutor_ava) {
+            avatar.context.img_link = data.collocutor_ava;
+        }
+        let t = new Date(data.last_msg_time);
+        const dialog = new Dialog({
+            avatar: avatar.render(),
+            text: data.last_msg_content,
+            time: t.getHours() + ':' + t.getMinutes(),
+            username: data.collocutor_name
+        });
+        return {rendered: dialog.render(), value: data.id};
     }
 }

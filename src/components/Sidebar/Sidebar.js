@@ -78,12 +78,13 @@ export default class Sidebar extends BaseComponent {
     /**
      * Добавляет в список новый элемент
      * @param rendered - component.render()
+     * @param value
      */
-    addItem(rendered) {
+    addItem(rendered, value='') {
         this.getAside();
         if (this.aside) {
-            const item = this.createItem(rendered);
-            this.aside.querySelector('.sidebar__list').append(item.outerHTML);
+            const item = this.createItem(rendered, value);
+            this.aside.querySelector('.sidebar__list').append(item);
         }
     }
     formSidebarContent(list) {
@@ -92,19 +93,23 @@ export default class Sidebar extends BaseComponent {
             const s = this.aside.querySelector('.sidebar__list');
             let res = '';
             list.forEach((r) => {
-                const item = this.createItem(r);
+                const item = this.createItem(r.rendered, r.value);
                 res += item.outerHTML;
             })
-            s.insertAdjacentHTML('beforeend', res);
+            s.innerHTML = res;
         }
     }
-    createItem(rendered) {
+    createItem(rendered, value='') {
         const item = document.createElement('li');
         item.classList.add('sidebar__list__item');
         const selectable = document.createElement('input');
         selectable.type = 'radio';
+        selectable.value = value;
+        selectable.classList.add('sidebar__list__item__radio')
+        selectable.id = value;
 
-        item.innerHTML = rendered;
+        item.insertAdjacentHTML('beforeend', rendered);
+        item.insertAdjacentElement('beforeend', selectable);
         return item;
     }
 }

@@ -1,4 +1,5 @@
 import {requestTypeWS, responseTypeWS} from "./messageTypes";
+import EventBus from "../tools/EventBus";
 
 export default class ws {
     /**
@@ -7,7 +8,7 @@ export default class ws {
      * @param {string} method - type
      * @param data
      */
-    static sendCommand(socket, method, data={}) {
+    static sendCommand(socket, method, data = {}) {
         const msg = {
             type: method,
             data: this.encodeUTF8(JSON.stringify(data)),
@@ -36,11 +37,13 @@ export default class ws {
      * @param text
      */
     static sendMessage(socket, chatId, text) {
-        ws.sendCommand(socket, requestTypeWS.createMessage, {chat_id: chatId, content: text});
+        ws.sendCommand(socket, requestTypeWS.createMessage, {chat_id: parseInt(chatId), content: text});
     }
+
     static sendGetLastMessages(socket, chatId) {
-        ws.sendCommand(socket, requestTypeWS.getLastMessages, {chat_id: chatId, messages: 15,})
+        ws.sendCommand(socket, requestTypeWS.getLastMessages, {chat_id: parseInt(chatId), messages: 15})
     }
+
     static sendGetHistoryMessages(socket, chatId, lastMessageId) {
         ws.sendCommand(socket, requestTypeWS.getHistoryMessages, {
             chat_id: chatId,
@@ -61,10 +64,12 @@ export default class ws {
         const data = ws.parseMessage(response.data);
         const {type, status, payload} = data;
 
+        let isOwn;
+        let time;
         switch (type) {
             case responseTypeWS.createMessage:
-                const isOwn = payload.username === username;
-                const time = new Date(payload.time);
+                isOwn = payload.username === username;
+                time = new Date(payload.time);
                 store.EventBus.emit(store.Events.messageReceived, {
                     msg: payload.content,
                     time: time.getHours() + ':' + time.getMinutes(),
@@ -84,6 +89,28 @@ export default class ws {
                     })
                 })
                 store.EventBus.emit(store.Events.chatLastMessagesReceived, {list: list})
+                break;
+
+            case responseTypeWS.noteFollow:
+                store.EventBus.emit(store.Events.follow, {})
+                store.EventBus.emit(store.Events.addNotification, {})
+                break;
+
+            case responseTypeWS.notePin:
+            case responseTypeWS.noteComment:
+                store.EventBus.emit(store.Events.addNotification, {});
+                break;
+
+            case responseTypeWS.noteChat:
+                store.EventBus.emit(store.Events.chatCreated, {
+                    collocutor_name: payload.collocutor_name,
+                    collocutor_ava: payload.collocutor_ava,
+                    id: payload.id,
+                });
+                break;
+
+            case responseTypeWS.noteMessage:
+                console.log(payload)
                 break;
 
             default:
@@ -115,16 +142,15 @@ export default class ws {
             payload: JSON.parse(this.decodeB64(data.data)),
         };
     }
+
     static encodeUTF8(str) {
         return btoa(unescape(encodeURIComponent(str)));
     }
+
     static decodeB64(str) {
         return decodeURIComponent(escape(atob(str)));
     }
 }
-
-
-
 
 
 //
