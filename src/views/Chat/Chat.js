@@ -91,6 +91,9 @@ export default class ChatPage extends BaseView {
     formChatContent(data={}) {
         const msgList = document.getElementById('message-list');
         if (msgList) {
+            if (msgList.nextElementSibling.classList.contains('hidden')) {
+                msgList.nextElementSibling.classList.remove('hidden')
+            }
             let res = '';
             data.list.forEach((m) => {
                 const liMsg = this.createMessageToWindow(m);

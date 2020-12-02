@@ -7,11 +7,16 @@
         <div></div>
 
         <ul class="chat__window__messages" id="message-list">
-            {{#each messageList}}
-                <li class="chat__message__wrap {{#if received}}message__received{{/if}}">{{{this}}}</li>
-            {{/each}}
+            {{#if messageList}}
+                {{#each messageList}}
+                    <li class="chat__message__wrap {{#if received}}message__received{{/if}}">{{{this}}}</li>
+                {{/each}}
+            {{else}}
+                <div class="chat__window__messages__help">Выберите чат, чтобы начать общение</div>
+            {{/if}}
         </ul>
 
-        <div class="chat__window__footer">{{{msgInput}}} {{{btnSend}}}</div>
+        <div class="chat__window__footer {{#if messageList}}{{else}}hidden{{/if}}">{{{msgInput}}} {{{btnSend}}}</div>
+
     </div>
 </div>
