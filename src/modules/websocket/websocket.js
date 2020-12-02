@@ -110,8 +110,7 @@ export default class ws {
                     time: time.getHours() + ':' + time.getMinutes(),
                     owner: isOwn
                 })
-                store.EventBus.emit(store.Events.addNotification, {});
-
+                // store.EventBus.emit(store.Events.addNotification, {});
                 break;
 
             default:
