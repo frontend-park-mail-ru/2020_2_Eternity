@@ -64,7 +64,7 @@ export default class ChatController extends BaseController {
         if (!this.view.checkDialogExisting(data.chatId)) {
             this.view.addDialog(data);
         }
-        if (this.view.currentChat === data.chatId) {
+        if (this.view.currentChat === data.chatId.toString()) {
             EventBus.emit(Events.messageReceived, data);
         } else {
             this.view.updateDialog(data);

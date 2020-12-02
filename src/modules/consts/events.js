@@ -16,6 +16,7 @@ export const Events = {
     boardCreating: 'boardCreating',
     pinComment: 'pinComment',
     pinAttach: 'pinAttach',
+    getBoards: 'getBoards',
 
     navbarChanged: 'navbarChanged',
 
