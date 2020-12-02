@@ -140,6 +140,17 @@ export default class Request {
         });
     }
 
+    static detachPin(boardId, pinId) {
+        return fetch(urls.detachPin, {
+            method: 'DELETE',
+            credentials: 'include',
+            body: JSON.stringify({
+                board_id: boardId,
+                pin_id: pinId
+            })
+        })
+    }
+
     static getBoardPins(id) {
         return this.requestGET(urls.boardPins.replace(':id', id), {});
     }

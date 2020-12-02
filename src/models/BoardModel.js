@@ -27,6 +27,10 @@ class BoardModel {
             return response.json();
         });
     }
+
+    detachPin(data = {}) {
+        return request.detachPin(data.board_id, data.pin_id);
+    }
 }
 
 export default new BoardModel();

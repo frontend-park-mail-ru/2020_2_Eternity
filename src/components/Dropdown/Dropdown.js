@@ -5,8 +5,13 @@ import BaseComponent from "../BaseComponent.js";
 import EventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 
+import BoardModel from "../../models/BoardModel";
+import Navbar from "../Navbar/Navbar";
+
 export default class Dropdown extends BaseComponent {
     options = []
+    boards
+    pinid
 
     constructor(context = {}) {
         super(template, context);
@@ -41,13 +46,21 @@ export default class Dropdown extends BaseComponent {
             if (this.origin) {
                 event.preventDefault();
                 const targetSelector = this.origin.getAttribute(this.settings.linkAttributeName);
+                this.pinid = this.origin.getAttribute('data-origin-pin');
                 this.dropdown = document.getElementById(targetSelector);
                 if (!this.isOpened) {
                     this.hide();
                     // this.show();
-                    this.getPositionByOrigin()
-                    this.dropdown.classList.add('dropdown__active');
-                    this.isOpened = true;
+                    this.getPositionByOrigin();
+
+                    BoardModel.getUserBoards({username: Navbar.context.username}).then((response) => {
+                        this.boards = response;
+
+                        this.formDropdownContent(this.boards);
+
+                        this.dropdown.classList.add('dropdown__active');
+                        this.isOpened = true;
+                    });
                 } else {
                     this.hide();
                 }
@@ -65,7 +78,7 @@ export default class Dropdown extends BaseComponent {
             position.x = position.x - 210 + this.origin.offsetWidth;
         }
         if (document.documentElement.clientHeight - position.y < 150) {
-            position.y = position.y - 140 ;
+            position.y = position.y - 140;
         }
         this.dropdown.style.left = position.x + 'px';
         this.dropdown.style.top = position.y + window.scrollY + 'px';
@@ -87,7 +100,22 @@ export default class Dropdown extends BaseComponent {
             if (event.target instanceof HTMLElement && event.target.closest('.dropdown__item')) {
                 const item = event.target.closest('.dropdown__item');
                 item.classList.toggle('dropdown__item__selected');
+                // console.log(item.querySelector('input').value);
+                if (item.classList.contains('dropdown__item__selected')) {
+                    //console.log('board_id: ', item.querySelector('input').value, 'pin_id: ', this.pinid)
+                    BoardModel.attachPin({
+                        board_id: parseInt(item.querySelector('input').value),
+                        pin_id: parseInt(this.pinid)
+                    });
+                } else {
+                    BoardModel.detachPin({
+                        board_id: parseInt(item.querySelector('input').value),
+                        pin_id: parseInt(this.pinid)
+                    });
+                }
             }
+
+
             // TODO: emit eventBus добавление на доску, удаление
         })
     }
@@ -100,9 +128,10 @@ export default class Dropdown extends BaseComponent {
             this.isOpened = true;
         }
     }
+
     hide() {
         if (this.dropdown) {
-            this.dropdown.scrollTo(0,0)
+            this.dropdown.scrollTo(0, 0)
             this.flushSelectedItems();
             this.dropdown.classList.remove('dropdown__active');
             this.isOpened = false;
@@ -115,6 +144,7 @@ export default class Dropdown extends BaseComponent {
             item.querySelector('input').checked = true;
         }
     }
+
     unselectItem(item) {
         item.classList.remove('dropdown__item__selected');
         item.querySelector('input').checked = false;
@@ -123,7 +153,7 @@ export default class Dropdown extends BaseComponent {
     bindCallbackOnItemClick(callback) {
         document.addEventListener('click', (event) => {
             if (event.target instanceof HTMLElement && event.target.closest('.dropdown__item')) {
-                 const clickedItem = event.target.closest('.dropdown__item');
+                const clickedItem = event.target.closest('.dropdown__item');
                 callback(clickedItem);
             }
         })
@@ -137,6 +167,7 @@ export default class Dropdown extends BaseComponent {
             this.unselectItem(option);
         })
     }
+
     getSelectedItems() {
         const options = this.dropdown.querySelectorAll('input');
         const values = Array.from(options).map((element) => element);
@@ -168,13 +199,13 @@ export default class Dropdown extends BaseComponent {
     }
 
 
-    onFillContent(data={}) {
+    onFillContent(data = {}) {
         data.list.forEach((item) => {
             this.addToContent(item);
         })
     }
 
-    addToContent(elem={}) {
+    addToContent(elem = {}) {
         this.options.push(elem);
         if (this.dropdown) {
             this.dropdown.insertAdjacentElement('beforeend', this.createDropdownItem(elem));
@@ -192,7 +223,8 @@ export default class Dropdown extends BaseComponent {
         }
 
     }
-    createDropdownItem(data={}) {
+
+    createDropdownItem(data = {}) {
         const elem = document.createElement('li');
         elem.classList.add('dropdown__item')
 
@@ -206,7 +238,8 @@ export default class Dropdown extends BaseComponent {
 
         label.insertAdjacentElement('beforeend', span);
         label.insertAdjacentElement('beforeend', input);
+        elem.insertAdjacentElement('beforeend', label);
 
-        return label;
+        return elem;
     }
 }
