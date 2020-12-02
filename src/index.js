@@ -40,3 +40,7 @@ router
     .add(routes.chatPage, new ChatController)
 router.start();
 
+export let lock = true;
+export const changeLock = () => {
+    lock = false;
+}
