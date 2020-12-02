@@ -120,7 +120,8 @@ export default class ChatPage extends BaseView {
         this.sidebar.formSidebarContent(res);
     }
     addDialog(data={}) {
-        this.sidebar.addItem(this.createDialogToWindow(data));
+        const newDialog = this.createDialogToWindow(data);
+        this.sidebar.addItem(newDialog.rendered, newDialog.value);
     }
     createDialogToWindow(data={}) {
         const avatar = new Avatar({

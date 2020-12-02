@@ -4,8 +4,6 @@ import BaseComponent from "../BaseComponent.js";
 import EventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 
-import {lock, changeLock} from "../../index.js"
-
 export default class Button extends BaseComponent {
     button
     states
@@ -19,12 +17,8 @@ export default class Button extends BaseComponent {
             this.states[key] = value;
         })
         this.init();
-
-        if (lock) {
-            document.addEventListener('click', this.checkBtnLink.bind(this));
-            document.addEventListener('click', this.checkBtnCreateChat.bind(this));
-            changeLock();
-        }
+        document.addEventListener('click', this.checkBtnLink.bind(this));
+        document.addEventListener('click', this.checkBtnCreateChat.bind(this));
     }
 
     init() {

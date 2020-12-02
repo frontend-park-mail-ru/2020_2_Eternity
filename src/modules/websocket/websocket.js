@@ -106,9 +106,14 @@ export default class ws {
                 time = new Date(payload.time);
                 store.EventBus.emit(store.Events.getNewMessage, {
                     chatId: payload.chat_id,
+                    id: payload.chat_id,
                     msg: payload.content,
                     time: time.getHours() + ':' + time.getMinutes(),
-                    owner: isOwn
+                    last_msg_time: time.getHours() + ':' + time.getMinutes(),
+                    owner: isOwn,
+                    collocutor_ava: payload.avatar,
+                    last_msg_content: payload.content,
+                    collocutor_name: payload.username,
                 })
                 // store.EventBus.emit(store.Events.addNotification, {});
                 break;
