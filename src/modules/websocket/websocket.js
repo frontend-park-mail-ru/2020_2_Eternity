@@ -101,16 +101,16 @@ export default class ws {
                 store.EventBus.emit(store.Events.addNotification, {});
                 break;
 
-            case responseTypeWS.noteChat:
-                store.EventBus.emit(store.Events.chatCreated, {
-                    collocutor_name: payload.collocutor_name,
-                    collocutor_ava: payload.collocutor_ava,
-                    id: payload.id,
-                });
-                break;
-
             case responseTypeWS.noteMessage:
-                console.log(payload)
+                isOwn = payload.username === username;
+                time = new Date(payload.time);
+                store.EventBus.emit(store.Events.getNewMessage, {
+                    chatId: payload.chat_id,
+                    msg: payload.content,
+                    time: time.getHours() + ':' + time.getMinutes(),
+                    owner: isOwn
+                })
+
                 break;
 
             default:

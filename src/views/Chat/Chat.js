@@ -66,6 +66,10 @@ export default class ChatPage extends BaseView {
         })
     }
 
+    get currentChat() {
+        return this.currentChat;
+    }
+
     checkWindowWidth() {
         const width = document.documentElement.clientWidth;
         if (width <= 768) {
@@ -139,5 +143,18 @@ export default class ChatPage extends BaseView {
     clearChatArea() {
         const msgList = document.getElementById('message-list');
         msgList.innerHTML = ''
+    }
+    checkDialogExisting(chatId) {
+        return this.sidebar.findItemById(chatId);
+    }
+    updateDialog(data={}) {
+        if (!data.chatId) {
+            data.chatId = this.currentChat
+        }
+        const dialog = this.sidebar.getItemById(data.chatId);
+        const dialogTime = dialog.querySelector('.message__info__time')
+        const dialogContent = dialog.querySelector('.dialog__content__text')
+        dialogTime.innerHTML = data.time;
+        dialogContent.innerHTML = data.msg
     }
 }

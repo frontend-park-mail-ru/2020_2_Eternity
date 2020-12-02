@@ -30,7 +30,7 @@ export const Events = {
     messageSend: 'messageSend',
     messageReceived: 'messageReceived',
     chatCreated: 'chatCreated',
-    getNewChatNotification: 'getNewChatNotification',
+    getNewMessage: 'getNewMessage',
     chatGetLastMessages: 'chatGetLastMessages',
     chatGetHistoryMessages: 'chatGetHistoryMessages',
     chatLastMessagesReceived: 'chatLastMessagesReceived',

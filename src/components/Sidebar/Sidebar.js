@@ -113,4 +113,19 @@ export default class Sidebar extends BaseComponent {
         item.insertAdjacentElement('beforeend', selectable);
         return item;
     }
+
+    findItemById(id) {
+        if (this.aside) {
+            return !!document.getElementById(id);
+        }
+    }
+    getItemById(id) {
+        return document.getElementById(id).previousElementSibling;
+    }
+    // replaceItem(id, newRendered, newValue) {
+    //     const newItem = this.createItem(newRendered, newValue)
+    //     if (this.findItemById(id)) {
+    //         document.getElementById(id).parentElement.outerHTML = newItem.outerHTML;
+    //     }
+    // }
 }
