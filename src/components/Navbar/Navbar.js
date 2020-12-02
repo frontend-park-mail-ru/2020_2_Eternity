@@ -6,6 +6,7 @@ import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import NotificationBell from "../NotificationBell/NotificationBell";
 import Search from "../Search/Search";
+import Dropdown from "../Dropdown/Dropdown";
 
 
 class Navbar extends BaseComponent {
@@ -17,10 +18,16 @@ class Navbar extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
         this.context.isAuthenticated = false;
-        this.notificationBell = new NotificationBell({id: 'showNotifications'})
+        this.dropdown = new Dropdown({
+            id: 'notificationsList',
+            title: 'Уведомления'
+        })
+        this.context.dropdown = this.dropdown.render();
+        this.notificationBell = new NotificationBell({id: 'showNotifications', dropdownId: this.dropdown.context.id})
         this.context.notification = this.notificationBell.render();
         this.search = new Search({id: 'searchForm', placeholder: 'Введите @пользователя или название пина для поиска'});
         this.context.search = this.search.render();
+
 
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
     }
@@ -49,10 +56,11 @@ class Navbar extends BaseComponent {
         this.context = data;
         this.context.notification = this.notificationBell.render();
         this.context.search = this.search.render();
+        this.context.dropdown = this.dropdown.render();
 
         const navbar = document.getElementById('navbar');
         if (navbar) {
-            navbar.innerHTML = this.render();
+            navbar.outerHTML = this.render();
         }
 
         if (this.logoutLink) {
