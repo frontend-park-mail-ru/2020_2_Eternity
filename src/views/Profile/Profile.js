@@ -40,8 +40,8 @@ export default class ProfilePage extends BaseView {
         const btnMessage = new Button({
             id: 'message',
             text: 'Сообщение',
-            link: true,
-            href: '/messages',
+            chat: true,
+            collocutor: this.context.username,
         })
         const btnEdit = new Button({
             id: 'edit',

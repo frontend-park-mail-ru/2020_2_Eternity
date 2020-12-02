@@ -15,6 +15,7 @@ import {Events} from "../../modules/consts/events";
 
 export default class ChatPage extends BaseView {
     sidebar
+    currentChat
 
     constructor(context = {}) {
         super('Сообщения', context, null);
@@ -52,14 +53,15 @@ export default class ChatPage extends BaseView {
         super.render()
 
         document.getElementById('send').addEventListener('click', () => {
-            EventBus.emit(Events.messageSend, {chatId: 1, text: msgInput.value});
+            EventBus.emit(Events.messageSend, {chatId: this.currentChat, text: msgInput.value});
             msgInput.clear();
         })
         // todo: по хорошему sidebar надо переписать, чтоб можно было обращаться к инпутам через него
         document.addEventListener('change', (event) => {
             if (event.target instanceof HTMLInputElement && event.target.closest('.sidebar__list__item__radio')) {
-                const chatId = event.target.value;
-                EventBus.emit(Events.chatGetLastMessages, {chatId: chatId})
+                this.currentChat = event.target.value;
+                this.clearChatArea();
+                EventBus.emit(Events.chatGetLastMessages, {chatId: this.currentChat})
             }
         })
     }
@@ -132,5 +134,10 @@ export default class ChatPage extends BaseView {
             username: data.collocutor_name
         });
         return {rendered: dialog.render(), value: data.id};
+    }
+
+    clearChatArea() {
+        const msgList = document.getElementById('message-list');
+        msgList.innerHTML = ''
     }
 }

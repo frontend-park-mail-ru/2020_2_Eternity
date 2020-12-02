@@ -48,6 +48,11 @@ class ChatModel {
             return response.json();
         })
     }
+    getChatById(chatId) {
+        return request.getChatById(chatId).then((response) => {
+            return response.json();
+        })
+    }
 
 }
 

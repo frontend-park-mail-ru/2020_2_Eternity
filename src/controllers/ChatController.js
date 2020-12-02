@@ -53,7 +53,9 @@ export default class ChatController extends BaseController {
     onChatCreating(data={}) {
         ChatModel.createChat(data.username).then((response) => {
             console.log(response);
-            this.view.addDialog(response);
+            if (!response.error) {
+                this.view.addDialog(response);
+            }
         })
     }
     onGetNewChatNotification(data={}) {

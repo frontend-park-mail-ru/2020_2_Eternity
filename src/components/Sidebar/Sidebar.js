@@ -107,6 +107,7 @@ export default class Sidebar extends BaseComponent {
         selectable.value = value;
         selectable.classList.add('sidebar__list__item__radio')
         selectable.id = value;
+        selectable.name = 'sidebarItem'
 
         item.insertAdjacentHTML('beforeend', rendered);
         item.insertAdjacentElement('beforeend', selectable);

@@ -18,6 +18,7 @@ export default class Button extends BaseComponent {
         })
         this.init();
         document.addEventListener('click', this.checkBtnLink.bind(this));
+        document.addEventListener('click', this.checkBtnCreateChat.bind(this));
     }
 
     init() {
@@ -59,6 +60,12 @@ export default class Button extends BaseComponent {
         if (this.checkBtnClick(event) && event.target.closest('[data-link]')) {
             const href = this.button.getAttribute('data-link');
             EventBus.emit(Events.pathChanged, {path: href})
+        }
+    }
+    checkBtnCreateChat(event) {
+        if (this.checkBtnClick(event) && event.target.closest('[data-collocutor]')) {
+            EventBus.emit(Events.chatCreated, {username: this.button.getAttribute('data-collocutor')})
+            EventBus.emit(Events.pathChanged, {path: '/messages'})
         }
     }
 
