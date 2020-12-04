@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .settings-layout {
     display: flex;
     flex-direction: column;
@@ -6,11 +9,11 @@
 
     max-width: 750px;
     margin: 30px auto;
-    background-color: white;
+    @include color-assign(background-color, secondary);
     box-sizing: border-box;
     border-radius: 25px;
     padding: 2rem 5rem 3rem;
-    box-shadow: 1px 2px 15px rgba(214, 214, 214, 0.4);
+    box-shadow: $box-shadow-secondary;
 
     .file-upload {
         margin-bottom: 20px;

@@ -4,6 +4,9 @@
   }
 }
 
+@import "src/colors";
+@import "src/themes";
+
 .layout__container {
   display: flex;
   flex-flow: column nowrap;
@@ -24,8 +27,8 @@
   border-radius: 25px;
   min-height: 370px;
 
-  background-color: white;
-  box-shadow: 1px 2px 15px rgba(214, 214, 214, 0.4);
+  @include color-assign(background-color, secondary);
+  box-shadow: $box-shadow-secondary;
 
   @include largescreen {
     width: 80%;
@@ -51,7 +54,7 @@
     &__title {
       width: 100%;
       padding-left: 10px;
-      color: black;
+      @include color-assign(color, font-color--primary);
 
       &__large {
         font-size: 1.7rem;

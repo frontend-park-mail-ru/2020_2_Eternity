@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .checkbox__label {
     margin: 0 5px;
     display: block;
@@ -11,7 +14,7 @@
     width: 20px;
     height: 20px;
     background: transparent;
-    border: 2px solid #28C4ae;
+    border: 2px solid $color-blue;
     border-radius: 5px;
 }
 .checkbox__input:checked + .checkbox__checked {
@@ -22,8 +25,8 @@
     width: 4px;
     height: 10px;
     margin-top: -2px;
-    border-right: 2px solid #28C4ae;
-    border-bottom: 2px solid #28C4ae;
+    border-right: 2px solid $color-blue;
+    border-bottom: 2px solid $color-blue;
     opacity: 0;
     transform: rotate(30deg);
     transition: .2s;

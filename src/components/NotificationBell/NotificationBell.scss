@@ -1,8 +1,11 @@
+@import "src/colors";
+@import "src/themes";
+
 .notification {
     position: relative;
 }
 .notification__bell {
-    color: white;
+    @include color-assign(color, font-color--primary);
 }
 .notification__count {
     position: absolute;
@@ -15,8 +18,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    color: white;
-    background-color: #0cce6b;
+    @include color-assign(color, font-color--white);
+    background-color: $color-green;
     border-radius: 25px;
     padding: 0 5px;
     font-size: smaller;

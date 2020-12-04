@@ -35,14 +35,14 @@ export default class Input extends BaseComponent {
         if (this.error) {
             this.error.innerHTML = error;
             this.error.classList.add('error_show');
-            this.field.classList.add('input-group__field_error');
-            this.label.classList.add('input-group__label_error');
+            this.field.classList.add('Input-group__field_error');
+            this.label.classList.add('Input-group__label_error');
         }
     }
     resetError() {
         if (this.error) {
-            this.field.classList.remove('input-group__field_error');
-            this.label.classList.remove('input-group__label_error');
+            this.field.classList.remove('Input-group__field_error');
+            this.label.classList.remove('Input-group__label_error');
             this.error.classList.remove('error_show');
             this.error.innerHTML = '';
         }

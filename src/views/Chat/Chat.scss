@@ -1,8 +1,11 @@
+@import "src/themes";
+
 @mixin largescreen {
     @media only screen and (min-device-width: 768px) and (min-width: 768px) {
         @content;
     }
 }
+
 
 .chat {
     display: flex;
@@ -33,6 +36,16 @@
     list-style: none;
     padding: 0 20px 20px;
     margin: 0;
+
+    &__help {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        @include color-assign(color, font-color--secondary);
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
 }
 .chat__window__messages::-webkit-scrollbar {
     display: none;
@@ -53,7 +66,7 @@
     box-sizing: border-box;
     padding: 20px;
     width: 100%;
-    background-color: white;
+    @include color-assign(background-color, secondary);
 
     .input-group {
         width: 80%;

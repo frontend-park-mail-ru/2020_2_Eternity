@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .comment {
     position: relative;
     display: block;
@@ -6,15 +9,15 @@
     min-height: 50px;
     padding: 10px 20px;
 
-    color: black;
-    border-top: 1px solid #e3e3e3;
+    @include color-assign(color, font-color--primary);
+    @include color-assign(border-top, accent, '1px solid THEMECOLOR');
 }
 .comment__author {
     display: block;
     font-weight: bold;
 }
 .comment__time {
-    color: #777777;
+    @include color-assign(color, font-color--secondary);
     position: absolute;
     right: 20px;
     top: 5px;

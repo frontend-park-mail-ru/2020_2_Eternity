@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .input-group {
     position: relative;
 }
@@ -6,7 +9,10 @@
     min-height: 44px;
     padding: 10px 15px;
     border-radius: 25px;
-    border: 1px solid #e0e0e0;
+    //border: 1px solid #e0e0e0;
+    @include color-assign(border, accent, '1px solid THEMECOLOR');
+    @include color-assign(background-color, secondary);
+    @include color-assign(color, font-color--primary);
     box-sizing: border-box;
     font-weight: 400;
     font-size: 1rem;
@@ -22,15 +28,15 @@
 }
 .input-group__field:focus {
     outline: none;
-    border: 1px solid #0086e4;
+    border: 1px solid $color-blue;
 }
 .input-group__field:placeholder-shown {
     text-overflow: ellipsis;
 }
 .input-group__field:not(:placeholder-shown) + .input-group__label,
 .input-group__field:focus + .input-group__label {
-    color: #0086e4;
-    background-color: #ffffff;
+    color: $color-blue;
+    @include color-assign(background-color, secondary);
     padding: 0;
     font-size: .9rem;
     top: -5px;
@@ -43,16 +49,17 @@
     top: 0;
     left: 10px;
     line-height: 40px;
-    color: #e0e0e0;
+    //color: #e0e0e0;
+    @include color-assign(color, font-color--secondary);
     padding: 0 5px;
     transition: all .2s ease-in-out;
 }
 .input-group__field:not(:placeholder-shown):not(:focus) + .input-group__label {
-    color: #e0e0e0;
+    @include color-assign(color, font-color--primary);
 }
 
 .error {
-    color: #F8333C;
+    color: $color-red;
     display: flex;
     min-height: 20px;
     font-size: .9rem;
@@ -65,9 +72,9 @@
     opacity: 1;
 }
 .input-group__field_error {
-    border-color: #F8333C !important;
+    border-color: $color-red !important;
 }
 .input-group__field:not(:placeholder-shown) + .input-group__label_error,
 .input-group__field:focus + .input-group__label_error {
-    color: #F8333C !important;
+    color: $color-red !important;
 }

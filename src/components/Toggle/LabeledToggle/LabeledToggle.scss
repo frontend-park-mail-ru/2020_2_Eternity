@@ -1,3 +1,5 @@
+@import "src/themes";
+
 .labeled-toggle {
     display: grid;
     grid-template-areas: ".     toggle"
@@ -10,6 +12,6 @@
 .labeled-toggle :last-child {
     grid-area: small;
     font-size: small;
-    color: #a3a5a7;
+    @include color-assign(color, font-color--secondary);
     margin: 0;
 }

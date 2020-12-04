@@ -9,6 +9,9 @@
     }
 }
 
+@import "src/colors";
+@import "src/themes";
+
 .sidebar {
     width: 60px;
     height: calc(100vh - 60px);
@@ -17,7 +20,7 @@
     top: 60px;
     grid-area: sidebar;
 
-    background: #fff;
+    @include color-assign(background-color, secondary);
     z-index: 90;
     transition: .3s ease-in-out;
 }
@@ -64,7 +67,7 @@
     text-decoration: none;
 }
 .sidebar__list__item:hover {
-    background-color: #f1f1f1;
+    @include color-assign(background-color, accent);
     cursor: pointer;
 }
 
@@ -72,7 +75,7 @@
     display: block;
     width: 60px;
     text-align: center;
-    color: #bdbdbd;
+    @include color-assign(color, font-color--secondary);
     position: relative;
     transition: transform .2s;
 }
@@ -99,7 +102,7 @@
     align-items: center;
     top: 0;
     display: flex;
-    background-color: #fff;
+    @include color-assign(background-color, secondary);
     z-index: 1;
 }
 

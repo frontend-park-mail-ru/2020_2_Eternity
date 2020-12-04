@@ -1,3 +1,5 @@
+@import "themes";
+
 @import "components/Avatar/Avatar.scss";
 @import "components/FileUpload/FileUpload.scss";
 @import "components/Popup/Popup.scss";
@@ -19,6 +21,7 @@
 @import "components/Search/Search.scss";
 @import "components/Userbar/Userbar.scss";
 @import "components/form/form.scss";
+@import "components/ThemeSwitcher/ThemeSwitcher";
 
 @import "views/Profile/Profile";
 @import "views/Settings/Settings";
@@ -39,18 +42,21 @@
 body {
     font-size: 1rem;
     font-weight: 300;
-    color: #5A6169;
-    background-color: #fafafa;
-    /*background-color: #ffffff;*/
+    @include color-assign(color, font-color--primary);
+    @include color-assign(background-color, primary);
+    transition: all .2s ease-in-out, background .3s ease-in-out;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
 
 * {
-    font-family: Gilroy, "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 a {
-    color: #000000;
+    @include color-assign(color, font-color--primary);
     font-weight: bold;
     text-decoration: none;
 }

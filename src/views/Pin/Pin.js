@@ -41,7 +41,7 @@ export default class PinPage extends BaseView {
         })
         this.userComment = new Textarea({
             id: 'userComment',
-            customInput: 'input-group__field_noresize',
+            customInput: 'Input-group__field_noresize',
             maxLength: 250,
             rows: 2,
             label: 'Добавить комментарий'

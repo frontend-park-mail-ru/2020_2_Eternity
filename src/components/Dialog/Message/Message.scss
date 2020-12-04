@@ -1,8 +1,12 @@
+@import "src/colors";
+@import "src/themes";
+
 .message {
     padding: 10px 20px;
     border-radius: 25px;
-    color: #000;
-    background-color: #e6e7ec;
+    @include color-assign(color, font-color--primary);
+    @include color-assign(background-color, accent);
+    //background-color: #e6e7ec;
     max-width: 600px;
     width: fit-content;
     position: relative;
@@ -10,15 +14,15 @@
     word-break: break-all;
 }
 .message_own {
-    color: #fff;
+    @include color-assign(color, font-color--white);
     margin-left: auto;
-    background-color: #0086e4;
+    background-color: $color-blue;
 }
 .message__time {
     position: absolute;
     left: 10px;
     bottom: -20px;
-    color: #5A6169;
+    @include color-assign(color, font-color--secondary);
 }
 .message__time__own {
     position: absolute;

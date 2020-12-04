@@ -1,10 +1,5 @@
-$color-white: #ffffff;
-$color-black: #252a32;
-$color-light: #f1f5f8;
-$color-red: #d32f2f;
-$color-blue: #148cb8;
-
-$box-shadow: 0 0 8px rgba(26, 26, 26, 0.1);
+@import "src/colors";
+@import "src/themes";
 
 @mixin largescreen {
   @media only screen and (min-device-width: 768px) and (min-width: 768px) {
@@ -20,7 +15,7 @@ $box-shadow: 0 0 8px rgba(26, 26, 26, 0.1);
   height: 60px;
   width: 100px;
   box-sizing: border-box;
-  color: $color-black;
+  @include color-assign(color, font-color--primary);
 }
 .brand:hover {
   color: $color-blue;
@@ -36,9 +31,10 @@ $box-shadow: 0 0 8px rgba(26, 26, 26, 0.1);
   padding: 0 40px;
   min-height: 60px;
 
-  color: $color-black;
-  background: $color-white;
+  @include color-assign(color, font-color--primary);
+  @include color-assign(background-color, secondary);
   box-shadow: $box-shadow;
+  transition: .3s ease-in-out;
 
   // Media Query for Desktop
   @include largescreen {
@@ -110,7 +106,7 @@ $box-shadow: 0 0 8px rgba(26, 26, 26, 0.1);
       font-size: 1rem;
       font-weight: 500;
       line-height: inherit;
-      color: $color-black;
+      @include color-assign(color, font-color--primary);
       text-transform: uppercase;
       transition: all 0.3s ease;
 

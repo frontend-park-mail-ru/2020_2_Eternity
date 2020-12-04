@@ -10,6 +10,9 @@
     }
 }
 
+@import "src/colors";
+@import "src/themes";
+
 .search {
     display: flex;
     align-items: center;
@@ -51,7 +54,7 @@
         @include breakpoints {
             ~ .search__field {
                 position: fixed;
-                background-color: white;
+                @include color-assign(background-color, secondary);
                 left: 0;
                 margin: 0;
                 height: 50px;
@@ -89,7 +92,7 @@
             content: '';
             width: 15px;
             height: 3px;
-            background-color: black;
+            @include color-assign(background-color, font-color--primary);
         }
         &::before {
             transform: rotate(45deg);
@@ -105,7 +108,7 @@
         left: 50%;
         width: 40px;
         height: 45px;
-        border: 0 solid #e0e0e0;
+        @include color-assign(border, accent, '0 solid THEMECOLOR');
         border-radius: 50px;
         transform: translateX(-50%);
         transform-origin: right;
@@ -119,14 +122,14 @@
         width: calc(100% - 40px);
         height: 100%;
         padding: 5px 15px;
-        color: black;
+        @include color-assign(color, font-color--primary);
         background-color: transparent;
         border: 0;
         outline: none;
         font-size: 16px;
 
         &::placeholder {
-            color: #aeaeae;
+            @include color-assign(color, font-color--secondary);
             opacity: 0;
             transition: .3s;
             transition-delay: .3s;
@@ -146,8 +149,8 @@
         align-items: center;
         width: 50px;
         height: 50px;
-        background-color: #fff;
-        border-radius: 5px;
+        @include color-assign(background-color, accent);
+        border-radius: 25px;
         transform: translateY(-50%);
         cursor: pointer;
         outline: none;
@@ -170,7 +173,7 @@
             width: 12px;
             height: 12px;
             background-color: transparent;
-            border: 2px solid black;
+            @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
             border-radius: 50px;
         }
 
@@ -182,7 +185,7 @@
             content: '';
             width: 8px;
             height: 2px;
-            background-color: black;
+            @include color-assign(background-color, font-color--primary);
             transform: rotate(45deg);
             transform-origin: right;
         }

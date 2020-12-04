@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .card__link {
     display: inline-flex;
     width: 100%;
@@ -7,7 +10,7 @@
     overflow: hidden;
     border-radius: 25px;
     border: none;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
+    box-shadow: $box-shadow-primary;
 
     display: flex;
     width: 100%;
@@ -21,7 +24,7 @@
 }
 .card:hover {
     transform: scale(1.01);
-    box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, .2);
+    box-shadow: $box-shadow-primary-hover;
 }
 .card:hover .card__actions {
     opacity: 1;
@@ -53,11 +56,11 @@
     display: inline-block;
     background-color: transparent;
 
-    fill: #f1f1f1;
+    @include color-assign(fill, font-color--white);
     transition: all .3s ease-in-out;
 }
 .card__actions__like:hover, .card__actions__like__active {
-    fill: #d62829;
+    fill: $color-red;
     opacity: 1;
 }
 .card__actions__like:focus {

@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .btn {
     display: flex;
     position: relative;
@@ -8,8 +11,8 @@
     line-height: 40px;
     padding: 0 1.5rem;
     overflow: hidden;
-    background-color: white;
-    color: #1A1A1A;
+    @include color-assign(background-color, secondary);
+    @include color-assign(color, font-color--primary);
 
     font-size: 15px;
     font-weight: 600;
@@ -27,7 +30,7 @@
     border-radius: 25px;
 
     transition: all .3s ease-out;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .1);
+    box-shadow: $box-shadow-secondary;
 
     & i, svg {
         pointer-events: none;
@@ -35,7 +38,7 @@
 }
 .btn:hover {
     text-decoration: none;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .2);
+    box-shadow: $box-shadow-primary;
 }
 .btn_round {
     padding: 0;
@@ -58,8 +61,8 @@
 
 .btn[disabled] {
     cursor: default !important;
-    color: #9e9e9e !important;
-    background-color: #cdcdcd !important;
+    @include color-assign(color, font-color--primary, 'THEMECOLOR !important');
+    @include color-assign(background-color, secondary, 'THEMECOLOR !important');
     box-shadow: none !important;
 
 }
@@ -69,54 +72,25 @@
 
 /* ------- COLORS ------- */
 .btn_red {
-    color: #fafafa;
-    background-color: #d62829;
+    @include color-assign(color, font-color--primary);
+    background-color: $color-red;
 }
 .btn_red:hover {
-    background-color: #c51718;
+    background-color: $color-red-dark;
 }
 
 .btn_green {
-    color: #fafafa;
-    background-color: #ccf6c8;
+    @include color-assign(color, font-color--primary);
+    background-color: $color-green;
 }
 .btn_green:hover {
-    background-color: #b7f1b2;
+    background-color: $color-green-dark;
 }
 
 .btn_blue {
-    color: #fafafa;
-    background-color: #0086e4;
+    @include color-assign(color, font-color--primary);
+    background-color: $color-blue;
 }
 .btn_blue:hover {
-    background-color: #0066d9;
-}
-
-
-
-
-/* -------------------------------------------------------- SEARCH BTN IN NAVBAR */
-.btn__link__common {
-    position: absolute;
-    display: flex;
-
-    margin: 8px 10px;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    vertical-align: middle;
-
-    width: 42px;
-    height: 42px;
-    border-radius: 25px;
-
-    background-color: #efefef;
-    font-weight: normal;
-
-    transition: all .3s ease-in-out;
-}
-
-.btn__link__common:hover {
-    text-decoration: none;
-    background-color: #ccf6c8;
+    background-color: $color-blue-dark;
 }

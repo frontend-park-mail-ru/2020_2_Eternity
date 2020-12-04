@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .dropdown {
     display: none;
 
@@ -9,13 +12,13 @@
     position: absolute;
 
     text-align: left;
-    color: #1A1A1A;
+    @include color-assign(color, font-color--primary);
 
     z-index: 2;
     outline: none;
     border-radius: 25px;
-    background-color: #fefefe;
-    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .1);
+    @include color-assign(background-color, secondary);
+    box-shadow: $box-shadow-secondary;
 
     transition: .3s all ease-in-out;
 }
@@ -46,10 +49,11 @@
     transition: .2s all ease-in-out;
 }
 .dropdown__item__selected {
-    background-color: #e0e0e0;
+    // TODO: ДРУГОЙ ЦВЕТ ДЛЯ ВЫДЕЛЕНИЯ!
+    @include color-assign(background-color, secondary);
 }
 .dropdown__item:hover {
-    background-color: #e0e0e0;
+    @include color-assign(background-color, secondary);
 }
 .dropdown__active {
     visibility: visible;

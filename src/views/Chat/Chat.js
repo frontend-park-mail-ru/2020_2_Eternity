@@ -36,7 +36,7 @@ export default class ChatPage extends BaseView {
         })
         const msgInput = new Textarea({
             id: 'msgInput',
-            customInput: 'input-group__field_noresize',
+            customInput: 'Input-group__field_noresize',
             label: 'Сообщение',
         })
         const btnSend = new Button({

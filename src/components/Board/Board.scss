@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .board {
     display: flex;
     flex-direction: column;
@@ -13,7 +16,7 @@
                          "first third";
 
     text-decoration: none;
-    background-color: #ffffff;
+    @include color-assign(background-color, accent);
     border-radius: 25px;
     overflow: hidden;
     position: relative;
@@ -47,5 +50,5 @@
 .board__date {
     font-weight: normal;
     margin: 5px 0;
-    color: #5A6169;
+    @include color-assign(color, font-color--secondary);
 }

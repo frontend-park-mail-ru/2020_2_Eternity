@@ -1,3 +1,6 @@
+@import "src/colors";
+@import "src/themes";
+
 .dialog {
     display: grid;
     grid-template-areas: "avatar content info";
@@ -6,7 +9,7 @@
     margin: 10px auto;
 }
 .dialog_unread {
-    background-color: #f5f5f5;
+    @include color-assign(background-color, secondary);
 }
 .dialog__content {
     grid-area: content;
@@ -43,8 +46,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    background-color: #0cce6b;
+    background-color: $color-green;
     border-radius: 25px;
     padding: 0 6px;
-    color: white;
+    @include color-assign(color, font-color--white);
 }

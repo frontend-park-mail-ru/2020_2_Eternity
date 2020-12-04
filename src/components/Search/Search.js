@@ -8,6 +8,6 @@ export default class Search extends BaseComponent {
     }
 
     get value() {
-        return this.element.querySelector('input.search__input').value;
+        return this.element.querySelector('Input.search__input').value;
     }
 }

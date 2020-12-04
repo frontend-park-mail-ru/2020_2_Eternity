@@ -91,12 +91,12 @@ export default class Dropdown extends BaseComponent {
     selectItem(item) {
         if (item instanceof HTMLElement) {
             item.classList.add('dropdown__item__selected');
-            item.querySelector('input').checked = true;
+            item.querySelector('Input').checked = true;
         }
     }
     unselectItem(item) {
         item.classList.remove('dropdown__item__selected');
-        item.querySelector('input').checked = false;
+        item.querySelector('Input').checked = false;
     }
 
     bindCallbackOnItemClick(callback) {
@@ -117,7 +117,7 @@ export default class Dropdown extends BaseComponent {
         })
     }
     getSelectedItems() {
-        const options = this.dropdown.querySelectorAll('input');
+        const options = this.dropdown.querySelectorAll('Input');
         const values = Array.from(options).map((element) => element);
 
         let result = [];
@@ -130,8 +130,8 @@ export default class Dropdown extends BaseComponent {
     }
 
     /**
-     * Устанавливает выделение итемов списка (css + input.checked = true) по массиву значений
-     * (эти значения содержат в себе input)
+     * Устанавливает выделение итемов списка (css + Input.checked = true) по массиву значений
+     * (эти значения содержат в себе Input)
      * @param itemsForSelect - [:id(num)]
      */
     setSelectedItems(itemsForSelect) {
@@ -139,7 +139,7 @@ export default class Dropdown extends BaseComponent {
         options = Array.from(options).map((element) => element);
 
         options.forEach((option) => {
-            const optionValue = option.querySelector('input').value;
+            const optionValue = option.querySelector('Input').value;
             if (itemsForSelect.contains(optionValue)) {
                 this.selectItem(option);
             }
