@@ -11,9 +11,15 @@ import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 import {routes} from "../../modules/consts/routes";
 import {fakePins} from "../../modules/consts/fake";
+import Popup from "../../components/Popup/Popup";
+import Userbar from "../../components/Userbar/Userbar";
+import List from "../../components/List/List";
 
 
 export default class ProfilePage extends BaseView {
+    followPopup
+    userbar
+    list
     pinCard
     boardCard
     renderedPins = []
@@ -52,6 +58,11 @@ export default class ProfilePage extends BaseView {
         })
         this.pinCard = new Card();
         this.boardCard = new Board();
+        this.userbar = new Userbar();
+        this.list = new List({id: 'follows'});
+        this.followPopup = new Popup({
+            id: 'followPopup',
+        })
 
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
@@ -75,15 +86,33 @@ export default class ProfilePage extends BaseView {
             btnMessage: btnMessage.render(),
             boards: boards,
             pins: pins,
+            followPopup: this.followPopup.render(),
         }
 
         this.fillWith(data);
         super.render()
 
-        if (document.getElementById('follow')) {
-            document.getElementById('follow').addEventListener('click', (event) => {
-                eventBus.emit(Events.follow, {event: event});
+        const follow = document.getElementById('follow');
+        const followers = document.getElementById('userFollowers');
+        const followings = document.getElementById('userFollowings');
+
+        if (follow) {
+            follow.addEventListener('click', this.onFollow);
+        }
+        followers.addEventListener('click', this.onShowFollowers);
+        followings.addEventListener('click', this.onShowFollowings);
+    }
+
+    formFollowList(users) {
+        if (!users) {
+            this.list.clearContent();
+        } else {
+            let list = [];
+            users.forEach((user) => {
+                const bar = new Userbar({...user});
+                list.push(bar);
             })
+            this.list.formContentFromListObjects(list);
         }
     }
 

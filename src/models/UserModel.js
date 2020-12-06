@@ -69,6 +69,17 @@ class UserModel {
             return response.json();
         });
     }
+
+    getFollowers(data={}) {
+        return request.getFollowers(data.username).then((response) => {
+            return response.json();
+        })
+    }
+    getFollowings(data={}) {
+        return request.getFollowings(data.username).then((response) => {
+            return response.json();
+        })
+    }
 }
 
 export default new UserModel();

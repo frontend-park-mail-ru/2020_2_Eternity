@@ -29,6 +29,8 @@ export const urls = {
     pinCommentPost: `/${apiPath}/pin/comments`,
 
     follow: `/${apiPath}/follow`,
+    followers: `/${apiPath}/followers/:username`,
+    followings: `/${apiPath}/following/:username`,
 
     notifications: `/${apiPath}/notifications`
 }

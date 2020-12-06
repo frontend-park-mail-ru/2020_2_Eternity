@@ -30,7 +30,9 @@ export default class ProfileController extends BaseController {
         eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.on(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.on(Events.profileUpdate, this.onUpdateProfile.bind(this));
-        eventBus.on(Events.follow, this.onFollow.bind(this));
+        this.view.onFollow = this.onFollow.bind(this);
+        this.view.onShowFollowers = this.onShowFollowers.bind(this);
+        this.view.onShowFollowings = this.onShowFollowings.bind(this);
 
         (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
             if (Navbar.context.isAuth) {
@@ -73,7 +75,6 @@ export default class ProfileController extends BaseController {
         eventBus.off(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.off(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.off(Events.profileUpdate, this.onUpdateProfile.bind(this));
-        eventBus.off(Events.follow, this.onFollow.bind(this));
 
         super.off();
     }
@@ -113,8 +114,8 @@ export default class ProfileController extends BaseController {
         eventBus.emit(Events.userInfoUpdate, data);
     }
 
-    onFollow(data = {}) {
-        data.event.preventDefault();
+    onFollow(event) {
+        event.preventDefault();
         UserModel.followUser({username: this.view.context.username}).then((response) => {
             if (!response.error) {
                 console.log(response)
@@ -122,4 +123,31 @@ export default class ProfileController extends BaseController {
             }
         }).catch((error) => console.log(error));
     }
+
+    onShowFollowers(event) {
+        UserModel.getFollowers({username: event.target.getAttribute('href')}).then((r) => {
+
+            this.view.formFollowList(r);
+            this.view.followPopup.formContent(this.view.list.render());
+        })
+        this.showPopup(event)
+    }
+
+    onShowFollowings(event) {
+        UserModel.getFollowings({username: event.target.getAttribute('href')}).then((r) => {
+            this.view.formFollowList(r);
+            this.view.followPopup.formContent(this.view.list.render());
+        })
+        this.showPopup(event)
+    }
+
+    showPopup(event) {
+        const origin = event.target.closest('[data-popup]');
+        if (origin) {
+            const targetSelector = origin.getAttribute('data-popup');
+            this.view.followPopup.origin = origin;
+            this.view.followPopup.open(targetSelector);
+        }
+    }
+
 }

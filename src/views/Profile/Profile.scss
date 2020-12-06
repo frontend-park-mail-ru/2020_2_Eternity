@@ -146,7 +146,7 @@
       border-radius: 25px;
       width: 1rem;
       padding: 1rem;
-      transition: all .3s ease;
+      transition: all .3s ease-in-out;
       color: transparent;
       text-align: center;
       cursor: pointer;
@@ -173,12 +173,6 @@
       width: 3rem;
       @include color-assign(color, font-color--primary);
       padding-inline-start: 3rem;
-      transition:
-              padding-inline-start .3s .25s linear,
-              width .3s .25s linear,
-              color .3s .5s linear,
-              font-size 0s linear,
-              background .3s linear;
       svg {
         //fill: ;
       }

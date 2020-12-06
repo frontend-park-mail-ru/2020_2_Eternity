@@ -174,4 +174,11 @@ export default class Request {
     static getNotifications() {
         return this.requestGET(urls.notifications, {});
     }
+
+    static getFollowers(username) {
+        return this.requestGET(urls.followers.replace(':username', username), {});
+    }
+    static getFollowings(username) {
+        return this.requestGET(urls.followings.replace(':username', username), {});
+    }
 }

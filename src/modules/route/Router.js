@@ -203,7 +203,9 @@ export default class Router {
 
             if (target instanceof HTMLAnchorElement) {
                 evt.preventDefault();
-                this.navigateTo(target.pathname, this.state);
+                if (!target.closest('[data-popup]')) {
+                    this.navigateTo(target.pathname, this.state);
+                }
             }
             // TODO: если этого else не будет, то будет плохо при переходе по пинам с главной :)
             //       если ткнуть по сердечку или card-content блоку попасть, например

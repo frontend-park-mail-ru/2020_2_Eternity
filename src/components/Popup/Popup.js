@@ -55,77 +55,84 @@ export default class Popup extends BaseComponent {
             Popup._shadow.classList.add('modal-window__shadow');
             document.body.appendChild(Popup._shadow);
         }
-        this.startListeners();
     }
 
 
     /**
      * Привязывает обработчики к событиям:
      * click:
-     *      - href[data-modal] - открытие модального окна по клику на ссылку с атрибутом data-modal
      *      - btn close - закрытие модального окна по нажатию Х в окне
-     *
      * согласно Settings:
      *      - closeOnOverlay - если true: закрывать окно по клику вне окна
      *      - closeOnEsc - если true: закрывать окно по Esc
      *      - catchFocus - если true: переключать фокус на элементы внутри окна по Tab
      */
     startListeners() {
-        document.addEventListener('click', function (event) {
-            if (this.settings.closeOnCloseBtn && event.target.closest('[data-close]')) {
-                this.close();
-                return;
-            }
-            this.origin = event.target.closest('[' + this.settings.linkAttributeName + ']');
-            if (this.origin) {
-                event.preventDefault();
-                // targetSelector - #id окна, который будет открываться
-                const targetSelector = this.origin.getAttribute(this.settings.linkAttributeName);
-                this.open(targetSelector);
-            }
-        }.bind(this));
-
+        document.addEventListener('click', this.closeOnBtnBind.bind(this));
         if (this.settings.closeOnOverlay) {
-            this.closeOnOverlayBind();
+            document.addEventListener('mousedown', this.closeOnOverlayMousedownBind.bind(this));
+            document.addEventListener('mouseup', this.closeOnOverlayMouseupBind.bind(this));
         }
         if (this.settings.closeOnEsc) {
-            this.closeOnEscBind();
+            window.addEventListener('keydown', this.closeOnEscBind.bind(this));
         }
         if (this.settings.catchFocus) {
-            this.focusCatchOnTabBind();
+            window.addEventListener('keydown', this.focusCatchOnTabBind.bind(this));
         }
     }
 
     /**
-     * Event Listener для mouseclick
+     * Удаляет обработчики при закрытии окна
+     */
+    removeListeners() {
+        document.removeEventListener('click', this.closeOnBtnBind.bind(this));
+        if (this.settings.closeOnOverlay) {
+            document.removeEventListener('mousedown', this.closeOnOverlayMousedownBind.bind(this));
+            document.removeEventListener('mouseup', this.closeOnOverlayMouseupBind.bind(this));
+        }
+        if (this.settings.closeOnEsc) {
+            window.removeEventListener('keydown', this.closeOnEscBind.bind(this));
+        }
+        if (this.settings.catchFocus) {
+            window.removeEventListener('keydown', this.focusCatchOnTabBind.bind(this));
+        }
+    }
+
+    /**
+     * Event Listener для закрытия окна по крестику
+     * @param event
+     */
+    closeOnBtnBind(event) {
+        if (this.settings.closeOnCloseBtn && event.target.closest('[data-close]')) {
+            this.close();
+        }
+    }
+
+    /**
+     * Event Listeners для mouseclick
      * Проверяет клик (нажать/отпустить клавишу) по оверлею (wrap)
      * Нужно, чтобы закрытие не срабатывало, когда нажали, например, на оверлей, а отпустили в модальном окне
      */
-    closeOnOverlayBind() {
-        document.addEventListener('mousedown', (event) => {
-            if (event.target instanceof HTMLElement && event.target.classList.contains('modal-window__wrap')) {
-                this.checkOverlay = true;
-            }
-        })
-
-        document.addEventListener('mouseup', (event) => {
-            if (this.checkOverlay && event.target instanceof HTMLElement && event.target.classList.contains('modal-window__wrap')) {
-                this.close();
-            }
-            this.checkOverlay = false;
-        })
+    closeOnOverlayMouseupBind(event) {
+        if (this.checkOverlay && event.target instanceof HTMLElement && event.target.classList.contains('modal-window__wrap')) {
+            this.close();
+        }
+        this.checkOverlay = false;
+    }
+    closeOnOverlayMousedownBind(event) {
+        if (event.target instanceof HTMLElement && event.target.classList.contains('modal-window__wrap')) {
+            this.checkOverlay = true;
+        }
     }
 
     /**
      * Event Listener для Esc на закрытие окна
      */
-    closeOnEscBind() {
-        window.addEventListener('keydown', (event) => {
-            if (event.code === 'Escape' && this.isOpened) {
-                event.preventDefault();
-                this.close();
-            }
-        })
+    closeOnEscBind(event) {
+        if (event.code === 'Escape' && this.isOpened) {
+            event.preventDefault();
+            this.close();
+        }
     }
 
     /**
@@ -134,18 +141,16 @@ export default class Popup extends BaseComponent {
      * Проверяет, если фокус-элемент вне окна, а окно открыто, то перекидывает на 1й
      * элемент в окне для фокуса
      */
-    focusCatchOnTabBind() {
-        window.addEventListener('keydown', (event) => {
-            if (this.isOpened) {
-                const nodesArray = this.openedWindow.querySelectorAll(this._focusElements);
+    focusCatchOnTabBind(event) {
+        if (this.isOpened) {
+            const nodesArray = this.openedWindow.querySelectorAll(this._focusElements);
 
-                if (event.code === 'Tab') {
-                    if (!this.openedWindow.contains(document.activeElement)) {
-                        nodesArray[0].focus();
-                    }
+            if (event.code === 'Tab') {
+                if (!this.openedWindow.contains(document.activeElement)) {
+                    nodesArray[0].focus();
                 }
             }
-        })
+        }
     }
 
     /**
@@ -176,6 +181,7 @@ export default class Popup extends BaseComponent {
         this.openedWindow.setAttribute('aria-hidden', 'false');
 
         this.isOpened = true;
+        this.startListeners();
     }
 
 
@@ -196,6 +202,7 @@ export default class Popup extends BaseComponent {
 
         this.returnBodyScroll();
         this.isOpened = false;
+        this.removeListeners();
     }
 
     /**
@@ -218,7 +225,7 @@ export default class Popup extends BaseComponent {
     returnBodyScroll() {
         const html = document.documentElement;
 
-        if (this.isOpened === true) {
+        if (this.isOpened) {
             html.classList.remove('modal-window_opened');
             if (this.scrollPosition !== 0) {
                 window.scrollTo(0, this.scrollPosition);
@@ -227,5 +234,9 @@ export default class Popup extends BaseComponent {
         }
     }
 
-
+    formContent(content) {
+        if (this.isOpened) {
+            this.openedWindow.querySelector('.modal-window__window__content').innerHTML = content;
+        }
+    }
 }

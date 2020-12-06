@@ -40,6 +40,7 @@ export default class List extends BaseComponent {
     }
 
     formContentFromListObjects(list) {
+        this.clearContent();
         let res = '';
         list.forEach((elem) => {
             const item  = this.createItem(elem);
