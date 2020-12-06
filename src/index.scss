@@ -21,6 +21,8 @@
 @import "components/Search/Search.scss";
 @import "components/Userbar/Userbar.scss";
 @import "components/form/form.scss";
+@import "components/List/List";
+@import "components/List/Item/Item";
 @import "components/ThemeSwitcher/ThemeSwitcher";
 
 @import "views/Profile/Profile";
@@ -69,3 +71,6 @@ a:hover {
     margin-top: 70px;
 }
 
+.hidden {
+    display: none;
+}

@@ -18,9 +18,14 @@ import eventBus from "../../modules/tools/EventBus";
 import Search from "../../components/Search/Search";
 
 import Userbar from "../../components/Userbar/Userbar";
+import Item from "../../components/List/Item/Item";
+import List from "../../components/List/List";
+import Dialog from "../../components/Dialog/Dialog";
 
 
 export default class MainPage extends BaseView {
+    test
+
     popupPinView
     cards = []
     lastPin
@@ -34,10 +39,25 @@ export default class MainPage extends BaseView {
         this.template = template;
 
         // this.card = new Card();
-        this.test = new Dropdown({
-            id: 'dropdown1',
-            title: 'Доступные доски'
+        // this.test = new Dropdown({
+        //     id: 'dropdown1',
+        //     title: 'Доступные доски'
+        // });
+        const te = new Userbar({
+            username: 'example',
+            img_link: '/img/img11/.jpg',
+        })
+        const tee = new Dialog({
+            id: '1',
+            username: 'testing2',
+            text: 'abyrbalg',
+            time: '11:21'
+        })
+        this.test = new List({
+            id: 'test',
         });
+        this.test.addItem(te, "prepend");
+        this.test.addItem(tee, "append")
 
         this.lastPin = 0;
 
@@ -79,7 +99,7 @@ export default class MainPage extends BaseView {
         const data = {
             pins: this.list,
             users: this.users,
-            dropdown: this.test.render(),
+            test: this.test.render()
         }
 
         this.fillWith(data);

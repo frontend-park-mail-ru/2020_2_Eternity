@@ -15,16 +15,22 @@ export default class NotificationBell extends BaseComponent {
     }
 
     setNotificationsCount(data) {
+        this.countNews = data.num;
+        this.context.num = data.num;
         if (this.element) {
-            this.context.num = data.num;
+            if (this.countNews >= 100) {
+                this.element.querySelector('.notification__count').classList.add('notification__count_too-much');
+            }
             this.element.querySelector('.notification__count').innerHTML = data.num;
-            this.countNews = data.num;
         }
     }
     clearNotificationsCount() {
+        this.countNews = 0;
+        this.context.num = 0;
         if (this.element) {
             this.element.querySelector('.notification__count').innerHTML = '';
-            this.countNews = 0;
         }
     }
+
+    // TODO: inc, dec
 }

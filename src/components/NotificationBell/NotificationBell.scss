@@ -3,26 +3,34 @@
 
 .notification {
     position: relative;
-}
-.notification__bell {
-    @include color-assign(color, font-color--primary);
-}
-.notification__count {
-    position: absolute;
-    bottom: 0;
-    left: 10px;
 
-    display: inline-block;
-    max-width: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    &__bell {
+        @include color-assign(color, font-color--primary);
+    }
 
-    @include color-assign(color, font-color--white);
-    background-color: $color-green;
-    border-radius: 25px;
-    padding: 0 5px;
-    font-size: smaller;
+    &__count {
+        position: absolute;
+        bottom: 0;
+        left: 10px;
 
-    transition: all .3s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @include color-assign(color, font-color--white);
+        background-color: $color-green;
+        border-radius: 50%;
+        padding: 2px;
+        font-size: small;
+
+        transition: all .3s ease-in-out;
+
+        &_too-much {
+            color: transparent !important;
+        }
+    }
 }
