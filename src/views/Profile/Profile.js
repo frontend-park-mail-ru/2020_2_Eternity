@@ -6,11 +6,6 @@ import Avatar from "../../components/Avatar/Avatar.js";
 import Board from "../../components/Board/Board.js";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
-
-import eventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
-import {routes} from "../../modules/consts/routes";
-import {fakePins} from "../../modules/consts/fake";
 import Popup from "../../components/Popup/Popup";
 import Userbar from "../../components/Userbar/Userbar";
 import List from "../../components/List/List";
@@ -22,18 +17,22 @@ export default class ProfilePage extends BaseView {
     list
     pinCard
     boardCard
-    renderedPins = []
-    renderedBoards = []
+    deskContent
+    content
+    renderedPins
+    renderedBoards
 
     constructor(context = {}) {
         super('Профиль', context, null);
         this.template = template;
-        document.addEventListener('change', this.changeTabBind.bind(this))
     }
 
     render() {
         let pins = [];
         let boards = [];
+        this.content = '';
+        this.renderedPins = []
+        this.renderedBoards = []
 
         const avatar = new Avatar({
             img_link: this.context.avatar,
@@ -95,18 +94,22 @@ export default class ProfilePage extends BaseView {
         const follow = document.getElementById('follow');
         const followers = document.getElementById('userFollowers');
         const followings = document.getElementById('userFollowings');
+        const tabs = document.querySelector('.profile-tabs');
+        this.deskContent =  document.getElementById('desk-content');
 
         if (follow) {
             follow.addEventListener('click', this.onFollow);
         }
         followers.addEventListener('click', this.onShowFollowers);
         followings.addEventListener('click', this.onShowFollowings);
+        tabs.addEventListener('change', this.onTabChange);
+        this.deskContent.addEventListener('animationend', this.onAnimationEnd);
+        this.deskContent.addEventListener('animationend', this.onShowNewContent);
     }
 
     formFollowList(users) {
-        if (!users) {
-            this.list.clearContent();
-        } else {
+        this.list.clearContent();
+        if (users) {
             let list = [];
             users.forEach((user) => {
                 const bar = new Userbar({...user});
@@ -116,30 +119,15 @@ export default class ProfilePage extends BaseView {
         }
     }
 
-    checkTabClick(event) {
-        return !!(event.target instanceof HTMLInputElement && event.target.closest('.profile-tabs'));
-    }
-
-    changeTabBind(event) {
-        if (this.checkTabClick(event)) {
-            switch(event.target.id.replace('tab', '')) {
-                case 'pin':
-                    this.changeDeskContent(this.renderedPins.join('\n'));
-                    break;
-                case 'board':
-                    this.changeDeskContent(this.renderedBoards.join('\n'));
-                    break;
-                default:
-                    const all = [...this.renderedPins, ...this.renderedBoards];
-                    this.changeDeskContent(all.join('\n'));
-                    break;
-            }
-        }
-    }
-
     changeDeskContent(newContent) {
-        document.getElementById('desk-content').innerHTML = newContent;
+        this.deskContent.classList.add('fade-out');
+        this.content = newContent;
     }
+
+    removeAnimation(event) {
+        event.path[0].classList.remove(event.animationName);
+    }
+
     changeUserFollowersNum(num) {
         document.getElementById('userFollowers').innerHTML = num + ' подписчиков';
     }

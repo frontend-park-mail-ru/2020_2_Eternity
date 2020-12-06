@@ -1,6 +1,7 @@
 import eventBus from "../tools/EventBus.js";
 import {Events} from "../consts/events.js";
 import {routes} from "../consts/routes.js";
+import EventBus from "../tools/EventBus.js";
 
 export default class Router {
     container
@@ -184,13 +185,9 @@ export default class Router {
      * @returns {HTMLAnchorElement}
      */
     checkRouteAnchor(target) {
-        if (target instanceof HTMLAnchorElement) {
-            return target;
+        if (target instanceof HTMLElement && target.closest('a')) {
+            return target.closest('a');
         }
-        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
-            return target.parentElement;
-        }
-        return target;
     }
 
     /**
@@ -204,15 +201,10 @@ export default class Router {
             if (target instanceof HTMLAnchorElement) {
                 evt.preventDefault();
                 if (!target.closest('[data-popup]')) {
-                    this.navigateTo(target.pathname, this.state);
+                    EventBus.emit(Events.pathChanged, {path: target.pathname});
+                    // this.navigateTo(target.pathname, this.state);
                 }
             }
-            // TODO: если этого else не будет, то будет плохо при переходе по пинам с главной :)
-            //       если ткнуть по сердечку или card-content блоку попасть, например
-            //       но без этого не будут работать кнопки ugh
-            // else {
-            //     evt.preventDefault();
-            // }
         });
 
         window.addEventListener('popstate', () => {

@@ -11,6 +11,7 @@ import {routes} from "../modules/consts/routes.js";
 import Navbar from "../components/Navbar/Navbar";
 import PinModel from "../models/PinModel";
 import BoardModel from "../models/BoardModel";
+import EventBus from "../modules/tools/EventBus";
 
 export default class ProfileController extends BaseController {
     type;
@@ -33,6 +34,9 @@ export default class ProfileController extends BaseController {
         this.view.onFollow = this.onFollow.bind(this);
         this.view.onShowFollowers = this.onShowFollowers.bind(this);
         this.view.onShowFollowings = this.onShowFollowings.bind(this);
+        this.view.onTabChange = this.onTabChange.bind(this);
+        this.view.onAnimationEnd = this.onAnimationEnd.bind(this);
+        this.view.onShowNewContent = this.onShowNewContent.bind(this);
 
         (this.type === 'view' ? UserModel.getUserProfile(data) : UserModel.getProfile()).then((response) => {
             if (Navbar.context.isAuth) {
@@ -71,6 +75,7 @@ export default class ProfileController extends BaseController {
     }
 
     off() {
+        this.view.followPopup.close();
         eventBus.off(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
         eventBus.off(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.off(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
@@ -150,4 +155,28 @@ export default class ProfileController extends BaseController {
         }
     }
 
+    onTabChange(event) {
+        if (event.target instanceof HTMLInputElement) {
+            switch(event.target.id.replace('tab', '')) {
+                case 'pin':
+                    this.view.changeDeskContent(this.view.renderedPins.join('\n'));
+                    break;
+                case 'board':
+                    this.view.changeDeskContent(this.view.renderedBoards.join('\n'));
+                    break;
+                default:
+                    this.view.changeDeskContent([...this.view.renderedPins, ...this.view.renderedBoards].join('\n'));
+                    break;
+            }
+        }
+    }
+    onAnimationEnd(event) {
+        this.view.removeAnimation(event);
+    }
+    onShowNewContent(event) {
+        if (event.animationName === 'fade-out') {
+            this.view.deskContent.innerHTML = this.view.content;
+            this.view.deskContent.classList.add('fade-in');
+        }
+    }
 }

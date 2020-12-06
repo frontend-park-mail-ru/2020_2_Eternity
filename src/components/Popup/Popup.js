@@ -1,6 +1,8 @@
 import template from "./Popup.hbs"
 
 import BaseComponent from "../BaseComponent.js";
+import EventBus from "../../modules/tools/EventBus";
+import {Events} from "../../modules/consts/events";
 
 
 export default class Popup extends BaseComponent {
@@ -179,7 +181,6 @@ export default class Popup extends BaseComponent {
         }
         this.openedWindow.classList.add('modal-window_active');
         this.openedWindow.setAttribute('aria-hidden', 'false');
-
         this.isOpened = true;
         this.startListeners();
     }
@@ -234,7 +235,15 @@ export default class Popup extends BaseComponent {
         }
     }
 
+    clearContent() {
+        this.context.content = '';
+        if (this.isOpened) {
+            this.openedWindow.querySelector('.modal-window__window__content').innerHTML = '';
+        }
+    }
+
     formContent(content) {
+        this.context.content = content;
         if (this.isOpened) {
             this.openedWindow.querySelector('.modal-window__window__content').innerHTML = content;
         }
