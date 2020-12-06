@@ -237,9 +237,7 @@ export default class Popup extends BaseComponent {
 
     clearContent() {
         this.context.content = '';
-        if (this.isOpened) {
-            this.openedWindow.querySelector('.modal-window__window__content').innerHTML = '';
-        }
+        document.querySelector('.modal-window__window__content').innerHTML = '';
     }
 
     formContent(content) {

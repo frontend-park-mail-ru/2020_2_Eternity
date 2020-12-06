@@ -74,6 +74,7 @@
     width: 30px;
     height: 30px;
 
+    @include color-assign(background-color, accent);
     position: absolute;
     top: 10px;
     right: 15px;
@@ -82,12 +83,14 @@
     border: none;
     cursor: pointer;
     outline: none;
-}
+    transition: .2s ease-in-out;
 
-.modal-window__close__icon {
-    width: 10px;
+    &__icon {
+        width: 10px;
+        @include color-assign(color, font-color--primary);
+        transition: .2s ease-in-out;
+    }
 }
-
 
 
 /* ------------------ Обертка ------------------ */
@@ -127,7 +130,7 @@
     opacity: 0;
     overflow: visible;
 
-    transition: all .2s ease;
+    transition: all .2s ease, background-color .2s ease-in-out;
     transform: scale(0.9);
 }
 .modal-window_active .modal-window__window {

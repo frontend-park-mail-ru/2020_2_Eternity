@@ -58,7 +58,7 @@ export default class ProfilePage extends BaseView {
         this.pinCard = new Card();
         this.boardCard = new Board();
         this.userbar = new Userbar();
-        this.list = new List({id: 'follows'});
+        this.list = new List({id: 'follows', placeholder: 'Нет пользователей'});
         this.followPopup = new Popup({
             id: 'followPopup',
         })

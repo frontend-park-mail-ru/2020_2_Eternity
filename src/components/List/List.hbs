@@ -1,3 +1,7 @@
 <ul class="list" id="{{id}}">
-    {{{content}}}
+    {{#if content}}
+        {{{content}}}
+    {{else}}
+        {{{placeholder}}}
+    {{/if}}
 </ul>

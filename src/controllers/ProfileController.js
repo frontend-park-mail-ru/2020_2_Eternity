@@ -151,6 +151,7 @@ export default class ProfileController extends BaseController {
         if (origin) {
             const targetSelector = origin.getAttribute('data-popup');
             this.view.followPopup.origin = origin;
+            this.view.followPopup.clearContent();
             this.view.followPopup.open(targetSelector);
         }
     }
