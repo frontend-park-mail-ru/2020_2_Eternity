@@ -33,7 +33,7 @@ class SessionController extends BaseController {
             }).then((responseJSON) => {
                 eventBus.emit(Events.newNotifications, {num: responseJSON.length});
             });
-        }, 1000);
+        }, 1000000);
 
         eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
         eventBus.on(Events.userLogout, this.onLogout.bind(this));

@@ -182,12 +182,22 @@ export default class Router {
      * Возвращает HTMLAnchorElement, для которого необходимо перейти по ссылке (пин, ссылка)
      *
      * @param target
-     * @returns {HTMLAnchorElement}
+     * @returns { {target: Element || null, pathname: string || null} }
      */
     checkRouteAnchor(target) {
-        if (target instanceof HTMLElement && target.closest('a')) {
-            return target.closest('a');
+        if (target.closest('a')) {
+            return {
+                target: target.closest('a'),
+                pathname: target.closest('a').pathname
+            }
         }
+        if (target.closest('[data-link]')) {
+            return {
+                target: target.closest('[data-link]'),
+                pathname: target.closest('[data-link]').getAttribute('data-link')
+            }
+        }
+        return {target: null, pathname: null}
     }
 
     /**
@@ -195,13 +205,12 @@ export default class Router {
      */
     start() {
         this.container.addEventListener('click', (evt) => {
-            let {target} = evt;
-            target = this.checkRouteAnchor(target);
+            const {target, pathname} = this.checkRouteAnchor(evt.target);
 
-            if (target instanceof HTMLAnchorElement) {
+            if (target) {
                 evt.preventDefault();
                 if (!target.closest('[data-popup]')) {
-                    EventBus.emit(Events.pathChanged, {path: target.pathname});
+                    EventBus.emit(Events.pathChanged, {path: pathname});
                     // this.navigateTo(target.pathname, this.state);
                 }
             }

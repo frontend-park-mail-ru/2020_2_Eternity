@@ -13,6 +13,7 @@ import ProfileController from "./controllers/ProfileController.js";
 import CreateController from "./controllers/CreateController.js";
 import ChatController from "./controllers/ChatController.js";
 import SessionController from "./controllers/SessionController.js";
+import SettingsController from "./controllers/SettingsController";
 
 const application = document.getElementById('app');
 
@@ -35,8 +36,8 @@ router
     .add(routes.boardPage, new BoardController)
     .add(routes.pinCreatingPage, new CreateController('pin'))
     .add(routes.boardCreatingPage, new CreateController('board'))
-    .add(routes.profilePage, new ProfileController('view'))
-    .add(routes.settingsPage, new ProfileController('edit'))
+    .add(routes.profilePage, new ProfileController)
+    .add(routes.settingsPage, new SettingsController)
     .add(routes.chatPage, new ChatController)
 router.start();
 

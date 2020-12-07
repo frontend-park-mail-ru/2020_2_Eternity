@@ -41,7 +41,7 @@ export default class BaseView {
     }
 
     clear() {
-        this.#app.innerHTML = '';
+        // this.#app.innerHTML = '';
     }
 
     fillWith(...data) {

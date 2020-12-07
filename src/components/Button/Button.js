@@ -17,7 +17,6 @@ export default class Button extends BaseComponent {
             this.states[key] = value;
         })
         this.init();
-        document.addEventListener('click', this.checkBtnLink.bind(this));
     }
 
     init() {
@@ -54,12 +53,6 @@ export default class Button extends BaseComponent {
             return true;
         }
         return false;
-    }
-    checkBtnLink(event) {
-        if (this.checkBtnClick(event) && event.target.closest('[data-link]')) {
-            const href = this.button.getAttribute('data-link');
-            EventBus.emit(Events.pathChanged, {path: href})
-        }
     }
 
     changeBtnStateSequentially(event) {
