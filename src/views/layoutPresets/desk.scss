@@ -7,15 +7,16 @@
   margin: 20px auto;
   padding: 0;
 
-  li {
+  &__item {
     list-style-type: none;
     display: flex;
     justify-content: center;
-
     animation: .2s ease-in both fade-in;
 
-    &:nth-child(even) {
-      animation-delay: .04s;
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        animation-delay: $i * (.04s);
+      }
     }
   }
 }

@@ -6,6 +6,7 @@ import ProfilePage from "../views/Profile/Profile.js";
 import Navbar from "../components/Navbar/Navbar";
 import PinModel from "../models/PinModel";
 import BoardModel from "../models/BoardModel";
+import EventBus from "../modules/tools/EventBus.js";
 
 export default class ProfileController extends BaseController {
     constructor() {
@@ -54,6 +55,14 @@ export default class ProfileController extends BaseController {
 
     off() {
         this.view.followPopup.close();
+        if (this.view.follow) {
+            this.view.follow.removeEventListener('click', this.view.onFollow);
+        }
+        this.view.followers.removeEventListener('click', this.view.onShowFollowers);
+        this.view.followings.removeEventListener('click', this.view.onShowFollowings);
+        this.view.tabs.removeEventListener('change', this.view.onTabChange);
+        this.view.deskContent.removeEventListener('animationend', this.view.onAnimationEnd);
+        this.view.deskContent.removeEventListener('animationend', this.view.onShowNewContent);
 
         super.off();
     }
@@ -61,9 +70,8 @@ export default class ProfileController extends BaseController {
     onFollow(event) {
         event.preventDefault();
         UserModel.followUser({username: this.view.context.username}).then((response) => {
-            if (!response.error) {
-                console.log(response)
-                this.view.changeUserFollowersNum(this.view.context.followers++);
+            if (response.ok) {
+                this.view.changeUserFollowersNum(++this.view.context.followers);
             }
         }).catch((error) => console.log(error));
     }

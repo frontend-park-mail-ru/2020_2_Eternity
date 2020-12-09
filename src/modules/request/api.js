@@ -32,6 +32,10 @@ export const urls = {
     followers: `/${apiPath}/followers/:username`,
     followings: `/${apiPath}/following/:username`,
 
-    notifications: `/${apiPath}/notifications`
+    notifications: `/${apiPath}/notifications`,
+
+    ws: `/ws`,
+    userChats: `/${apiPath}/chat`,
+    chatById: `/${apiPath}/chat/:id`,
 }
 

@@ -5,13 +5,14 @@ import {Events} from "../modules/consts/events.js";
 import UserModel from "../models/UserModel";
 
 export default class BaseView {
+    title
     context
     template
     navbar
     #app
 
     constructor(title, context = {}, template) {
-        document.title = title;
+        this.title = title;
         this.template = template;
         this.context = context;
         this.notificationLock = true;
@@ -21,6 +22,8 @@ export default class BaseView {
     }
 
     render() {
+        document.title = 'Pinteo • ' + this.title;
+
         this.context['navbar'] = this.navbar.render();
         this.#app.innerHTML = this.template(this.context);
 
@@ -41,7 +44,7 @@ export default class BaseView {
     }
 
     clear() {
-        // this.#app.innerHTML = '';
+        this.context = {};
     }
 
     fillWith(...data) {

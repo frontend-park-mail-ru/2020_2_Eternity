@@ -12,15 +12,25 @@ import List from "../../components/List/List";
 
 
 export default class ProfilePage extends BaseView {
+    // for followers list in popup
     followPopup
     userbar
     list
+
+    // for profile desk with pins and cards
     pinCard
     boardCard
-    deskContent
+
     content
     renderedPins
     renderedBoards
+
+    // for event listeners
+    deskContent
+    follow
+    followers
+    followings
+    tabs
 
     constructor(context = {}) {
         super('Профиль', context, null);
@@ -33,6 +43,9 @@ export default class ProfilePage extends BaseView {
         this.content = '';
         this.renderedPins = []
         this.renderedBoards = []
+        this.pinCard = new Card();
+        this.boardCard = new Board();
+        this.userbar = new Userbar();
 
         const avatar = new Avatar({
             img_link: this.context.avatar,
@@ -45,8 +58,8 @@ export default class ProfilePage extends BaseView {
         const btnMessage = new Button({
             id: 'message',
             text: 'Сообщение',
-            link: true,
-            href: '/messages',
+            chat: true,
+            collocutor: this.context.username,
         })
         const btnEdit = new Button({
             id: 'edit',
@@ -55,9 +68,6 @@ export default class ProfilePage extends BaseView {
             link: true,
             href: '/profile/edit',
         })
-        this.pinCard = new Card();
-        this.boardCard = new Board();
-        this.userbar = new Userbar();
         this.list = new List({id: 'follows', placeholder: 'Нет пользователей'});
         this.followPopup = new Popup({
             id: 'followPopup',
@@ -91,18 +101,19 @@ export default class ProfilePage extends BaseView {
         this.fillWith(data);
         super.render()
 
-        const follow = document.getElementById('follow');
-        const followers = document.getElementById('userFollowers');
-        const followings = document.getElementById('userFollowings');
-        const tabs = document.querySelector('.profile-tabs');
-        this.deskContent =  document.getElementById('desk-content');
+        this.follow = document.getElementById('follow');
+        this.followers = document.getElementById('userFollowers');
+        this.followings = document.getElementById('userFollowings');
+        this.tabs = document.querySelector('.profile-tabs');
 
-        if (follow) {
-            follow.addEventListener('click', this.onFollow);
+        if (this.follow) {
+            this.follow.addEventListener('click', this.onFollow);
         }
-        followers.addEventListener('click', this.onShowFollowers);
-        followings.addEventListener('click', this.onShowFollowings);
-        tabs.addEventListener('change', this.onTabChange);
+        this.followers.addEventListener('click', this.onShowFollowers);
+        this.followings.addEventListener('click', this.onShowFollowings);
+        this.tabs.addEventListener('change', this.onTabChange);
+
+        this.deskContent =  document.getElementById('desk-content');
         this.deskContent.addEventListener('animationend', this.onAnimationEnd);
         this.deskContent.addEventListener('animationend', this.onShowNewContent);
     }

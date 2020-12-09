@@ -1,15 +1,13 @@
 import template from "./Navbar.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-
-import eventBus from "../../modules/tools/EventBus.js";
-import {Events} from "../../modules/consts/events.js";
 import NotificationBell from "../NotificationBell/NotificationBell";
 import Search from "../Search/Search";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
-import Popup from "../Popup/Popup";
 import Dropdown from "../Dropdown/Dropdown";
 
+import eventBus from "../../modules/tools/EventBus.js";
+import {Events} from "../../modules/consts/events.js";
 
 class Navbar extends BaseComponent {
     burger
@@ -31,11 +29,13 @@ class Navbar extends BaseComponent {
             dataAttr: 'data-activates="' + this.dropdown.context.id + '"',
         })
 
-        this.context.notification = this.notificationBell.render();
-        this.context.search = this.search.render();
-        this.context.theme = this.themeSwitcher.render();
-        this.context.notificationsDropdown = this.dropdown.render();
-
+        const data = {
+            notification: this.notificationBell.render(),
+            search: this.search.render(),
+            theme: this.themeSwitcher.render(),
+            notificationsDropdown: this.dropdown.render(),
+        }
+        this.context = {...data};
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
     }
 

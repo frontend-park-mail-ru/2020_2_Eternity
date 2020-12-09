@@ -12,8 +12,10 @@ import BoardController from "./controllers/BoardController.js";
 import ProfileController from "./controllers/ProfileController.js";
 import CreateController from "./controllers/CreateController.js";
 import ChatController from "./controllers/ChatController.js";
-import SessionController from "./controllers/SessionController.js";
 import SettingsController from "./controllers/SettingsController";
+
+import SessionController from "./controllers/SessionController.js";
+import NotificationsController from "./controllers/NotificationsController";
 
 const application = document.getElementById('app');
 
@@ -41,3 +43,4 @@ router
     .add(routes.chatPage, new ChatController)
 router.start();
 
+NotificationsController.on()

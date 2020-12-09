@@ -78,15 +78,54 @@ export default class Sidebar extends BaseComponent {
     /**
      * Добавляет в список новый элемент
      * @param rendered - component.render()
+     * @param value
      */
-    addItem(rendered) {
+    addItem(rendered, value='') {
         this.getAside();
         if (this.aside) {
-            const list = this.aside.querySelector('.sidebar__list');
-            let item = document.createElement('li');
-            item.classList.add('sidebar__list__item');
-            item.innerHTML = rendered;
-            list.append(item);
+            const item = this.createItem(rendered, value);
+            this.aside.querySelector('.sidebar__list').append(item);
         }
     }
+    formSidebarContent(list) {
+        this.getAside();
+        if (this.aside) {
+            const s = this.aside.querySelector('.sidebar__list');
+            let res = '';
+            list.forEach((r) => {
+                const item = this.createItem(r.rendered, r.value);
+                res += item.outerHTML;
+            })
+            s.innerHTML = res;
+        }
+    }
+    createItem(rendered, value='') {
+        const item = document.createElement('li');
+        item.classList.add('sidebar__list__item');
+        const selectable = document.createElement('input');
+        selectable.type = 'radio';
+        selectable.value = value;
+        selectable.classList.add('sidebar__list__item__radio')
+        selectable.id = value;
+        selectable.name = 'sidebarItem'
+
+        item.insertAdjacentHTML('beforeend', rendered);
+        item.insertAdjacentElement('beforeend', selectable);
+        return item;
+    }
+
+    findItemById(id) {
+        if (this.aside) {
+            return !!document.getElementById(id);
+        }
+    }
+    getItemById(id) {
+        return document.getElementById(id).previousElementSibling;
+    }
+    // replaceItem(id, newRendered, newValue) {
+    //     const newItem = this.createItem(newRendered, newValue)
+    //     if (this.findItemById(id)) {
+    //         document.getElementById(id).parentElement.outerHTML = newItem.outerHTML;
+    //     }
+    // }
 }

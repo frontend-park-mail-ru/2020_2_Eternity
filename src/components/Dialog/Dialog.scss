@@ -2,18 +2,21 @@
 @import "src/themes";
 
 .dialog {
-    display: grid;
-    grid-template-areas: "avatar content info";
+    display: flex;
     align-items: center;
     padding: 5px 10px;
     margin: 10px auto;
+
+    .avatar {
+        min-width: 40px;
+    }
 }
 .dialog_unread {
     @include color-assign(background-color, secondary);
 }
 .dialog__content {
-    grid-area: content;
     overflow: hidden;
+    width: 100%;
     padding: 0 10px;
 }
 .dialog__content__user {
@@ -26,7 +29,6 @@
     text-overflow: ellipsis;
 }
 .dialog__info {
-    grid-area: info;
     display: flex;
     position: relative;
     height: 100%;

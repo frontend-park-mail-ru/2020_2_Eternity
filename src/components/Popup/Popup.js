@@ -26,6 +26,13 @@ export default class Popup extends BaseComponent {
         if (this.settings.linkAttributeName){
             this.init();
         }
+
+        this.closeOnBtn = this.closeOnBtnBind.bind(this);
+        this.closeOnOverlayMousedown = this.closeOnOverlayMousedownBind.bind(this);
+        this.closeOnOverlayMouseup = this.closeOnOverlayMouseupBind.bind(this);
+        this.closeOnEsc = this.closeOnEscBind.bind(this);
+        this.focusCatchOnTab = this.focusCatchOnTabBind.bind(this);
+
     }
 
     static shadow = false;
@@ -70,16 +77,16 @@ export default class Popup extends BaseComponent {
      *      - catchFocus - если true: переключать фокус на элементы внутри окна по Tab
      */
     startListeners() {
-        document.addEventListener('click', this.closeOnBtnBind.bind(this));
+        document.addEventListener('click', this.closeOnBtn);
         if (this.settings.closeOnOverlay) {
-            document.addEventListener('mousedown', this.closeOnOverlayMousedownBind.bind(this));
-            document.addEventListener('mouseup', this.closeOnOverlayMouseupBind.bind(this));
+            document.addEventListener('mousedown', this.closeOnOverlayMousedown);
+            document.addEventListener('mouseup', this.closeOnOverlayMouseup);
         }
         if (this.settings.closeOnEsc) {
-            window.addEventListener('keydown', this.closeOnEscBind.bind(this));
+            window.addEventListener('keydown', this.closeOnEsc);
         }
         if (this.settings.catchFocus) {
-            window.addEventListener('keydown', this.focusCatchOnTabBind.bind(this));
+            window.addEventListener('keydown', this.focusCatchOnTab);
         }
     }
 
@@ -87,16 +94,16 @@ export default class Popup extends BaseComponent {
      * Удаляет обработчики при закрытии окна
      */
     removeListeners() {
-        document.removeEventListener('click', this.closeOnBtnBind.bind(this));
+        document.removeEventListener('click', this.closeOnBtn);
         if (this.settings.closeOnOverlay) {
-            document.removeEventListener('mousedown', this.closeOnOverlayMousedownBind.bind(this));
-            document.removeEventListener('mouseup', this.closeOnOverlayMouseupBind.bind(this));
+            document.removeEventListener('mousedown', this.closeOnOverlayMousedown);
+            document.removeEventListener('mouseup', this.closeOnOverlayMouseup);
         }
         if (this.settings.closeOnEsc) {
-            window.removeEventListener('keydown', this.closeOnEscBind.bind(this));
+            window.removeEventListener('keydown', this.closeOnEsc);
         }
         if (this.settings.catchFocus) {
-            window.removeEventListener('keydown', this.focusCatchOnTabBind.bind(this));
+            window.removeEventListener('keydown', this.focusCatchOnTab);
         }
     }
 

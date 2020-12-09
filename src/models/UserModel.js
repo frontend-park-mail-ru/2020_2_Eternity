@@ -66,7 +66,7 @@ class UserModel {
 
     followUser(data = {}) {
         return request.followUser(data.username).then((response) => {
-            return response.json();
+            return response;
         });
     }
 
@@ -77,6 +77,12 @@ class UserModel {
     }
     getFollowings(data={}) {
         return request.getFollowings(data.username).then((response) => {
+            return response.json();
+        })
+    }
+
+    getNotifications() {
+        return request.getNotifications().then((response) => {
             return response.json();
         })
     }

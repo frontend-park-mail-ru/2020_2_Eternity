@@ -1,5 +1,5 @@
-// const socket = new WebSocket('wss://localhost');
-
+import {requestTypeWS, responseTypeWS} from "./messageTypes";
+import EventBus from "../tools/EventBus";
 
 export default class ws {
     /**
@@ -8,22 +8,14 @@ export default class ws {
      * @param {string} method - type
      * @param data
      */
-    static sendCommand(socket, method, data={}) {
+    static sendCommand(socket, method, data = {}) {
         const msg = {
             type: method,
-            ...data
+            data: this.encodeUTF8(JSON.stringify(data)),
         };
-        socket.send(JSON.stringify(msg));
-    }
-
-    /**
-     * Функция уведомляет бэк о том что отправлено сообщение
-     * @param socket
-     * @param text
-     * @param owner
-     */
-    static sendMessage(socket, text, owner) {
-        ws.sendCommand(socket, 'message', { text, owner })
+        // TODO: сюда нужен промис, иначе вебсокет будет ругаться что не открыт или занят
+        // socket.onopen = () => {  socket.send(JSON.stringify(msg)) };
+        socket.send(JSON.stringify(msg))
     }
 
     /**
@@ -33,14 +25,36 @@ export default class ws {
      * @param {string} username - сторона, открывающая сокет
      */
     static on(socket, store, username) {
-        socket.onmessage = (message) => {
-            console.log(message);
-            ws.onResponse(store, message, socket, username);
+        socket.onmessage = (response) => {
+            ws.onResponse(store, response, socket, username);
         }
     }
 
     /**
-     * Поведение в зависимости от типа пришедшего сообщения на бэк
+     * Функция уведомляет бэк о том что отправлено сообщение
+     * @param socket
+     * @param chatId
+     * @param text
+     */
+    static sendMessage(socket, chatId, text) {
+        ws.sendCommand(socket, requestTypeWS.createMessage, {chat_id: parseInt(chatId), content: text});
+    }
+
+    static sendGetLastMessages(socket, chatId) {
+        ws.sendCommand(socket, requestTypeWS.getLastMessages, {chat_id: parseInt(chatId), messages: 15})
+    }
+
+    static sendGetHistoryMessages(socket, chatId, lastMessageId) {
+        ws.sendCommand(socket, requestTypeWS.getHistoryMessages, {
+            chat_id: chatId,
+            n_messages: 15,
+            message_id: lastMessageId
+        });
+    }
+
+
+    /**
+     * Поведение в зависимости от типа пришедшего сообщения
      * @param store
      * @param response
      * @param {WebSocket} socket
@@ -48,23 +62,68 @@ export default class ws {
      */
     static onResponse(store, response, socket, username) {
         const data = ws.parseMessage(response.data);
-        console.log(data);
-        const {type, payload} = data;
+        const {type, status, payload} = data;
 
+        let isOwn;
+        let time;
         switch (type) {
-            case 'message': {
-                const isOwn = payload.owner === username;
-                // TODO: с бэка должно приходить вроде как
-                let time = new Date;
-                time = time.getHours() + ':' + time.getMinutes();
-                store.EventBus.emit(store.Events.messageReceived, {msg: payload.text, time: time, owner: isOwn})
-                // if (!ownMessage) {
-                // sendNotification(`New Message from ${payload.userName}`, payload.text, chatIcon);
-                // }
+            case responseTypeWS.createMessage:
+                isOwn = payload.username === username;
+                time = new Date(payload.time);
+                store.EventBus.emit(store.Events.messageReceived, {
+                    msg: payload.content,
+                    time: time.getHours() + ':' + time.getMinutes(),
+                    owner: isOwn
+                })
                 break;
-            }
+
+            case responseTypeWS.getLastMessages:
+            case responseTypeWS.getHistoryMessages:
+                let list = [];
+                payload.forEach((m) => {
+                    const time = new Date(m.time);
+                    list.push({
+                        msg: m.content,
+                        time: time.getHours() + ':' + time.getMinutes(),
+                        owner: m.username === username,
+                    })
+                })
+                store.EventBus.emit(store.Events.chatLastMessagesReceived, {list: list})
+                break;
+
+            case responseTypeWS.noteFollow:
+                store.EventBus.emit(store.Events.follow, {})
+                store.EventBus.emit(store.Events.addNotification, {})
+                break;
+
+            case responseTypeWS.notePin:
+            case responseTypeWS.noteComment:
+                store.EventBus.emit(store.Events.addNotification, {});
+                break;
+
+            case responseTypeWS.noteMessage:
+                isOwn = payload.username === username;
+                time = new Date(payload.time);
+                store.EventBus.emit(store.Events.getNewMessage, {
+                    chatId: payload.chat_id,
+                    id: payload.chat_id,
+                    msg: payload.content,
+                    time: time.getHours() + ':' + time.getMinutes(),
+                    last_msg_time: time.getHours() + ':' + time.getMinutes(),
+                    owner: isOwn,
+                    collocutor_ava: payload.avatar,
+                    last_msg_content: payload.content,
+                    collocutor_name: payload.username,
+                })
+                // store.EventBus.emit(store.Events.addNotification, {});
+                break;
+
+            default:
+                console.log(data);
+                break;
         }
     }
+
 
     /**
      * Парсит сообщение от бэка
@@ -82,41 +141,83 @@ export default class ws {
         if (dataError) {
             return {error: true};
         }
-
-        const {type} = data;
-        delete data.type;
         return {
-            type: type,
-            payload: data,
+            type: data.type,
+            status: data.status,
+            payload: JSON.parse(this.decodeB64(data.data)),
         };
+    }
+
+    static parseNotification(note) {
+        let dataError = false;
+        let data;
+        console.log({
+            type: note.type,
+            time: new Date(note.creation_time),
+            payload: this.decodeB64(note.data)
+        })
+    }
+
+    static encodeUTF8(str) {
+        return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    static decodeB64(str) {
+        return decodeURIComponent(escape(atob(str)));
     }
 }
 
 
-
-
-
-// socket.onopen = function(e) {
-//     alert("[open] Соединение установлено");
-//     alert("Отправляем данные на сервер");
-//     socket.send("Меня зовут Джон");
-// };
 //
-// socket.onmessage = function(event) {
-//     alert(`[message] Данные получены с сервера: ${event.data}`);
-// };
 //
-// socket.onclose = function(event) {
-//     if (event.wasClean) {
-//         alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-//     } else {
-//         // например, сервер убил процесс или сеть недоступна
-//         // обычно в этом случае event.code 1006
-//         alert('[close] Соединение прервано');
+// class Websocket extends Object {
+//     socketPromise
+//     socket
+//
+//     get newPromise() {
+//         return new Promise(((resolve, reject) => {
+//             this.socket = new WebSocket('ws://localhost:8008/ws');
+//             this.socket.onopen = () => {
+//                 console.log('WS connected');
+//                 resolve(this.socket);
+//             }
+//             this.socket.onerror = (error) => {reject(error)};
+//         }))
 //     }
-// };
 //
-// socket.onerror = function(error) {
-//     alert(`[error] ${error.message}`);
-// };
+//     get Promise() {
+//         if (!this.socketPromise) {
+//             this.socketPromise = this.newPromise;
+//         }
+//         return this.socketPromise;
+//     }
+// }
+//
+// export default new Websocket();
 
+
+//
+// // socket.onopen = function(e) {
+// //     alert("[open] Соединение установлено");
+// //     alert("Отправляем данные на сервер");
+// //     socket.send("Меня зовут Джон");
+// // };
+// //
+// // socket.onmessage = function(event) {
+// //     alert(`[message] Данные получены с сервера: ${event.data}`);
+// // };
+// //
+// // socket.onclose = function(event) {
+// //     if (event.wasClean) {
+// //         alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+// //     } else {
+// //         // например, сервер убил процесс или сеть недоступна
+// //         // обычно в этом случае event.code 1006
+// //         alert('[close] Соединение прервано');
+// //     }
+// // };
+// //
+// // socket.onerror = function(error) {
+// //     alert(`[error] ${error.message}`);
+// // };
+//

@@ -185,6 +185,9 @@ export default class Router {
      * @returns { {target: Element || null, pathname: string || null} }
      */
     checkRouteAnchor(target) {
+        if (target.closest('[data-activates]') || target.closest('[data-popup]')) {
+            return {target: target, pathname: null};
+        }
         if (target.closest('a')) {
             return {
                 target: target.closest('a'),
@@ -206,10 +209,9 @@ export default class Router {
     start() {
         this.container.addEventListener('click', (evt) => {
             const {target, pathname} = this.checkRouteAnchor(evt.target);
-
             if (target) {
                 evt.preventDefault();
-                if (!target.closest('[data-popup]')) {
+                if (pathname) {
                     EventBus.emit(Events.pathChanged, {path: pathname});
                     // this.navigateTo(target.pathname, this.state);
                 }

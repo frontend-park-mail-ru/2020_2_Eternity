@@ -10,8 +10,17 @@ export default class NotificationBell extends BaseComponent {
 
     constructor(context = {}) {
         super(template, context);
+        this.countNews = 0;
         EventBus.on(Events.newNotifications, this.setNotificationsCount.bind(this))
         EventBus.on(Events.clearNotifications, this.clearNotificationsCount.bind(this))
+        EventBus.on(Events.addNotification, this.addNotification.bind(this))
+    }
+
+    addNotification() {
+        ++this.countNews;
+        if (this.element) {
+            this.element.querySelector('.notification__count').innerHTML = this.countNews.toString();
+        }
     }
 
     setNotificationsCount(data) {

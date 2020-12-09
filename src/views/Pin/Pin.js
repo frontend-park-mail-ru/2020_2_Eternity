@@ -113,11 +113,15 @@ export default class PinPage extends BaseView {
     addCommentToList(data = {}) {
         this.comment.context = data;
         this.comment.context.username = this.comment.context.Username;
-        this.context.commentListRendered.push(this.comment.render());
         let li = document.createElement('li');
         let ul = document.getElementById('commentList')
         li.innerHTML = this.comment.render();
+
+        if (this.context.commentListRendered.length === 0) {
+            ul.innerHTML = '';
+        }
         ul.append(li);
+        this.context.commentListRendered.push(this.comment.render());
         this.userComment.clear();
     }
 }

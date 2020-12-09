@@ -9,6 +9,12 @@
 
   animation: .3s ease-in both fade-in;
 
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * (.04s);
+    }
+  }
+
   &__input {
     position: absolute;
     top: 0;

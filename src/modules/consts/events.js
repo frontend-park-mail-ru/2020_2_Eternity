@@ -16,9 +16,11 @@ export const Events = {
     boardCreating: 'boardCreating',
     pinComment: 'pinComment',
     pinAttach: 'pinAttach',
+    getBoards: 'getBoards',
 
     navbarChanged: 'navbarChanged',
 
+    addNotification: 'addNotification',
     newNotifications: 'newNotifications',
     clearNotifications: 'clearNotifications',
 
@@ -28,4 +30,10 @@ export const Events = {
 
     messageSend: 'messageSend',
     messageReceived: 'messageReceived',
+    chatCreated: 'chatCreated',
+    getNewMessage: 'getNewMessage',
+    chatGetLastMessages: 'chatGetLastMessages',
+    chatGetHistoryMessages: 'chatGetHistoryMessages',
+    chatLastMessagesReceived: 'chatLastMessagesReceived',
+    chatHistoryReceived: 'chatHistoryReceived',
 }

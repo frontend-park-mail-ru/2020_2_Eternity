@@ -17,6 +17,7 @@ export default class Button extends BaseComponent {
             this.states[key] = value;
         })
         this.init();
+        document.addEventListener('click', this.checkBtnCreateChat.bind(this));
     }
 
     init() {
@@ -53,6 +54,12 @@ export default class Button extends BaseComponent {
             return true;
         }
         return false;
+    }
+    checkBtnCreateChat(event) {
+        if (this.checkBtnClick(event) && event.target.closest('[data-collocutor]')) {
+            EventBus.emit(Events.chatCreated, {username: this.button.getAttribute('data-collocutor')})
+            EventBus.emit(Events.pathChanged, {path: '/messages'})
+        }
     }
 
     changeBtnStateSequentially(event) {

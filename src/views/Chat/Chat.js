@@ -15,22 +15,14 @@ import {Events} from "../../modules/consts/events";
 
 export default class ChatPage extends BaseView {
     sidebar
+    currentChat
 
     constructor(context = {}) {
         super('Сообщения', context, null);
         this.template = template;
-
-        EventBus.on(Events.messageReceived, this.addMessage.bind(this));
     }
 
-
     render() {
-        const avatar = new Avatar({
-            img_link: '/img/img15.jpg',
-            middle: true,
-        })
-        const message = new Dialog({avatar: avatar.render(), ...fakeMessage});
-
         this.sidebar = new Sidebar({
             id: 'sidebar',
         })
@@ -61,12 +53,21 @@ export default class ChatPage extends BaseView {
         super.render()
 
         document.getElementById('send').addEventListener('click', () => {
-            EventBus.emit(Events.messageSend, {text: msgInput.value});
+            EventBus.emit(Events.messageSend, {chatId: this.currentChat, text: msgInput.value});
             msgInput.clear();
         })
+        // todo: по хорошему sidebar надо переписать, чтоб можно было обращаться к инпутам через него
+        document.addEventListener('change', (event) => {
+            if (event.target instanceof HTMLInputElement && event.target.closest('.sidebar__list__item__radio')) {
+                this.currentChat = event.target.value;
+                this.clearChatArea();
+                EventBus.emit(Events.chatGetLastMessages, {chatId: this.currentChat})
+            }
+        })
+    }
 
-        // TODO: ЭТО ПРИВЯЗАТЬ НА СОБЫТИЕ Events.createChat, в него пихать инфу о собеседнике
-        // this.sidebar.addItem(message.render())
+    get currentChat() {
+        return this.currentChat;
     }
 
     checkWindowWidth() {
@@ -83,15 +84,81 @@ export default class ChatPage extends BaseView {
     addMessage(data={}) {
         const msgList = document.getElementById('message-list');
         if (msgList) {
-            const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
-            let liMsg = document.createElement('li');
-
-            liMsg.classList.add('chat__message__wrap');
-            if (!data.owner) {
-                liMsg.classList.add('message__received');
-            }
-            liMsg.innerHTML = newMsg.render();
+            const liMsg = this.createMessageToWindow(data);
             msgList.prepend(liMsg);
         }
+    }
+    formChatContent(data={}) {
+        const msgList = document.getElementById('message-list');
+        if (msgList) {
+            if (msgList.nextElementSibling.classList.contains('hidden')) {
+                msgList.nextElementSibling.classList.remove('hidden')
+            }
+            let res = '';
+            data.list.forEach((m) => {
+                const liMsg = this.createMessageToWindow(m);
+                res += liMsg.outerHTML;
+            })
+            msgList.insertAdjacentHTML('beforeend', res);
+        }
+    }
+    createMessageToWindow(data={}) {
+        const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
+        const liMsg = document.createElement('li');
+
+        liMsg.classList.add('chat__message__wrap');
+        if (!data.owner) {
+            liMsg.classList.add('message__received');
+        }
+        liMsg.innerHTML = newMsg.render();
+        return liMsg
+    }
+
+    formDialogList(list) {
+        let res = [];
+        list.forEach((d) => {
+            const item = this.createDialogToWindow(d);
+            res.push(item);
+        })
+        this.sidebar.formSidebarContent(res);
+    }
+    addDialog(data={}) {
+        const newDialog = this.createDialogToWindow(data);
+        this.sidebar.addItem(newDialog.rendered, newDialog.value);
+    }
+    createDialogToWindow(data={}) {
+        const avatar = new Avatar({
+            img_link: '/img/default.svg',
+            middle: true,
+        })
+        if (data.collocutor_ava) {
+            avatar.context.img_link = data.collocutor_ava;
+        }
+        let t = new Date(data.last_msg_time);
+        const dialog = new Dialog({
+            avatar: avatar.render(),
+            text: data.last_msg_content,
+            time: t.getHours() + ':' + t.getMinutes(),
+            username: data.collocutor_name
+        });
+        return {rendered: dialog.render(), value: data.id};
+    }
+
+    clearChatArea() {
+        const msgList = document.getElementById('message-list');
+        msgList.innerHTML = ''
+    }
+    checkDialogExisting(chatId) {
+        return this.sidebar.findItemById(chatId);
+    }
+    updateDialog(data={}) {
+        if (!data.chatId) {
+            data.chatId = this.currentChat
+        }
+        const dialog = this.sidebar.getItemById(data.chatId);
+        const dialogTime = dialog.querySelector('.message__info__time')
+        const dialogContent = dialog.querySelector('.dialog__content__text')
+        dialogTime.innerHTML = data.time;
+        dialogContent.innerHTML = data.msg
     }
 }
