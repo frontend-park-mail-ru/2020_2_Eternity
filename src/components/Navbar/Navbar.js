@@ -19,6 +19,10 @@ class Navbar extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
         this.context.isAuthenticated = false;
+        document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
+    }
+
+    render() {
         this.search = new Search({id: 'searchForm', placeholder: 'Введите @пользователя или название пина для поиска'});
         this.themeSwitcher = ThemeSwitcher;
         this.dropdown = new Dropdown({
@@ -35,8 +39,9 @@ class Navbar extends BaseComponent {
             theme: this.themeSwitcher.render(),
             notificationsDropdown: this.dropdown.render(),
         }
-        this.context = {...data};
-        document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
+
+        this.context = {...this.context, ...data};
+        return super.render();
     }
 
     checkBurgerToggleClick(event) {
@@ -60,14 +65,11 @@ class Navbar extends BaseComponent {
     }
 
     change (data={}) {
-        this.context = {
-            ...this.context,
-            ...data
-        };
+        this.context = { ...data };
 
         const navbar = document.getElementById('navbar');
         if (navbar) {
-            navbar.innerHTML = this.render();
+            navbar.outerHTML = this.render();
         }
 
         if (this.logoutLink) {

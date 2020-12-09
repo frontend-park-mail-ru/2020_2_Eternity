@@ -19,6 +19,7 @@ export default class PinPage extends BaseView {
     btnBoard
     dropdown
     comment
+    commentListRendered
 
     constructor(context = {}) {
         super('Просмотр пина', context, null);
@@ -28,7 +29,7 @@ export default class PinPage extends BaseView {
     }
 
     render() {
-        console.log(this.context)
+        this.context.commentList = [];
 
         this.dropdown = new Dropdown({
             id: 'boardList',

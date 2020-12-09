@@ -150,11 +150,11 @@ export default class ws {
 
     static parseNotification(note) {
         let dataError = false;
-        let data;
+        console.log(this.decodeB64(note.data))
         console.log({
             type: note.type,
             time: new Date(note.creation_time),
-            payload: this.decodeB64(note.data)
+            payload: JSON.parse(this.decodeB64(note.data))
         })
     }
 

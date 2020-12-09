@@ -11,16 +11,16 @@ import EventBus from "../modules/tools/EventBus.js";
 export default class ProfileController extends BaseController {
     constructor() {
         super(new ProfilePage());
-    }
 
-    on(data = {}) {
         this.view.onFollow = this.onFollow.bind(this);
         this.view.onShowFollowers = this.onShowFollowers.bind(this);
         this.view.onShowFollowings = this.onShowFollowings.bind(this);
         this.view.onTabChange = this.onTabChange.bind(this);
         this.view.onAnimationEnd = this.onAnimationEnd.bind(this);
         this.view.onShowNewContent = this.onShowNewContent.bind(this);
+    }
 
+    on(data = {}) {
         UserModel.getUserProfile(data).then((response) => {
             if (Navbar.context.isAuth) {
                 if (Navbar.context.username === response.username) {
