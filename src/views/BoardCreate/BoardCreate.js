@@ -24,33 +24,30 @@ export default class BoardCreate extends BaseView {
             description: 'Описание'
         }
 
-        let elements = [];
-
-        elements.push(new Input({
+        const title = new Input({
             label: fieldsLabels.title,
             type: 'text',
             customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
-        }));
-        elements.push(new Textarea({
+        });
+        const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
             class: 'form__input',
             id: 'description',
-        }));
-        elements.push(new LabeledToggle({
+        });
+        const privateTgl = new LabeledToggle({
             label: 'Сделать доску приватной?',
             small: 'Другие пользователи не смогут увидеть ее',
             id: 'private',
-        }));
-        elements.push(new Button({
+        });
+        const createBtn = new Button({
             id: 'submit',
             type: 'submit',
             text: 'Создать'
-        }));
-
-        const form = new FormGenerator('Board-creating', ...elements).createForm();
+        });
+        const form = new FormGenerator('Board-creating', ...[title, description, privateTgl, createBtn]).createForm();
 
         const data = {
             form: form.render()
@@ -61,9 +58,9 @@ export default class BoardCreate extends BaseView {
 
         form.bind('submit', (event) => {
             let data = {};
-            data['title'] = document.getElementById('title').value;
-            data['description'] = document.getElementById('description').value;
-            data['private'] = form.getElement('private').value;
+            data['title'] = title.value;
+            data['description'] = description.value;
+            data['private'] = privateTgl.value;
 
             eventBus.emit(Events.boardCreating, {event: event, ...data});
         })

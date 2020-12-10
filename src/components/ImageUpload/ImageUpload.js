@@ -17,9 +17,6 @@ export default class ImageUpload extends BaseComponent {
 
     constructor(context = {}) {
         super(template, context);
-        document.addEventListener('dragover', this.dragoverBind.bind(this));
-        document.addEventListener('dragleave', this.dragleaveBind.bind(this));
-        document.addEventListener('change', this.showPreviewBind.bind(this));
     }
 
     render() {
@@ -38,11 +35,13 @@ export default class ImageUpload extends BaseComponent {
             customButton: 'btn_round btn_round_mini btn_red image-upload__reset',
             text: Icons.remove,
         })
-        this.reset.bindClickButtonListener(this.resetPreviewBind.bind(this), this.reset.context.id);
 
-        this.context.img = this.img.render();
-        this.context.input = this.inputField.render();
-        this.context.reset = this.reset.render();
+        this.context = {
+            ...this.context,
+            img: this.img.render(),
+            input: this.inputField.render(),
+            reset: this.reset.render(),
+        };
         return super.render();
     }
 
@@ -56,7 +55,6 @@ export default class ImageUpload extends BaseComponent {
             this.labelText.innerHTML = 'Нажмите или перетащите файл для загрузки';
         }
     }
-
 
     changeUploadAreaState(state) {
         if (state === 'error') {

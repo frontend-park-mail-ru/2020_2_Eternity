@@ -9,6 +9,10 @@ export default class FileUpload extends BaseComponent {
     }
 
     get value() {
-        return document.querySelector('Input[type="file"]').files[0];
+        return this.element.querySelector('input[type="file"]').files[0];
+    }
+
+    clear() {
+        this.element.querySelector('input[type="file"]').value = '';
     }
 }

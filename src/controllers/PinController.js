@@ -15,6 +15,8 @@ import Navbar from "../components/Navbar/Navbar";
 export default class PinController extends BaseController {
     constructor() {
         super(new PinPage());
+
+        this.view.onAddComment = this.onPinComment.bind(this);
     }
 
     on(data={}) {
@@ -53,18 +55,24 @@ export default class PinController extends BaseController {
 
         super.on();
 
-        eventBus.on(Events.pinComment, this.onPinComment.bind(this));
         eventBus.on(Events.pinAttach, this.onPinAttach.bind(this));
     }
 
     off() {
-        eventBus.off(Events.pinComment, this.onPinComment.bind(this));
         eventBus.off(Events.pinAttach, this.onPinAttach.bind(this));
-
+        if (this.view.btnComment.element) {
+            this.view.btnComment.element.removeEventListener('click', this.view.onAddComment);
+        }
         super.off();
     }
 
-    onPinComment(data={}) {
+
+    onPinComment() {
+        const data = {
+            is_root: true,
+            content: this.view.userComment.value,
+            pin_id: this.view.context.id,
+        }
         CommentModel.createComment(data).then((response) => {
             if (!response.error) {
                 this.view.addCommentToList(response);

@@ -9,6 +9,9 @@ import {Events} from "../modules/consts/events.js";
 export default class SettingsController extends BaseController {
     constructor() {
         super(new SettingsPage());
+
+        this.view.onShowAvatarPreview = this.onShowAvatarPreview.bind(this);
+        this.view.onResetPreview = this.onResetPreview.bind(this);
     }
 
     on(data = {}) {
@@ -32,6 +35,10 @@ export default class SettingsController extends BaseController {
         eventBus.off(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
         eventBus.off(Events.userPasswordUpdate, this.onUserPasswordUpdate.bind(this));
         eventBus.off(Events.profileUpdate, this.onUpdateProfile.bind(this));
+
+        this.view.upload.element.removeEventListener('change', this.view.onShowAvatarPreview);
+        this.view.reset.element.removeEventListener('click', this.view.onResetPreview);
+
         super.off();
     }
 
@@ -68,5 +75,24 @@ export default class SettingsController extends BaseController {
         }
         // TODO: добавить eventBus.emit(Events.userPasswordUpdate, {oldpassword: data.oldpassword, newpassword: data.newpassword})
         eventBus.emit(Events.userInfoUpdate, data);
+    }
+
+    onResetPreview() {
+        this.view.reset.hide();
+        this.view.avatar.clear();
+        this.view.upload.clear();
+    }
+
+    onShowAvatarPreview() {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            this.view.avatar.set(evt.target.result);
+            this.view.reset.show();
+        };
+        const file = this.view.upload.value;
+        if (file && file.type.match('image.*')) {
+            reader.readAsDataURL(file);
+            this.changeUploadAreaState('ok');
+        }
     }
 }

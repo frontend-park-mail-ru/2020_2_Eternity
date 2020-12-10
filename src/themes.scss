@@ -5,7 +5,7 @@ $light: 'light';
 $dark: 'dark';
 $font-color--primary: 'font-color--primary';
 $font-color--white: 'font-color--white';
-$font-color--secondary: 'font-color--white';
+$font-color--secondary: 'font-color--secondary';
 
 // ---------------------------------------
 // THEMES
@@ -14,7 +14,7 @@ $themes: (
         light: (
                 primary: #fafafa,
                 secondary: #fefefe,
-                accent: #e0e0e0,
+                accent: #efefef,
                 font-color--primary: #111111,
                 font-color--white: #fff,
                 font-color--secondary: #9e9e9e,

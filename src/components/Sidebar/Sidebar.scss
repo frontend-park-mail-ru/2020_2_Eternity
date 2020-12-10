@@ -115,6 +115,7 @@
     display: flex;
     @include color-assign(background-color, secondary);
     z-index: 1;
+    cursor: pointer;
 }
 
 .sidebar__footer {}

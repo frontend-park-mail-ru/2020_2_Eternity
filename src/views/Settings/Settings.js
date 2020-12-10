@@ -12,11 +12,16 @@ import FormGenerator from "../../modules/tools/FormGenerator.js";
 import Validator from "../../modules/tools/Validator.js"
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import {Icons} from "../../modules/consts/icons";
 
 
 
 export default class SettingsPage extends BaseView {
-    form;
+    form
+    // for uploading and preview avatar
+    avatar
+    reset
+    upload
 
     constructor(context = {}) {
         super('Редактирование профиля', context, null);
@@ -35,73 +40,80 @@ export default class SettingsPage extends BaseView {
             newPassword: 'Новый пароль'
         }
 
-        let elements = [];
-
-        const avatar = new Avatar({
+        this.avatar = new Avatar({
             img_link: this.context.avatar,
             id: this.context.username,
         });
-        elements.push(new FileUpload({
+        this.upload = new FileUpload({
+            id: 'avatarUpload',
             label: fieldsLabels.fileUpload,
-        }));
-        elements.push(new Input({
+        });
+        const username = new Input({
             label: fieldsLabels['username'],
             type: 'text',
             customClasses: 'form__input',
             value: this.context.username,
             id: 'username'
-        }));
-        elements.push(new Input({
+        });
+        const name = new Input({
             label: fieldsLabels['name'],
             type: 'text',
             customClasses: 'form__input',
             value: this.context.name,
             id: 'name'
-        }));
-        elements.push(new Input({
+        });
+        const surname = new Input({
             label: fieldsLabels['surname'],
             type: 'text',
             customClasses: 'form__input',
             value: this.context.surname,
             id: 'surname'
-        }));
-        elements.push(new Input({
+        })
+        const email = new Input({
             label: fieldsLabels['email'],
             type: 'email',
             customClasses: 'form__input',
             value: this.context.email,
             id: 'email'
-        }));
-        elements.push(new Textarea({
+        })
+        const description = new Textarea({
             label: fieldsLabels.description,
             rows: 5,
             class: 'form__input',
             value: this.context.description,
             id: 'description',
-        }));
-        elements.push(new Input({
+        })
+        const oldPassword = new Input({
             label: fieldsLabels['oldPassword'],
             type: 'password',
             customClasses: 'form__input',
             value: this.context.oldPassword,
             id: 'oldPassword'
-        }));
-        elements.push(new Input({
+        })
+        const newPassword = new Input({
             label: fieldsLabels['newPassword'],
             type: 'password',
             customClasses: 'form__input',
             value: this.context.newPassword,
             id: 'newPassword'
-        }));
-        elements.push(new Button({
+        })
+        const saveBtn = new Button({
             id: 'submit',
             type: 'submit',
             text: 'Сохранить'
-        }));
+        });
+        this.form = new FormGenerator('settings',
+            ...[this.upload, username, name, surname, email, description, oldPassword, newPassword, saveBtn]).createForm();
 
-        this.form = new FormGenerator('settings', ...elements).createForm();
+        this.reset = new Button({
+            id: 'reset',
+            customButton: 'btn_round btn_round_mini btn_red image-upload__reset',
+            text: Icons.remove,
+        })
+
         const data = {
-            avatar: avatar.render(),
+            avatar: this.avatar.render(),
+            reset: this.reset.render(),
             form: this.form.render()
         }
 
@@ -127,5 +139,8 @@ export default class SettingsPage extends BaseView {
             })
             eventBus.emit(Events.profileUpdate, {event: event, ...values});
         })
+
+        this.upload.element.addEventListener('change', this.onShowAvatarPreview);
+        this.reset.element.addEventListener('click', this.onResetPreview);
     }
 }

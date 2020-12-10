@@ -13,6 +13,8 @@ import {Events} from "../../modules/consts/events.js";
 
 
 export default class PinCreate extends BaseView {
+    upload
+
     constructor(context = {}) {
         super('Новый пин', context, null);
         this.template = template;
@@ -24,31 +26,30 @@ export default class PinCreate extends BaseView {
             description: 'Описание'
         }
 
-        let elements = [];
-
-        elements.push(new Input({
+        this.upload = new ImageUpload({id: 'upload'});
+        const title = new Input({
             label: fieldsLabels.title,
             type: 'text',
             customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
-        }));
-        elements.push(new Textarea({
+        });
+        const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
             class: 'form__input',
             value: this.context.description,
             id: 'description'
-        }));
-        elements.push(new Button({
+        });
+        const createBtn = new Button({
             id: 'submit',
             type: 'submit',
             text: 'Создать'
-        }));
+        });
+        const form = new FormGenerator('PinCreate', ...[title, description, createBtn]).createForm();
 
-        const form = new FormGenerator('PinCreate', ...elements).createForm();
         const data = {
-            pinUpload: new ImageUpload({id: 'pinup'}).render(),
+            pinUpload: this.upload.render(),
             form: form.render(),
         }
 
@@ -58,14 +59,17 @@ export default class PinCreate extends BaseView {
         form.bind('submit', (event) => {
             event.preventDefault();
             let data = {};
-            data['title'] = document.getElementById('title').value;
-            data['description'] = document.getElementById('description').value;
+            data['title'] = title.value;
+            data['description'] = description.value;
             //data = JSON.stringify(data);
             data['file'] = document.getElementById('pinImageUpload').files[0];
-            console.log('hello');
-
 
             eventBus.emit(Events.pinCreating, {event: event, ...data});
         })
+
+        this.upload.reset.element.addEventListener('click', this.onResetPreview);
+        this.upload.element.addEventListener('dragover', this.onDragover);
+        this.upload.element.addEventListener('dragleave', this.onDragleave);
+        this.upload.element.addEventListener('change', this.onShowPreview);
     }
 }

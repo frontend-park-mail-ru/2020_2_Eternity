@@ -11,26 +11,24 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import EventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import {Icons} from "../../modules/consts/icons";
+import List from "../../components/List/List";
 
 
 export default class PinPage extends BaseView {
     userComment
     btnComment
+
     btnBoard
     dropdown
-    comment
-    commentListRendered
+
+    comments
 
     constructor(context = {}) {
         super('Просмотр пина', context, null);
         this.template = template;
-        this.context.commentList = [];
-        this.commentListRendered = [];
     }
 
     render() {
-        this.context.commentList = [];
-
         this.dropdown = new Dropdown({
             id: 'boardList',
             title: 'Доступные доски',
@@ -60,26 +58,21 @@ export default class PinPage extends BaseView {
             activates: true,
             idToActivate: this.dropdown.context.id,
         })
-
-        this.comment = new Comment();
-        let comments = [];
-        this.context.commentList.forEach((c) => {
-            c.username = c.Username;
-            this.comment.context = c;
-            comments.push(this.comment.render());
+        this.comments = new List({
+            id: 'commentList',
+            custom: 'pin__comments',
+            placeholder: '<div class="pin__comments__empty"><p> Еще никто не прокомментировал этот пин </p></div>'
         })
 
-        // let options = [];
-        // if (this.context.options) {
-        //     this.context.options.forEach((option) => {
-        //         options.push({title: option.title, id: option.id});
-        //     });
-        // }
-        // const select = new Select({
-        //     id: 'select',
-        //     placeholder: 'Доступные доски',
-        //     options: options,
-        // })
+        let comments = [];
+        if (this.context.commentList) {
+            this.context.commentList.forEach((c) => {
+                c.username = c.Username;
+                const nc = new Comment(c);
+                comments.push(nc);
+            })
+        }
+        this.comments.formContentFromListObjects(comments);
 
         const data = {
             ...this.context,
@@ -88,7 +81,7 @@ export default class PinPage extends BaseView {
             btnComment: this.btnComment.render(),
             btnBoard: this.btnBoard.render(),
             dropdown: this.dropdown.render(),
-            commentListRendered: comments,
+            list: this.comments.render(),
         }
 
         this.fillWith(data);
@@ -98,31 +91,19 @@ export default class PinPage extends BaseView {
         //     select.bind(this.context.id);
         // }
 
-        // TODO: где и как биндить по человечески?
         if (this.context.auth) {
-            this.btnComment.element.addEventListener('click', () => {
-                const data = {
-                    is_root: true,
-                    content: this.userComment.value,
-                    pin_id: this.context.id,
-                }
-                EventBus.emit(Events.pinComment, data)
-            });
+            this.btnComment.element.addEventListener('click', this.onAddComment);
         }
+    }
+
+    change() {
+
     }
 
     addCommentToList(data = {}) {
         this.comment.context = data;
         this.comment.context.username = this.comment.context.Username;
-        let li = document.createElement('li');
-        let ul = document.getElementById('commentList')
-        li.innerHTML = this.comment.render();
-
-        if (this.context.commentListRendered.length === 0) {
-            ul.innerHTML = '';
-        }
-        ul.append(li);
-        this.context.commentListRendered.push(this.comment.render());
+        this.comments.addItem(this.comment);
         this.userComment.clear();
     }
 }

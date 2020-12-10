@@ -11,14 +11,14 @@ class ThemeSwitcher extends BaseComponent {
     }
 
     init() {
-        if (getCurrentTheme() === 'dark') {
-            this.setChecked();
-        }
         document.addEventListener('change', (event) => {
             if (event.target instanceof HTMLElement && event.target.closest('#themeSwitcher')) {
                 onThemeChanged();
             }
         });
+        if (getCurrentTheme() === 'dark') {
+            this.setChecked();
+        }
     }
 
     get value() {

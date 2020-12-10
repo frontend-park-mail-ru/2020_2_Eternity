@@ -14,11 +14,13 @@ export default class ChatController extends BaseController {
                 console.log('websocket-соединение установлено, можно чатица');
             }
         }).catch((error) => console.log(error))
+
+        this.view.onSend = this.onSend.bind(this);
+        this.view.onSelectDialog = this.onSelectDialog.bind(this);
     }
 
     on() {
         EventBus.on(Events.messageSend, this.onMessageSend.bind(this));
-        EventBus.on(Events.chatCreated, this.onChatCreating.bind(this));
         EventBus.on(Events.messageReceived, this.onMessageReceived.bind(this));
         EventBus.on(Events.getNewMessage, this.onGetNewMessage.bind(this));
         EventBus.on(Events.chatGetLastMessages, this.onGetChatLastMessages.bind(this));
@@ -29,7 +31,6 @@ export default class ChatController extends BaseController {
 
         ChatModel.getUserChats().then((response) => {
             if (!response.error) {
-                console.log(response);
                 this.view.formDialogList(response);
             }
         })
@@ -38,7 +39,6 @@ export default class ChatController extends BaseController {
     }
     off() {
         EventBus.off(Events.messageSend, this.onMessageSend.bind(this));
-        EventBus.off(Events.chatCreated, this.onChatCreating.bind(this));
         EventBus.off(Events.messageReceived, this.onMessageReceived.bind(this));
         EventBus.off(Events.getNewMessage, this.onGetNewMessage.bind(this));
         EventBus.off(Events.chatGetLastMessages, this.onGetChatLastMessages.bind(this));
@@ -46,19 +46,14 @@ export default class ChatController extends BaseController {
         EventBus.off(Events.chatGetHistoryMessages, this.onGetChatHistoryMessages.bind(this));
         EventBus.off(Events.chatHistoryReceived, this.onListMessagesReceived.bind(this));
 
+        this.view.btnSend.element.removeEventListener('click', this.view.onSend);
+        this.view.sidebar.element.addEventListener('change', this.view.onSelectDialog);
+
         super.off();
     }
 
     onMessageSend(data={}) {
         ChatModel.send(data.chatId, data.text);
-    }
-    onChatCreating(data={}) {
-        ChatModel.createChat(data.username).then((response) => {
-            console.log(response);
-            if (!response.error) {
-                this.view.addDialog(response);
-            }
-        })
     }
     onGetNewMessage(data={}) {
         if (!this.view.checkDialogExisting(data.chatId)) {
@@ -82,5 +77,18 @@ export default class ChatController extends BaseController {
     }
     onListMessagesReceived(data={}) {
         this.view.formChatContent(data)
+    }
+
+    onSend() {
+        EventBus.emit(Events.messageSend, {chatId: this.view.currentChat, text: this.view.msgInput.value});
+        this.view.msgInput.clear();
+    }
+    onSelectDialog(event) {
+        if (event.target instanceof HTMLInputElement) {
+            this.view.currentChat = event.target.value;
+            this.view.clearChatArea();
+            EventBus.emit(Events.chatGetLastMessages, {chatId: this.view.currentChat});
+            this.view.inputShow();
+        }
     }
 }

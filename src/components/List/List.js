@@ -32,7 +32,7 @@ export default class List extends BaseComponent {
         const newItem = this.createItem(itemObject);
         order === 'append' ? this.elements.push(newItem) : this.elements.unshift(newItem);
         if (this.element) {
-            order === 'append' ? this.element.append(newItem.render()) : this.element.prepend(newItem.render());
+            order === 'append' ? this.element.insertAdjacentHTML('beforeend', newItem.render()) : this.element.insertAdjacentHTML('afterbegin', newItem.render());
         }
     }
     removeItem() {
@@ -70,7 +70,20 @@ export default class List extends BaseComponent {
     }
 
     createItem(itemObj) {
-        return new Item({type: this.settings.selectable, for: this.name}, itemObj, itemObj.context.id);
+        let extraClasses = '';
+        if (this.context.customItem) {
+            extraClasses += this.context.customItem;
+        }
+        if (itemObj.extra) {
+            extraClasses += (' ' + itemObj.extra);
+        }
+        return new Item(
+            {
+                type: this.settings.selectable,
+                for: this.name,
+                custom: extraClasses,
+            },
+            itemObj, itemObj.context.id);
     }
 
     getSelectedItems() {

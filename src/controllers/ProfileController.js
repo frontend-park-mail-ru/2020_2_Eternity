@@ -7,14 +7,21 @@ import Navbar from "../components/Navbar/Navbar";
 import PinModel from "../models/PinModel";
 import BoardModel from "../models/BoardModel";
 import EventBus from "../modules/tools/EventBus.js";
+import {Events} from "../modules/consts/events";
+import ChatModel from "../models/ChatModel";
 
 export default class ProfileController extends BaseController {
     constructor() {
         super(new ProfilePage());
 
+        // follow btn and follows lists
         this.view.onFollow = this.onFollow.bind(this);
+        this.view.onUnfollow = this.onUnfollow.bind(this);
         this.view.onShowFollowers = this.onShowFollowers.bind(this);
         this.view.onShowFollowings = this.onShowFollowings.bind(this);
+        // message btn
+        this.view.onCreateChat = this.onCreateChat.bind(this);
+        // tabs
         this.view.onTabChange = this.onTabChange.bind(this);
         this.view.onAnimationEnd = this.onAnimationEnd.bind(this);
         this.view.onShowNewContent = this.onShowNewContent.bind(this);
@@ -58,6 +65,9 @@ export default class ProfileController extends BaseController {
         if (this.view.follow) {
             this.view.follow.removeEventListener('click', this.view.onFollow);
         }
+        if (this.view.btnMessage) {
+            this.view.btnMessage.removeEventListener('click', this.view.onCreateChat);
+        }
         this.view.followers.removeEventListener('click', this.view.onShowFollowers);
         this.view.followings.removeEventListener('click', this.view.onShowFollowings);
         this.view.tabs.removeEventListener('change', this.view.onTabChange);
@@ -74,6 +84,9 @@ export default class ProfileController extends BaseController {
                 this.view.changeUserFollowersNum(++this.view.context.followers);
             }
         }).catch((error) => console.log(error));
+    }
+    onUnfollow(event) {
+
     }
 
     onShowFollowers(event) {
@@ -127,6 +140,17 @@ export default class ProfileController extends BaseController {
         if (event.animationName === 'fade-out') {
             this.view.deskContent.innerHTML = this.view.content;
             this.view.deskContent.classList.add('fade-in');
+        }
+    }
+
+    onCreateChat(event) {
+        if (event.target.closest('[data-collocutor]')) {
+            const button = event.target.closest('[data-collocutor]');
+            ChatModel.createChat(button.getAttribute('data-collocutor')).then((response) => {
+                if (!response.error) {
+                    EventBus.emit(Events.pathChanged, {path: '/messages'});
+                }
+            })
         }
     }
 }

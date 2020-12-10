@@ -7,15 +7,21 @@ import Dialog from "../../components/Dialog/Dialog.js";
 import Message from "../../components/Dialog/Message/Message.js";
 import Textarea from "../../components/Textarea/Textarea";
 import Button from "../../components/Button/Button";
+import List from "../../components/List/List";
 
-import {fakeMessage} from "../../modules/consts/fake"
 import {Icons} from "../../modules/consts/icons";
 import EventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 
 export default class ChatPage extends BaseView {
     sidebar
+    dialog
     currentChat
+
+    msgInput
+    btnSend
+
+    messages
 
     constructor(context = {}) {
         super('Сообщения', context, null);
@@ -25,45 +31,60 @@ export default class ChatPage extends BaseView {
     render() {
         this.sidebar = new Sidebar({
             id: 'sidebar',
+            listtype: 'radio',
         })
-        const msgInput = new Textarea({
+        this.msgInput = new Textarea({
             id: 'msgInput',
             customInput: 'Input-group__field_noresize',
             label: 'Сообщение',
         })
-        const btnSend = new Button({
+        this.btnSend = new Button({
             id: 'send',
             customButton: 'btn_with-icon btn_round',
             text: Icons.send,
         })
+        this.btnAttach = new Button({
+            id: 'attach',
+            customButton: 'btn_with-icon btn_round',
+            text: Icons.attach,
+        })
+        this.btnSmile = new Button({
+            id: 'smile',
+            customButton: 'btn_with-icon btn_round smile-picker',
+            text: Icons.smile,
+        })
+        this.messages = new List({
+            id: 'message-list',
+            custom: 'chat__window__messages',
+            placeholder: '<div class="chat__window__messages__help">Выберите чат, чтобы начать общение</div>',
+            customItem: 'chat__message__wrap',
+        })
+        this.dialog = new Dialog();
 
         const messageList = []
 
+
+        // ------------------------------------------------------------
         this.checkWindowWidth();
         window.addEventListener('resize', () => {
             this.checkWindowWidth();
         });
+        // ------------------------------------------------------------
+
         const data = {
             sidebar: this.sidebar.render(),
             messageList: messageList,
-            msgInput: msgInput.render(),
-            btnSend: btnSend.render(),
+            msgInput: this.msgInput.render(),
+            btnSend: this.btnSend.render(),
+            btnAttach: this.btnAttach.render(),
+            smile: this.btnSmile.render(),
+            messages: this.messages.render(),
         }
         this.fillWith(data);
         super.render()
 
-        document.getElementById('send').addEventListener('click', () => {
-            EventBus.emit(Events.messageSend, {chatId: this.currentChat, text: msgInput.value});
-            msgInput.clear();
-        })
-        // todo: по хорошему sidebar надо переписать, чтоб можно было обращаться к инпутам через него
-        document.addEventListener('change', (event) => {
-            if (event.target instanceof HTMLInputElement && event.target.closest('.sidebar__list__item__radio')) {
-                this.currentChat = event.target.value;
-                this.clearChatArea();
-                EventBus.emit(Events.chatGetLastMessages, {chatId: this.currentChat})
-            }
-        })
+        this.btnSend.element.addEventListener('click', this.onSend);
+        this.sidebar.element.addEventListener('change', this.onSelectDialog);
     }
 
     get currentChat() {
@@ -81,50 +102,48 @@ export default class ChatPage extends BaseView {
         }
     }
 
+    /** --------------
+     * MESSAGES
+     * ---------------
+     */
     addMessage(data={}) {
-        const msgList = document.getElementById('message-list');
-        if (msgList) {
-            const liMsg = this.createMessageToWindow(data);
-            msgList.prepend(liMsg);
-        }
-    }
-    formChatContent(data={}) {
-        const msgList = document.getElementById('message-list');
-        if (msgList) {
-            if (msgList.nextElementSibling.classList.contains('hidden')) {
-                msgList.nextElementSibling.classList.remove('hidden')
-            }
-            let res = '';
-            data.list.forEach((m) => {
-                const liMsg = this.createMessageToWindow(m);
-                res += liMsg.outerHTML;
-            })
-            msgList.insertAdjacentHTML('beforeend', res);
-        }
+        const newMsg = this.createMessageToWindow(data);
+        this.messages.addItem(newMsg, 'prepend');
     }
     createMessageToWindow(data={}) {
         const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
-        const liMsg = document.createElement('li');
-
-        liMsg.classList.add('chat__message__wrap');
         if (!data.owner) {
-            liMsg.classList.add('message__received');
+            newMsg.extra = 'message__received';
         }
-        liMsg.innerHTML = newMsg.render();
-        return liMsg
+        return newMsg;
+    }
+    formChatContent(data={}) {
+        let res = [];
+        data.list.forEach((m) => {
+            const item = this.createMessageToWindow(m);
+            res.push(item);
+        })
+        this.messages.formContentFromListObjects(res);
+    }
+    clearChatArea() {
+        this.messages.clearContent();
     }
 
+
+    /** --------------
+     * DIALOGS
+     * ---------------
+     */
     formDialogList(list) {
         let res = [];
         list.forEach((d) => {
             const item = this.createDialogToWindow(d);
             res.push(item);
         })
-        this.sidebar.formSidebarContent(res);
+        this.sidebar.formContent(res);
     }
     addDialog(data={}) {
-        const newDialog = this.createDialogToWindow(data);
-        this.sidebar.addItem(newDialog.rendered, newDialog.value);
+        this.sidebar.addItem(this.createDialogToWindow(data));
     }
     createDialogToWindow(data={}) {
         const avatar = new Avatar({
@@ -135,30 +154,30 @@ export default class ChatPage extends BaseView {
             avatar.context.img_link = data.collocutor_ava;
         }
         let t = new Date(data.last_msg_time);
-        const dialog = new Dialog({
+
+        return new Dialog({
+            id: data.id,
             avatar: avatar.render(),
             text: data.last_msg_content,
             time: t.getHours() + ':' + t.getMinutes(),
             username: data.collocutor_name
-        });
-        return {rendered: dialog.render(), value: data.id};
-    }
-
-    clearChatArea() {
-        const msgList = document.getElementById('message-list');
-        msgList.innerHTML = ''
+        })
     }
     checkDialogExisting(chatId) {
-        return this.sidebar.findItemById(chatId);
+        return document.getElementById(chatId);
     }
     updateDialog(data={}) {
-        if (!data.chatId) {
-            data.chatId = this.currentChat
-        }
-        const dialog = this.sidebar.getItemById(data.chatId);
-        const dialogTime = dialog.querySelector('.message__info__time')
-        const dialogContent = dialog.querySelector('.dialog__content__text')
-        dialogTime.innerHTML = data.time;
-        dialogContent.innerHTML = data.msg
+        data.chatId = data.chatId || this.currentChat;
+        const dialog = document.getElementById(data.chatId);
+        dialog.querySelector('.message__info__time').innerHTML = data.time;
+        dialog.querySelector('.dialog__content__text').innerHTML = data.msg
+    }
+
+
+    inputShow() {
+        document.getElementById('chat-footer').classList.remove('hidden')
+    }
+    inputHide() {
+        document.getElementById('chat-footer').classList.add('hidden')
     }
 }

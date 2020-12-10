@@ -8,54 +8,25 @@
     max-height: 150px;
     overflow-y: scroll;
     box-sizing: border-box;
-    padding: 20px 15px;
+    padding: 20px 15px !important;
     position: absolute;
+    z-index: 999;
 
     text-align: left;
     @include color-assign(color, font-color--primary);
 
-    z-index: 2;
     outline: none;
     border-radius: 25px;
     @include color-assign(background-color, secondary);
     box-shadow: $box-shadow-secondary;
 
     transition: .3s all ease-in-out;
-}
-.dropdown::-webkit-scrollbar {width: 0;}
-.dropdown::-webkit-scrollbar-track {
-    margin-right: 20px;
-}
-.dropdown__title {
-    line-height: 2em;
-}
-.dropdown__item input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-}
-.dropdown__item {
-    display: block;
-    position: relative;
-    height: 2em;
-    line-height: 2em;
-    border-radius: 25px;
-    padding-left: 15px;
 
-    cursor: pointer;
-    transition: .2s all ease-in-out;
-}
-.dropdown__item__selected {
-    // TODO: ДРУГОЙ ЦВЕТ ДЛЯ ВЫДЕЛЕНИЯ!
-    @include color-assign(background-color, secondary);
-}
-.dropdown__item:hover {
-    @include color-assign(background-color, secondary);
-}
-.dropdown__active {
-    visibility: visible;
-    display: inline-block;
+    &__active {
+        visibility: visible;
+        display: inline-block;
+    }
+
+    &::-webkit-scrollbar {width: 0;}
+    &::-webkit-scrollbar-track {margin-right: 20px;}
 }

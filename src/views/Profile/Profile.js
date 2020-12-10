@@ -31,6 +31,8 @@ export default class ProfilePage extends BaseView {
     followers
     followings
     tabs
+    btnMessage
+
 
     constructor(context = {}) {
         super('Профиль', context, null);
@@ -58,15 +60,13 @@ export default class ProfilePage extends BaseView {
         const btnMessage = new Button({
             id: 'message',
             text: 'Сообщение',
-            chat: true,
-            collocutor: this.context.username,
+            dataAttr: 'data-collocutor="' + this.context.username + '"',
         })
         const btnEdit = new Button({
             id: 'edit',
             text: '<i class="fas fa-pen"></i>',
             customButton: 'btn_round profile__edit',
-            link: true,
-            href: '/profile/edit',
+            dataAttr: 'data-link="/profile/edit"',
         })
         this.list = new List({id: 'follows', placeholder: 'Нет пользователей'});
         this.followPopup = new Popup({
@@ -105,9 +105,13 @@ export default class ProfilePage extends BaseView {
         this.followers = document.getElementById('userFollowers');
         this.followings = document.getElementById('userFollowings');
         this.tabs = document.querySelector('.profile-tabs');
+        this.btnMessage = document.getElementById('message');
 
         if (this.follow) {
             this.follow.addEventListener('click', this.onFollow);
+        }
+        if (this.btnMessage) {
+            this.btnMessage.addEventListener('click', this.onCreateChat);
         }
         this.followers.addEventListener('click', this.onShowFollowers);
         this.followings.addEventListener('click', this.onShowFollowings);

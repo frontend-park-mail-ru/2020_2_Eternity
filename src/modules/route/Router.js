@@ -209,7 +209,7 @@ export default class Router {
     start() {
         this.container.addEventListener('click', (evt) => {
             const {target, pathname} = this.checkRouteAnchor(evt.target);
-            console.log(target)
+
             if (target) {
                 evt.preventDefault();
                 if (pathname) {

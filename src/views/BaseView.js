@@ -43,6 +43,8 @@ export default class BaseView {
         }
     }
 
+    change() {}
+
     clear() {
         this.context = {};
     }

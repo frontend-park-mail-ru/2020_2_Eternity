@@ -6,17 +6,20 @@
     <div class="chat__window content__expand">
         <div></div>
 
-        <ul class="chat__window__messages" id="message-list">
-            {{#if messageList}}
-                {{#each messageList}}
-                    <li class="chat__message__wrap {{#if received}}message__received{{/if}}">{{{this}}}</li>
-                {{/each}}
-            {{else}}
-                <div class="chat__window__messages__help">Выберите чат, чтобы начать общение</div>
-            {{/if}}
-        </ul>
+        {{{messages}}}
 
-        <div class="chat__window__footer {{#if messageList}}{{else}}hidden{{/if}}">{{{msgInput}}} {{{btnSend}}}</div>
-
+        <div class="chat__window__footer hidden" id="chat-footer">
+            <div class="chat__window__footer__actions">
+                {{{btnAttach}}}
+            </div>
+            <div class="chat__window__footer__input">
+                {{{smile}}}
+                {{{msgInput}}}
+            </div>
+            <div class="chat__window__footer__actions">
+                {{{btnSend}}}
+            </div>
+        </div>
     </div>
 </div>
+

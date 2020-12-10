@@ -1,15 +1,27 @@
 import template from "./Sidebar.hbs"
 
 import BaseComponent from "../BaseComponent.js";
+import List from "../List/List";
 
 export default class Sidebar extends BaseComponent {
     aside
     toggler
+    list
 
     constructor(context = {}) {
         super(template, context);
         this.startListeners();
         this.context.expand = true; // по умолчанию раскрыт
+    }
+
+    render() {
+        this.list = new List({
+            custom: 'sidebar__list',
+            id: 'sidebar-content',
+
+        }, {selectable: this.context.listtype})
+        this.context.list = this.list.render();
+        return super.render();
     }
 
     startListeners() {
@@ -42,16 +54,16 @@ export default class Sidebar extends BaseComponent {
         }
     }
 
-    expand() {
-        if (this.aside) {
-            this.aside.classList.toggle('expand');
-        }
-    }
-
     getAside() {
         if (this.element) {
             this.toggler = document.getElementById('sidebar-toggler');
             this.aside = this.toggler.closest('aside');
+        }
+    }
+
+    expand() {
+        if (this.aside) {
+            this.aside.classList.toggle('expand');
         }
     }
     deleteExpand() {
@@ -75,53 +87,13 @@ export default class Sidebar extends BaseComponent {
         }
     }
 
-    /**
-     * Добавляет в список новый элемент
-     * @param rendered - component.render()
-     * @param value
-     */
-    addItem(rendered, value='') {
-        this.getAside();
-        if (this.aside) {
-            const item = this.createItem(rendered, value);
-            this.aside.querySelector('.sidebar__list').append(item);
-        }
+    addItem(itemObject, order) {
+        this.list.addItem(itemObject, order);
     }
-    formSidebarContent(list) {
-        this.getAside();
-        if (this.aside) {
-            const s = this.aside.querySelector('.sidebar__list');
-            let res = '';
-            list.forEach((r) => {
-                const item = this.createItem(r.rendered, r.value);
-                res += item.outerHTML;
-            })
-            s.innerHTML = res;
-        }
-    }
-    createItem(rendered, value='') {
-        const item = document.createElement('li');
-        item.classList.add('sidebar__list__item');
-        const selectable = document.createElement('input');
-        selectable.type = 'radio';
-        selectable.value = value;
-        selectable.classList.add('sidebar__list__item__radio')
-        selectable.id = value;
-        selectable.name = 'sidebarItem'
-
-        item.insertAdjacentHTML('beforeend', rendered);
-        item.insertAdjacentElement('beforeend', selectable);
-        return item;
+    formContent(list) {
+        this.list.formContentFromListObjects(list);
     }
 
-    findItemById(id) {
-        if (this.aside) {
-            return !!document.getElementById(id);
-        }
-    }
-    getItemById(id) {
-        return document.getElementById(id).previousElementSibling;
-    }
     // replaceItem(id, newRendered, newValue) {
     //     const newItem = this.createItem(newRendered, newValue)
     //     if (this.findItemById(id)) {

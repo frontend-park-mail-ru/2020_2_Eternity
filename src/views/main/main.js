@@ -3,24 +3,12 @@ import template from './main.hbs'
 import BaseView from "../BaseView.js";
 
 import Card from "../../components/Card/Card.js";
-import Popup from "../../components/Popup/Popup.js";
-import {fakePins} from "../../modules/consts/fake.js";
-import FileUpload from "../../components/FileUpload/FileUpload.js";
-import Validator from "../../modules/tools/Validator";
-import Dropdown from "../../components/Dropdown/Dropdown";
-
-import EventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
-import {Icons} from "../../modules/consts/icons";
-import Checkbox from "../../components/Checkbox/Checkbox";
-
-import eventBus from "../../modules/tools/EventBus";
-import Search from "../../components/Search/Search";
-
 import Userbar from "../../components/Userbar/Userbar";
-import Item from "../../components/List/Item/Item";
 import List from "../../components/List/List";
 import Dialog from "../../components/Dialog/Dialog";
+
+import eventBus from "../../modules/tools/EventBus";
+import {Events} from "../../modules/consts/events";
 
 
 export default class MainPage extends BaseView {

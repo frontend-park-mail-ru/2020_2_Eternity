@@ -18,18 +18,8 @@
                 <p class="pin__info__description">{{content}}</p>
             </div>
 
-            <ul class="pin__comments" id="commentList">
-                {{#if commentListRendered}}
-                    {{#each commentListRendered}}
-                        <li>{{{this}}}</li>
-                    {{/each}}
-                {{else}}
-                    <div class="pin__comments__empty">
-                        <p> Еще никто не прокомментировал этот пин </p>
-                    </div>
-                {{/if}}
-            </ul>
-
+            {{{list}}}
+            
             <div class="pin__form">
                 {{#if auth}}
                     {{{input}}}

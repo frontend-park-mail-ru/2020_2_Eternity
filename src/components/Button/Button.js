@@ -17,7 +17,6 @@ export default class Button extends BaseComponent {
             this.states[key] = value;
         })
         this.init();
-        document.addEventListener('click', this.checkBtnCreateChat.bind(this));
     }
 
     init() {
@@ -48,25 +47,9 @@ export default class Button extends BaseComponent {
         }
     }
 
-    checkBtnClick(event) {
-        if (event.target instanceof HTMLElement && event.target.closest('.btn')) {
-            this.button = event.target.closest('.btn');
-            return true;
-        }
-        return false;
-    }
-    checkBtnCreateChat(event) {
-        if (this.checkBtnClick(event) && event.target.closest('[data-collocutor]')) {
-            EventBus.emit(Events.chatCreated, {username: this.button.getAttribute('data-collocutor')})
-            EventBus.emit(Events.pathChanged, {path: '/messages'})
-        }
-    }
-
-    changeBtnStateSequentially(event) {
-        if (this.checkBtnClick(event)) {
-            this.stateNum = (this.stateNum + 1) % Object.keys(this.states).length;
-            this.changeBtnState(this.states[Object.keys(this.states)[this.stateNum]]);
-        }
+    changeBtnStateSequentially() {
+        this.stateNum = (this.stateNum + 1) % Object.keys(this.states).length;
+        this.changeBtnState(this.states[Object.keys(this.states)[this.stateNum]]);
     }
 
     changeBtnState(state) {
@@ -78,15 +61,6 @@ export default class Button extends BaseComponent {
         }
     }
 
-    bindClickButtonListener(callback, idBinded) {
-        document.addEventListener('click', (event) => {
-            if (this.checkBtnClick(event)) {
-                if (event.target.id === idBinded) {
-                    callback();
-                }
-            }
-        })
-    }
     show() {
         if (this.element) {
             this.element.style.opacity = '1';

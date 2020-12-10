@@ -12,7 +12,8 @@ export default class Avatar extends BaseComponent {
 
     clear() {
         if (this.context.id) {
-            document.getElementById(this.imageID).setAttribute('src', '/img/default.svg');
+            document.getElementById(this.imageID).setAttribute('src',
+                this.context.img_link ? this.context.img_link : '/img/default.svg');
         }
     }
     set(imgSrc) {

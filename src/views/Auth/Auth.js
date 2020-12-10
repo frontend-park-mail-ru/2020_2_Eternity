@@ -39,45 +39,34 @@ export default class AuthRegPage extends BaseView {
      * @return //TODO: понять и простить
      */
     render() {
-        let elements = [];
-
-        if (this.pageType === 'registration') {
-            elements.push(new Input({
-                label: 'Адрес электронной почты',
-                type: 'email',
-                placeholder: 'example@email.com',
-                id: 'email'
-            }));
-        }
-
-        elements.push(new Input({
+        const email = new Input({
+            label: 'Адрес электронной почты',
+            type: 'email',
+            placeholder: 'example@email.com',
+            id: 'email'
+        });
+        const username = new Input({
             label: 'Логин',
             type: 'text',
             placeholder: 'Username',
             id: 'username'
-        }));
-
-        elements.push(new Input({
+        })
+        const password = new Input({
             label: 'Пароль',
             type: 'password',
             placeholder: 'Password',
             id: 'password'
-        }));
+        });
+        const btn = new Button({
+            id: 'submit',
+            type: 'submit',
+            text: this.pageType === 'registration'? 'Зарегистрироваться' : 'Войти'
+        });
 
+        let elements = [username, password, btn];
         if (this.pageType === 'registration') {
-            elements.push(new Button({
-                id: 'submit',
-                type: 'submit',
-                text: 'Зарегистрироваться'
-            }));
-        } else {
-            elements.push(new Button({
-                id: 'submit',
-                type: 'submit',
-                text: 'Войти'
-            }));
+            elements.unshift(email);
         }
-
         this.form = new FormGenerator(this.pageType, ...elements).createForm();
 
         const data = {

@@ -9,7 +9,7 @@ const applyTheme = (passedSetting) => {
 
 const toggleTheme = () => {
     let currentTheme = getCurrentTheme();
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    currentTheme = (currentTheme === 'light') ? 'dark' : 'light';
     localStorage.setItem(STORAGE_KEY, currentTheme);
     return currentTheme;
 };

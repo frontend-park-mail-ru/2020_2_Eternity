@@ -10,12 +10,14 @@ import LoginController from "./controllers/LoginController.js"
 import PinController from "./controllers/PinController.js";
 import BoardController from "./controllers/BoardController.js";
 import ProfileController from "./controllers/ProfileController.js";
-import CreateController from "./controllers/CreateController.js";
+import PinCreateController from "./controllers/PinCreateController";
+import BoardCreateController from "./controllers/BoardCreateController";
 import ChatController from "./controllers/ChatController.js";
 import SettingsController from "./controllers/SettingsController";
 
 import SessionController from "./controllers/SessionController.js";
 import NotificationsController from "./controllers/NotificationsController";
+
 
 const application = document.getElementById('app');
 
@@ -36,8 +38,8 @@ router
     .add(routes.regPage, new LoginController('registration'))
     .add(routes.pinPage, new PinController)
     .add(routes.boardPage, new BoardController)
-    .add(routes.pinCreatingPage, new CreateController('pin'))
-    .add(routes.boardCreatingPage, new CreateController('board'))
+    .add(routes.pinCreatingPage, new PinCreateController)
+    .add(routes.boardCreatingPage, new BoardCreateController)
     .add(routes.profilePage, new ProfileController)
     .add(routes.settingsPage, new SettingsController)
     .add(routes.chatPage, new ChatController)
