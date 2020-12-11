@@ -5,11 +5,10 @@ import BaseView from "../BaseView.js";
 import Card from "../../components/Card/Card.js";
 import Userbar from "../../components/Userbar/Userbar";
 import List from "../../components/List/List";
-import Dialog from "../../components/Dialog/Dialog";
+import Popup from "../../components/Popup/Popup";
 
 import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
-
 
 export default class MainPage extends BaseView {
     test
@@ -22,30 +21,33 @@ export default class MainPage extends BaseView {
     fillingMutex
     users = []
 
+    // for events
+    cardLinks
+    copyLinkBtns
+
     constructor(context = {}) {
         super('Главная', context, null);
         this.template = template;
 
-        // this.card = new Card();
         // this.test = new Dropdown({
         //     id: 'dropdown1',
         //     title: 'Доступные доски'
         // });
+
+        /**
+         * УБРАТЬ---------------------------------
+         */
         const te = new Userbar({
             username: 'example',
             img_link: '/img/img11/.jpg',
-        })
-        const tee = new Dialog({
-            id: '1',
-            username: 'testing2',
-            text: 'abyrbalg',
-            time: '11:21'
         })
         this.test = new List({
             id: 'test',
         });
         this.test.addItem(te, "prepend");
-        this.test.addItem(tee, "append")
+        /**
+         * ---------------------------------------
+         */
 
         this.lastPin = 0;
 
@@ -64,6 +66,11 @@ export default class MainPage extends BaseView {
     }
 
     render() {
+        this.popupPinView = new Popup({
+            id: 'pinView',
+            custom: 'pin__view',
+        })
+
         if (this.context.protoUsers) {
             this.context.protoUsers.forEach((user) => {
                this.users.push(new Userbar(user).render());
@@ -74,19 +81,18 @@ export default class MainPage extends BaseView {
 
         if (this.context.protoPins) {
             this.context.protoPins.forEach((pin) => {
-                let card = new Card(pin);
+                const card = new Card(pin);
                 this.cards.push(card);
-                // this.card.context = pin;
                 this.list.push(card.render());
                 this.lastPin = pin.id;
             });
-
             this.context.protoPins = [];
         }
 
         const data = {
             pins: this.list,
             users: this.users,
+            popup: this.popupPinView.render(),
             test: this.test.render()
         }
 
@@ -119,5 +125,15 @@ export default class MainPage extends BaseView {
                 this.fillEmptyPlace();
             });
         }
+
+        this.cardLinks = document.querySelectorAll('.card__link');
+        this.copyLinkBtns = document.querySelectorAll('.copy-link');
+
+        this.cardLinks.forEach((card) => {
+            card.addEventListener('click', this.onShowPinPopupView);
+        });
+        this.copyLinkBtns.forEach((btn) => {
+            btn.addEventListener('click', this.onCopyLink);
+        });
     }
 }

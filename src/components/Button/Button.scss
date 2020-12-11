@@ -35,9 +35,17 @@
     & i, svg {
         pointer-events: none;
     }
+
+    &__ext {
+        opacity: 0;
+        position: absolute;
+        text-transform: none;
+    }
 }
 .btn:hover {
     text-decoration: none;
+    background-color: $color-green;
+    @include color-assign(color, font-color--white);
     box-shadow: $box-shadow-primary;
 }
 .btn_round {
@@ -49,6 +57,10 @@
 .btn_round_mini {
     width: 24px;
     height: 24px;
+}
+.btn_round_middle {
+    width: 32px;
+    height: 32px;
 }
 .btn_with-icon svg {
     display: inline-block;
@@ -72,7 +84,7 @@
 
 /* ------- COLORS ------- */
 .btn_red {
-    @include color-assign(color, font-color--primary);
+    @include color-assign(color, font-color--white);
     background-color: $color-red;
 }
 .btn_red:hover {
@@ -80,7 +92,7 @@
 }
 
 .btn_green {
-    @include color-assign(color, font-color--primary);
+    @include color-assign(color, font-color--white);
     background-color: $color-green;
 }
 .btn_green:hover {
@@ -88,9 +100,29 @@
 }
 
 .btn_blue {
-    @include color-assign(color, font-color--primary);
+    @include color-assign(color, font-color--white);
     background-color: $color-blue;
 }
 .btn_blue:hover {
     background-color: $color-blue-dark;
+}
+
+
+.fade-in_icon {
+    animation: fade-in_icon;
+    animation-duration: .8s;
+}
+@keyframes fade-in_icon {
+    0% {
+        background-color: $color-green;
+        color: transparent;
+    }
+    50% {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+    }
+    100% {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+    }
 }

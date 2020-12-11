@@ -185,6 +185,12 @@ export default class Router {
      * @returns { {target: Element || null, pathname: string || null} }
      */
     checkRouteAnchor(target) {
+        if (target.closest('[data-link]')) {
+            return {
+                target: target.closest('[data-link]'),
+                pathname: target.closest('[data-link]').getAttribute('data-link')
+            }
+        }
         if (target.closest('[data-activates]') || target.closest('[data-popup]')) {
             return {target: target, pathname: null};
         }
@@ -194,12 +200,7 @@ export default class Router {
                 pathname: target.closest('a').pathname
             }
         }
-        if (target.closest('[data-link]')) {
-            return {
-                target: target.closest('[data-link]'),
-                pathname: target.closest('[data-link]').getAttribute('data-link')
-            }
-        }
+
         return {target: null, pathname: null}
     }
 

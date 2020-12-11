@@ -76,8 +76,9 @@
 
     @include color-assign(background-color, accent);
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 15px;
+    z-index: 2;
 
     border-radius: 100%;
     border: none;
@@ -115,7 +116,7 @@
 .modal-window__window {
     position: relative;
     box-sizing: border-box;
-    margin: 0;
+    margin: 15px 0;
 
     flex-shrink: 0;
     flex-grow: 0;

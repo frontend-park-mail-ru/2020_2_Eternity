@@ -21,6 +21,13 @@
 
     will-change: transform;
     transition: all .3s ease-in-out;
+
+    & .card__actions__like, & .card__actions__go {
+        opacity: 0;
+    }
+    &:hover .card__actions__like, &:hover .card__actions__go {
+        opacity: 1;
+    }
 }
 .card:hover {
     transform: scale(1.01);
@@ -39,18 +46,25 @@
 
 .card__actions {
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
     padding: 16px 19px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 
-    opacity: 0;
+    opacity: 1;
     transition: all .3s ease-in-out;
 }
 
 .card__actions__like {
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 32px;
     height: 32px;
     padding: 0;
+    margin: 16px 19px;
     cursor: pointer;
     border: none;
     display: inline-block;
@@ -61,7 +75,7 @@
 }
 .card__actions__like:hover, .card__actions__like__active {
     fill: $color-red;
-    opacity: 1;
+    opacity: 1 !important;
 }
 .card__actions__like:focus {
     outline: none;
