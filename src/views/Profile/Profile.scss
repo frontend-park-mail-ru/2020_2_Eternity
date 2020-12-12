@@ -174,12 +174,6 @@
       width: 3rem;
       @include color-assign(color, font-color--primary);
       padding-inline-start: 3rem;
-      svg {
-        //fill: ;
-      }
-    }
-    label:hover svg {
-      //fill: ;
     }
     input:focus + label {
       outline: none;

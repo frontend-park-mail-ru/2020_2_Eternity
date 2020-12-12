@@ -1,7 +1,7 @@
 class Validator {
-    //todo: вынести в consts (создать папку)
+    //todo: вынести в consts
     errors = {
-        empty: 'Строка не может быть пустой',
+        empty: 'Поле не может быть пустым',
         email: 'Некорректный e-mail',
         alpha: 'Поле может содержать только буквенные символы и цифры',
         password: 'Пароль должен содержать не менее 8 буквенных символов и цифр',
@@ -17,16 +17,22 @@ class Validator {
         return (value === '') ? this.errors.empty : null;
     }
     checkAlphabetNum = (value) => {
-        const ok = this.AlphaNumRegExp.test(value);
-        return ok ? null : this.errors.alpha;
+        if (value) {
+            const ok = this.AlphaNumRegExp.test(value);
+            return ok ? null : this.errors.alpha;
+        }
     }
     checkPassword = (value) => {
-        const ok = this.PasswordRegExp.test(value);
-        return ok ? null : this.errors.password;
+        if (value) {
+            const ok = this.PasswordRegExp.test(value);
+            return ok ? null : this.errors.password;
+        }
     }
     checkEmail = (value) => {
-        const ok = this.EmailRegExp.test(value);
-        return ok ? null : this.errors.email;
+        if (value) {
+            const ok = this.EmailRegExp.test(value);
+            return ok ? null : this.errors.email;
+        }
     }
 
     compose = (...validators) => {
@@ -45,7 +51,10 @@ class Validator {
 
     validateEmailField = this.compose(this.checkEmpty, this.checkEmail);
     validatePasswordField = this.compose(this.checkEmpty, this.checkPassword);
-    validateUsernameField = this.compose(this.checkEmpty, this.checkAlphabetNum);
+    validateAlphaField = this.compose(this.checkEmpty, this.checkAlphabetNum);
+    validateEmptyField = this.compose(this.checkEmpty);
+
+    // Валидация необязательных полей (могут быть пустыми)
 }
 
 

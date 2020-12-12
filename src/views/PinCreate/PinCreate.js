@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Validator from "../../modules/tools/Validator";
 
 
 export default class PinCreate extends BaseView {
@@ -30,17 +31,16 @@ export default class PinCreate extends BaseView {
         const title = new Input({
             label: fieldsLabels.title,
             type: 'text',
-            customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
-        });
+        }, Validator.validateAlphaField);
         const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
-            class: 'form__input',
+            customInput: 'input-group__field_noresize',
             value: this.context.description,
             id: 'description'
-        });
+        }, Validator.validateAlphaField);
         const createBtn = new Button({
             id: 'submit',
             type: 'submit',
@@ -58,13 +58,26 @@ export default class PinCreate extends BaseView {
 
         form.bind('submit', (event) => {
             event.preventDefault();
+            let ok = true;
             let data = {};
-            data['title'] = title.value;
-            data['description'] = description.value;
-            //data = JSON.stringify(data);
-            data['file'] = document.getElementById('pinImageUpload').files[0];
 
-            eventBus.emit(Events.pinCreating, {event: event, ...data});
+            form.elements.forEach((element) => {
+                if (element instanceof Input) {
+                    element.checkValid();
+                    if (element.hasError()) {
+                        ok = false;
+                    }
+                }
+            });
+
+            if (ok) {
+                data = {
+                    title: title.value,
+                    description: description.value,
+                    file: document.getElementById('pinImageUpload').files[0],
+                };
+                eventBus.emit(Events.pinCreating, {event: event, ...data});
+            }
         })
 
         this.upload.reset.element.addEventListener('click', this.onResetPreview);

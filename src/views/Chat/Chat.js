@@ -12,6 +12,7 @@ import List from "../../components/List/List";
 import {Icons} from "../../modules/consts/icons";
 import EventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
+import Validator from "../../modules/tools/Validator";
 
 export default class ChatPage extends BaseView {
     sidebar
@@ -35,9 +36,10 @@ export default class ChatPage extends BaseView {
         })
         this.msgInput = new Textarea({
             id: 'msgInput',
-            customInput: 'Input-group__field_noresize',
+            customInput: 'input-group__field_noresize',
             label: 'Сообщение',
-        })
+            noMessageForError: true,
+        }, Validator.validateEmptyField)
         this.btnSend = new Button({
             id: 'send',
             customButton: 'btn_with-icon btn_round',

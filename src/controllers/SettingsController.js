@@ -92,7 +92,6 @@ export default class SettingsController extends BaseController {
         const file = this.view.upload.value;
         if (file && file.type.match('image.*')) {
             reader.readAsDataURL(file);
-            this.changeUploadAreaState('ok');
         }
     }
 }

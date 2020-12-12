@@ -62,7 +62,7 @@
     color: $color-red;
     display: flex;
     min-height: 20px;
-    font-size: .9rem;
+    font-size: small;
     padding-left: 15px;
     align-items: center;
     opacity: 0;
@@ -70,6 +70,7 @@
 }
 .error_show {
     opacity: 1;
+    margin: 0 0 15px;
 }
 .input-group__field_error {
     border-color: $color-red !important;

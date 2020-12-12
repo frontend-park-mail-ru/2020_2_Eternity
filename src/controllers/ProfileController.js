@@ -36,6 +36,12 @@ export default class ProfileController extends BaseController {
                 } else {
                     response.edit = false;
                     response.show = true;
+
+                    UserModel.isFollowing({username: response.username}).then((r) => {
+                        if (r.following) {
+                            this.view.btnSub.changeBtnStateSequentially();
+                        }
+                    })
                 }
             } else {
                 response.edit = false;
@@ -64,6 +70,7 @@ export default class ProfileController extends BaseController {
         this.view.followPopup.close();
         if (this.view.follow) {
             this.view.follow.removeEventListener('click', this.view.onFollow);
+            this.view.follow.removeEventListener('click', this.view.onUnfollow);
         }
         if (this.view.btnMessage) {
             this.view.btnMessage.removeEventListener('click', this.view.onCreateChat);
@@ -81,12 +88,25 @@ export default class ProfileController extends BaseController {
         event.preventDefault();
         UserModel.followUser({username: this.view.context.username}).then((response) => {
             if (response.ok) {
+                this.view.btnSub.changeBtnStateSequentially();
                 this.view.changeUserFollowersNum(++this.view.context.followers);
+
+                this.view.follow.removeEventListener('click', this.view.onFollow);
+                this.view.follow.addEventListener('click', this.view.onUnfollow);
             }
         }).catch((error) => console.log(error));
     }
     onUnfollow(event) {
+        event.preventDefault();
+        UserModel.unfollowUser({username: this.view.context.username}).then((response) => {
+            if (response.ok) {
+                this.view.btnSub.changeBtnStateSequentially();
+                this.view.changeUserFollowersNum(--this.view.context.followers);
 
+                this.view.follow.removeEventListener('click', this.view.onUnfollow);
+                this.view.follow.addEventListener('click', this.view.onFollow);
+            }
+        })
     }
 
     onShowFollowers(event) {

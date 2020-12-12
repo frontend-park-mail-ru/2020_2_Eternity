@@ -30,20 +30,27 @@ export default class Button extends BaseComponent {
     }
 
     changeBtnText(text) {
-        if (this.button) {
-            this.button.innerHTML = text;
+        this.context.text = text;
+        if (this.element) {
+            this.element.innerText = text;
         }
     }
     changeBtnColor(colorClass) {
-        if (this.button) {
-            if (colorClass) {
-                this.button.classList.contains(colorClass) ? this.button.classList.remove(colorClass) : this.button.classList.add(colorClass);
+        if (!this.context.customButton) {
+            this.context.customButton = '';
+        }
+        if (colorClass) {
+            this.context.customButton.includes(colorClass) ?
+                this.context.customButton.replace(colorClass, '') : this.context.customButton += colorClass;
+
+            if (this.element) {
+                this.element.classList.contains(colorClass) ? this.element.classList.remove(colorClass) : this.element.classList.add(colorClass);
             }
         }
     }
     changeDisabled() {
-        if (this.button) {
-            this.button.disabled = !this.button.disabled;
+        if (this.element) {
+            this.element.disabled = !this.button.disabled;
         }
     }
 

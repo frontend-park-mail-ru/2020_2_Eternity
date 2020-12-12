@@ -70,6 +70,18 @@ class UserModel {
         });
     }
 
+    unfollowUser(data={}) {
+        return request.unfollowUser(data.username).then((response) => {
+            return response;
+        })
+    }
+
+    isFollowing(data={}) {
+        return request.isFollowing(data.username).then((response) => {
+            return response.json();
+        })
+    }
+
     getFollowers(data={}) {
         return request.getFollowers(data.username).then((response) => {
             return response.json();

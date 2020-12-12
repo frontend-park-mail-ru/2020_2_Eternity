@@ -9,6 +9,7 @@ import Button from "../../components/Button/Button";
 import Popup from "../../components/Popup/Popup";
 import Userbar from "../../components/Userbar/Userbar";
 import List from "../../components/List/List";
+import {Icons} from "../../modules/consts/icons";
 
 
 export default class ProfilePage extends BaseView {
@@ -32,11 +33,26 @@ export default class ProfilePage extends BaseView {
     followings
     tabs
     btnMessage
+    btnSub
 
 
     constructor(context = {}) {
         super('Профиль', context, null);
         this.template = template;
+
+        // TODO: перенести в render и сделать функцию change
+        //  (rerender, иначе создается контекст заново и чек на фоловера пропадает)
+        this.btnSub = new Button({
+            id: 'follow',
+        }, {
+            follow: {
+                text: 'Подписаться',
+            },
+            unfollow: {
+                text: 'Вы подписаны',
+                color: 'btn_green',
+            }
+        })
     }
 
     render() {
@@ -48,15 +64,11 @@ export default class ProfilePage extends BaseView {
         this.pinCard = new Card();
         this.boardCard = new Board();
         this.userbar = new Userbar();
-
         const avatar = new Avatar({
             img_link: this.context.avatar,
             id: this.context.username,
         });
-        const btnSub = new Button({
-            id: 'follow',
-            text: 'Подписаться',
-        })
+
         const btnMessage = new Button({
             id: 'message',
             text: 'Сообщение',
@@ -68,6 +80,7 @@ export default class ProfilePage extends BaseView {
             customButton: 'btn_round profile__edit',
             dataAttr: 'data-link="/profile/edit"',
         })
+
         this.list = new List({id: 'follows', placeholder: 'Нет пользователей'});
         this.followPopup = new Popup({
             id: 'followPopup',
@@ -90,7 +103,7 @@ export default class ProfilePage extends BaseView {
 
         const data = {
             avatar: avatar.render(),
-            btnSub: btnSub.render(),
+            btnSub: this.btnSub.render(),
             btnEdit: btnEdit.render(),
             btnMessage: btnMessage.render(),
             boards: boards,
@@ -107,8 +120,9 @@ export default class ProfilePage extends BaseView {
         this.tabs = document.querySelector('.profile-tabs');
         this.btnMessage = document.getElementById('message');
 
-        if (this.follow) {
-            this.follow.addEventListener('click', this.onFollow);
+        if (this.btnSub.element) {
+            this.btnSub.stateNum === 0 ? this.btnSub.element.addEventListener('click', this.onFollow) :
+                this.btnSub.element.addEventListener('click', this.onUnfollow);
         }
         if (this.btnMessage) {
             this.btnMessage.addEventListener('click', this.onCreateChat);

@@ -41,22 +41,22 @@ export default class AuthRegPage extends BaseView {
     render() {
         const email = new Input({
             label: 'Адрес электронной почты',
-            type: 'email',
+            type: 'text',
             placeholder: 'example@email.com',
             id: 'email'
-        });
+        }, Validator.validateEmailField);
         const username = new Input({
             label: 'Логин',
             type: 'text',
             placeholder: 'Username',
             id: 'username'
-        })
+        }, Validator.validateAlphaField)
         const password = new Input({
             label: 'Пароль',
             type: 'password',
             placeholder: 'Password',
             id: 'password'
-        });
+        }, Validator.validatePasswordField);
         const btn = new Button({
             id: 'submit',
             type: 'submit',
@@ -79,42 +79,28 @@ export default class AuthRegPage extends BaseView {
         this.form.bind('submit', (event) => {
             event.preventDefault();
 
+            let ok = true;
+            let data = {};
+
             this.form.elements.forEach((element) => {
-                if (element instanceof Input && element.error) {
-                    element.resetError();
-                }
-            });
-
-            let data = {
-                username: this.form.getElement('username').element.value,
-                password: this.form.getElement('password').element.value
-            };
-
-            Validator.validateUsernameField(data.username).forEach((error) => {
-                this.form.getElement('username').addError(error);
-            });
-
-            Validator.validatePasswordField(data.password).forEach((error) => {
-                this.form.getElement('password').addError(error);
-            });
-
-            if (this.pageType === 'registration') {
-                data.email = this.form.getElement('email').element.value;
-                Validator.validateEmailField(data.email).forEach((error) => {
-                    this.form.getElement('email').addError(error);
-                });
-            }
-
-            if (![...this.form.elements.values()].some((element) => {
                 if (element instanceof Input) {
-                    return element.error;
+                    element.checkValid();
+                    if (element.hasError()) {
+                        ok = false;
+                    }
                 }
-            })) {
+            });
+
+            if (ok) {
+                data = {
+                    username: this.form.getElement('username').value,
+                    password: this.form.getElement('password').value
+                };
                 if (this.pageType === 'registration') {
-                    eventBus.emit(Events.userSignup, data);
-                } else {
-                    eventBus.emit(Events.userLogin, data);
+                    data.email = this.form.getElement('email').value;
                 }
+
+                this.pageType === 'registration' ? eventBus.emit(Events.userSignup, data) : eventBus.emit(Events.userLogin, data);
             }
         })
     }

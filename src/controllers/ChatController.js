@@ -1,4 +1,4 @@
-import BaseController from "./BaseController.js";
+    import BaseController from "./BaseController.js";
 import ChatPage from "../views/Chat/Chat.js";
 import ChatModel from "../models/ChatModel";
 import EventBus from "../modules/tools/EventBus";
@@ -80,8 +80,11 @@ export default class ChatController extends BaseController {
     }
 
     onSend() {
-        EventBus.emit(Events.messageSend, {chatId: this.view.currentChat, text: this.view.msgInput.value});
-        this.view.msgInput.clear();
+        this.view.msgInput.checkValid();
+        if (!this.view.msgInput.hasError()) {
+            EventBus.emit(Events.messageSend, {chatId: this.view.currentChat, text: this.view.msgInput.value});
+            this.view.msgInput.clear();
+        }
     }
     onSelectDialog(event) {
         if (event.target instanceof HTMLInputElement) {

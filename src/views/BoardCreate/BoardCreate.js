@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Validator from "../../modules/tools/Validator";
 
 
 export default class BoardCreate extends BaseView {
@@ -30,13 +31,13 @@ export default class BoardCreate extends BaseView {
             customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
-        });
+        }, Validator.validateAlphaField);
         const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
-            class: 'form__input',
+            class: 'form__input input-group__field_noresize',
             id: 'description',
-        });
+        }, Validator.validateEmptyField);
         const privateTgl = new LabeledToggle({
             label: 'Сделать доску приватной?',
             small: 'Другие пользователи не смогут увидеть ее',
@@ -57,12 +58,26 @@ export default class BoardCreate extends BaseView {
         super.render()
 
         form.bind('submit', (event) => {
+            event.preventDefault();
             let data = {};
-            data['title'] = title.value;
-            data['description'] = description.value;
-            data['private'] = privateTgl.value;
+            let ok = true;
 
-            eventBus.emit(Events.boardCreating, {event: event, ...data});
+            form.elements.forEach((element) => {
+                if (element instanceof Input) {
+                    element.checkValid();
+                    if (element.hasError()) {
+                        ok = false;
+                    }
+                }
+            });
+            if (ok) {
+                data = {
+                    title: title.value,
+                    description: description.value,
+                    private: privateTgl.value,
+                };
+                eventBus.emit(Events.boardCreating, {event: event, ...data});
+            }
         })
     }
 }

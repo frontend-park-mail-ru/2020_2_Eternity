@@ -12,6 +12,7 @@ import EventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import {Icons} from "../../modules/consts/icons";
 import List from "../../components/List/List";
+import Validator from "../../modules/tools/Validator";
 
 
 export default class PinPage extends BaseView {
@@ -40,11 +41,12 @@ export default class PinPage extends BaseView {
         })
         this.userComment = new Textarea({
             id: 'userComment',
-            customInput: 'Input-group__field_noresize',
+            customInput: 'input-group__field_noresize',
             maxLength: 250,
             rows: 2,
-            label: 'Добавить комментарий'
-        })
+            label: 'Добавить комментарий',
+            noMessageForError: true,
+        }, Validator.validateAlphaField)
         this.btnComment = new Button({
             id: 'btnComment',
             text: Icons.send,
@@ -101,9 +103,9 @@ export default class PinPage extends BaseView {
     }
 
     addCommentToList(data = {}) {
-        this.comment.context = data;
-        this.comment.context.username = this.comment.context.Username;
-        this.comments.addItem(this.comment);
+        const nc = new Comment(data);
+        nc.context.username = nc.context.Username;
+        this.comments.addItem(nc);
         this.userComment.clear();
     }
 }

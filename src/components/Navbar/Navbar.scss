@@ -140,3 +140,10 @@
     }
   }
 }
+
+#notificationsDropdown {
+  margin-top: 25px;
+  animation: fade-in both ease-in-out;
+  animation-duration: .2s;
+  position: fixed;
+}

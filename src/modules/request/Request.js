@@ -67,7 +67,7 @@ export default class Request {
     }
 
     static getUserProfile(username) {
-        return this.requestGET(urls.userProfile.replace(':username', username), {});
+        return this.requestGET(urls.userProfile.replace(':username', username));
     }
 
     static updatePassword(oldPassword, newPassword) {
@@ -124,11 +124,11 @@ export default class Request {
     }
 
     static getAllPins(lastPin) {
-        return this.requestGET(urls.feed.replace(':option', lastPin ? `?last=${lastPin}` : ''), {});
+        return this.requestGET(urls.feed.replace(':option', lastPin ? `?last=${lastPin}` : ''));
     }
 
     static getUserPins(username) {
-        return this.requestGET(urls.pins.replace(':username', username), {});
+        return this.requestGET(urls.pins.replace(':username', username));
     }
 
     static attachPin(boardId, pinId) {
@@ -141,7 +141,7 @@ export default class Request {
     }
 
     static getBoardPins(id) {
-        return this.requestGET(urls.boardPins.replace(':id', id), {});
+        return this.requestGET(urls.boardPins.replace(':id', id));
     }
 
     /**
@@ -159,11 +159,11 @@ export default class Request {
     }
 
     static board(id) {
-        return this.requestGET(urls.board.replace(':id', id), {});
+        return this.requestGET(urls.board.replace(':id', id));
     }
 
     static getUserBoards(username) {
-        return this.requestGET(urls.boards.replace(':username', username), {});
+        return this.requestGET(urls.boards.replace(':username', username));
     }
 
     /**
@@ -172,7 +172,7 @@ export default class Request {
      * --------------------------------------------------------------------
      */
     static getPinComments(id) {
-        return this.requestGET(urls.pinComments.replace(':id', id), {});
+        return this.requestGET(urls.pinComments.replace(':id', id));
     }
 
     static commentPost(data={}) {
@@ -195,7 +195,18 @@ export default class Request {
             })
         });
     }
-    // TODO: unfollowUser
+
+    static unfollowUser(username) {
+        return this.requestPOST(urls.unfollow, {
+            body: JSON.stringify({
+                username: username,
+            })
+        });
+    }
+
+    static isFollowing(username) {
+        return this.requestGET(urls.isFollowing.replace(':username', username));
+    }
 
     /**
      * --------------------------------------------------------------------
@@ -206,18 +217,18 @@ export default class Request {
         return this.requestGET(urls.search
             .replace(':last', lastPin ? `&?last=${lastPin}` : '')
             .replace(':type', type)
-            .replace(':content', content), {});
+            .replace(':content', content));
     }
 
     static getNotifications() {
-        return this.requestGET(urls.notifications, {});
+        return this.requestGET(urls.notifications);
     }
 
     static getFollowers(username) {
-        return this.requestGET(urls.followers.replace(':username', username), {});
+        return this.requestGET(urls.followers.replace(':username', username));
     }
     static getFollowings(username) {
-        return this.requestGET(urls.followings.replace(':username', username), {});
+        return this.requestGET(urls.followings.replace(':username', username));
     }
 
     /**
@@ -237,10 +248,10 @@ export default class Request {
         });
     }
     static getChatById(chatId) {
-        return this.requestGET(urls.chatById.replace(':id', chatId), {});
+        return this.requestGET(urls.chatById.replace(':id', chatId));
     }
     static getUserChats() {
-        return this.requestGET(urls.userChats, {});
+        return this.requestGET(urls.userChats);
     }
     static markChatAsRead(chatId) {
         return this.requestPUT(urls.userChats, {

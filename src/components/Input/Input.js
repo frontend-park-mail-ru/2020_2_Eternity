@@ -6,11 +6,13 @@ export default class Input extends BaseComponent {
     field
     label
     error
+    messageForError
     validator
 
     constructor(context = {}, validator) {
         super(template, context);
         this.validator = validator;
+        this.messageForError = !context.noMessageForError;
     }
 
     getHTML() {
@@ -25,7 +27,7 @@ export default class Input extends BaseComponent {
         if (this.element) {
             this.resetError();
             const errors = this.validator(this.value);
-            if (errors.length !== 0) {
+            if (errors && errors.length !== 0) {
                 this.addError(errors[0])
             }
         }
@@ -34,15 +36,17 @@ export default class Input extends BaseComponent {
     addError(error) {
         if (this.error) {
             this.error.innerHTML = error;
-            this.error.classList.add('error_show');
-            this.field.classList.add('Input-group__field_error');
-            this.label.classList.add('Input-group__label_error');
+            if (this.messageForError) {
+                this.error.classList.add('error_show');
+            }
+            this.field.classList.add('input-group__field_error');
+            this.label.classList.add('input-group__label_error');
         }
     }
     resetError() {
         if (this.error) {
-            this.field.classList.remove('Input-group__field_error');
-            this.label.classList.remove('Input-group__label_error');
+            this.field.classList.remove('input-group__field_error');
+            this.label.classList.remove('input-group__label_error');
             this.error.classList.remove('error_show');
             this.error.innerHTML = '';
         }
@@ -50,7 +54,7 @@ export default class Input extends BaseComponent {
 
     hasError() {
         if (this.error) {
-            return this.error.classList.contains('error_show');
+            return this.field.classList.contains('input-group__field_error');
         }
     }
 
