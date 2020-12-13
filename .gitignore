@@ -110,3 +110,6 @@ fabric.properties
 node_modules/
 dist/
 /package-lock.json
+
+*.css
+*.css.map
