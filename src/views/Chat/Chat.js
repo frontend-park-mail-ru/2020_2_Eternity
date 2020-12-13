@@ -16,6 +16,7 @@ import Validator from "../../modules/tools/Validator";
 
 export default class ChatPage extends BaseView {
     sidebar
+    expandToggler
     dialog
     currentChat
 
@@ -65,13 +66,7 @@ export default class ChatPage extends BaseView {
 
         const messageList = []
 
-
-        // ------------------------------------------------------------
         this.checkWindowWidth();
-        window.addEventListener('resize', () => {
-            this.checkWindowWidth();
-        });
-        // ------------------------------------------------------------
 
         const data = {
             sidebar: this.sidebar.render(),
@@ -84,6 +79,9 @@ export default class ChatPage extends BaseView {
         }
         this.fillWith(data);
         super.render()
+
+        this.expandToggler = document.getElementById('sidebar-toggler');
+        this.expandToggler.addEventListener('click', this.onExpand);
 
         this.btnSend.element.addEventListener('click', this.onSend);
         this.sidebar.element.addEventListener('change', this.onSelectDialog);

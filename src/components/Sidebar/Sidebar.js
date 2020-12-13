@@ -10,7 +10,6 @@ export default class Sidebar extends BaseComponent {
 
     constructor(context = {}) {
         super(template, context);
-        this.startListeners();
         this.context.expand = true; // по умолчанию раскрыт
     }
 
@@ -18,39 +17,18 @@ export default class Sidebar extends BaseComponent {
         this.list = new List({
             custom: 'sidebar__list',
             id: 'sidebar-content',
-
         }, {selectable: this.context.listtype})
         this.context.list = this.list.render();
         return super.render();
     }
 
-    startListeners() {
-        document.addEventListener('click', this.expandOnTogglerClickBind.bind(this));
-        document.addEventListener('click', this.stretchContentIfInParentBind.bind(this));
-    }
+    expandOnToggler() {
+        this.expand();
+        this.rotateToggler();
 
-    checkTogglerClick(event) {
-        if (event.target instanceof SVGElement && event.target.closest('#sidebar-toggler')) {
-            event.preventDefault();
-            this.toggler = document.getElementById('sidebar-toggler');
-            this.aside = this.toggler.closest('aside');
-            return true;
-        }
-        return false;
-    }
-
-    expandOnTogglerClickBind(event) {
-        if (this.checkTogglerClick(event)) {
-            this.expand();
-            this.rotateToggler();
-        }
-    }
-    stretchContentIfInParentBind(event) {
-        if (this.checkTogglerClick(event)) {
-            const parentContainer = this.aside.parentElement;
-            if (parentContainer) {
-                this.aside.nextElementSibling.classList.toggle('content__expand');
-            }
+        const parentContainer = this.aside.parentElement;
+        if (parentContainer) {
+            this.aside.nextElementSibling.classList.toggle('content__expand');
         }
     }
 

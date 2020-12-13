@@ -6,6 +6,8 @@ import {Events} from "../modules/consts/events";
 import UserModel from "../models/UserModel";
 
 export default class ChatController extends BaseController {
+    expandDelayMs = 300
+
     constructor() {
         super(new ChatPage());
 
@@ -15,8 +17,10 @@ export default class ChatController extends BaseController {
             }
         }).catch((error) => console.log(error))
 
+        this.view.onExpand = this.onExpand.bind(this);
         this.view.onSend = this.onSend.bind(this);
         this.view.onSelectDialog = this.onSelectDialog.bind(this);
+        this.onResizeExpandSidebar = this.onResizeExpandSidebar.bind(this);
     }
 
     on() {
@@ -28,6 +32,7 @@ export default class ChatController extends BaseController {
         EventBus.on(Events.chatGetHistoryMessages, this.onGetChatHistoryMessages.bind(this));
         EventBus.on(Events.chatHistoryReceived, this.onListMessagesReceived.bind(this));
 
+        window.addEventListener('resize', this.debounce(this.onResizeExpandSidebar, this.expandDelayMs));
 
         ChatModel.getUserChats().then((response) => {
             if (!response.error) {
@@ -46,8 +51,11 @@ export default class ChatController extends BaseController {
         EventBus.off(Events.chatGetHistoryMessages, this.onGetChatHistoryMessages.bind(this));
         EventBus.off(Events.chatHistoryReceived, this.onListMessagesReceived.bind(this));
 
+        this.view.expandToggler.removeEventListener('click', this.view.onExpand);
         this.view.btnSend.element.removeEventListener('click', this.view.onSend);
         this.view.sidebar.element.addEventListener('change', this.view.onSelectDialog);
+
+        window.removeEventListener('resize', this.debounce(this.onResizeExpandSidebar, this.expandDelayMs));
 
         super.off();
     }
@@ -92,6 +100,32 @@ export default class ChatController extends BaseController {
             this.view.clearChatArea();
             EventBus.emit(Events.chatGetLastMessages, {chatId: this.view.currentChat});
             this.view.inputShow();
+        }
+    }
+
+    onExpand(event) {
+        event.preventDefault();
+        const origin = event.target.closest('#sidebar-toggler');
+        if (origin) {
+            this.view.sidebar.getAside();
+            this.view.sidebar.expandOnToggler();
+        }
+    }
+
+    onResizeExpandSidebar() {
+        this.view.checkWindowWidth();
+    }
+
+    debounce(func, ms) {
+        let timeout;
+
+        return function() {
+            let self = this;
+            const functionCall = function() {
+                return func.apply(self, arguments);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(functionCall, ms);
         }
     }
 }
