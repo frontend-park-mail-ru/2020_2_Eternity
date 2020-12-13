@@ -77,14 +77,13 @@
         display: none;
       }
 
-      a {
-        display: block;
-        line-height: 3em;
-        @include color-assign(background-color, secondary);
-        box-sizing: border-box;
-        height: 3em;
+      .btn {
+        box-shadow: none;
         padding: 0 1em;
-        border-radius: 25px;
+
+        &_with-icon svg {
+          height: 20px;
+        }
       }
 
       @include largescreen {
@@ -92,12 +91,17 @@
         background-color: transparent;
         box-shadow: none;
 
-        a:first-child {
-          margin-right: 20px;
+        .btn {
+          box-shadow: $box-shadow-secondary;
+
+          &:first-child {
+            margin-right: 20px;
+          }
         }
 
         &__linktext {
           display: inline-flex;
+          margin-right: 5px;
         }
       }
     }

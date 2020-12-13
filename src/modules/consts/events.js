@@ -1,5 +1,6 @@
 export const Events = {
     pathChanged: 'pathChanged',
+    goBack: 'goBack',
 
     userLogin: 'userLogin',
     userLogout: 'userLogout',

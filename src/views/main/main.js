@@ -21,8 +21,6 @@ export default class MainPage extends BaseView {
     fillingMutex
     users = []
 
-    // for events
-    cardLinks
     copyLinkBtns
 
     constructor(context = {}) {
@@ -126,12 +124,8 @@ export default class MainPage extends BaseView {
             });
         }
 
-        this.cardLinks = document.querySelectorAll('.card__link');
-        this.copyLinkBtns = document.querySelectorAll('.copy-link');
 
-        this.cardLinks.forEach((card) => {
-            card.addEventListener('click', this.onShowPinPopupView);
-        });
+        this.copyLinkBtns = document.querySelectorAll('.copy-link');
         this.copyLinkBtns.forEach((btn) => {
             btn.addEventListener('click', this.onCopyLink);
         });

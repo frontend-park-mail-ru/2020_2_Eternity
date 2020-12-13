@@ -12,11 +12,6 @@ export default class Card extends BaseComponent {
     }
 
     render() {
-        const viewGo = new Button({
-            customButton: 'btn_round btn_round_middle btn_with-icon card__actions__go',
-            text: Icons.expand,
-            dataAttr: 'data-link="/pin/' + this.context.id + '"',
-        })
         const share = new Button({
             customButton: 'btn_round btn_round_middle btn_with-icon card__actions__go share',
             text: Icons.share,
@@ -29,7 +24,6 @@ export default class Card extends BaseComponent {
         })
         this.context = {
             ...this.context,
-            viewGo: viewGo.render(),
             share: share.render(),
             copyLink: copyLink.render(),
         }

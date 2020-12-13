@@ -45,6 +45,7 @@ export default class Router {
         }
 
         eventBus.on(Events.pathChanged, this.go.bind(this));
+        eventBus.on(Events.goBack, this.back.bind(this));
     }
 
     /**
@@ -179,7 +180,7 @@ export default class Router {
     }
 
     /**
-     * Возвращает HTMLAnchorElement, для которого необходимо перейти по ссылке (пин, ссылка)
+     * Возвращает path, на который нужно перейти, и target (источник ссылки)
      *
      * @param target
      * @returns { {target: Element || null, pathname: string || null} }
@@ -191,7 +192,9 @@ export default class Router {
                 pathname: target.closest('[data-link]').getAttribute('data-link')
             }
         }
-        if (target.closest('[data-activates]') || target.closest('[data-popup]')) {
+        if (target.closest('[data-activates]') ||
+            target.closest('[data-popup]') ||
+            target.closest('[data-copy]')) {
             return {target: target, pathname: null};
         }
         if (target.closest('a')) {

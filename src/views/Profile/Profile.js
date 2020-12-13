@@ -80,6 +80,16 @@ export default class ProfilePage extends BaseView {
             customButton: 'btn_round profile__edit',
             dataAttr: 'data-link="/profile/edit"',
         })
+        const btnCreatePin = new Button({
+            text: '<span class="profile-desk__create__linktext">Создать пин</span> ' + Icons.add,
+            customButton: 'btn_with-icon',
+            dataAttr: 'data-link="/create-pin"',
+        })
+        const btnCreateBoard = new Button({
+            text: '<span class="profile-desk__create__linktext">Создать доску</span> ' + Icons.board,
+            customButton: 'btn_with-icon',
+            dataAttr: 'data-link="/create-board"',
+        })
 
         this.list = new List({id: 'follows', placeholder: 'Нет пользователей'});
         this.followPopup = new Popup({
@@ -106,6 +116,8 @@ export default class ProfilePage extends BaseView {
             btnSub: this.btnSub.render(),
             btnEdit: btnEdit.render(),
             btnMessage: btnMessage.render(),
+            btnCreatePin: btnCreatePin.render(),
+            btnCreateBoard: btnCreateBoard.render(),
             boards: boards,
             pins: pins,
             followPopup: this.followPopup.render(),

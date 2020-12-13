@@ -1,7 +1,6 @@
 import BaseController from "./BaseController.js";
 
 import MainPage from "../views/main/main.js";
-import PinPopup from "../views/PopupViews/PinPopup/PinPopup";
 
 import {fakePins} from "../modules/consts/fake.js"
 import {Icons} from "../modules/consts/icons";
@@ -19,7 +18,6 @@ export default class MainController extends BaseController {
     constructor() {
         super(new MainPage());
 
-        this.view.onShowPinPopupView = this.onShowPinPopupView.bind(this);
         this.view.onCopyLink = this.onCopyLink.bind(this);
     }
 
@@ -40,8 +38,8 @@ export default class MainController extends BaseController {
             }).catch((error) => console.log(error));
         } else {
             PinModel.getAllPins().then((response) => {
-                // this.view.fillWith({protoPins: fakePins});
-                this.view.fillWith({protoPins: response});
+                this.view.fillWith({protoPins: fakePins});
+                // this.view.fillWith({protoPins: response});
                 this.view.render();
 
                 if (response.length < 15) {
@@ -55,10 +53,6 @@ export default class MainController extends BaseController {
     }
 
     off() {
-        this.view.popupPinView.close();
-        this.view.cardLinks.forEach((card) => {
-            card.removeEventListener('click', this.view.onShowPinPopupView);
-        });
         this.view.copyLinkBtns.forEach((btn) => {
             btn.removeEventListener('click', this.view.onCopyLink);
         });
@@ -99,25 +93,6 @@ export default class MainController extends BaseController {
                     this.view.fillingMutex = true;
                     this.view.fillEmptyPlace();
                 }).catch((error) => console.log(error));
-            }
-        }
-    }
-
-
-    onShowPinPopupView(event) {
-        if (!event.target.closest('[data-activates]') && !event.target.closest('[data-copy]')) {
-            const origin = event.target.closest('[data-popup]');
-            if (origin) {
-                const targetSelector = origin.getAttribute('data-popup');
-                this.view.popupPinView.origin = origin;
-                this.view.popupPinView.clearContent();
-                this.view.popupPinView.open(targetSelector);
-
-                const id = origin.getAttribute('href').replace('/pin/', '');
-                PinModel.getPin({pin: id}).then((r) => {
-                    const popupView = new PinPopup(r);
-                    this.view.popupPinView.formContent(popupView.render())
-                })
             }
         }
     }
