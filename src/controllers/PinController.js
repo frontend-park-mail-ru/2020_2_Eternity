@@ -7,9 +7,9 @@ import {routes} from "../modules/consts/routes.js";
 
 import PinModel from "../models/PinModel.js";
 import CommentModel from "../models/CommentModel.js";
-import EventBus from "../modules/tools/EventBus";
 import UserModel from "../models/UserModel";
 import BoardModel from "../models/BoardModel";
+
 import Navbar from "../components/Navbar/Navbar";
 
 export default class PinController extends BaseController {

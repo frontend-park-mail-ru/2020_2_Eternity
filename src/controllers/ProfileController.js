@@ -39,7 +39,7 @@ export default class ProfileController extends BaseController {
 
                     UserModel.isFollowing({username: response.username}).then((r) => {
                         if (r.following) {
-                            this.view.btnSub.changeBtnStateSequentially();
+                            this.swapFollowListeners();
                         }
                     })
                 }
@@ -53,13 +53,14 @@ export default class ProfileController extends BaseController {
             }
 
             this.view.fillWith(response);
+            this.view.load(response);
 
             PinModel.getUserPins(data).then((pinsResponse) => {
                 this.view.fillWith({pins: pinsResponse});
 
                 BoardModel.getUserBoards(data).then((boardsResponse) => {
                     this.view.fillWith({boards: boardsResponse});
-                    this.view.render();
+                    this.view.loadDesk();
                 });
             });
         }).catch((error) => console.log(error));
@@ -88,11 +89,8 @@ export default class ProfileController extends BaseController {
         event.preventDefault();
         UserModel.followUser({username: this.view.context.username}).then((response) => {
             if (response.ok) {
-                this.view.btnSub.changeBtnStateSequentially();
                 this.view.changeUserFollowersNum(++this.view.context.followers);
-
-                this.view.follow.removeEventListener('click', this.view.onFollow);
-                this.view.follow.addEventListener('click', this.view.onUnfollow);
+                this.swapFollowListeners();
             }
         }).catch((error) => console.log(error));
     }
@@ -100,13 +98,20 @@ export default class ProfileController extends BaseController {
         event.preventDefault();
         UserModel.unfollowUser({username: this.view.context.username}).then((response) => {
             if (response.ok) {
-                this.view.btnSub.changeBtnStateSequentially();
                 this.view.changeUserFollowersNum(--this.view.context.followers);
-
-                this.view.follow.removeEventListener('click', this.view.onUnfollow);
-                this.view.follow.addEventListener('click', this.view.onFollow);
+                this.swapFollowListeners();
             }
         })
+    }
+    swapFollowListeners() {
+        if (this.view.btnSub.stateNum === 0 && this.view.follow) {
+            this.view.follow.removeEventListener('click', this.view.onFollow);
+            this.view.follow.addEventListener('click', this.view.onUnfollow);
+        } else {
+            this.view.follow.removeEventListener('click', this.view.onUnfollow);
+            this.view.follow.addEventListener('click', this.view.onFollow);
+        }
+        this.view.btnSub.changeBtnStateSequentially();
     }
 
     onShowFollowers(event) {
@@ -140,13 +145,13 @@ export default class ProfileController extends BaseController {
         if (event.target instanceof HTMLInputElement) {
             switch (event.target.id.replace('tab', '')) {
                 case 'pin':
-                    this.view.changeDeskContent(this.view.renderedPins.join('\n'));
+                    this.view.changeDeskContent(this.view.pins);
                     break;
                 case 'board':
-                    this.view.changeDeskContent(this.view.renderedBoards.join('\n'));
+                    this.view.changeDeskContent(this.view.boards);
                     break;
                 default:
-                    this.view.changeDeskContent([...this.view.renderedPins, ...this.view.renderedBoards].join('\n'));
+                    this.view.changeDeskContent([...this.view.pins, ...this.view.boards]);
                     break;
             }
         }
@@ -158,18 +163,19 @@ export default class ProfileController extends BaseController {
 
     onShowNewContent(event) {
         if (event.animationName === 'fade-out') {
-            this.view.deskContent.innerHTML = this.view.content;
+            this.view.desk.formContentFromListObjects(this.view.newContent);
             this.view.deskContent.classList.add('fade-in');
         }
     }
 
     onCreateChat(event) {
         if (event.target.closest('[data-collocutor]')) {
-            const button = event.target.closest('[data-collocutor]');
-            ChatModel.createChat(button.getAttribute('data-collocutor')).then((response) => {
-                if (!response.error) {
-                    EventBus.emit(Events.pathChanged, {path: '/messages'});
+            const collocutor = event.target.closest('[data-collocutor]').getAttribute('data-collocutor');
+            ChatModel.getUserChats().then((r) => {
+                if (!r.some((chat) => chat.collocutor_name === collocutor)) {
+                    ChatModel.createChat(collocutor).then((response) => console.log('new chat'));
                 }
+                EventBus.emit(Events.pathChanged, {path: '/messages'});
             })
         }
     }

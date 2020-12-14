@@ -79,3 +79,30 @@ a:hover {
 .rotate {
     transform: rotate(180deg);
 }
+
+
+.load-animation {
+    border-radius: 25px;
+    @include color-assign(background, skeleton-bg);
+    background-size: 1200px 100px;
+    animation: load 2s forwards linear infinite;
+
+    &_short {
+        display: inline-flex;
+        min-height: 1em;
+        min-width: 8em;
+        max-width: 50%;
+    }
+    &_round {
+        border-radius: 50%;
+    }
+}
+
+@keyframes load{
+    0% {
+        background-position: -500px 0;
+    }
+    100% {
+        background-position: 500px 0;
+    }
+}
