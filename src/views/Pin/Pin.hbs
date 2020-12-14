@@ -2,33 +2,25 @@
 
 <div class="layout__container pin">
     <div class="wrap">
-        <div class="wrap__left">
-            <img src="{{img_link}}">
+        <div class="wrap__left load-animation">
+            {{{pinImg}}}
         </div>
 
         <div class="wrap__right">
-            {{#if auth}}
-                <div class="pin__board">
-                    {{{btnBoard}}}
-                </div>
-            {{/if}}
+            {{#if auth}}<div class="pin__board">{{{btnBoard}}}</div>{{/if}}
+
             <div class="pin__info">
-                <h2 class="pin__info__title">{{title}}</h2>
-<!--                <a class="pin__info__author" href="/@{{username}}"> {{{authorAvatar}}} {{username}}</a>-->
-                <p class="pin__info__description">{{content}}</p>
+                {{{pinTitle}}}
+                {{{pinAuthor}}}
+                {{{pinDescr}}}
             </div>
 
             {{{list}}}
             
             <div class="pin__form">
-                {{#if auth}}
-                    {{{input}}}
-                    {{{btnComment}}}
-                {{else}}
-                    <div class="wrap__right__title">Чтобы оставлять комментарии к пинам, <a href="/login">Войдите</a>
-                        или <a href="/signup">Зарегистрируйтесь</a>.
-                    </div>
-                {{/if}}
+                <div class="wrap__right__title">Чтобы оставлять комментарии к пинам, <a href="/login">Войдите</a>
+                    или <a href="/signup">Зарегистрируйтесь</a>.
+                </div>
             </div>
         </div>
     </div>

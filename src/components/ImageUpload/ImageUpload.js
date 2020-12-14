@@ -1,7 +1,7 @@
 import template from "./ImageUpload.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-import Image from "./Image/Image";
+import Image from "../Image/Image";
 import Input from "../Input/Input";
 import {Icons} from "../../modules/consts/icons";
 import Button from "../Button/Button";

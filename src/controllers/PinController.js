@@ -23,14 +23,11 @@ export default class PinController extends BaseController {
         PinModel.getPin(data).then((response) => {
             if (response) {
                 this.view.context.auth = Navbar.context.isAuth;
-
-                this.view.fillWith(response);
-                this.view.render();
+                this.view.load(response)
 
                 PinModel.getPinComments(data).then((commentsResponse) => {
                     if (commentsResponse) {
-                        this.view.fillWith({commentList: commentsResponse});
-                        this.view.render();
+                        this.view.loadComments(commentsResponse);
                     }
                 });
 
@@ -42,7 +39,7 @@ export default class PinController extends BaseController {
                             if (boardResponse) {
                                 this.view.context.show = true;
                                 this.view.fillWith({options: boardResponse});
-                                this.view.render();
+                                // this.view.render();
                             }
                         });
                     }
