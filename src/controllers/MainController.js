@@ -19,6 +19,7 @@ export default class MainController extends BaseController {
         super(new MainPage());
 
         this.view.onCopyLink = this.onCopyLink.bind(this);
+        this.view.onShowCreateDropdown = this.onShowCreateDropdown.bind(this);
     }
 
     on(data = {}) {
@@ -38,8 +39,9 @@ export default class MainController extends BaseController {
             }).catch((error) => console.log(error));
         } else {
             PinModel.getAllPins().then((response) => {
-                this.view.fillWith({protoPins: fakePins});
-                // this.view.fillWith({protoPins: response});
+                // this.view.fillWith({protoPins: fakePins});
+                response.forEach((r) => r.img_link = fakePins[2].img_link)
+                this.view.fillWith({protoPins: response});
                 this.view.render();
 
                 if (response.length < 15) {
@@ -56,6 +58,7 @@ export default class MainController extends BaseController {
         this.view.copyLinkBtns.forEach((btn) => {
             btn.removeEventListener('click', this.view.onCopyLink);
         });
+        this.view.btnCreate.element.removeEventListener('click', this.view.onShowCreateDropdown);
 
         this.view.fillingMutex = true;
         // console.log(this.view.list);
@@ -125,5 +128,19 @@ export default class MainController extends BaseController {
         origin.classList.remove('fade-in_icon');
         origin.replaceChild(tmp, origin.firstElementChild);
         document.removeEventListener('animationend', this.onRemoveAnimation);
+    }
+
+    onShowCreateDropdown(event) {
+        const origin = event.target.closest('[data-activates]');
+        if (origin) {
+            const targetSelector = origin.getAttribute('data-activates');
+            this.view.dropdownCreate.origin = origin;
+            this.view.dropdownCreate.dropdown = document.getElementById(targetSelector);
+            if (this.view.dropdownCreate.isOpened) {
+                this.view.dropdownCreate.hide();
+            } else {
+                this.view.dropdownCreate.show();
+            }
+        }
     }
 }

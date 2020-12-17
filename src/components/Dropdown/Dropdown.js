@@ -20,9 +20,9 @@ export default class Dropdown extends BaseComponent {
             this.init();
         }
         this.list = new List({
-            custom: 'dropdown',
+            custom: 'dropdown ' + this.context.custom,
             id: this.context.id,
-            placeholder: 'Пусто'
+            placeholder: this.context.placeholder ? this.context.placeholder : 'Пусто',
         }, {selectable: this.context.listtype})
 
         this.closeOnClickOutside = this.closeOnClickOutsideBind.bind(this);
@@ -43,7 +43,7 @@ export default class Dropdown extends BaseComponent {
     }
 
     startListeners() {
-        document.addEventListener('click', this.closeOnClickOutside);
+        // document.addEventListener('click', this.closeOnClickOutside);
         // this.selectItemOnClickBind();
     }
     removeListeners() {
@@ -57,15 +57,16 @@ export default class Dropdown extends BaseComponent {
     }
 
     getPositionByOrigin() {
-        const position = this.origin.getBoundingClientRect()
+        const position = this.origin.getBoundingClientRect();
         if (document.documentElement.clientWidth - position.x < 210) {
             position.x = position.x - 210 + this.origin.offsetWidth;
         }
         if (document.documentElement.clientHeight - position.y < 150) {
             position.y = position.y - 140 ;
         }
+        getComputedStyle(this.origin, null).position !== 'fixed' ?
+            this.dropdown.style.top = position.y + window.scrollY + 'px' : this.dropdown.style.top = position.y + 'px';
         this.dropdown.style.left = position.x + 'px';
-        this.dropdown.style.top = position.y + window.scrollY + 'px';
     }
 
     show() {
@@ -104,7 +105,7 @@ export default class Dropdown extends BaseComponent {
     }
 
     addToContent(itemObject, order) {
-        this.list.add(itemObject, order);
+        this.list.addItem(itemObject, order);
     }
 
     formContent(list) {

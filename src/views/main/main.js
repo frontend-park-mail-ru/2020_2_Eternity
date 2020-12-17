@@ -9,6 +9,10 @@ import Popup from "../../components/Popup/Popup";
 
 import eventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
+import Button from "../../components/Button/Button";
+import {Icons} from "../../modules/consts/icons";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import Link from "../../components/Link/Link";
 
 export default class MainPage extends BaseView {
     test
@@ -22,6 +26,9 @@ export default class MainPage extends BaseView {
     users = []
 
     copyLinkBtns
+
+    dropdownCreate
+    btnCreate
 
     constructor(context = {}) {
         super('Главная', context, null);
@@ -87,11 +94,27 @@ export default class MainPage extends BaseView {
             this.context.protoPins = [];
         }
 
+        this.dropdownCreate = new Dropdown({
+            id: 'dropdownCreate',
+            custom: 'create__dropdown'
+        })
+        this.btnCreate = new Button({
+            id: 'btnCreate',
+            text: Icons.add,
+            dataAttr: 'data-activates="' + this.dropdownCreate.context.id + '"',
+            customButton: 'btn_round btn_with-icon create',
+        })
+        this.dropdownCreate.addToContent(new Link({href: '/create-pin', text: 'Пин', custom: 'create__link'}));
+        this.dropdownCreate.addToContent(new Link({href: '/create-board', text: 'Доска', custom: 'create__link'}))
+
+
         const data = {
             pins: this.list,
             users: this.users,
             popup: this.popupPinView.render(),
-            test: this.test.render()
+            test: this.test.render(),
+            dropdownCreate: this.dropdownCreate.render(),
+            btnCreate: this.btnCreate.render()
         }
 
         this.fillWith(data);
@@ -129,5 +152,6 @@ export default class MainPage extends BaseView {
         this.copyLinkBtns.forEach((btn) => {
             btn.addEventListener('click', this.onCopyLink);
         });
+        this.btnCreate.element.addEventListener('click', this.onShowCreateDropdown);
     }
 }

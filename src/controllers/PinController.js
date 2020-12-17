@@ -57,7 +57,7 @@ export default class PinController extends BaseController {
 
     off() {
         eventBus.off(Events.pinAttach, this.onPinAttach.bind(this));
-        if (this.view.btnComment.element) {
+        if (this.view.btnComment) {
             this.view.btnComment.element.removeEventListener('click', this.view.onAddComment);
         }
         super.off();

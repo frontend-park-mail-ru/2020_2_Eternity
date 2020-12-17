@@ -3,9 +3,13 @@
 .board {
     &__info {
         max-width: 600px;
-        text-align: center;
         margin: auto;
         padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
 
         h2 {
             margin: 0 0 10px;

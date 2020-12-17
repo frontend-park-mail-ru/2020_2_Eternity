@@ -20,8 +20,9 @@ export default class BoardController extends BaseController {
             this.view.fillWith(response);
 
             PinModel.getBoardPins(data).then((pinsResponse) => {
+                response.pins = pinsResponse;
                 this.view.fillWith({pins: pinsResponse});
-                this.view.render();
+                this.view.load(response);
             })
         }).catch((error) => console.log(error));
 

@@ -9,6 +9,7 @@ export default class Card extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
         // TODO: в eventBus при добавлении на доску Events.addPinToBoard
+        //       вынести его отсюда в контроллер надо
         document.addEventListener('click', this.changeLikeButton.bind(this));
     }
 
