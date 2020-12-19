@@ -107,6 +107,15 @@
     background-color: $color-blue-dark;
 }
 
+.btn_transparent {
+    background-color: transparent;
+    box-shadow: none;
+}
+.btn_transparent:hover {
+    background-color: transparent;
+    box-shadow: none;
+    color: $color-blue;
+}
 
 .fade-in_icon {
     animation: fade-in_icon;

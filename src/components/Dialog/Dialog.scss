@@ -1,6 +1,12 @@
 @import "src/colors";
 @import "src/themes";
 
+@mixin largescreen {
+    @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+        @content;
+    }
+}
+
 .dialog {
     display: flex;
     align-items: center;
@@ -17,8 +23,12 @@
 }
 .dialog__content {
     overflow: hidden;
-    width: 100%;
+    width: 70%;
     padding: 0 10px;
+
+    @include largescreen {
+        width: 60%;
+    }
 }
 .dialog__content__user {
     font-weight: bolder;

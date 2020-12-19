@@ -8,11 +8,18 @@ import Message from "../../components/Dialog/Message/Message.js";
 import Textarea from "../../components/Textarea/Textarea";
 import Button from "../../components/Button/Button";
 import List from "../../components/List/List";
+import Span from "../../components/Span/Span";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import EmojiPicker from "../../components/EmojiPicker/EmojiPicker";
 
+import {emoji, sticker} from "../../modules/consts/emoji";
 import {Icons} from "../../modules/consts/icons";
 import EventBus from "../../modules/tools/EventBus";
 import {Events} from "../../modules/consts/events";
 import Validator from "../../modules/tools/Validator";
+import Image from "../../components/Image/Image";
+
+
 
 export default class ChatPage extends BaseView {
     sidebar
@@ -46,16 +53,30 @@ export default class ChatPage extends BaseView {
             customButton: 'btn_with-icon btn_round',
             text: Icons.send,
         })
-        this.btnAttach = new Button({
-            id: 'attach',
-            customButton: 'btn_with-icon btn_round',
-            text: Icons.attach,
-        })
+
+
+
+
+
         this.btnSmile = new Button({
             id: 'smile',
-            customButton: 'btn_with-icon btn_round smile-picker',
+            customButton: 'btn_with-icon btn_round btn_transparent smile-picker',
             text: Icons.smile,
+            dataAttr: 'data-activates="smilesWindow"'
         })
+        // this.smiles = new Dropdown({
+        //     id: 'smilesWindow',
+        //     listtype: 'radio',
+        //     customItem: 'emoji-picker__emoji',
+        //     custom: 'emoji-picker'
+        // })
+        this.smiles = new EmojiPicker({
+            id: 'smilesWindow',
+        })
+
+
+
+
         this.messages = new List({
             id: 'message-list',
             custom: 'chat__window__messages',
@@ -73,9 +94,9 @@ export default class ChatPage extends BaseView {
             messageList: messageList,
             msgInput: this.msgInput.render(),
             btnSend: this.btnSend.render(),
-            btnAttach: this.btnAttach.render(),
             smile: this.btnSmile.render(),
             messages: this.messages.render(),
+            smiles: this.smiles.render(),
         }
         this.fillWith(data);
         super.render()
@@ -85,6 +106,9 @@ export default class ChatPage extends BaseView {
 
         this.btnSend.element.addEventListener('click', this.onSend);
         this.sidebar.element.addEventListener('change', this.onSelectDialog);
+        this.btnSmile.element.addEventListener('click', this.onShowEmoji);
+        this.smiles.element.addEventListener('change', this.onPutEmoji);
+        this.smiles.element.addEventListener('change', this.onEmojiTabChange);
     }
 
     get currentChat() {
@@ -111,7 +135,18 @@ export default class ChatPage extends BaseView {
         this.messages.addItem(newMsg, 'prepend');
     }
     createMessageToWindow(data={}) {
-        const newMsg = new Message({text: data.msg, own: data.owner, time: data.time});
+        let smileOrSticker;
+        let textMsg;
+
+        if (data.msg.slice(1, -1) in sticker) {
+            textMsg = new Image({src: sticker[data.msg.slice(1, -1)], alt: data.msg.slice(1, -1), class: 'message__text__sticker'}).render();
+            smileOrSticker = 'sticker_chat';
+        } else {
+            textMsg = data.msg.replace(/\n/g, '<br/>');
+            smileOrSticker = emoji.indexOf(data.msg) === -1 ? '' : 'smile';
+        }
+
+        const newMsg = new Message({text: textMsg, own: data.owner, time: data.time, custom: smileOrSticker});
         if (!data.owner) {
             newMsg.extra = 'message__received';
         }
@@ -155,6 +190,9 @@ export default class ChatPage extends BaseView {
         }
         let t = new Date(data.last_msg_time);
 
+        if (data.last_msg_content.slice(1, -1) in sticker) {
+            data.last_msg_content = 'Стикер';
+        }
         return new Dialog({
             id: data.id,
             avatar: avatar.render(),
@@ -170,6 +208,9 @@ export default class ChatPage extends BaseView {
         data.chatId = data.chatId || this.currentChat;
         const dialog = document.getElementById(data.chatId);
         dialog.querySelector('.message__info__time').innerHTML = data.time;
+        if (data.msg.slice(1, -1) in sticker) {
+            data.msg = 'Стикер';
+        }
         dialog.querySelector('.dialog__content__text').innerHTML = data.msg
     }
 

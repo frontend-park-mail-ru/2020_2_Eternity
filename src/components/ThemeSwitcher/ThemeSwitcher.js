@@ -21,6 +21,11 @@ class ThemeSwitcher extends BaseComponent {
         }
     }
 
+    render() {
+        this.context.dark = getCurrentTheme() === 'dark';
+        return super.render();
+    }
+
     get value() {
         return this.element.checked;
     }
