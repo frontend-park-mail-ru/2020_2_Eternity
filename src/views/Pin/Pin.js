@@ -163,9 +163,10 @@ export default class PinPage extends BaseView {
         curr.className = 'pin__info__title';
         curr.innerText = title;
     }
-    // TODO: когда бэк будет отдавать автора с пином, поменять username
+
     changePinAuthor(avatar, username) {
         const curr = document.querySelector('.pin__info__author');
+        curr.setAttribute('href', '/@' + username);
         curr.innerHTML = avatar.render();
         curr.insertAdjacentText('beforeend', username);
     }
