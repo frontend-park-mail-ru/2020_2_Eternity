@@ -38,8 +38,8 @@ export default class MainController extends BaseController {
             }).catch((error) => console.log(error));
         } else {
             PinModel.getAllPins().then((response) => {
-                this.view.fillWith({protoPins: fakePins});
-                // this.view.fillWith({protoPins: response});
+                // this.view.fillWith({protoPins: fakePins});
+                this.view.fillWith({protoPins: response});
                 this.view.render();
 
                 if (response.length < 15) {
