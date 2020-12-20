@@ -5,6 +5,15 @@
 
 
 .pin {
+    &__actions {
+        display: flex;
+        flex-direction: row;
+
+        .btn {
+            margin: 15px 10px 0;
+        }
+    }
+
     &__board {
         position: absolute;
         top: .5em;
@@ -22,6 +31,7 @@
             min-height: 1em;
             margin: 10px 0;
             font-weight: 600;
+            word-wrap: break-word;
         }
         &__author {
             display: inline-flex;
@@ -61,7 +71,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: calc(85vh - 240px);
+        height: calc(85vh - 285px);
         min-height: 160px;
 
         padding: 0;
@@ -82,8 +92,8 @@
         }
 
         @include layout.largescreen {
-            height: calc(100% - 240px);
-            min-height: calc(100% - 240px);
+            height: calc(100% - 285px);
+            min-height: calc(100% - 285px);
             max-height: 400px;
         }
     }

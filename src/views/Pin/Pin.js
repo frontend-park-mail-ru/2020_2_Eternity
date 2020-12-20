@@ -12,6 +12,9 @@ import List from "../../components/List/List";
 
 import {Icons} from "../../modules/consts/icons";
 import Validator from "../../modules/tools/Validator";
+import Link from "../../components/Link/Link";
+import Popup from "../../components/Popup/Popup";
+import ReportForm from "../../components/ReportForm/ReportForm";
 
 
 export default class PinPage extends BaseView {
@@ -19,8 +22,17 @@ export default class PinPage extends BaseView {
     userComment
     btnComment
 
-    btnBoard
     dropdown
+    reportForm
+
+    btnAction
+    dropAction
+    linkReport
+    reportFormComponent
+    linkDownload
+
+    btnShare
+    dropShare
 
     comments
 
@@ -34,13 +46,6 @@ export default class PinPage extends BaseView {
             id: 'boardList',
             title: 'Доступные доски',
         });
-        this.btnBoard = new Button({
-            id: 'btnBoard',
-            text: Icons.add,
-            customButton: 'btn_with-icon btn_round',
-            activates: true,
-            idToActivate: this.dropdown.context.id,
-        })
 
         this.pinImg = new Image({
             id: 'pinImg',
@@ -58,6 +63,44 @@ export default class PinPage extends BaseView {
             placeholder: '<div class="pin__comments__empty"><p> Еще никто не прокомментировал этот пин </p></div>'
         })
 
+        this.btnAction = new Button({
+            id: 'btnAction',
+            text: Icons.dots,
+            customButton: 'btn_with-icon btn_round btn_round_middle',
+            dataAttr: 'data-activates="dropAction"'
+        })
+        this.dropAction = new Dropdown({
+            id: 'dropAction',
+            customItem: 'create__link'
+        })
+        this.linkReport = new Link({
+            id: 'linkReport',
+            text: 'Пожаловаться',
+            dataAttr: 'data-popup="#reportForm"'
+        })
+        this.linkDownload = new Link({
+            id: 'linkDownload',
+            text: 'Скачать',
+            dataAttr: 'data-activates=""'
+        })
+        this.dropAction.formContent([this.linkReport, this.linkDownload])
+        this.reportForm = new Popup({
+            id: 'reportForm',
+        })
+        this.reportFormComponent = new ReportForm();
+        this.reportForm.formContent(this.reportFormComponent.render());
+
+
+        this.btnShare = new Button({
+            id: 'btnShare',
+            text: Icons.share,
+            customButton: 'btn_with-icon btn_round btn_round_middle',
+            dataAttr: 'data-activates="dropShare"'
+        })
+        this.dropShare = new Dropdown({
+            id: 'dropShare',
+        })
+
         const data = {
             ...this.context,
             pinImg: this.pinImg.render(),
@@ -66,9 +109,15 @@ export default class PinPage extends BaseView {
             pinAuthor: this.createPinAuthor(authorAvatar).outerHTML,
             pinDescr: this.createPinDescr().outerHTML,
 
-            btnBoard: this.btnBoard.render(),
             dropdown: this.dropdown.render(),
             list: this.comments.render(),
+
+            btnAction: this.btnAction.render(),
+            dropAction: this.dropAction.render(),
+            reportForm: this.reportForm.render(),
+
+            btnShare: this.btnShare.render(),
+            dropShare: this.dropShare.render(),
         }
 
         this.fillWith(data);
@@ -78,9 +127,11 @@ export default class PinPage extends BaseView {
         //     select.bind(this.context.id);
         // }
 
-        if (this.context.auth) {
+        this.btnAction.element.addEventListener('click', this.onShowActionsDropdown);
+        this.btnShare.element.addEventListener('click', this.onShowShareDropdown);
+        this.linkReport.element.addEventListener('click', this.onShowReportForm);
 
-        }
+        this.reportFormComponent.btnReport.element.addEventListener('click', this.onSendReport);
     }
 
     createPinTitle() {
@@ -113,7 +164,7 @@ export default class PinPage extends BaseView {
         curr.innerText = title;
     }
     // TODO: когда бэк будет отдавать автора с пином, поменять username
-    changePinAuthor(avatar, username='example') {
+    changePinAuthor(avatar, username) {
         const curr = document.querySelector('.pin__info__author');
         curr.innerHTML = avatar.render();
         curr.insertAdjacentText('beforeend', username);
@@ -125,8 +176,12 @@ export default class PinPage extends BaseView {
     }
 
     load(data={}) {
+        this.context.info = data;
+
         this.pinImg.show(data.img_link);
         this.pinImg.element.parentElement.classList.remove('load-animation');
+        this.linkDownload.element.setAttribute('href', data.img_link);
+        this.linkDownload.element.setAttribute('download', data.title + '.jpg');
 
         const authorAvatar = new Avatar({
             img_link: '/img/img11.jpg',
@@ -165,7 +220,6 @@ export default class PinPage extends BaseView {
         let comments = [];
         if (data) {
             data.forEach((c) => {
-                c.username = c.Username;
                 const nc = new Comment(c);
                 comments.push(nc);
             })
@@ -175,7 +229,6 @@ export default class PinPage extends BaseView {
 
     addCommentToList(data = {}) {
         const nc = new Comment(data);
-        nc.context.username = nc.context.Username;
         this.comments.addItem(nc);
         this.userComment.clear();
     }

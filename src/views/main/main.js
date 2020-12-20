@@ -148,10 +148,10 @@ export default class MainPage extends BaseView {
         }
 
 
-        this.copyLinkBtns = document.querySelectorAll('.copy-link');
-        this.copyLinkBtns.forEach((btn) => {
-            btn.addEventListener('click', this.onCopyLink);
-        });
+        // this.copyLinkBtns = document.querySelectorAll('.copy-link');
+        // this.copyLinkBtns.forEach((btn) => {
+        //     btn.addEventListener('click', this.onCopyLink);
+        // });
         this.btnCreate.element.addEventListener('click', this.onShowCreateDropdown);
     }
 }

@@ -18,7 +18,7 @@ export default class MainController extends BaseController {
     constructor() {
         super(new MainPage());
 
-        this.view.onCopyLink = this.onCopyLink.bind(this);
+        // this.view.onCopyLink = this.onCopyLink.bind(this);
         this.view.onShowCreateDropdown = this.onShowCreateDropdown.bind(this);
     }
 
@@ -55,9 +55,9 @@ export default class MainController extends BaseController {
     }
 
     off() {
-        this.view.copyLinkBtns.forEach((btn) => {
-            btn.removeEventListener('click', this.view.onCopyLink);
-        });
+        // this.view.copyLinkBtns.forEach((btn) => {
+        //     btn.removeEventListener('click', this.view.onCopyLink);
+        // });
         this.view.btnCreate.element.removeEventListener('click', this.view.onShowCreateDropdown);
 
         this.view.fillingMutex = true;

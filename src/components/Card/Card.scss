@@ -56,6 +56,7 @@
 }
 
 .card__actions {
+    z-index: 2;
     position: absolute;
     bottom: 0;
     box-sizing: border-box;
@@ -80,13 +81,29 @@
     border: none;
     display: inline-block;
     background-color: transparent;
+    z-index: 2;
 
     @include color-assign(fill, font-color--white);
     transition: all .3s ease-in-out;
+
+    &__shadow {
+        background-color: #1A1A1A;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        transition: .3s ease-in-out;
+    }
 }
 .card__actions__like:hover, .card__actions__like__active {
     fill: $color-red;
     opacity: 1 !important;
+}
+.card__actions__like__active ~ .card__actions__like__shadow {
+    opacity: .2;
 }
 .card__actions__like:focus {
     outline: none;

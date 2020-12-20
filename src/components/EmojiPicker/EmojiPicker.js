@@ -46,7 +46,6 @@ export default class EmojiPicker extends BaseComponent {
 
     getPositionByOrigin() {
         const position = this.origin.getBoundingClientRect();
-        console.log(position)
         this.dropdown.style.top = position.y - 355 + 'px';
         this.dropdown.style.left = position.x - 270 + 'px';
     }

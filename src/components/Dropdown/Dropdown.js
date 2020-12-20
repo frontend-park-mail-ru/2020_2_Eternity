@@ -21,7 +21,7 @@ export default class Dropdown extends BaseComponent {
         }
         this.list = new List({
             custom: 'dropdown ' + (this.context.custom ? this.context.custom : ''),
-            id: this.context.id + 'Window',
+            id: this.context.id,
             placeholder: this.context.placeholder ? this.context.placeholder : 'Пусто',
             customItem: this.context.customItem ? this.context.customItem : '',
         }, {selectable: this.context.listtype})
@@ -65,8 +65,8 @@ export default class Dropdown extends BaseComponent {
         if (document.documentElement.clientHeight - position.y < 160) {
             position.y = position.y - 155 ;
         }
-        getComputedStyle(this.origin, null).position !== 'fixed' ?
-            this.dropdown.style.top = position.y + window.scrollY + 'px' : this.dropdown.style.top = position.y + 'px';
+        getComputedStyle(this.origin, null).position !== 'fixed' ? position.y = (position.y + window.scrollY + 20) : position.y;
+        this.dropdown.style.top = position.y + 'px';
         this.dropdown.style.left = position.x + 'px';
     }
 

@@ -39,5 +39,7 @@ export const urls = {
     ws: `/ws`,
     userChats: `/${apiPath}/chat`,
     chatById: `/${apiPath}/chat/:id`,
+
+    report: `/${apiPath}/report`,
 }
 
