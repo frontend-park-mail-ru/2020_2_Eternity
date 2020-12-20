@@ -11,7 +11,7 @@
 .brand {
   padding: 0;
   display: inline-flex;
-  margin: 0 auto 0 0;
+  align-self: flex-start;
   height: 60px;
   width: 100px;
   box-sizing: border-box;
@@ -31,6 +31,10 @@
   padding: 0 40px;
   min-height: 60px;
 
+  display: flex;
+  flex-direction: column;
+
+
   @include color-assign(color, font-color--primary);
   @include color-assign(background-color, secondary);
   box-shadow: $box-shadow;
@@ -38,9 +42,8 @@
 
   // Media Query for Desktop
   @include largescreen {
-    height: 60px;
-    display: flex;
     flex-direction: row;
+    height: 60px;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
@@ -48,15 +51,15 @@
 
   .navbrand {
     display: flex;
-    flex-grow: 1;
+    flex-grow: 3;
     height: 60px;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 
     .burger {
       display: flex;
-      margin-left: 80px;
+      margin-left: 20px;
       flex-direction: row;
       justify-content: center;
       align-items: center;
@@ -84,34 +87,46 @@
         display: none;
       }
     }
-
-    &__messages-icon {
-      margin: 2rem;
-    }
-
   }
 
   .menu {
     list-style: none;
     height: 0;
     margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     overflow: hidden;
     transition: all .3s ease;
 
+    &_no-collapse {
+      display: flex;
+      float: right;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      height: auto;
+      margin: 0;
+      width: 100%;
+    }
+
     &-item {
       height: 45px;
+      display: flex;
+      align-items: center;
+      line-height: inherit;
+      @include color-assign(color, font-color--primary);
+      text-transform: uppercase;
     }
 
     &-link {
       display: flex;
-      height: 100%;
       align-items: center;
+      height: 100%;
       text-decoration: none;
       font-size: 1rem;
       font-weight: 500;
-      line-height: inherit;
-      @include color-assign(color, font-color--primary);
-      text-transform: uppercase;
       transition: all 0.3s ease;
 
       &:hover {
@@ -120,7 +135,7 @@
     }
 
     &.active {
-      height: auto;
+      height: 145px;
     }
 
     // Media Query for Desktop
@@ -128,13 +143,12 @@
       display: flex;
       float: right;
       flex-direction: row;
-      justify-content: flex-end;
+      justify-content: space-around;
       align-items: center;
       height: auto;
       margin: 0;
 
       &-item {
-        padding: 0 40px;
         height: 60px;
       }
     }
@@ -142,8 +156,8 @@
 }
 
 #notificationsDropdown {
-  margin-top: 25px;
   animation: fade-in both ease-in-out;
   animation-duration: .2s;
-  position: fixed;
+  position: fixed !important;
+  top: 40px !important;
 }

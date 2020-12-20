@@ -3,7 +3,17 @@
 @import "./src/colors";
 @import "./src/themes";
 
+
 .pin {
+    &__actions {
+        display: flex;
+        flex-direction: row;
+
+        .btn {
+            margin: 15px 10px 0;
+        }
+    }
+
     &__board {
         position: absolute;
         top: .5em;
@@ -18,8 +28,10 @@
         padding: 0 1em;
         @include color-assign(border-bottom, accent, '1px solid THEMECOLOR');
         &__title {
+            min-height: 1em;
             margin: 10px 0;
             font-weight: 600;
+            word-wrap: break-word;
         }
         &__author {
             display: inline-flex;
@@ -28,6 +40,9 @@
             .avatar {
                 margin: 0 5px;
             }
+        }
+        &__description {
+            min-height: 2em;
         }
     }
 
@@ -46,13 +61,17 @@
             margin: 10px;
             width: 85%;
         }
+
+        .wrap__right__title {
+            padding: 0 1rem;
+        }
     }
 
     &__comments {
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: calc(85vh - 240px);
+        height: calc(85vh - 285px);
         min-height: 160px;
 
         padding: 0;
@@ -73,8 +92,8 @@
         }
 
         @include layout.largescreen {
-            height: calc(100% - 240px);
-            min-height: calc(100% - 240px);
+            height: calc(100% - 285px);
+            min-height: calc(100% - 285px);
             max-height: 400px;
         }
     }

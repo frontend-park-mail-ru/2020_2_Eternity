@@ -18,7 +18,8 @@ export default class MainController extends BaseController {
     constructor() {
         super(new MainPage());
 
-        this.view.onCopyLink = this.onCopyLink.bind(this);
+        // this.view.onCopyLink = this.onCopyLink.bind(this);
+        this.view.onShowCreateDropdown = this.onShowCreateDropdown.bind(this);
     }
 
     on(data = {}) {
@@ -53,9 +54,10 @@ export default class MainController extends BaseController {
     }
 
     off() {
-        this.view.copyLinkBtns.forEach((btn) => {
-            btn.removeEventListener('click', this.view.onCopyLink);
-        });
+        // this.view.copyLinkBtns.forEach((btn) => {
+        //     btn.removeEventListener('click', this.view.onCopyLink);
+        // });
+        this.view.btnCreate.element.removeEventListener('click', this.view.onShowCreateDropdown);
 
         this.view.fillingMutex = true;
         // console.log(this.view.list);
@@ -125,5 +127,19 @@ export default class MainController extends BaseController {
         origin.classList.remove('fade-in_icon');
         origin.replaceChild(tmp, origin.firstElementChild);
         document.removeEventListener('animationend', this.onRemoveAnimation);
+    }
+
+    onShowCreateDropdown(event) {
+        const origin = event.target.closest('[data-activates]');
+        if (origin) {
+            const targetSelector = origin.getAttribute('data-activates');
+            this.view.dropdownCreate.origin = origin;
+            this.view.dropdownCreate.dropdown = document.getElementById(targetSelector);
+            if (this.view.dropdownCreate.isOpened) {
+                this.view.dropdownCreate.hide();
+            } else {
+                this.view.dropdownCreate.show();
+            }
+        }
     }
 }

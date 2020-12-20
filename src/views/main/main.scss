@@ -1,3 +1,6 @@
+@use "../layoutPresets/layout";
+@import "../../themes";
+
 .content-grid {
     /* TODO: нормальная адаптивная плитка получится только с js */
     columns: 7;
@@ -66,4 +69,31 @@
 .row {
     display: flex;
     width: 100%;
+}
+
+.create {
+    position: fixed;
+    z-index: 999;
+    bottom: 1rem;
+    right: 1rem;
+    @include layout.largescreen {
+        bottom: 1.7rem;
+        right: 2rem;
+    }
+
+    &__dropdown {
+        position: fixed !important;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        border-radius: 25px;
+        transition: .3s ease-in-out;
+        padding: .7rem 2rem;
+        &:hover {
+            text-decoration: none;
+            @include color-assign(background-color, accent);
+        }
+    }
 }

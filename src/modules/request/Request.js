@@ -260,4 +260,12 @@ export default class Request {
             })
         })
     }
+
+    static sendReport(data) {
+        return this.requestPOST(urls.report, {
+            body: JSON.stringify({
+                ...data,
+            })
+        })
+    }
 }

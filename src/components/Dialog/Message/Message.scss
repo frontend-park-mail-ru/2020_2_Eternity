@@ -12,20 +12,24 @@
     position: relative;
     margin: 15px 0 20px;
     word-break: break-all;
-}
-.message_own {
-    @include color-assign(color, font-color--white);
-    margin-left: auto;
-    background-color: $color-blue;
-}
-.message__time {
-    position: absolute;
-    left: 10px;
-    bottom: -20px;
-    @include color-assign(color, font-color--secondary);
-}
-.message__time__own {
-    position: absolute;
-    left: auto;
-    right: 0;
+
+    &_own {
+        @include color-assign(color, font-color--white);
+        margin-left: auto;
+        background-color: $color-blue;
+    }
+
+    &__time {
+        position: absolute;
+        left: 10px;
+        bottom: -20px;
+        @include color-assign(color, font-color--secondary);
+        font-size: small;
+
+        &__own {
+            position: absolute;
+            left: auto;
+            right: 0;
+        }
+    }
 }

@@ -3,11 +3,13 @@ import template from "./Card.hbs"
 import BaseComponent from "../BaseComponent.js";
 import Button from "../Button/Button";
 import {Icons} from "../../modules/consts/icons";
+import Image from "../Image/Image";
 
 export default class Card extends BaseComponent {
     constructor(context = {}) {
         super(template, context);
         // TODO: в eventBus при добавлении на доску Events.addPinToBoard
+        //       вынести его отсюда в контроллер надо
         document.addEventListener('click', this.changeLikeButton.bind(this));
     }
 
@@ -22,8 +24,14 @@ export default class Card extends BaseComponent {
             dataAttr: 'data-copy="true"',
             ext: 'localhost:3000/pin/' + this.context.id,
         })
+        const pinCard = new Image({
+            class: 'card__img',
+            id: 'pin' + this.context.id,
+            src: this.context.img_link,
+        })
         this.context = {
             ...this.context,
+            pinCard: pinCard.render(),
             share: share.render(),
             copyLink: copyLink.render(),
         }

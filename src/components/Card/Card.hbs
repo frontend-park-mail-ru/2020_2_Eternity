@@ -1,6 +1,6 @@
-<a href="/pin/{{id}}" class="card__link">
-    <div class="card">
-        <img class="card__img" id="pin{{id}}" src="{{img_link}}" style="min-height: 350px" alt="">
+<div class="card">
+    <a href="/pin/{{id}}" class="card__link {{custom}}">
+        {{{pinCard}}}
 
         <button class="card__actions__like" data-activates='dropdown1'>
             <svg class="heart" viewBox="0 0 48 48">
@@ -8,11 +8,11 @@
             </svg>
             <!--            TODO: card__actions__delete, card__actions__edit        -->
         </button>
+        <div class="card__actions__like__shadow"></div>
 
         <div class="card__actions">
             {{{share}}}
-            {{{copyLink}}}
         </div>
-    </div>
-</a>
-
+    </a>
+</div>
+<h4 class="card__title">{{{title}}}</h4>

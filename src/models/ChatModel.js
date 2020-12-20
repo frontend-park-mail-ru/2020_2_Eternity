@@ -25,7 +25,12 @@ class ChatModel {
                     }
                 })
             }
-            return response;
+            return new Promise(((resolve) => {
+                this.socket.onopen = () => {
+                    console.log('соединение с чатиком установлено');
+                    resolve(true);
+                }
+            }))
         })
     }
 
