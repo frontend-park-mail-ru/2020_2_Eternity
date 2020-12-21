@@ -163,7 +163,7 @@ export default class MainPage extends BaseView {
             id: 'btnCreate',
             text: Icons.add,
             dataAttr: 'data-activates="' + this.dropdownCreate.context.id + '"',
-            customButton: 'btn_round btn_with-icon create',
+            customButton: 'btn_round btn_with-icon create btn_green',
         })
         this.dropdownCreate.addToContent(new Link({href: '/create-pin', text: 'Пин', custom: 'create__link'}));
         this.dropdownCreate.addToContent(new Link({href: '/create-board', text: 'Доска', custom: 'create__link'}))

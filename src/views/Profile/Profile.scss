@@ -33,16 +33,17 @@
       margin: 15px auto;
       list-style-type: none;
 
-      li:last-child {
-        margin-top: .7rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-      }
-
-      li:first-child {
-        font-size: 1.3rem;
-        font-weight: bold;
+      &__item {
+        &:last-child {
+          margin-top: .7rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+        &:first-child {
+          font-size: 1.3rem;
+          font-weight: bold;
+        }
       }
 
       .btn {
@@ -69,7 +70,6 @@
       text-align: center;
       @include color-assign(background-color, secondary);
       border-radius: 25px;
-      box-shadow: $box-shadow-secondary;
       padding: 0 .5em;
       margin-left: 1em;
 
@@ -92,8 +92,6 @@
         box-shadow: none;
 
         .btn {
-          box-shadow: $box-shadow-secondary;
-
           &:first-child {
             margin-right: 20px;
           }
@@ -125,62 +123,63 @@
     @include color-assign(background-color, secondary);
     font-weight: 600;
     border-radius: 25px;
-    box-shadow: $box-shadow-secondary;
 
-    ul {
+    &__list {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 100%;
       padding: 0;
       margin: 0;
-    }
 
-    li {
-      display: flex;
-      flex-grow: 1;
-      padding: 0;
-      justify-content: center;
-      position: relative;
-    }
+      &__item {
+        display: flex;
+        flex-grow: 1;
+        padding: 0;
+        justify-content: center;
+        position: relative;
 
-    label {
-      position: relative;
-      font-size: 0;
-      line-height: 1rem;
-      border-radius: 25px;
-      width: 1rem;
-      padding: 1rem;
-      transition: all .3s ease-in-out;
-      color: transparent;
-      text-align: center;
-      cursor: pointer;
+        &__icon {
+          position: relative;
+          font-size: 0;
+          line-height: 1rem;
+          border-radius: 25px;
+          width: 1rem;
+          padding: 1rem;
+          transition: all .3s ease-in-out;
+          color: transparent;
+          text-align: center;
+          cursor: pointer;
 
-      svg {
-        position: absolute;
-        left: 1rem;
-        width: 1.2rem;
-        height: 1.2rem;
-        @include color-assign(color, font-color--primary);
+          &__svg {
+            position: absolute;
+            left: 1rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            @include color-assign(color, font-color--primary);
+          }
+        }
+
+        &__input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+
+          &:checked + .profile-tabs__list__item__icon {
+            @include color-assign(background-color, accent);
+            font-size: 1rem;
+            width: 3rem;
+            @include color-assign(color, font-color--primary);
+            padding-inline-start: 3rem;
+          }
+          &:focus + .profile-tabs__list__item__icon {
+            outline: none;
+          }
+        }
       }
-    }
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-    }
-    input:checked + label {
-      @include color-assign(background-color, accent);
-      font-size: 1rem;
-      width: 3rem;
-      @include color-assign(color, font-color--primary);
-      padding-inline-start: 3rem;
-    }
-    input:focus + label {
-      outline: none;
     }
   }
 }

@@ -3,6 +3,11 @@
 @import "./src/colors";
 @import "./src/themes";
 
+@mixin smallscreen {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+        @content;
+    }
+}
 
 .pin {
     &__actions {
@@ -142,5 +147,37 @@
                 height: 100%;
             }
         }
+    }
+}
+
+.share {
+    width: auto;
+    min-height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem !important;
+
+    @include smallscreen {
+        margin: 0 !important;
+        height: 30vh !important;
+        max-height: 30vh !important;
+        width: 100vw;
+    }
+
+    &__title {
+        width: 100%;
+        margin: 5px 5px 10px;
+        height: 2rem;
+    }
+
+    &__social {
+        display: inline-flex;
+        margin: 0.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        cursor: pointer;
     }
 }

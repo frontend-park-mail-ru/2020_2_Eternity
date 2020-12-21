@@ -3,59 +3,76 @@
 
 .input-group {
     position: relative;
-}
-.input-group__field {
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 15px;
-    border-radius: 25px;
-    //border: 1px solid #e0e0e0;
-    @include color-assign(border, accent, '1px solid THEMECOLOR');
-    @include color-assign(background-color, secondary);
-    @include color-assign(color, font-color--primary);
-    box-sizing: border-box;
-    font-weight: 400;
-    font-size: 1rem;
-    resize: vertical;
 
-    transition: all .2s ease-in-out, height 0ms;
-}
-.input-group__field::-webkit-scrollbar {
-    display: none;
-}
-.input-group__field_noresize {
-    resize: none;
-}
-.input-group__field:focus {
-    outline: none;
-    border: 1px solid $color-blue;
-}
-.input-group__field:placeholder-shown {
-    text-overflow: ellipsis;
-}
-.input-group__field:not(:placeholder-shown) + .input-group__label,
-.input-group__field:focus + .input-group__label {
-    color: $color-blue;
-    @include color-assign(background-color, secondary);
-    padding: 0;
-    font-size: .9rem;
-    top: -5px;
-    left: 15px;
-    line-height: 10px;
-}
-.input-group__label {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 10px;
-    line-height: 40px;
-    //color: #e0e0e0;
-    @include color-assign(color, font-color--secondary);
-    padding: 0 5px;
-    transition: all .2s ease-in-out;
-}
-.input-group__field:not(:placeholder-shown):not(:focus) + .input-group__label {
-    @include color-assign(color, font-color--primary);
+    &__field {
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 15px;
+        border-radius: 25px;
+        //border: 1px solid #e0e0e0;
+        @include color-assign(border, accent, '1px solid THEMECOLOR');
+        @include color-assign(background-color, secondary);
+        @include color-assign(color, font-color--primary);
+        box-sizing: border-box;
+        font-weight: 400;
+        font-size: 1rem;
+        resize: vertical;
+
+        transition: all .2s ease-in-out, height 0ms;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &_noresize {
+            resize: none;
+        }
+
+        &:focus {
+            outline: none;
+            border: 1px solid $color-blue;
+        }
+        &:placeholder-shown {
+            text-overflow: ellipsis;
+        }
+
+        &:not(:placeholder-shown) + .input-group__label,
+        &:focus + .input-group__label {
+            color: $color-blue;
+            @include color-assign(background-color, secondary);
+            padding: 0;
+            font-size: .9rem;
+            top: -5px;
+            left: 15px;
+            line-height: 10px;
+        }
+
+        &_error {
+            border-color: $color-red !important;
+        }
+
+        &:not(:placeholder-shown) + .input-group__label_error,
+        &:focus + .input-group__label_error {
+            color: $color-red !important;
+        }
+    }
+
+    &__label {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 10px;
+        line-height: 40px;
+        //color: #e0e0e0;
+        @include color-assign(color, font-color--secondary);
+        padding: 0 5px;
+        transition: all .2s ease-in-out;
+
+        &:not(:placeholder-shown):not(:focus) + .input-group__label {
+            @include color-assign(color, font-color--primary);
+        }
+
+    }
 }
 
 .error {
@@ -67,15 +84,9 @@
     align-items: center;
     opacity: 0;
     transition: all .2s ease-in-out;
-}
-.error_show {
-    opacity: 1;
-    margin: 0 0 15px;
-}
-.input-group__field_error {
-    border-color: $color-red !important;
-}
-.input-group__field:not(:placeholder-shown) + .input-group__label_error,
-.input-group__field:focus + .input-group__label_error {
-    color: $color-red !important;
+
+    &_show {
+        opacity: 1;
+        margin: 0 0 15px;
+    }
 }

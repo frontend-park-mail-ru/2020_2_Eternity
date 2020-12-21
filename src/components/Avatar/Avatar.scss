@@ -7,22 +7,25 @@
     display: inline-block;
     position: relative;
     border-radius: 50%;
-}
-.avatar_mini {
-    height: 24px;
-    width: 24px;
-}
-.avatar_middle {
-    height: 40px;
-    width: 40px;
-}
-.avatar__img {
-    border-radius: 50%;
-    object-position: center;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+
+    &_mini {
+        height: 24px;
+        width: 24px;
+    }
+
+    &_middle {
+        height: 40px;
+        width: 40px;
+    }
+
+    &__img {
+        border-radius: 50%;
+        object-position: center;
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }

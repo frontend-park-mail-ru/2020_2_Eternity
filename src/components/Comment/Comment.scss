@@ -12,14 +12,16 @@
 
     @include color-assign(color, font-color--primary);
     @include color-assign(border-top, accent, '1px solid THEMECOLOR');
-}
-.comment__author {
-    display: block;
-    font-weight: bold;
-}
-.comment__time {
-    @include color-assign(color, font-color--secondary);
-    position: absolute;
-    right: 20px;
-    top: 5px;
+
+    &__author {
+        display: block;
+        font-weight: bold;
+    }
+
+    &__time {
+        @include color-assign(color, font-color--secondary);
+        position: absolute;
+        right: 20px;
+        top: 5px;
+    }
 }

@@ -11,10 +11,10 @@
         align-items: center;
         text-align: center;
 
-        h2 {
+        &__title {
             margin: 0 0 10px;
         }
-        p {
+        &__descr {
             margin: .5rem;
         }
     }

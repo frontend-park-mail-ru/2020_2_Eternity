@@ -213,12 +213,13 @@ export default class Router {
     start() {
         this.container.addEventListener('click', (evt) => {
             const {target, pathname} = this.checkRouteAnchor(evt.target);
-
             if (target) {
-                evt.preventDefault();
-                if (pathname) {
-                    EventBus.emit(Events.pathChanged, {path: pathname});
-                    // this.navigateTo(target.pathname, this.state);
+                if (!target.getAttribute('download')) {
+                    evt.preventDefault();
+                    if (pathname) {
+                        EventBus.emit(Events.pathChanged, {path: pathname});
+                        // this.navigateTo(target.pathname, this.state);
+                    }
                 }
             }
         });

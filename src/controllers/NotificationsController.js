@@ -65,6 +65,7 @@ class NotificationsController extends BaseController {
             } else {
                 UserModel.getNotifications().then((r) => {
                     this.nav.dropdown.show();
+                    ws.parseNotification(r[0]);
                 })
             }
         }

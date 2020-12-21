@@ -125,5 +125,8 @@
   }
 }
 .message__text__sticker {
-  width: 180px;
+  width: 120px;
+  @include largescreen {
+    width: 150px;
+  }
 }

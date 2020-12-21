@@ -60,7 +60,8 @@ export default class AuthRegPage extends BaseView {
         const btn = new Button({
             id: 'submit',
             type: 'submit',
-            text: this.pageType === 'registration'? 'Зарегистрироваться' : 'Войти'
+            text: this.pageType === 'registration'? 'Зарегистрироваться' : 'Войти',
+            customButton: 'btn_green',
         });
 
         let elements = [username, password, btn];

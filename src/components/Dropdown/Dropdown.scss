@@ -1,6 +1,12 @@
 @import "src/colors";
 @import "src/themes";
 
+@mixin smallscreen {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+        @content;
+    }
+}
+
 .dropdown {
     display: none;
 
@@ -29,4 +35,18 @@
 
     &::-webkit-scrollbar {width: 0;}
     &::-webkit-scrollbar-track {margin-right: 20px;}
+
+    @include smallscreen {
+        position: fixed;
+        top: 100vh;
+        left: 0;
+        height: 30vh !important;
+        max-height: 30vh !important;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin: 0;
+    }
 }

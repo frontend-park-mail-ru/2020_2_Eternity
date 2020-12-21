@@ -46,7 +46,8 @@ export default class BoardCreate extends BaseView {
         const createBtn = new Button({
             id: 'submit',
             type: 'submit',
-            text: 'Создать'
+            text: 'Создать',
+            customButton: 'btn_green'
         });
         const form = new FormGenerator('Board-creating', ...[title, description, privateTgl, createBtn]).createForm();
 

@@ -100,7 +100,8 @@ export default class SettingsPage extends BaseView {
         const saveBtn = new Button({
             id: 'submit',
             type: 'submit',
-            text: 'Сохранить'
+            text: 'Сохранить',
+            customButton: 'btn_green'
         });
         this.form = new FormGenerator('settings',
             ...[this.upload, username, name, surname, email, description, oldPassword, newPassword, saveBtn]).createForm();
