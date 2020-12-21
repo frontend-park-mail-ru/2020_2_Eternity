@@ -97,9 +97,14 @@ export default class MainPage extends BaseView {
         if (cardNumber <= 1) {
             cardNumber = 1;
             indent = 0;
-        } else if (indent <= 20) {
+        } else if (indent <= 15) {
             cardNumber--;
             indent = (this.width - (cardNumber * cardWidth)) / cardNumber;
+        }
+
+        if (indent >= 30) {
+            indent = 30;
+            // this.left = (this.width - ((cardWidth + indent) * cardNumber) - indent) / 2;
         }
 
         console.log(indent);

@@ -2,7 +2,7 @@
 @import "src/themes";
 
 .card {
-    background-color: #eeeeee;
+    @include color-assign(background-color, secondary);
 
     border-radius: 25px;
     overflow: hidden;
