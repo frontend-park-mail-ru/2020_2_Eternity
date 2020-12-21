@@ -148,8 +148,9 @@ export default class MainPage extends BaseView {
             });
             this.context.protoPins = [];
         }
-
-        this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1])
+        if ([this.currentIdx] > 0) {
+            this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1])
+        }
         // console.log(this.maxHeight);
         //
         // console.log(this.matrix);

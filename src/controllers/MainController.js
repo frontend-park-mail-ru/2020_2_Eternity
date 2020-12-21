@@ -22,6 +22,11 @@ export default class MainController extends BaseController {
         this.view.onShowCreateDropdown = this.onShowCreateDropdown.bind(this);
     }
 
+    resize = () => {
+        this.off();
+        this.on();
+    }
+
     on(data = {}) {
         this.loadMoreLock = true;
         eventBus.on(Events.feedNext, this.onFeedNext.bind(this));
@@ -51,6 +56,7 @@ export default class MainController extends BaseController {
         }
 
         super.on();
+        window.addEventListener('resize', this.resize);
     }
 
     off() {
@@ -73,6 +79,7 @@ export default class MainController extends BaseController {
         this.view.maxHeight = 0;
         // console.log(this.view.list);
         super.off();
+        window.removeEventListener('resize', this.resize);
     }
 
     onFeedNext(data = {}) {

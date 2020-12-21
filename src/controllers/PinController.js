@@ -74,7 +74,7 @@ export default class PinController extends BaseController {
 
 
     onPinComment() {
-        this.view.userComment.checkValid();
+        // this.view.userComment.checkValid();
         if (!this.view.userComment.hasError()) {
             const data = {
                 is_root: true,
