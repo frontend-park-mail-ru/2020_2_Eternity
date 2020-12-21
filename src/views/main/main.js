@@ -91,8 +91,18 @@ export default class MainPage extends BaseView {
         this.width = document.getElementById('app').offsetWidth;
 
         const cardWidth = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize);
-        const cardNumber = Math.floor(this.width / cardWidth);
-        const indent = (this.width - (cardNumber * cardWidth)) / cardNumber;
+        let cardNumber = Math.floor(this.width / cardWidth);
+        let indent = (this.width - (cardNumber * cardWidth)) / cardNumber;
+
+        if (cardNumber <= 1) {
+            cardNumber = 1;
+            indent = 0;
+        } else if (indent <= 20) {
+            cardNumber--;
+            indent = (this.width - (cardNumber * cardWidth)) / cardNumber;
+        }
+
+        console.log(indent);
 
         if (this.left === 0) {
             this.left = (this.width - ((cardWidth + indent) * cardNumber) + indent) / 2;
