@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar/Navbar";
 import EventBus from "../modules/tools/EventBus";
 import {Events} from "../modules/consts/events";
 import ws from "../modules/websocket/websocket";
+import Span from "../components/Span/Span";
 
 
 class NotificationsController extends BaseController {
@@ -64,8 +65,13 @@ class NotificationsController extends BaseController {
                 this.nav.dropdown.hide()
             } else {
                 UserModel.getNotifications().then((r) => {
+                    let res = [];
+                    r.forEach((n) => {
+                        const s = new Span({text: ws.parseNotification(n), custom: 'notification__item'})
+                        res.push(s);
+                    })
+                    this.nav.dropdown.list.formContentFromListObjects(res)
                     this.nav.dropdown.show();
-                    ws.parseNotification(r[0]);
                 })
             }
         }
