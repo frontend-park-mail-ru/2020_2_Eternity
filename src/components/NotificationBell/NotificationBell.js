@@ -13,11 +13,9 @@ export default class NotificationBell extends BaseComponent {
 
     /**
      *
-     * @param {{ id,
-     *           custom: string,
-     *           dataAttr: string }} context - custom - классы кастомизации колокольчика,
-     *                                         num - количество уведомлений изначально (аналог setCount)
-     *                                         dataAttr - data-attribute (data-activates для дропдауна)
+     * @param context - custom - классы кастомизации колокольчика,
+     *                  num - количество уведомлений изначально (аналог setCount)
+     *                  dataAttr - data-attribute (data-activates для дропдауна)
      *
      */
     constructor(context = {}) {

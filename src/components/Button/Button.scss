@@ -30,7 +30,6 @@
     border-radius: 25px;
 
     transition: all .3s ease-out;
-    box-shadow: $box-shadow-secondary;
 
     & i, svg {
         pointer-events: none;
@@ -46,7 +45,6 @@
     text-decoration: none;
     background-color: $color-green;
     @include color-assign(color, font-color--white);
-    box-shadow: $box-shadow-primary;
 }
 .btn_round {
     padding: 0;

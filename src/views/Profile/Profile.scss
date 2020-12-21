@@ -69,7 +69,6 @@
       text-align: center;
       @include color-assign(background-color, secondary);
       border-radius: 25px;
-      box-shadow: $box-shadow-secondary;
       padding: 0 .5em;
       margin-left: 1em;
 
@@ -92,8 +91,6 @@
         box-shadow: none;
 
         .btn {
-          box-shadow: $box-shadow-secondary;
-
           &:first-child {
             margin-right: 20px;
           }
@@ -125,7 +122,6 @@
     @include color-assign(background-color, secondary);
     font-weight: 600;
     border-radius: 25px;
-    box-shadow: $box-shadow-secondary;
 
     ul {
       display: flex;

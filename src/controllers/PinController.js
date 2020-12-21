@@ -22,6 +22,7 @@ export default class PinController extends BaseController {
         this.view.onShowShareDropdown = this.onShowShareDropdown.bind(this);
         this.view.onShowReportForm = this.onShowReportForm.bind(this);
         this.view.onSendReport = this.onSendReport.bind(this);
+        this.view.onShare = this.onShare.bind(this);
     }
 
     on(data={}) {
@@ -107,9 +108,7 @@ export default class PinController extends BaseController {
             if (this.view.dropAction.isOpened) {
                 this.view.dropAction.hide()
             } else {
-                UserModel.getNotifications().then((r) => {
-                    this.view.dropAction.show();
-                })
+                this.view.dropAction.show();
             }
         }
     }
@@ -134,11 +133,14 @@ export default class PinController extends BaseController {
             if (this.view.dropShare.isOpened) {
                 this.view.dropShare.hide()
             } else {
-                UserModel.getNotifications().then((r) => {
-                    this.view.dropShare.show();
-                })
+                this.view.dropShare.show();
             }
         }
+    }
+
+    onShare(event) {
+        event.preventDefault();
+        window.open(event.currentTarget.href, 'Поделиться', 'width=600, height=500, location=no, menubar=no, toolbar=no');
     }
 
     onSendReport() {

@@ -63,6 +63,10 @@ export default class PinPage extends BaseView {
             placeholder: '<div class="pin__comments__empty"><p> Еще никто не прокомментировал этот пин </p></div>'
         })
 
+        /**
+         * ACTION DROPDOWN
+         * REPORT FORM
+         */
         this.btnAction = new Button({
             id: 'btnAction',
             text: Icons.dots,
@@ -81,7 +85,6 @@ export default class PinPage extends BaseView {
         this.linkDownload = new Link({
             id: 'linkDownload',
             text: 'Скачать',
-            dataAttr: 'data-activates=""'
         })
         this.dropAction.formContent([this.linkReport, this.linkDownload])
         this.reportForm = new Popup({
@@ -90,7 +93,9 @@ export default class PinPage extends BaseView {
         this.reportFormComponent = new ReportForm();
         this.reportForm.formContent(this.reportFormComponent.render());
 
-
+        /**
+         * SHARE DROPDOWN
+         */
         this.btnShare = new Button({
             id: 'btnShare',
             text: Icons.share,
@@ -99,7 +104,30 @@ export default class PinPage extends BaseView {
         })
         this.dropShare = new Dropdown({
             id: 'dropShare',
+            custom: 'share',
+            customItem: 'share__social'
         })
+        const socialLinks = {
+            vk: 'https://vk.com/share.php?url={url}&title={title}',
+            facebook: 'https://www.facebook.com/sharer.php?u={url}',
+            twitter: 'https://twitter.com/intent/tweet?url={url}&text={title}',
+            telegram: 'https://t.me/share/url?url={url}&text={title}',
+        }
+        let social = [];
+        Object.entries(socialLinks).forEach(([key, value]) => {
+            const l = new Link({
+                target: '_blank',
+                dataAttr: 'data-activates=""',
+                href:  value.replace('{url}', encodeURIComponent(window.location.origin + window.location.pathname))
+                            .replace('{title}', encodeURIComponent(this.title)),
+                text: Icons[key]
+            })
+            social.push(l);
+        })
+        const h = document.createElement('h3');
+        h.textContent = 'Поделиться пином';
+        h.className = 'share__title';
+        this.dropShare.formContent(social);
 
         const data = {
             ...this.context,
@@ -122,6 +150,7 @@ export default class PinPage extends BaseView {
 
         this.fillWith(data);
         super.render();
+        this.dropShare.list.element.insertAdjacentElement('afterbegin', h);
 
         // if (this.context.show) {
         //     select.bind(this.context.id);
@@ -130,8 +159,10 @@ export default class PinPage extends BaseView {
         this.btnAction.element.addEventListener('click', this.onShowActionsDropdown);
         this.btnShare.element.addEventListener('click', this.onShowShareDropdown);
         this.linkReport.element.addEventListener('click', this.onShowReportForm);
-
         this.reportFormComponent.btnReport.element.addEventListener('click', this.onSendReport);
+
+        this.socials = this.dropShare.element.querySelectorAll('a')
+        this.socials.forEach((sl) => sl.addEventListener('click', this.onShare));
     }
 
     createPinTitle() {
@@ -182,7 +213,8 @@ export default class PinPage extends BaseView {
         this.pinImg.show(data.img_link);
         this.pinImg.element.parentElement.classList.remove('load-animation');
         this.linkDownload.element.setAttribute('href', data.img_link);
-        this.linkDownload.element.setAttribute('download', data.title + '.jpg');
+        const filename = data.img_link.trim().split('/').pop();
+        this.linkDownload.element.setAttribute('download', filename);
 
         const authorAvatar = new Avatar({
             img_link: '/img/img11.jpg',

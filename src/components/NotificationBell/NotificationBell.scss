@@ -1,8 +1,18 @@
 @import "src/colors";
 @import "src/themes";
 
+@mixin smallscreen {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+        @content;
+    }
+}
+
 .notification {
     position: relative;
+
+    @include smallscreen {
+        display: none;
+    }
 
     &__bell {
         @include color-assign(color, font-color--primary);

@@ -58,16 +58,22 @@ export default class Dropdown extends BaseComponent {
     }
 
     getPositionByOrigin() {
-        const position = this.origin.getBoundingClientRect();
-        if (document.documentElement.clientWidth - position.x < 210) {
-            position.x = position.x - 210 + this.origin.offsetWidth;
+        if (document.documentElement.clientWidth > 430) {
+            const position = this.origin.getBoundingClientRect();
+            if (document.documentElement.clientWidth - position.x < 210) {
+                position.x = position.x - 210 + this.origin.offsetWidth;
+            }
+            if (document.documentElement.clientHeight - position.y < 160) {
+                position.y = position.y - 155;
+            }
+            getComputedStyle(this.origin, null).position !== 'fixed' ? position.y = (position.y + window.scrollY + 20) : position.y;
+            this.dropdown.style.top = position.y + 'px';
+            this.dropdown.style.left = position.x + 'px';
+        } else {
+            const dropSize = getComputedStyle(this.dropdown).height;
+            this.dropdown.style.top = `calc(100vh - ${dropSize})`;
+            this.dropdown.style.left = '';
         }
-        if (document.documentElement.clientHeight - position.y < 160) {
-            position.y = position.y - 155 ;
-        }
-        getComputedStyle(this.origin, null).position !== 'fixed' ? position.y = (position.y + window.scrollY + 20) : position.y;
-        this.dropdown.style.top = position.y + 'px';
-        this.dropdown.style.left = position.x + 'px';
     }
 
     show() {
@@ -85,6 +91,10 @@ export default class Dropdown extends BaseComponent {
             this.flushSelectedItems();
             this.dropdown.classList.remove('dropdown__active');
             this.isOpened = false;
+
+            if (document.documentElement.clientWidth <= 430) {
+                this.dropdown.style.top = '100vh';
+            }
         }
         this.removeListeners();
     }

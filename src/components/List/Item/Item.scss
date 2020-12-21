@@ -27,9 +27,9 @@
     margin: 0;
   }
 
-  //&__input:checked + &__content {
-  //  @include color-assign(background-color, accent);
-  //}
+  &__input:checked + &__content {
+    @include color-assign(background-color, accent);
+  }
 
   &__input:hover + &__content {
     @include color-assign(background-color, accent);

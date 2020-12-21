@@ -6,19 +6,39 @@
     @content;
   }
 }
+@mixin smallscreen {
+  @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+    @content;
+  }
+}
 
+@mixin xsmall {
+  @media only screen and (max-device-width: 285px) and (max-width: 285px) {
+    @content;
+  }
+}
 
 .brand {
   padding: 0;
   display: inline-flex;
   align-self: flex-start;
-  height: 60px;
-  width: 100px;
   box-sizing: border-box;
-  @include color-assign(color, font-color--primary);
-}
-.brand:hover {
-  color: $color-blue;
+
+  height: 100%;
+  width: 100px;
+  min-width: 100px;
+  @include color-assign(background, logo, 'THEMECOLOR no-repeat center');
+  @include smallscreen {
+    height: 100%;
+    width: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+    background: url("/img/p-logo.svg") no-repeat center;
+  }
+
+  @include xsmall {
+    display: none;
+  }
 }
 
 .navbar {
@@ -39,6 +59,10 @@
   @include color-assign(background-color, secondary);
   box-shadow: $box-shadow;
   transition: .3s ease-in-out;
+
+  @include xsmall {
+    padding: 0 20px;
+  }
 
   // Media Query for Desktop
   @include largescreen {
@@ -69,6 +93,10 @@
       background: none;
       transition: all .3s ease;
 
+      @include smallscreen {
+        margin-left: 10px;
+      }
+
       &-close {
         display: none;
       }
@@ -90,6 +118,7 @@
   }
 
   .menu {
+    position: relative;
     list-style: none;
     height: 0;
     margin: 0;
@@ -130,13 +159,19 @@
       transition: all 0.3s ease;
 
       &:hover {
-        color: $color-blue;
+        color: $color-green;
       }
     }
 
     &.active {
-      height: 145px;
+      height: 100px;
     }
+    @include smallscreen {
+      &.active {
+        height: 145px;
+      }
+    }
+
 
     // Media Query for Desktop
     @include largescreen {
@@ -159,5 +194,59 @@
   animation: fade-in both ease-in-out;
   animation-duration: .2s;
   position: fixed !important;
-  top: 40px !important;
+
+  @include smallscreen {
+    display: none;
+  }
+}
+
+#pagesDrop {
+  animation: fade-in both ease-in-out;
+  animation-duration: .2s;
+  position: fixed !important;
+  margin-top: 35px;
+  width: 180px !important;
+
+  @include smallscreen {
+    width: 100vw !important;
+    margin-top: 0 !important;
+  }
+}
+.pages-link {
+  @include color-assign(background-color, accent);
+  border-radius: 25px;
+  padding: 0 15px !important;
+  height: 50px !important;
+}
+
+#messages {
+  @include smallscreen {
+    display: none;
+  }
+  &-link {
+    display: none;
+    @include smallscreen {
+      display: block;
+    }
+  }
+}
+
+#themeItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include smallscreen {
+    display: none;
+  }
+
+  &-collapse {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: .5rem;
+    @include smallscreen {
+      display: flex;
+    }
+  }
 }

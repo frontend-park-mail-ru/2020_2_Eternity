@@ -44,7 +44,8 @@ export default class PinCreate extends BaseView {
         const createBtn = new Button({
             id: 'submit',
             type: 'submit',
-            text: 'Создать'
+            text: 'Создать',
+            customButton: 'btn_green'
         });
         const form = new FormGenerator('PinCreate', ...[title, description, createBtn]).createForm();
 
