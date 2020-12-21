@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
+let config = {
     // devtool: 'source-map',
     entry: {
         main: './src/index.js',
@@ -28,26 +28,9 @@ module.exports = {
                 loader: "handlebars-loader",
                 exclude: /node_modules/,
             },
-            // {
-            //     test: /\.css$/,
-            //     // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-            //     use: [
-            //         'style-loader',
-            //         {
-            //             loader: 'css-loader',
-            //             options: {
-            //                 importLoaders: 1
-            //             }
-            //         },
-            //         'postcss-loader'
-            //     ],
-            //     exclude: /node_modules/,
-            // },
             {
                 test: /\.(css|s[ac]ss)$/,
                 use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
                     'css-loader?url=false',
                     'sass-loader',
                 ]
@@ -83,7 +66,6 @@ module.exports = {
             template: './src/index.html',
             filename: 'index.html'
         }),
-        require('autoprefixer')
     ],
 
     devServer: {
@@ -98,4 +80,13 @@ module.exports = {
             },
         }
     },
+}
+
+module.exports = (env, argv) => {
+    if (argv.mode === 'development') {
+        config.module.rules[2].use.unshift('style-loader');
+    } else {
+        config.module.rules[2].use.unshift(MiniCssExtractPlugin.loader);
+    }
+    return config
 };
