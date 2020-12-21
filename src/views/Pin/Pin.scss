@@ -76,7 +76,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        height: calc(85vh - 285px);
+        height: calc(85vh - 290px);
         min-height: 160px;
 
         padding: 0;
@@ -97,8 +97,8 @@
         }
 
         @include layout.largescreen {
-            height: calc(100% - 285px);
-            min-height: calc(100% - 285px);
+            height: calc(100% - 290px);
+            min-height: calc(100% - 290px);
             max-height: 400px;
         }
     }

@@ -36,6 +36,8 @@ export default class PinPage extends BaseView {
 
     comments
 
+    btnBoard
+
     constructor(context = {}) {
         super('Просмотр пина', context, null);
         this.template = template;
@@ -43,8 +45,9 @@ export default class PinPage extends BaseView {
 
     render() {
         this.dropdown = new Dropdown({
-            id: 'boardList',
-            title: 'Доступные доски',
+            id: 'dropBoards',
+            customItem: 'create__link',
+            listtype: 'checkbox'
         });
 
         this.pinImg = new Image({
@@ -242,11 +245,36 @@ export default class PinPage extends BaseView {
                 type: 'submit'
             })
 
+            this.btnBoard = new Button({
+                id: 'btnBoard',
+                text: Icons.add,
+                customButton: 'btn_with-icon btn_round btn_round_middle',
+                dataAttr: 'data-activates="dropBoards"'
+            })
+
             const commentArea = document.querySelector('.pin__form');
             commentArea.innerHTML = this.userComment.render();
             commentArea.insertAdjacentHTML('beforeend', this.btnComment.render());
             this.btnComment.element.addEventListener('click', this.onAddComment);
+
+            const actionsArea = document.querySelector('.pin__actions');
+            actionsArea.insertAdjacentHTML('beforeend', this.btnBoard.render());
+            this.btnBoard.element.addEventListener('click', this.onShowBoards);
         }
+    }
+
+    loadBoards(data) {
+        let res = []
+        data.forEach((board) => {
+            const l = new Link({
+                dataAttr: 'data-activates=""',
+                text: board.title,
+                id: board.id,
+            })
+            res.push(l)
+        })
+        this.dropdown.formContent(res);
+        this.dropdown.element.addEventListener('change', this.onAttachPin);
     }
 
     loadComments(data) {

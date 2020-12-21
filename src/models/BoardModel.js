@@ -24,7 +24,7 @@ class BoardModel {
 
     attachPin(data = {}) {
         return request.attachPin(data.board_id, data.pin_id).then((response) => {
-            return response.json();
+            return response;
         });
     }
 }
