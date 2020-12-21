@@ -44,9 +44,10 @@ module.exports = {
             //     exclude: /node_modules/,
             // },
             {
-                test:/\.s[ac]ss$/,
+                test: /\.(css|s[ac]ss)$/,
                 use: [
                     'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader?url=false',
                     'sass-loader',
                 ]
@@ -76,9 +77,7 @@ module.exports = {
                 {from: './public/static/fonts', to: 'fonts'},
             ]
         }),
-        // new MiniCssExtractPlugin({
-        //     filename: 'index.scss',
-        // }),
+        new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',
