@@ -149,13 +149,21 @@ export default class ws {
     }
 
     static parseNotification(note) {
-        let dataError = false;
-        console.log(this.decodeB64(note.data))
-        console.log({
+        const data = {
             type: note.type,
             time: new Date(note.creation_time),
             payload: JSON.parse(this.decodeB64(note.data))
-        })
+        };
+
+        const notifsType = [
+            'Пользователь username прокомментировал ваш пин pintitle',
+            'Пользователь username опубликовал новый пин pintitle',
+            'Пользователь username подписался на вас',
+            `${data.payload.new_messages} новых сообщений с ${data.payload.collocutor_name}`,
+            `${data.payload.username} прислал новое сообщение`,
+        ]
+
+        return notifsType[data.type];
     }
 
     static encodeUTF8(str) {

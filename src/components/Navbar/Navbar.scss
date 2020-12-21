@@ -195,9 +195,22 @@
   animation-duration: .2s;
   position: fixed !important;
 
+  width: 300px;
+  max-height: 80vh !important;
+  padding: 1rem !important;
+
   @include smallscreen {
     display: none;
   }
+
+  .list__item {
+    animation: none;
+  }
+}
+.notification__item {
+  padding: 10px .5rem;
+  border-radius: 25px;
+  //cursor: pointer;
 }
 
 #pagesDrop {

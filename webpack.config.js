@@ -76,7 +76,7 @@ let config = {
         proxy: {
             '/api': {
                 target: 'http://localhost:8008',
-                pathRewrite: {'^/api': ''},
+                // pathRewrite: {'^/api': ''},
             },
         }
     },
