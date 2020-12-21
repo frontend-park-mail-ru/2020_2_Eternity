@@ -12,6 +12,7 @@ import BoardModel from "../models/BoardModel";
 import Request from "../modules/request/Request";
 
 import Navbar from "../components/Navbar/Navbar";
+import EventBus from "../modules/tools/EventBus.js";
 
 export default class PinController extends BaseController {
     constructor() {
@@ -23,6 +24,8 @@ export default class PinController extends BaseController {
         this.view.onShowReportForm = this.onShowReportForm.bind(this);
         this.view.onSendReport = this.onSendReport.bind(this);
         this.view.onShare = this.onShare.bind(this);
+        this.view.onShowBoards = this.onShowBoards.bind(this);
+        this.view.onAttachPin = this.onAttachPin.bind(this);
     }
 
     on(data={}) {
@@ -43,9 +46,7 @@ export default class PinController extends BaseController {
                     if (profileResponse) {
                         BoardModel.getUserBoards(profileResponse).then((boardResponse) => {
                             if (boardResponse) {
-                                this.view.context.show = true;
-                                this.view.fillWith({options: boardResponse});
-                                // this.view.render();
+                                this.view.loadBoards(boardResponse);
                             }
                         });
                     }
@@ -70,6 +71,10 @@ export default class PinController extends BaseController {
         this.view.btnShare.element.removeEventListener('click', this.view.onShowShareDropdown);
         this.view.linkReport.element.removeEventListener('click', this.view.onShowReportForm);
         this.view.reportFormComponent.btnReport.element.removeEventListener('click', this.view.onSendReport);
+        if (this.view.btnBoard.element) {
+            this.view.btnBoard.element.removeEventListener('click', this.view.onShowBoards);
+        }
+        this.view.dropdown.element.removeEventListener('change', this.view.onAttachPin);
         super.off();
     }
 
@@ -91,7 +96,7 @@ export default class PinController extends BaseController {
     onPinAttach(data={}) {
         BoardModel.attachPin(data).then((response) => {
             if (!response.error) {
-                this.view.addCommentToList(response);
+                // this.view.addCommentToList(response);
             }
         })
     }
@@ -158,5 +163,31 @@ export default class PinController extends BaseController {
             }).catch((error) => console.log(error));
         })
         this.view.reportForm.close();
+    }
+
+    onShowBoards(event) {
+        const origin = event.target.closest('[data-activates]');
+        if (origin) {
+            const targetSelector = origin.getAttribute('data-activates');
+            this.view.dropdown.origin = origin;
+            this.view.dropdown.dropdown = document.getElementById(targetSelector);
+
+            if (this.view.dropdown.isOpened) {
+                this.view.dropdown.hide()
+            } else {
+                this.view.dropdown.show();
+            }
+        }
+    }
+
+    onAttachPin(event) {
+        const origin = event.target;
+        if (origin) {
+            const data = {
+                board_id: parseInt(origin.getAttribute('value')),
+                pin_id: this.view.context.info.id,
+            }
+            EventBus.emit(Events.pinAttach, data);
+        }
     }
 }
