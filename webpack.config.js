@@ -7,11 +7,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     // devtool: 'source-map',
     entry: {
-        main: './src/index.js'
+        main: './src/index.js',
+        sw: './src/sw.js',
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         publicPath: '/',
     },
 
@@ -28,16 +29,25 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.css$/,
-                // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-                use: ['style-loader', 'css-loader'],
-                exclude: /node_modules/,
+                test:/\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader?url=false',
+                    'sass-loader',
+                ]
             },
             {
                 test: /\.(svg|png|jpe?g|)$/,
                 loader: "file-loader",
                 options: {
                     name: '../img/[name].[ext]',
+                },
+            },
+            {
+                test: /\.(ttf|woff|woff2)$/,
+                loader: "file-loader",
+                options: {
+                    name: '../fonts/[name].[ext]',
                 },
             },
         ]
@@ -48,20 +58,22 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 {from: './public/static/img', to: 'img'},
+                {from: './public/static/fonts', to: 'fonts'},
             ]
         }),
-        new MiniCssExtractPlugin({
-            filename: 'index.css',
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: 'index.scss',
+        // }),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',
             filename: 'index.html'
         }),
+        require('autoprefixer')
     ],
 
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'build'),
         compress: true,
         port: 3000,
         historyApiFallback: true,
