@@ -261,6 +261,10 @@ export default class Request {
         })
     }
 
+    static getSubPins() {
+        return this.requestGET(urls.subfeed);
+    }
+
     static sendReport(data) {
         return this.requestPOST(urls.report, {
             body: JSON.stringify({

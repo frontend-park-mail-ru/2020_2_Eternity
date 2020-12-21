@@ -37,6 +37,12 @@ class PinModel {
         })
     }
 
+    getFeedPins() {
+        return request.getSubPins().then((response) => {
+            return response.json();
+        })
+    }
+
     getBoardPins(data = {}) {
         return request.getBoardPins(data.board).then((response) => {
             return response.json();

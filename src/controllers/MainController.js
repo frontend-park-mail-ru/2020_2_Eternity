@@ -33,8 +33,9 @@ export default class MainController extends BaseController {
 
         if (Object.keys(data).length) {
             this.searchData = data;
-            PinModel.getAllSearchData(data).then((response) => {
-                this.view.fillWith(data.type === 'user' ? {protoUsers: response} : {protoPins: response});
+
+            PinModel.getAllSearchData({type: 'user', content: data.content}).then((response) => {
+                this.view.fillWith({protoUsers: response});
                 this.view.render();
 
                 if (response.length < 15) {
@@ -42,9 +43,8 @@ export default class MainController extends BaseController {
                 }
                 this.view.fillEmptyPlace();
             }).catch((error) => console.log(error));
-        } else {
-            PinModel.getAllPins().then((response) => {
-                // this.view.fillWith({protoPins: fakePins});
+
+            PinModel.getAllSearchData({type: 'pin', content: data.content}).then((response) => {
                 this.view.fillWith({protoPins: response});
                 this.view.render();
 
@@ -53,6 +53,43 @@ export default class MainController extends BaseController {
                 }
                 this.view.fillEmptyPlace();
             }).catch((error) => console.log(error));
+
+/*            data.type = 'board';
+
+            PinModel.getAllSearchData(data).then((response) => {
+                this.view.fillWith(data.type === 'user' ? {protoUsers: response} : {protoPins: response});
+                this.view.render();
+
+                if (response.length < 15) {
+                    this.loadMoreLock = false;
+                }
+                this.view.fillEmptyPlace();
+            }).catch((error) => console.log(error));*/
+
+        } else {
+            if (window.location.pathname === '/following') {
+                PinModel.getFeedPins().then((response) => {
+                    // this.view.fillWith({protoPins: fakePins});
+                    this.view.fillWith({protoPins: response});
+                    this.view.render();
+
+                    if (response.length < 15) {
+                        this.loadMoreLock = false;
+                    }
+                    this.view.fillEmptyPlace();
+                }).catch((error) => console.log(error));
+            } else {
+                PinModel.getAllPins().then((response) => {
+                    // this.view.fillWith({protoPins: fakePins});
+                    this.view.fillWith({protoPins: response});
+                    this.view.render();
+
+                    if (response.length < 15) {
+                        this.loadMoreLock = false;
+                    }
+                    this.view.fillEmptyPlace();
+                }).catch((error) => console.log(error));
+            }
         }
 
         super.on();
@@ -84,7 +121,7 @@ export default class MainController extends BaseController {
 
     onFeedNext(data = {}) {
         if (this.loadMoreLock) {
-            if (Object.keys(this.searchData).length) {
+            /*if (Object.keys(this.searchData).length) {
                 data['type'] = this.searchData.type;
                 data['content'] = this.searchData.content;
                 PinModel.getNextSearchData(data).then((response) => {
@@ -97,7 +134,7 @@ export default class MainController extends BaseController {
                     this.view.fillingMutex = true;
                     this.view.fillEmptyPlace();
                 }).catch((error) => console.log(error));
-            } else {
+            } else {*/
                 PinModel.getNextFeedPins(data).then((response) => {
                     if (response.length < 15) {
                         this.loadMoreLock = false;
@@ -108,7 +145,7 @@ export default class MainController extends BaseController {
                     this.view.fillingMutex = true;
                     this.view.fillEmptyPlace();
                 }).catch((error) => console.log(error));
-            }
+            // }
         }
     }
 

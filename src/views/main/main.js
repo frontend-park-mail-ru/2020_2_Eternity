@@ -117,6 +117,14 @@ export default class MainPage extends BaseView {
 
             this.context.protoUsers = [];   
         }
+/*
+        if (this.context.protoBoards) {
+            this.context.protoBoards.forEach((user) => {
+                this.users.push(new Userbar(user).render());
+            });
+
+            this.context.protoBoards = [];
+        }*/
 
         if (this.context.protoPins) {
             if (this.cardsInRow === 0 || this.cardsInRow === cardNumber) {

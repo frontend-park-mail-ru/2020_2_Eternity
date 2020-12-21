@@ -32,8 +32,11 @@ if ('serviceWorker' in navigator) {
 }
 
 export let router = new Router(application)
+
+let mc = new MainController;
+
 router
-    .add(routes.mainPage, new MainController)
+    .add(routes.mainPage, mc)
     .add(routes.loginPage, new LoginController('auth'))
     .add(routes.regPage, new LoginController('registration'))
     .add(routes.pinPage, new PinController)
@@ -43,6 +46,7 @@ router
     .add(routes.profilePage, new ProfileController)
     .add(routes.settingsPage, new SettingsController)
     .add(routes.chatPage, new ChatController)
+    .add(routes.followFeed, mc)
 router.start();
 
 NotificationsController.on()

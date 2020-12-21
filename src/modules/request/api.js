@@ -41,5 +41,7 @@ export const urls = {
     chatById: `/${apiPath}/chat/:id`,
 
     report: `/${apiPath}/report`,
+
+    subfeed: `/${apiPath}/subfeed`
 }
 
