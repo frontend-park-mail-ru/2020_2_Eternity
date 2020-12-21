@@ -127,7 +127,7 @@ export default class MainPage extends BaseView {
         }*/
 
         if (this.context.protoPins) {
-            if (this.cardsInRow === 0 || this.cardsInRow === cardNumber) {
+            if ((this.cardsInRow === 0 || this.cardsInRow === cardNumber) && this.matrix.length < 2) {
                 this.matrix.push([]);
                 this.currentIdx++;
                 this.cardsInRow = 0;
