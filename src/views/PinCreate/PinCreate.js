@@ -33,14 +33,14 @@ export default class PinCreate extends BaseView {
             type: 'text',
             value: this.context.title,
             id: 'title'
-        }, Validator.validateAlphaField);
+        });
         const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
             customInput: 'input-group__field_noresize',
             value: this.context.description,
             id: 'description'
-        }, Validator.validateAlphaField);
+        });
         const createBtn = new Button({
             id: 'submit',
             type: 'submit',
@@ -63,7 +63,7 @@ export default class PinCreate extends BaseView {
 
             form.elements.forEach((element) => {
                 if (element instanceof Input) {
-                    element.checkValid();
+                    // element.checkValid();
                     if (element.hasError()) {
                         ok = false;
                     }

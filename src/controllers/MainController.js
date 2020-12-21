@@ -65,6 +65,12 @@ export default class MainController extends BaseController {
         this.view.list = [];
         this.view.users = [];
         this.searchData = {};
+        this.view.matrix = [];
+        this.view.left = 0;
+        this.view.top = 0;
+        this.view.currentIdx = 0;
+        this.view.cardsInRow = 0;
+        this.view.maxHeight = 0;
         // console.log(this.view.list);
         super.off();
     }

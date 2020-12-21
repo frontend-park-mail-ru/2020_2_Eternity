@@ -24,6 +24,13 @@ export default class MainPage extends BaseView {
     listenerMutex
     fillingMutex
     users = []
+    left
+    top
+    width
+    matrix = []
+    currentIdx;
+    cardsInRow;
+    maxHeight;
 
     copyLinkBtns
 
@@ -32,16 +39,23 @@ export default class MainPage extends BaseView {
 
     constructor(context = {}) {
         super('Главная', context, null);
+        this.width = window.innerWidth;
         this.template = template;
+        this.left = 0;
+        this.top = 0;
+        this.currentIdx = 0;
+        this.cardsInRow = 0;
+        this.maxHeight = 0;
 
         // this.test = new Dropdown({
         //     id: 'dropdown1',
         //     title: 'Доступные доски'
         // });
+/*
 
-        /**
+        /!**
          * УБРАТЬ---------------------------------
-         */
+         *!/
         const te = new Userbar({
             username: 'example',
             img_link: '/img/img11/.jpg',
@@ -50,9 +64,10 @@ export default class MainPage extends BaseView {
             id: 'test',
         });
         this.test.addItem(te, "prepend");
-        /**
+        /!**
          * ---------------------------------------
-         */
+         *!/
+*/
 
         this.lastPin = 0;
 
@@ -62,7 +77,7 @@ export default class MainPage extends BaseView {
 
     fillEmptyPlace() {
         if ((window.innerHeight + document.getElementsByTagName("html")[0].scrollTop >=
-            document.getElementsByClassName("content-grid")[0].clientHeight / 2) &&
+            this.maxHeight + 300) &&
             this.lastPin > 1 &&
             this.fillingMutex) {
             this.fillingMutex = false;
@@ -71,6 +86,25 @@ export default class MainPage extends BaseView {
     }
 
     render() {
+        console.log(window.innerHeight + document.getElementsByTagName("html")[0].scrollTop)
+
+        this.width = document.getElementById('app').offsetWidth;
+
+        const cardWidth = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const cardNumber = Math.floor(this.width / cardWidth);
+        const indent = (this.width - (cardNumber * cardWidth)) / cardNumber;
+
+        if (this.left === 0) {
+            this.left = (this.width - ((cardWidth + indent) * cardNumber) + indent) / 2;
+        }
+
+        if (this.matrix.length === 0) {
+            this.matrix.push([]);
+            for (let i = 0; i < cardNumber; ++i) {
+                this.matrix[0].push(0);
+            }
+        }
+
         this.popupPinView = new Popup({
             id: 'pinView',
             custom: 'pin__view',
@@ -85,14 +119,40 @@ export default class MainPage extends BaseView {
         }
 
         if (this.context.protoPins) {
+            if (this.cardsInRow === 0 || this.cardsInRow === cardNumber) {
+                this.matrix.push([]);
+                this.currentIdx++;
+                this.cardsInRow = 0;
+            }
             this.context.protoPins.forEach((pin) => {
+                pin.pleft = this.left;
+
+                pin.ptop = this.matrix[this.currentIdx - 1][this.cardsInRow];
+                this.left += cardWidth + indent;
+
                 const card = new Card(pin);
+
                 this.cards.push(card);
                 this.list.push(card.render());
                 this.lastPin = pin.id;
+
+                this.matrix[this.currentIdx].push((pin.title ? card.context.height + 25 : card.context.height) + 15 + this.matrix[this.currentIdx - 1][this.cardsInRow]);
+                this.cardsInRow++;
+
+                if (this.cardsInRow === cardNumber) {
+                    this.matrix.push([]);
+                    this.currentIdx++;
+                    this.left = (this.width - ((cardWidth + indent) * cardNumber) + indent) / 2;
+                    this.cardsInRow = 0;
+                }
             });
             this.context.protoPins = [];
         }
+
+        this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1])
+        // console.log(this.maxHeight);
+        //
+        // console.log(this.matrix);
 
         this.dropdownCreate = new Dropdown({
             id: 'dropdownCreate',
@@ -112,7 +172,7 @@ export default class MainPage extends BaseView {
             pins: this.list,
             users: this.users,
             popup: this.popupPinView.render(),
-            test: this.test.render(),
+            // test: this.test.render(),
             dropdownCreate: this.dropdownCreate.render(),
             btnCreate: this.btnCreate.render()
         }
@@ -120,9 +180,7 @@ export default class MainPage extends BaseView {
         this.fillWith(data);
         super.render();
 
-        const cardWidth = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize);
-
-        this.cards.forEach((card) => {
+        /*this.cards.forEach((card) => {
             let pin = document.getElementById(`pin${card.context.id}`);
             let poll = setInterval(function () {
                 if (pin) {
@@ -136,13 +194,13 @@ export default class MainPage extends BaseView {
                     pin.style.removeProperty('min-height')
                 }
             }
-        });
+        });*/
 
         if (document.getElementsByClassName("content-grid")[0] && this.listenerMutex) {
             this.listenerMutex = false;
 
             window.addEventListener('scroll', () => {
-                console.log('WORK');
+                // console.log('WORK');
                 this.fillEmptyPlace();
             });
         }

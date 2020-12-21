@@ -14,6 +14,8 @@ export default class Card extends BaseComponent {
     }
 
     render() {
+        this.context.height = this.context.height / (this.context.width / (15 * parseFloat(getComputedStyle(document.documentElement).fontSize)));
+        this.context.width = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize);
         const share = new Button({
             customButton: 'btn_round btn_round_middle btn_with-icon card__actions__go share',
             text: Icons.share,
@@ -26,7 +28,7 @@ export default class Card extends BaseComponent {
         })
         const pinCard = new Image({
             class: 'card__img',
-            id: 'pin' + this.context.id,
+            id: 'imgpin' + this.context.id,
             src: this.context.img_link,
         })
         this.context = {

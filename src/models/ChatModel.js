@@ -8,7 +8,7 @@ import UserModel from "./UserModel";
 
 class ChatModel {
     // TODO: адрес бэка в конфиг какой нибудь вынести
-    socket = new WebSocket('ws://localhost:8008/ws');
+    socket = new WebSocket('ws://pinteo.ru:8008/ws');
 
     constructor() {
         EventBus.on(Events.userLogin, this.connect.bind(this));

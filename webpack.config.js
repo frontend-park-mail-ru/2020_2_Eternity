@@ -5,7 +5,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    // devtool: 'source-map',
+    devtool: 'source-map',
     entry: {
         main: './src/index.js',
         sw: './src/sw.js',
@@ -95,7 +95,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://localhost:8008',
-                pathRewrite: {'^/api': ''},
+                // pathRewrite: {'^/api': ''},
             },
         }
     },
