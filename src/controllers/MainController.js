@@ -105,6 +105,8 @@ export default class MainController extends BaseController {
         this.view.fillingMutex = true;
         // console.log(this.view.list);
         eventBus.off(Events.feedNext, this.onFeedNext.bind(this));
+        this.view.cards = [];
+        this.view.lastPin = 0;
         this.view.list = [];
         this.view.users = [];
         this.searchData = {};
