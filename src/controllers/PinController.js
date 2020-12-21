@@ -71,8 +71,10 @@ export default class PinController extends BaseController {
         this.view.btnShare.element.removeEventListener('click', this.view.onShowShareDropdown);
         this.view.linkReport.element.removeEventListener('click', this.view.onShowReportForm);
         this.view.reportFormComponent.btnReport.element.removeEventListener('click', this.view.onSendReport);
-        if (this.view.btnBoard.element) {
-            this.view.btnBoard.element.removeEventListener('click', this.view.onShowBoards);
+        if (this.view.btnBoard) {
+            if (this.view.btnBoard.element) {
+                this.view.btnBoard.element.removeEventListener('click', this.view.onShowBoards);
+            }
         }
         this.view.dropdown.element.removeEventListener('change', this.view.onAttachPin);
         super.off();
