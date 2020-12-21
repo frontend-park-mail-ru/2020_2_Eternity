@@ -77,7 +77,7 @@ export default class MainPage extends BaseView {
 
     fillEmptyPlace() {
         if ((window.innerHeight + document.getElementsByTagName("html")[0].scrollTop >=
-            this.maxHeight + 300) &&
+            this.maxHeight /*+ 300*/) &&
             this.lastPin > 1 &&
             this.fillingMutex) {
             this.fillingMutex = false;
@@ -148,7 +148,7 @@ export default class MainPage extends BaseView {
             });
             this.context.protoPins = [];
         }
-        if ([this.currentIdx] > 0) {
+        if (this.currentIdx && this.currentIdx > 0) {
             this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1])
         }
         // console.log(this.maxHeight);
