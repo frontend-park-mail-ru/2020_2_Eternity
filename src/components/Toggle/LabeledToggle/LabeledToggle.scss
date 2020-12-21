@@ -9,7 +9,7 @@
 .labeled-toggle .toggle {
     margin-left: auto;
 }
-.labeled-toggle :last-child {
+.labeled-toggle:last-child {
     grid-area: small;
     font-size: small;
     @include color-assign(color, font-color--secondary);

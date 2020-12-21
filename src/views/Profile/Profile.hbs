@@ -4,12 +4,12 @@
     <div class="profile-card__user-avatar">{{{avatar}}}</div>
 
     <ul class="profile-card__user-info">
-        <li>{{{name}}} {{{surname}}}</li>
-        <li>{{{username}}}</li>
-        <li>{{{description}}}</li>
-        <li><a href="" id="userFollowers" data-popup="#followPopup"></a>&ensp;•&ensp;
+        <li class="profile-card__user-info__item">{{{name}}} {{{surname}}}</li>
+        <li class="profile-card__user-info__item">{{{username}}}</li>
+        <li class="profile-card__user-info__item">{{{description}}}</li>
+        <li class="profile-card__user-info__item"><a href="" id="userFollowers" data-popup="#followPopup"></a>&ensp;•&ensp;
             <a href="" id="userFollowings" data-popup="#followPopup"></a></li>
-        <li></li>
+        <li class="profile-card__user-info__item"></li>
     </ul>
 </div>
 
@@ -18,29 +18,44 @@
         <div class="profile-desk__create"></div>
 
         <div class="profile-tabs">
-            <ul>
-                <li><input type="radio" name="tab" id="alltab" checked="checked"><label for="alltab">
-                    <svg viewBox="0 0 211 212" fill="currentColor">
-                        <path d="M211 205l0 -112c0,-5 -1,-9 -5,-12l-88 -77c-6,-5 -15,-5 -21,0l-91 78c-4,3 -6,7 -6,12l0 111c0,4 3,7 8,7l56 0c5,0 8,-3 8,-7l0 -56c0,-15 12,-26 26,-26l15 0c15,0 26,11 26,26l0 56c0,4 4,7 8,7l57 0c4,0 7,-3 7,-7z"/></svg>
-                    Все
-                </label></li>
-                <li><input type="radio" name="tab" id="pintab"><label for="pintab">
-                    <svg viewBox="0 0 512 512" fill="currentColor"><path d="M399.292,267.208c-15.747-29.813-40.315-55.432-69.275-73.206l-8.746-67.596c25.003-19.539,41.396-49.624,41.396-83.74
+            <ul class="profile-tabs__list">
+                <li class="profile-tabs__list__item">
+                    <input class="profile-tabs__list__item__input" type="radio" name="tab" id="alltab" checked="checked">
+                    <label class="profile-tabs__list__item__icon" for="alltab">
+                        <svg class="profile-tabs__list__item__icon__svg" viewBox="0 0 211 212" fill="currentColor">
+                            <path d="M211 205l0 -112c0,-5 -1,-9 -5,-12l-88 -77c-6,-5 -15,-5 -21,0l-91 78c-4,3 -6,7 -6,12l0 111c0,4 3,7 8,7l56 0c5,0 8,-3 8,-7l0 -56c0,-15 12,-26 26,-26l15 0c15,0 26,11 26,26l0 56c0,4 4,7 8,7l57 0c4,0 7,-3 7,-7z"/>
+                        </svg>
+                        Все
+                    </label>
+                </li>
+                <li class="profile-tabs__list__item">
+                    <input class="profile-tabs__list__item__input" type="radio" name="tab" id="pintab">
+                    <label class="profile-tabs__list__item__icon" for="pintab">
+                        <svg class="profile-tabs__list__item__icon__svg" viewBox="0 0 512 512" fill="currentColor">
+                            <path d="M399.292,267.208c-15.747-29.813-40.315-55.432-69.275-73.206l-8.746-67.596c25.003-19.539,41.396-49.624,41.396-83.74
 			C362.667,13.354,307.375,0,256,0S149.333,13.354,149.333,42.667c0,34.118,16.395,64.204,41.401,83.743l-8.772,67.612
 			c-28.947,17.758-53.506,43.361-69.254,73.186c-6.729,12.719-7.896,28.198-3.229,42.448c4.271,13.031,13.146,23.604,24.323,29.021
 			c33.534,16.259,71.794,21.91,102.813,23.444L245.354,502c0.354,5.625,5.01,10,10.646,10c5.635,0,10.292-4.375,10.646-10
 			l8.74-139.879c31.018-1.534,69.277-7.184,102.802-23.434c11.188-5.427,20.063-16,24.333-29.031
-			C407.187,295.406,406.021,279.927,399.292,267.208z"/></svg>
-                    Пины
-                </label></li>
-                <li><input type="radio" name="tab" id="boardtab"><label for="boardtab">
-                    <svg viewBox="0 0 512 512" fill="currentColor"><path d="M160,85.333h192c5.888,0,10.667-4.779,10.667-10.667V53.333c0-17.643-14.357-32-32-32h-37.845
+			C407.187,295.406,406.021,279.927,399.292,267.208z"/>
+                        </svg>
+                        Пины
+                    </label>
+                </li>
+                <li class="profile-tabs__list__item">
+                    <input class="profile-tabs__list__item__input" type="radio" name="tab" id="boardtab">
+                    <label class="profile-tabs__list__item__icon" for="boardtab">
+                        <svg class="profile-tabs__list__item__icon__svg" viewBox="0 0 512 512" fill="currentColor">
+                            <path d="M160,85.333h192c5.888,0,10.667-4.779,10.667-10.667V53.333c0-17.643-14.357-32-32-32h-37.845
 				C285.291,8.32,271.317,0,256,0s-29.291,8.32-36.821,21.333h-37.845c-17.643,0-32,14.357-32,32v21.333
-				C149.333,80.555,154.112,85.333,160,85.333z"/><path d="M416,42.667h-21.333c-5.888,0-10.667,4.779-10.667,10.667v21.333c0,17.643-14.357,32-32,32H160
+				C149.333,80.555,154.112,85.333,160,85.333z"/>
+                            <path d="M416,42.667h-21.333c-5.888,0-10.667,4.779-10.667,10.667v21.333c0,17.643-14.357,32-32,32H160
 				c-17.643,0-32-14.357-32-32V53.333c0-5.888-4.779-10.667-10.667-10.667H96c-17.643,0-32,14.357-32,32V480
-				c0,17.643,14.357,32,32,32h320c17.643,0,32-14.357,32-32V74.667C448,57.024,433.643,42.667,416,42.667z"/></svg>
-                    Доски
-                </label></li>
+				c0,17.643,14.357,32,32,32h320c17.643,0,32-14.357,32-32V74.667C448,57.024,433.643,42.667,416,42.667z"/>
+                        </svg>
+                        Доски
+                    </label>
+                </li>
             </ul>
         </div>
     </div>

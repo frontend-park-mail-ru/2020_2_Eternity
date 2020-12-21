@@ -23,72 +23,75 @@
     @include color-assign(background-color, secondary);
     z-index: 90;
     transition: .3s ease-in-out;
-}
 
-.sidebar__content {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: inherit;
-}
-.sidebar__content::-webkit-scrollbar {
-    display: none;
-}
+    &__content {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: inherit;
 
-.sidebar__list {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    padding-inline-start: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    position: relative;
-    top: 75px;
-}
-.sidebar__list__item {
-    list-style: none;
-    position: relative;
-    width: 100%;
-    height: 75px;
-
-
-    &__radio {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
-}
-.sidebar__list__item > a {
-    display: flex;
-    align-items: center;
 
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
+    &__list {
+        margin-block-start: 0;
+        margin-block-end: 0;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        padding-inline-start: 0;
 
-    transition: .3s all ease-in-out;
-}
-.sidebar__list__item > a:hover {
-    text-decoration: none;
-}
-.sidebar__list__item:hover {
-    @include color-assign(background-color, accent);
-    cursor: pointer;
-}
+        display: flex;
+        flex-direction: column;
 
-.sidebar__toggler__icon {
-    display: block;
-    width: 60px;
-    text-align: center;
-    @include color-assign(color, font-color--secondary);
-    position: relative;
-    transition: transform .2s;
+        position: relative;
+        top: 75px;
+
+        &__item {
+            list-style: none;
+            position: relative;
+            width: 100%;
+            height: 75px;
+
+
+            &__radio {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
+
+            &:hover {
+                @include color-assign(background-color, accent);
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__toggler {
+        position: absolute;
+        width: 100%;
+        height: 75px;
+        justify-content: end;
+        align-items: center;
+        top: 0;
+        display: flex;
+        @include color-assign(background-color, secondary);
+        z-index: 1;
+        cursor: pointer;
+
+        &__icon {
+            display: block;
+            width: 60px;
+            text-align: center;
+            @include color-assign(color, font-color--secondary);
+            position: relative;
+            transition: transform .2s;
+        }
+    }
 }
 
 .expand {
@@ -103,19 +106,6 @@
 .rotate {
     transform: rotate(180deg);
     transform-origin: center center;
-}
-
-.sidebar__toggler {
-    position: absolute;
-    width: 100%;
-    height: 75px;
-    justify-content: end;
-    align-items: center;
-    top: 0;
-    display: flex;
-    @include color-assign(background-color, secondary);
-    z-index: 1;
-    cursor: pointer;
 }
 
 .sidebar__footer {}

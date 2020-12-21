@@ -7,27 +7,27 @@
     text-align: center;
     vertical-align: top;
     margin: 10px auto;
+
+    &__input {
+        display: none;
+    }
+
+    &__label {
+        background: $color-green;
+        @include color-assign(color, font-color--white);
+        font-weight: 700;
+        border-radius: 25px;
+        padding: 10px;
+        display: block;
+        height: 100%;
+
+        box-sizing: border-box;
+        cursor: pointer;
+
+        transition: all 0.3s ease-in-out;
+    }
+
+    &:hover &__label {
+        background: $color-green-dark;
+    }
 }
-
-.file-upload__input {
-    display: none;
-}
-
-.file-upload__label {
-    background: $color-green;
-    @include color-assign(color, font-color--white);
-    font-weight: 700;
-    border-radius: 25px;
-    padding: 10px;
-    display: block;
-    height: 100%;
-
-    box-sizing: border-box;
-    cursor: pointer;
-
-    transition: all 0.3s ease-in-out;
-}
-.file-upload:hover .file-upload__label {
-    background: $color-green-dark;
-}
-

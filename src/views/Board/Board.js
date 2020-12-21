@@ -47,16 +47,16 @@ export default class BoardPage extends BaseView {
         const [title, author, descr] = node.children;
         console.log(data)
         title.textContent = data.title;
-        title.className = '';
+        title.className = 'board__info__title';
 
         author.innerHTML = new Link({
             href: '/@' + data.username,
             text: '@' + data.username,
         }).render();
-        author.className = '';
+        author.className = 'board__info__descr';
 
         descr.textContent = data.content;
-        descr.className = '';
+        descr.className = 'board__info__descr';
 
         if (data.pins) {
             this.desk = new List({
