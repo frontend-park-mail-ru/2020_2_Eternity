@@ -4,15 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-let config = {
+module.exports = {
     // devtool: 'source-map',
     entry: {
-        main: './src/index.js',
-        sw: './src/sw.js',
+        main: './src/index.js'
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
 
@@ -29,24 +28,16 @@ let config = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.(css|s[ac]ss)$/,
-                use: [
-                    'css-loader?url=false',
-                    'sass-loader',
-                ]
+                test: /\.css$/,
+                // use: [ process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+                use: ['style-loader', 'css-loader'],
+                exclude: /node_modules/,
             },
             {
                 test: /\.(svg|png|jpe?g|)$/,
                 loader: "file-loader",
                 options: {
                     name: '../img/[name].[ext]',
-                },
-            },
-            {
-                test: /\.(ttf|woff|woff2)$/,
-                loader: "file-loader",
-                options: {
-                    name: '../fonts/[name].[ext]',
                 },
             },
         ]
@@ -57,10 +48,11 @@ let config = {
         new CopyPlugin({
             patterns: [
                 {from: './public/static/img', to: 'img'},
-                {from: './public/static/fonts', to: 'fonts'},
             ]
         }),
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: 'index.css',
+        }),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',
@@ -69,7 +61,7 @@ let config = {
     ],
 
     devServer: {
-        contentBase: path.join(__dirname, 'build'),
+        contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 3000,
         historyApiFallback: true,
@@ -80,13 +72,4 @@ let config = {
             },
         }
     },
-}
-
-module.exports = (env, argv) => {
-    if (argv.mode === 'development') {
-        config.module.rules[2].use.unshift('style-loader');
-    } else {
-        config.module.rules[2].use.unshift(MiniCssExtractPlugin.loader);
-    }
-    return config
 };
