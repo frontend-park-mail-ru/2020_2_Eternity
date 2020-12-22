@@ -28,9 +28,10 @@ export default class PinController extends BaseController {
         this.view.onAttachPin = this.onAttachPin.bind(this);
     }
 
-    on(data={}) {
+    on(data = {}) {
         PinModel.getPin(data).then((response) => {
             if (response) {
+                super.on();
                 this.view.context.auth = Navbar.context.isAuth;
                 this.view.load(response)
 
@@ -57,26 +58,54 @@ export default class PinController extends BaseController {
             }
         }).catch((error) => console.log(error));
 
-        super.on();
-
         eventBus.on(Events.pinAttach, this.onPinAttach.bind(this));
     }
 
     off() {
         eventBus.off(Events.pinAttach, this.onPinAttach.bind(this));
         if (this.view.btnComment) {
-            this.view.btnComment.element.removeEventListener('click', this.view.onAddComment);
+            if (this.view.btnComment.element) {
+                this.view.btnComment.element.removeEventListener('click', this.view.onAddComment);
+            }
         }
-        this.view.btnAction.element.removeEventListener('click', this.view.onShowActionsDropdown);
-        this.view.btnShare.element.removeEventListener('click', this.view.onShowShareDropdown);
-        this.view.linkReport.element.removeEventListener('click', this.view.onShowReportForm);
-        this.view.reportFormComponent.btnReport.element.removeEventListener('click', this.view.onSendReport);
+
+        if (this.view.btnAction) {
+            if (this.view.btnAction.element) {
+                this.view.btnAction.element.removeEventListener('click', this.view.onShowActionsDropdown);
+            }
+        }
+
+        if (this.view.btnShare) {
+            if (this.view.btnShare.element) {
+                this.view.btnShare.element.removeEventListener('click', this.view.onShowShareDropdown);
+            }
+        }
+
+        if (this.view.linkReport) {
+            if (this.view.linkReport.element) {
+                this.view.linkReport.element.removeEventListener('click', this.view.onShowReportForm);
+            }
+        }
+
+        if (this.view.reportFormComponent) {
+            if (this.view.reportFormComponent.btnReport) {
+                if (this.view.reportFormComponent.btnReport.element) {
+                    this.view.reportFormComponent.btnReport.element.removeEventListener('click', this.view.onSendReport);
+                }
+            }
+        }
+
         if (this.view.btnBoard) {
             if (this.view.btnBoard.element) {
                 this.view.btnBoard.element.removeEventListener('click', this.view.onShowBoards);
             }
         }
-        this.view.dropdown.element.removeEventListener('change', this.view.onAttachPin);
+
+        if (this.view.dropdown) {
+            if (this.view.dropdown.element) {
+                this.view.dropdown.element.removeEventListener('change', this.view.onAttachPin);
+            }
+        }
         super.off();
     }
 
@@ -95,7 +124,7 @@ export default class PinController extends BaseController {
         })
     }
 
-    onPinAttach(data={}) {
+    onPinAttach(data = {}) {
         BoardModel.attachPin(data).then((response) => {
             if (!response.error) {
                 // this.view.addCommentToList(response);
