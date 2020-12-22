@@ -100,7 +100,12 @@ export default class MainController extends BaseController {
         // this.view.copyLinkBtns.forEach((btn) => {
         //     btn.removeEventListener('click', this.view.onCopyLink);
         // });
-        this.view.btnCreate.element.removeEventListener('click', this.view.onShowCreateDropdown);
+
+        if (this.view.btnCreate) {
+            if (this.view.btnCreate.element) {
+                this.view.btnCreate.element.removeEventListener('click', this.view.onShowCreateDropdown);
+            }
+        }
 
         this.view.fillingMutex = true;
         // console.log(this.view.list);

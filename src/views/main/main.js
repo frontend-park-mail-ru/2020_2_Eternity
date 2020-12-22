@@ -13,6 +13,7 @@ import Button from "../../components/Button/Button";
 import {Icons} from "../../modules/consts/icons";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Link from "../../components/Link/Link";
+import Navbar from "../../components/Navbar/Navbar";
 
 export default class MainPage extends BaseView {
     test
@@ -182,23 +183,30 @@ export default class MainPage extends BaseView {
             id: 'dropdownCreate',
             custom: 'create__dropdown'
         })
-        this.btnCreate = new Button({
-            id: 'btnCreate',
-            text: Icons.add,
-            dataAttr: 'data-activates="' + this.dropdownCreate.context.id + '"',
-            customButton: 'btn_round btn_with-icon create btn_green',
-        })
-        this.dropdownCreate.addToContent(new Link({href: '/create-pin', text: 'Пин', custom: 'create__link'}));
-        this.dropdownCreate.addToContent(new Link({href: '/create-board', text: 'Доска', custom: 'create__link'}))
 
-
-        const data = {
+        let data = {
             pins: this.list,
             users: this.users,
             popup: this.popupPinView.render(),
             // test: this.test.render(),
-            dropdownCreate: this.dropdownCreate.render(),
-            btnCreate: this.btnCreate.render()
+        }
+
+        if (Navbar.context.isAuth) {
+            this.btnCreate = new Button({
+                id: 'btnCreate',
+                text: Icons.add,
+                dataAttr: 'data-activates="' + this.dropdownCreate.context.id + '"',
+                customButton: 'btn_round btn_with-icon create btn_green',
+            })
+
+            this.dropdownCreate.addToContent(new Link({href: '/create-pin', text: 'Пин', custom: 'create__link'}));
+            this.dropdownCreate.addToContent(new Link({href: '/create-board', text: 'Доска', custom: 'create__link'}))
+
+            data = {
+                ...data,
+                dropdownCreate: this.dropdownCreate.render(),
+                btnCreate: this.btnCreate.render()
+            }
         }
 
         this.fillWith(data);
@@ -234,6 +242,9 @@ export default class MainPage extends BaseView {
         // this.copyLinkBtns.forEach((btn) => {
         //     btn.addEventListener('click', this.onCopyLink);
         // });
-        this.btnCreate.element.addEventListener('click', this.onShowCreateDropdown);
+
+        if (Navbar.context.isAuth) {
+            this.btnCreate.element.addEventListener('click', this.onShowCreateDropdown);
+        }
     }
 }
