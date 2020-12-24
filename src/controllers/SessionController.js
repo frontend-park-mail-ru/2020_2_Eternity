@@ -59,14 +59,17 @@ class SessionController extends BaseController {
     }
 
     onSearch(data = {}) {
-        /*if (data.request.search('@') === 0) {
+        if (data.request.search('@') === 0) {
             let searchString = data.request.split('@')[1];
             eventBus.emit(Events.pathChanged, {path: `/?type=user&content=${searchString}`});
+        } else if (data.request.search('#') === 0) {
+            let searchString = data.request.split('#')[1];
+            eventBus.emit(Events.pathChanged, {path: `/?type=pin&content=${searchString}`});
         } else {
-            eventBus.emit(Events.pathChanged, {path: `/?type=pin&content=${data.request}`});
-        }*/
+            eventBus.emit(Events.pathChanged, {path: `/?type=:search&content=${data.request}`});
+        }
 
-        eventBus.emit(Events.pathChanged, {path: `/?type=:search&content=${data.request}`});
+        // eventBus.emit(Events.pathChanged, {path: `/?type=:search&content=${data.request}`});
     }
 }
 

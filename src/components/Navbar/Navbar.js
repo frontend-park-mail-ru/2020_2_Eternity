@@ -29,7 +29,7 @@ class Navbar extends BaseComponent {
     }
 
     render() {
-        this.search = new Search({id: 'searchForm', placeholder: 'Введите @пользователя или название пина для поиска'});
+        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
         this.themeSwitcher = ThemeSwitcher;
         this.dropdown = new Dropdown({
             id: 'notificationsDropdown',

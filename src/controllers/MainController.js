@@ -34,25 +34,39 @@ export default class MainController extends BaseController {
         if (Object.keys(data).length) {
             this.searchData = data;
 
-            PinModel.getAllSearchData({type: 'user', content: data.content}).then((response) => {
-                this.view.fillWith({protoUsers: response});
-                this.view.render();
+            if (data.type === 'user' || data.type === 'pin') {
+                PinModel.getAllSearchData({type: data.type, content: data.content}).then((response) => {
+                    this.view.fillWith(data.type === 'user' ? {protoUsers: response} : {protoPins: response});
+                    this.view.render();
 
-                if (response.length < 15) {
-                    this.loadMoreLock = false;
-                }
-                this.view.fillEmptyPlace();
-            }).catch((error) => console.log(error));
+                    if (response.length < 15) {
+                        this.loadMoreLock = false;
+                    }
+                    this.view.fillEmptyPlace();
+                }).catch((error) => console.log(error));
+            } else if (data.type === ':search') {
+                console.log(data.type);
 
-            PinModel.getAllSearchData({type: 'pin', content: data.content}).then((response) => {
-                this.view.fillWith({protoPins: response});
-                this.view.render();
+                PinModel.getAllSearchData({type: 'user', content: data.content}).then((response) => {
+                    this.view.fillWith({protoUsers: response});
+                    this.view.render();
 
-                if (response.length < 15) {
-                    this.loadMoreLock = false;
-                }
-                this.view.fillEmptyPlace();
-            }).catch((error) => console.log(error));
+                    if (response.length < 15) {
+                        this.loadMoreLock = false;
+                    }
+                    this.view.fillEmptyPlace();
+                }).catch((error) => console.log(error));
+
+                PinModel.getAllSearchData({type: 'pin', content: data.content}).then((response) => {
+                    this.view.fillWith({protoPins: response});
+                    this.view.render();
+
+                    if (response.length < 15) {
+                        this.loadMoreLock = false;
+                    }
+                    this.view.fillEmptyPlace();
+                }).catch((error) => console.log(error));
+            }
 
 /*            data.type = 'board';
 
