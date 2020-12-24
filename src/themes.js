@@ -1,13 +1,15 @@
 const STORAGE_KEY = 'user-color-scheme';
+const mediaPrefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-const applyTheme = (passedSetting) => {
-    let currentSetting = passedSetting || localStorage.getItem(STORAGE_KEY);
+applyTheme = (passedSetting) => {
+    let currentSetting = passedSetting || getCurrentTheme();
     if (currentSetting) {
         document.documentElement.dataset.theme = currentSetting;
+        localStorage.setItem(STORAGE_KEY, currentSetting);
     }
 };
 
-const toggleTheme = () => {
+toggleTheme = () => {
     let currentTheme = getCurrentTheme();
     currentTheme = (currentTheme === 'light') ? 'dark' : 'light';
     localStorage.setItem(STORAGE_KEY, currentTheme);
@@ -15,7 +17,7 @@ const toggleTheme = () => {
 };
 
 getCurrentTheme = () => {
-    return localStorage.getItem(STORAGE_KEY) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    return localStorage.getItem(STORAGE_KEY) || (mediaPrefersColorScheme.matches ? 'dark' : 'light');
 }
 
 applyTheme();
