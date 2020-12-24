@@ -16,8 +16,21 @@ class ThemeSwitcher extends BaseComponent {
                 onThemeChanged();
             }
         });
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this.toggleThemeSwitcher.bind(this));
+
         if (getCurrentTheme() === 'dark') {
             this.setChecked();
+        }
+    }
+
+    toggleThemeSwitcher() {
+        (window.matchMedia('(prefers-color-scheme: dark)').matches) ? applyTheme('dark') : applyTheme('light');
+
+        if (getCurrentTheme() === 'dark') {
+            this.setChecked();
+        } else {
+            this.element.checked = false;
+            this.context.dark = false;
         }
     }
 

@@ -46,19 +46,6 @@ $themes: (
     #{compose-colors-var($key)}: #{$value};
   }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    @each $key, $value in map-get($themes, 'dark') {
-      #{compose-colors-var($key)}: #{$value};
-    }
-
-    img {
-      filter: grayscale(30%);
-      transition: filter .2s ease;
-    }
-  }
-}
 :root[data-theme='dark'] {
   @each $key, $value in map-get($themes, 'dark') {
     #{compose-colors-var($key)}: #{$value};
