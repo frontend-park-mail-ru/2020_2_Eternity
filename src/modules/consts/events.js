@@ -24,6 +24,7 @@ export const Events = {
     addNotification: 'addNotification',
     newNotifications: 'newNotifications',
     clearNotifications: 'clearNotifications',
+    showNotificationBar: 'showNotificationBar',
 
     feedNext: 'feedNext',
 

@@ -19,6 +19,7 @@ class NotificationsController extends BaseController {
         this.onClearNotificationsHandle = this.onClearNotifications.bind(this);
         this.onAddNotificationHandle = this.onAddNotification.bind(this);
         this.onDecNotificationHandle = this.onDecNotification.bind(this);
+        this.onShowNotificationBar = this.onShowNotificationBar.bind(this);
     }
 
     onSetNewNotifications(data={}) {
@@ -34,6 +35,10 @@ class NotificationsController extends BaseController {
         this.nav.notificationBell.decNotification(data);
     }
 
+    onShowNotificationBar(data={}) {
+        this.nav.notificationBar.show(data);
+    }
+
     on() {
         // this.nav.onShowNotifications = this.onShowNotifications.bind(this);
         document.addEventListener('click', (event) => {
@@ -42,16 +47,24 @@ class NotificationsController extends BaseController {
                 this.onShowNotifications(event);
             }
         })
+        document.addEventListener('click', (event) => {
+            const close = event.target.closest('#alert-close');
+            if (close) {
+                this.nav.notificationBar.closeBar();
+            }
+        })
 
         EventBus.on(Events.newNotifications, this.onSetNewNotificationsHandle);
         EventBus.on(Events.clearNotifications, this.onClearNotificationsHandle);
         EventBus.on(Events.addNotification, this.onAddNotificationHandle);
+        EventBus.on(Events.showNotificationBar, this.onShowNotificationBar);
     }
 
     off() {
         EventBus.off(Events.newNotifications, this.onSetNewNotificationsHandle);
         EventBus.off(Events.clearNotifications, this.onClearNotificationsHandle);
         EventBus.off(Events.addNotification, this.onAddNotificationHandle);
+        EventBus.off(Events.showNotificationBar, this.onShowNotificationBar);
     }
 
     onShowNotifications(event) {

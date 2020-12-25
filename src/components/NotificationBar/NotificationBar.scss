@@ -1,0 +1,71 @@
+@import "src/colors";
+@import "src/themes";
+
+.alert {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  z-index: 900;
+  padding: .3rem;
+  height: 1.5rem;
+  font-weight: 300;
+  box-shadow: $box-shadow-secondary;
+
+  @include color-assign(background-color, accent);
+  transition: all .3s ease-in-out;
+
+  &_active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    animation: show both 3s;
+  }
+
+  &_success {
+    @include color-assign(color, font-color--white);
+    background-color: $color-green;
+  }
+
+  &_error {
+    @include color-assign(color, font-color--white);
+    background-color: $color-red;
+  }
+
+  &_danger {
+    color: #1A1A1A;
+    background-color: $color-yellow;
+    .btn {
+      color: #1A1A1A;
+    }
+  }
+
+  &_success, &_error {
+    .btn {
+      @include color-assign(color, font-color--white);
+    }
+  }
+
+  .btn {
+    position: absolute;
+    right: 1rem;
+  }
+}
+
+@keyframes show {
+  10% {
+    top: 60px;
+  }
+
+  90% {
+    top: 60px;
+  }
+  100% {
+    top: 0;
+    display: none;
+  }
+}

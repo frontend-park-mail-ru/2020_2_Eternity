@@ -6,6 +6,7 @@ import {Events} from "../modules/consts/events.js";
 import {routes} from "../modules/consts/routes.js";
 
 import BoardModel from "../models/BoardModel.js";
+import EventBus from "../modules/tools/EventBus";
 
 
 export default class BoardCreateController extends BaseController {
@@ -28,8 +29,13 @@ export default class BoardCreateController extends BaseController {
 
         BoardModel.createBoard(data).then((response) => {
             if (!response.error) {
-                console.log('new Board!')
-                eventBus.emit(Events.pathChanged, routes.profilePage);
+                eventBus.emit(Events.pathChanged, {
+                    path: routes.profilePage,
+                    note: {
+                        type: 'success',
+                        text: 'Доска успешно создана'
+                    }
+                });
             }
         }).catch((error) => console.log(error))
     }

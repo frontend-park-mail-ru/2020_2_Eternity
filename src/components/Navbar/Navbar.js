@@ -10,6 +10,7 @@ import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Link from "../Link/Link";
 import {Icons} from "../../modules/consts/icons";
+import NotificationBar from "../NotificationBar/NotificationBar";
 
 class Navbar extends BaseComponent {
     burger
@@ -20,6 +21,8 @@ class Navbar extends BaseComponent {
 
     link
     pagesDrop
+
+    notificationBar
 
     constructor(context = {}) {
         super(template, context);
@@ -79,6 +82,8 @@ class Navbar extends BaseComponent {
         })
         this.pagesDrop.formContent([mainLink, subFeedLink]);
 
+        this.notificationBar = new NotificationBar();
+
         const data = {
             notification: this.notificationBell.render(),
             search: this.search.render(),
@@ -87,6 +92,8 @@ class Navbar extends BaseComponent {
 
             l: this.link.render(),
             pagesDrop: this.pagesDrop.render(),
+
+            notificationBar: this.notificationBar.render(),
         }
 
         this.context = {...this.context, ...data};

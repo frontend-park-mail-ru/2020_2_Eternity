@@ -27,7 +27,7 @@ export default class MainController extends BaseController {
         this.on();
     }
 
-    on(data = {}) {
+    on(data = {}, note) {
         this.loadMoreLock = true;
         eventBus.on(Events.feedNext, this.onFeedNext.bind(this));
 
@@ -106,7 +106,7 @@ export default class MainController extends BaseController {
             }
         }
 
-        super.on();
+        super.on(data, note);
         window.addEventListener('resize', this.resize);
     }
 
