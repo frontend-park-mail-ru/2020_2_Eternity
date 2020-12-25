@@ -13,6 +13,7 @@ import Request from "../modules/request/Request";
 
 import Navbar from "../components/Navbar/Navbar";
 import EventBus from "../modules/tools/EventBus.js";
+import {Icons} from "../modules/consts/icons";
 
 export default class PinController extends BaseController {
     constructor() {
@@ -24,8 +25,9 @@ export default class PinController extends BaseController {
         this.view.onShowReportForm = this.onShowReportForm.bind(this);
         this.view.onSendReport = this.onSendReport.bind(this);
         this.view.onShare = this.onShare.bind(this);
-        this.view.onShowBoards = this.onShowBoards.bind(this);
         this.view.onAttachPin = this.onAttachPin.bind(this);
+        this.view.onShowBoardDrop = this.onShowBoardDrop.bind(this);
+        this.view.onShowCreateBoardPopup = this.onShowCreateBoardPopup.bind(this);
     }
 
     on(data = {}) {
@@ -95,15 +97,15 @@ export default class PinController extends BaseController {
             }
         }
 
-        if (this.view.btnBoard) {
-            if (this.view.btnBoard.element) {
-                this.view.btnBoard.element.removeEventListener('click', this.view.onShowBoards);
-            }
-        }
-
         if (this.view.dropdown) {
             if (this.view.dropdown.element) {
                 this.view.dropdown.element.removeEventListener('change', this.view.onAttachPin);
+            }
+        }
+
+        if (this.view.boardDrop) {
+            if (this.view.boardDrop.element) {
+                this.view.boardDrop.element.querySelector('.dropdown__label').removeEventListener('click', this.view.onShowBoardDrop);
             }
         }
         super.off();
@@ -174,7 +176,11 @@ export default class PinController extends BaseController {
 
     onShare(event) {
         event.preventDefault();
-        window.open(event.currentTarget.href, 'Поделиться', 'width=600, height=500, location=no, menubar=no, toolbar=no');
+        if (event.target.closest('[data-activates]').getAttribute('data-activates') !== 'copy') {
+            window.open(event.currentTarget.href, 'Поделиться', 'width=600, height=500, location=no, menubar=no, toolbar=no');
+        } else {
+            this.copyLink(event.target.closest('[data-activates]'));
+        }
     }
 
     onSendReport() {
@@ -219,6 +225,40 @@ export default class PinController extends BaseController {
                 pin_id: this.view.context.info.id,
             }
             EventBus.emit(Events.pinAttach, data);
+        }
+    }
+
+    copyLink(e) {
+        window.getSelection().selectAllChildren(document.getElementById('url-to-copy'));
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+
+        const tmpIcon = e.innerHTML;
+        e.innerHTML = Icons.checkMark;
+
+        setTimeout(() => {
+            e.innerHTML = tmpIcon;
+        }, 1000);
+    }
+
+    onShowBoardDrop(event) {
+        const drop = event.target.closest('.dropdown__wrap').querySelector('.dropdown__drop');
+        if (drop) {
+            if (this.view.boardDrop.isOpened) {
+                this.view.boardDrop.hideDrop();
+            } else {
+                this.view.boardDrop.showDrop();
+            }
+        }
+    }
+
+    onShowCreateBoardPopup(event) {
+        const origin = event.target.closest('[data-popup]');
+        if (origin) {
+            const targetSelector = origin.getAttribute('data-popup');
+            this.view.createForm.origin = origin;
+            this.view.createForm.open(targetSelector);
+            this.view.boardDrop.hideDrop();
         }
     }
 }

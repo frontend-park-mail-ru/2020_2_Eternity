@@ -1,0 +1,35 @@
+@import "src/themes";
+
+.boardbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 25px;
+  height: 45px;
+  padding: 0 1rem;
+
+  &__btn {
+    display: none;
+    position: absolute;
+    right: 1rem;
+
+    .btn {
+      margin: 0 !important;
+    }
+
+    &_active {
+      display: flex;
+    }
+  }
+
+  &:hover {
+    @include color-assign(background-color, accent);
+    .boardbar__btn {
+      display: flex;
+    }
+  }
+
+  &__title {
+    font-weight: 400;
+  }
+}
