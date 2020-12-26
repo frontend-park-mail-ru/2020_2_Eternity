@@ -9,6 +9,7 @@ import {Icons} from "../modules/consts/icons";
 export default class ChatController extends BaseController {
     expandDelayMs = 300
     connected
+    pressedKeys = {}
 
     constructor() {
         super(new ChatPage());
@@ -42,7 +43,26 @@ export default class ChatController extends BaseController {
             this.openConnection();
         }
 
+        document.addEventListener('keydown', (event) => {
+            this.sendMessageOnEnter(event);
+        })
+
+        document.addEventListener('keyup', (event) => {
+            delete this.pressedKeys[event.key];
+        });
+
         super.on();
+    }
+
+    sendMessageOnEnter(event) {
+        this.pressedKeys[event.key] = true;
+
+        if (event.key === 'Enter' && !this.pressedKeys['Shift']) {
+            event.preventDefault();
+            if (document.activeElement === document.getElementById(this.view.msgInput.context.id)) {
+                this.onSend();
+            }
+        }
     }
 
     openConnection() {
@@ -74,6 +94,14 @@ export default class ChatController extends BaseController {
         this.view.smiles.element.removeEventListener('change', this.view.onEmojiTabChange);
 
         window.removeEventListener('resize', this.debounce(this.onResizeExpandSidebar, this.expandDelayMs));
+
+        document.removeEventListener('keydown', (event) => {
+            this.sendMessageOnEnter(event);
+        });
+
+        document.removeEventListener('keyup', (event) => {
+            delete this.pressedKeys[event.key];
+        });
 
         super.off();
     }
