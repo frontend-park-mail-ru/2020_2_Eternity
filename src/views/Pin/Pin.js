@@ -243,8 +243,7 @@ export default class PinPage extends BaseView {
         this.linkDownload.element.setAttribute('download', filename);
 
         const authorAvatar = new Avatar({
-            img_link: '/img/img11.jpg',
-            // img_link: data.img_link,
+            img_link: data.avatar,
             mini: true,
         })
         this.changePinTitle(data.title);
