@@ -10,6 +10,7 @@ export default class WideDropdown extends BaseComponent {
     isSaved
     isOpened
     list
+    listenerOnClose;
 
     constructor(context = {}) {
         super(template, context);
@@ -19,6 +20,8 @@ export default class WideDropdown extends BaseComponent {
             custom: 'dropdown__drop__list ' + context.custom,
             id: 'list' + context.id,
         })
+
+        this.listenerOnClose = this.closeOnClickOutsideBind.bind(this);
 
         this.isOpened = false;
     }
@@ -62,11 +65,22 @@ export default class WideDropdown extends BaseComponent {
         this.element.querySelector('.dropdown__label__saved').classList.add('dropdown__label__saved_active')
     }
 
+    closeOnClickOutsideBind(event) {
+        if (this.isOpened && (!event.target.closest('.dropdown__drop') || !(event.target instanceof HTMLElement))) {
+            this.hideDrop();
+        }
+    }
+
     showDrop() {
-        this.isOpened = true;
         this.element.querySelector('.dropdown__drop').classList.add('dropdown__drop__active');
+
+        document.addEventListener('click', this.listenerOnClose);
+        setTimeout(() => {
+            this.isOpened = true;
+        }, 300);
     }
     hideDrop() {
+        document.removeEventListener('click', this.listenerOnClose);
         this.isOpened = false;
         this.element.querySelector('.dropdown__drop').classList.remove('dropdown__drop__active');
     }

@@ -53,7 +53,6 @@ export default class Dropdown extends BaseComponent {
     }
 
     closeOnClickOutsideBind(event) {
-        console.log('yay')
         if (this.isOpened && (!event.target.closest('.dropdown') || !(event.target instanceof HTMLElement))) {
             this.hide();
         }
