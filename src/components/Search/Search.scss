@@ -12,7 +12,7 @@
   flex-direction: row;
   align-items: center;
   transition: all .3s;
-  @include color-assign(border, accent, '1px solid THEMECOLOR');
+  @include color-assign(border, hoverlabel, '1px solid THEMECOLOR');
 
   @media only screen and (max-device-width: 1020px) and (max-width: 1020px) {
     width: 50%;

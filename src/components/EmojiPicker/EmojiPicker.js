@@ -20,6 +20,8 @@ export default class EmojiPicker extends BaseComponent {
     constructor(context = {}) {
         super(template, context)
 
+        this.listenerOnClose = this.closeOnClickOutsideBind.bind(this);
+
         this.emojis = []
         emoji.forEach((el) => {
             this.emojis.push(new Span({custom: 'emoji', text: el}));
@@ -45,16 +47,33 @@ export default class EmojiPicker extends BaseComponent {
     }
 
     getPositionByOrigin() {
-        const position = this.origin.getBoundingClientRect();
-        this.dropdown.style.top = position.y - 355 + 'px';
-        this.dropdown.style.left = position.x - 270 + 'px';
+        if (document.documentElement.clientWidth > 430) {
+            const position = this.origin.getBoundingClientRect();
+            if (document.documentElement.clientWidth - position.x < 210) {
+                position.x = position.x - 270;
+            }
+            if (document.documentElement.clientHeight - position.y < 160) {
+                position.y = position.y - 355;
+            }
+            getComputedStyle(this.origin, null).position !== 'fixed' ? position.y = (position.y + window.scrollY + 10) : position.y;
+            this.dropdown.style.top = position.y + 'px';
+            this.dropdown.style.left = position.x + 'px';
+        } else {
+            const dropSize = getComputedStyle(this.dropdown).height;
+            this.dropdown.style.top = `calc(100vh - ${dropSize})`;
+            this.dropdown.style.left = '';
+        }
     }
 
     show() {
         this.getPositionByOrigin()
         if (this.dropdown && !this.isOpened) {
             this.dropdown.classList.add('dropdown__active');
-            this.isOpened = true;
+
+            document.addEventListener('click', this.listenerOnClose);
+            setTimeout(() => {
+                this.isOpened = true;
+            }, 300);
         }
     }
 
@@ -63,11 +82,19 @@ export default class EmojiPicker extends BaseComponent {
             this.dropdown.scrollTo(0,0)
             this.flushSelectedItems();
             this.dropdown.classList.remove('dropdown__active');
+            this.dropdown.style.top = '';
+            document.removeEventListener('click', this.listenerOnClose);
             this.isOpened = false;
         }
     }
 
     flushSelectedItems() {
         this.list.flushSelectedItems();
+    }
+
+    closeOnClickOutsideBind(event) {
+        if (this.isOpened && (!event.target.closest('.dropdown') || !(event.target instanceof HTMLElement))) {
+            this.hide();
+        }
     }
 }
