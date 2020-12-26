@@ -13,9 +13,14 @@
     &__actions {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         .btn {
             margin: 15px 10px 0;
+        }
+
+        .dropdown__wrap {
+            margin-top: 5px;
         }
     }
 
@@ -165,12 +170,12 @@
         height: 30vh !important;
         max-height: 30vh !important;
         width: 100vw;
+        padding: .4rem .5rem !important;
     }
 
     &__title {
         width: 100%;
         margin: 5px 5px 10px;
-        height: 2rem;
     }
 
     &__social {
@@ -179,5 +184,12 @@
         width: 2.5rem;
         height: 2.5rem;
         cursor: pointer;
+
+        &::after {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: #0cce6b;
+        }
     }
 }

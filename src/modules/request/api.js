@@ -20,7 +20,9 @@ export const urls = {
     board: `/${apiPath}/board/:id`,
     boards: `/${apiPath}/boards/:username`,
     attachPin: `/${apiPath}/attach`,
+    detachPin: `/${apiPath}/detach`,
     boardPins: `/${apiPath}/pins/board/:id`,
+    checkAttachingPin: `/${apiPath}/boards_pin/:pin_id`,
 
     pin: `/${apiPath}/user/pin/:id`,
     pinPost: `/${apiPath}/user/pin`,

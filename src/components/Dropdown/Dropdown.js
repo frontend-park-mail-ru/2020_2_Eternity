@@ -24,6 +24,7 @@ export default class Dropdown extends BaseComponent {
             id: this.context.id,
             placeholder: this.context.placeholder ? this.context.placeholder : 'Пусто',
             customItem: this.context.customItem ? this.context.customItem : '',
+            dataAttr: this.context.dataAttr ? this.context.dataAttr : '',
         }, {selectable: this.context.listtype})
 
         this.closeOnClickOutside = this.closeOnClickOutsideBind.bind(this);

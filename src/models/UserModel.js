@@ -98,6 +98,11 @@ class UserModel {
             return response.json();
         })
     }
+
+    markReadNotifications() {
+        return request.markReadNotifications().then(() => {});
+    }
+
 }
 
 export default new UserModel();

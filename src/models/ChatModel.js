@@ -1,6 +1,5 @@
 import request from "../modules/request/Request.js";
 import ws from "../modules/websocket/websocket";
-// import websocket from "../modules/websocket/websocket";
 
 import EventBus from "../modules/tools/EventBus";
 import {Events} from "../modules/consts/events";
@@ -13,6 +12,7 @@ class ChatModel {
 
     constructor() {
         EventBus.on(Events.onLogin, this.openSocket.bind(this), this.connect.bind(this));
+        EventBus.on(Events.userLogout, this.closeConnect.bind(this));
         // TODO: закрыть WS по логауту
         // EventBus.on(Events.userLogout, )
     }
@@ -37,6 +37,10 @@ class ChatModel {
 
     openSocket() {
         this.socket = new WebSocket(this.socketURL);
+    }
+
+    closeConnect() {
+        this.socket.close();
     }
 
     send(chatId, text) {

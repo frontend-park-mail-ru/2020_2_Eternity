@@ -15,6 +15,10 @@ import Validator from "../../modules/tools/Validator";
 import Link from "../../components/Link/Link";
 import Popup from "../../components/Popup/Popup";
 import ReportForm from "../../components/ReportForm/ReportForm";
+import WideDropdown from "../../components/WideDropdown/WideDropdown";
+import CreateForm from "../../components/CreateForm/CreateForm";
+import Boardbar from "../../components/Boardbar/Boardbar";
+import Span from "../../components/Span/Span";
 
 
 export default class PinPage extends BaseView {
@@ -22,7 +26,6 @@ export default class PinPage extends BaseView {
     userComment
     btnComment
 
-    dropdown
     reportForm
 
     btnAction
@@ -36,7 +39,10 @@ export default class PinPage extends BaseView {
 
     comments
 
-    btnBoard
+    boardDrop
+    newBoardLink
+    createForm
+    createBoardBtn
 
     constructor(context = {}) {
         super('Просмотр пина', context, null);
@@ -44,12 +50,6 @@ export default class PinPage extends BaseView {
     }
 
     render() {
-        this.dropdown = new Dropdown({
-            id: 'dropBoards',
-            customItem: 'create__link',
-            listtype: 'checkbox'
-        });
-
         this.pinImg = new Image({
             id: 'pinImg',
             src: this.context.img_link,
@@ -115,22 +115,33 @@ export default class PinPage extends BaseView {
             facebook: 'https://www.facebook.com/sharer.php?u={url}',
             twitter: 'https://twitter.com/intent/tweet?url={url}&text={title}',
             telegram: 'https://t.me/share/url?url={url}&text={title}',
+            link: '{url}',
         }
         let social = [];
         Object.entries(socialLinks).forEach(([key, value]) => {
             const l = new Link({
                 target: '_blank',
-                dataAttr: 'data-activates=""',
+                dataAttr: key === 'link' ? 'data-activates="copy"' : 'data-activates=""',
                 href:  value.replace('{url}', encodeURIComponent(window.location.origin + window.location.pathname))
                             .replace('{title}', encodeURIComponent(this.title)),
                 text: Icons[key]
             })
             social.push(l);
         })
-        const h = document.createElement('h3');
-        h.textContent = 'Поделиться пином';
-        h.className = 'share__title';
         this.dropShare.formContent(social);
+
+        /**
+         * ADDING TO BOARDS
+         * CREATE NEW BOARD FORM AND ATTACH PIN TO IT
+         */
+        this.boardDrop = new WideDropdown({
+            id: 'boardsWideDrop',
+        });
+        this.createForm = new Popup({
+            id: 'createForm',
+        })
+        this.createFormComponent = new CreateForm();
+        this.createForm.formContent(this.createFormComponent.render());
 
         const data = {
             ...this.context,
@@ -140,7 +151,6 @@ export default class PinPage extends BaseView {
             pinAuthor: this.createPinAuthor(authorAvatar).outerHTML,
             pinDescr: this.createPinDescr().outerHTML,
 
-            dropdown: this.dropdown.render(),
             list: this.comments.render(),
 
             btnAction: this.btnAction.render(),
@@ -149,11 +159,24 @@ export default class PinPage extends BaseView {
 
             btnShare: this.btnShare.render(),
             dropShare: this.dropShare.render(),
+
+            createForm: this.createForm.render(),
         }
 
         this.fillWith(data);
         super.render();
-        this.dropShare.list.element.insertAdjacentElement('afterbegin', h);
+
+        let node = document.createElement('h3');
+        node.textContent = 'Поделиться пином';
+        node.className = 'share__title';
+        this.dropShare.list.element.insertAdjacentElement('afterbegin', node);
+
+        node = document.createElement('span');
+        node.id = 'url-to-copy';
+        node.innerText = window.location.origin + window.location.pathname;
+        node.className = 'visually-hidden';
+        this.dropShare.list.element.insertAdjacentElement('beforeend', node);
+
 
         // if (this.context.show) {
         //     select.bind(this.context.id);
@@ -245,36 +268,56 @@ export default class PinPage extends BaseView {
                 type: 'submit'
             })
 
-            this.btnBoard = new Button({
-                id: 'btnBoard',
-                text: Icons.add,
-                customButton: 'btn_with-icon btn_round btn_round_middle',
-                dataAttr: 'data-activates="dropBoards"'
-            })
-
             const commentArea = document.querySelector('.pin__form');
             commentArea.innerHTML = this.userComment.render();
             commentArea.insertAdjacentHTML('beforeend', this.btnComment.render());
             this.btnComment.element.addEventListener('click', this.onAddComment);
 
             const actionsArea = document.querySelector('.pin__actions');
-            actionsArea.insertAdjacentHTML('beforeend', this.btnBoard.render());
-            this.btnBoard.element.addEventListener('click', this.onShowBoards);
+            actionsArea.insertAdjacentHTML('beforeend', this.boardDrop.render());
+            this.boardDrop.element.querySelector('.dropdown__label').addEventListener('click', this.onShowBoardDrop);
+
+            this.newBoardLink = document.getElementById('newBoardLink');
+            this.newBoardLink.addEventListener('click', this.onShowCreateBoardPopup);
+
+            document.getElementById('createForm').querySelector('.create-board-form__pin__img').classList.remove('hidden');
+            document.getElementById('createForm').querySelector('.create-board-form__pin__img').setAttribute('src', data.img_link);
+            this.createBoardBtn = document.getElementById('createBoardBtn');
+            this.createBoardBtn.dataset.pinId = data.id;
+            this.createBoardBtn.addEventListener('click', this.onCreateBoardAndAttach);
         }
     }
 
-    loadBoards(data) {
+    loadBoards(data, lastAttached) {
+        console.log(data)
         let res = []
-        data.forEach((board) => {
-            const l = new Link({
-                dataAttr: 'data-activates=""',
-                text: board.title,
-                id: board.id,
+        if (data) {
+            data.forEach((bd) => {
+                const b = new Boardbar(bd)
+                res.push(b);
             })
-            res.push(l)
+        } else {
+            res.push(new Span({
+                text: 'Нет созданных досок',
+                custom: 'chat__window__messages__help'
+            }))
+        }
+        this.boardDrop.list.formContentFromListObjects(res)
+
+        if (lastAttached.count !== 0) {
+            if (lastAttached.count === 1) {
+                this.boardDrop.showSaved();
+            } else {
+                this.boardDrop.setCountSaved(lastAttached.count);
+            }
+            this.boardDrop.setText(lastAttached.board.title);
+        }
+
+        this.boardDrop.element.querySelectorAll('.btn').forEach((btn) => {
+            btn.addEventListener('click', this.onAttachPin);
         })
-        this.dropdown.formContent(res);
-        this.dropdown.element.addEventListener('change', this.onAttachPin);
+        // this.boardDrop.element.querySelectorAll('[data-act="remove"]')
+        // this.dropdown.element.addEventListener('change', this.onAttachPin);
     }
 
     loadComments(data) {

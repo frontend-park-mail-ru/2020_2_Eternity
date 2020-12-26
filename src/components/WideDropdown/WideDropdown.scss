@@ -1,0 +1,120 @@
+@import "src/themes";
+
+@mixin smallscreen {
+  @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+    @content;
+  }
+}
+
+.dropdown__label {
+  position: relative;
+
+  display: flex;
+
+  justify-content: flex-start;
+  flex-direction: column;
+
+  width: 13rem;
+  min-height: 44px;
+  padding: 10px 15px;
+  border-radius: 25px;
+  //border: 1px solid #e0e0e0;
+  @include color-assign(border, accent, '1px solid THEMECOLOR');
+  @include color-assign(background-color, secondary);
+  @include color-assign(color, font-color--primary);
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 1rem;
+  cursor: pointer;
+
+  transition: all .2s ease-in-out;
+
+  &__arrow {
+    position: absolute;
+    right: 0;
+    margin: 1% 15px;
+  }
+
+  &__saved {
+    display: none;
+    font-size: xx-small;
+    margin: 0;
+    padding: 0;
+
+    &_active {
+      display: flex;
+      visibility: visible;
+    }
+  }
+
+  &__text {
+    width: 87%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    @include color-assign(background-color, hoverlabel);
+  }
+}
+
+.dropdown__drop {
+  display: none;
+
+  position: absolute;
+  z-index: 999;
+  margin-top: .2rem;
+  height: 25rem;
+  width: 19rem;
+  box-sizing: border-box;
+  padding: 20px 15px !important;
+  @include color-assign(color, font-color--primary);
+
+  outline: none;
+  border-radius: 25px;
+  @include color-assign(background-color, secondary);
+  box-shadow: $box-shadow-secondary;
+
+  transition: .3s all ease-in-out;
+
+  &::-webkit-scrollbar {width: 0;}
+  &::-webkit-scrollbar-track {margin-right: 20px;}
+
+  &__active {
+    visibility: visible;
+    display: inline-block;
+    @include color-assign(border, accent, '1px solid THEMECOLOR');
+  }
+
+  &__list {
+    overflow-y: scroll;
+    max-height: 15rem;
+  }
+
+  &__create {
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    height: 4rem;
+    border-radius: 25px;
+    box-sizing: border-box;
+    padding-left: .5rem;
+    font-weight: 600;
+    cursor: pointer;
+    @include color-assign(background-color, secondary);
+    transition: all .3s ease-in-out;
+
+    &:hover {
+      @include color-assign(background-color, primary);
+    }
+
+    &__icon {
+      @include color-assign(background-color, accent);
+      padding: .5rem .8rem;
+      border-radius: 50%;
+      margin-right: .3rem;
+    }
+  }
+}

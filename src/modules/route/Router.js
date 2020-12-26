@@ -236,10 +236,11 @@ export default class Router {
      * если она отлична от текущей
      *
      * @param path
+     * @param note
      * @param state
      * @returns {*}
      */
-    navigateTo(path = '', state = null) {
+    navigateTo(path = '', note=null, state = null) {
         // TODO: обновление контента страницы по запросу на эту же страницу?
 
         // TODO: Надо будет вернуть этот кусок кода, поняв как определять параметры страницы
@@ -248,7 +249,7 @@ export default class Router {
             return;
         }*/
         window.history.pushState(state, '', this.root + this.clearSlashes(path));
-        this.checkRoute();
+        this.checkRoute(note);
         return this;
     }
 
@@ -257,7 +258,7 @@ export default class Router {
      *
      * @returns {boolean}
      */
-    checkRoute() {
+    checkRoute(note) {
         const fragment = this.getFragment();
 
         return this.routes.some(route => {
@@ -273,7 +274,7 @@ export default class Router {
 
                 this.currentLocation = fragment;
                 this.currentController = route.controller;
-                route.controller.on(query);
+                route.controller.on(query, note);
             }
 
             return false;
@@ -315,6 +316,6 @@ export default class Router {
      * @param data
      */
     go(data={}) {
-        this.navigateTo(data.path);
+        this.navigateTo(data.path, data.note);
     }
 }

@@ -26,6 +26,12 @@
 @import "components/ThemeSwitcher/ThemeSwitcher";
 @import "components/EmojiPicker/EmojiPicker";
 @import "components/ReportForm/ReportForm";
+@import "components/Tooltip/Tooltip";
+@import "components/WideDropdown/WideDropdown";
+@import "components/CreateForm/CreateForm";
+@import "components/Boardbar/Boardbar";
+@import "components/NotificationBar/NotificationBar";
+@import "components/Notebar/Notebar";
 
 @import "views/Profile/Profile";
 @import "views/Settings/Settings";
@@ -112,4 +118,12 @@ a:hover {
     100% {
         background-position: 500px 0;
     }
+}
+
+.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
 }

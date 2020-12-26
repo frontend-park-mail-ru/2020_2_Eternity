@@ -140,6 +140,19 @@ export default class Request {
         });
     }
 
+    static detachPin(boardId, pinId) {
+        return this.request(urls.detachPin, 'DELETE', {
+            body: JSON.stringify({
+                board_id: boardId,
+                pin_id: pinId
+            })
+        })
+    }
+
+    static checkAttachingPin(pinId) {
+        return this.requestGET(urls.checkAttachingPin.replace(':pin_id', pinId));
+    }
+
     static getBoardPins(id) {
         return this.requestGET(urls.boardPins.replace(':id', id));
     }
@@ -222,6 +235,9 @@ export default class Request {
 
     static getNotifications() {
         return this.requestGET(urls.notifications);
+    }
+    static markReadNotifications() {
+        return this.requestPUT(urls.notifications);
     }
 
     static getFollowers(username) {

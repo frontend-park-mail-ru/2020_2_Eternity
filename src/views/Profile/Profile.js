@@ -146,7 +146,7 @@ export default class ProfilePage extends BaseView {
             case 2:
             case 3:
             case 4:
-                word = type === 'followers' ? ' подписчика' : ' подписка';
+                word = type === 'followers' ? ' подписчика' : ' подписки';
                 break;
             default:
                 word = type === 'followers' ? ' подписчиков' : ' подписок';

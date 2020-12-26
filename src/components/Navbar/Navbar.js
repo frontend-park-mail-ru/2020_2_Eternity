@@ -10,6 +10,7 @@ import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Link from "../Link/Link";
 import {Icons} from "../../modules/consts/icons";
+import NotificationBar from "../NotificationBar/NotificationBar";
 
 class Navbar extends BaseComponent {
     burger
@@ -21,23 +22,27 @@ class Navbar extends BaseComponent {
     link
     pagesDrop
 
+    notificationBar
+
     constructor(context = {}) {
         super(template, context);
         this.context.isAuthenticated = false;
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
         document.addEventListener('click', this.showPages.bind(this));
-    }
 
-    render() {
-        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
         this.themeSwitcher = ThemeSwitcher;
         this.dropdown = new Dropdown({
             id: 'notificationsDropdown',
+            placeholder: 'Новых уведомлений нет',
         })
         this.notificationBell = new NotificationBell({
             id: 'showNotifications',
             dataAttr: 'data-activates="' + this.dropdown.context.id + '"',
         })
+    }
+
+    render() {
+        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
 
         let defaultPage = {
             icon: Icons.home,
@@ -79,6 +84,8 @@ class Navbar extends BaseComponent {
         })
         this.pagesDrop.formContent([mainLink, subFeedLink]);
 
+        this.notificationBar = new NotificationBar();
+
         const data = {
             notification: this.notificationBell.render(),
             search: this.search.render(),
@@ -87,6 +94,8 @@ class Navbar extends BaseComponent {
 
             l: this.link.render(),
             pagesDrop: this.pagesDrop.render(),
+
+            notificationBar: this.notificationBar.render(),
         }
 
         this.context = {...this.context, ...data};

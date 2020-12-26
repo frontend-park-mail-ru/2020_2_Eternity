@@ -5,6 +5,7 @@ import SettingsPage from "../views/Settings/Settings.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
+import EventBus from "../modules/tools/EventBus.js";
 
 export default class SettingsController extends BaseController {
     constructor() {
@@ -44,8 +45,11 @@ export default class SettingsController extends BaseController {
 
     onUserInfoUpdate(data = {}) {
         UserModel.updateProfile(data).then((response) => {
-            this.view.fillWith(response);
-            console.log('Profile updated: ', response.username);
+            if (!response.error) {
+                this.view.fillWith(response);
+                console.log('Profile updated: ', response.username);
+                EventBus.emit(Events.showNotificationBar, {type: 'success', text: 'Профиль успешно обновлен'})
+            }
         }).catch((error) => console.log(error));
     }
 
@@ -54,6 +58,7 @@ export default class SettingsController extends BaseController {
             // TODO: обновить аватар в шапке и вообще добавить его туда :D event bus emit
             this.view.context.avatar = URL.createObjectURL(data['localFile']);
             this.view.render();
+            EventBus.emit(Events.showNotificationBar, {type: 'success', text: 'Профиль успешно обновлен'})
         }).catch((error) => console.log(error));
     }
 
