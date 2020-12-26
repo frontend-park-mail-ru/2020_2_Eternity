@@ -8,18 +8,12 @@ import Message from "../../components/Dialog/Message/Message.js";
 import Textarea from "../../components/Textarea/Textarea";
 import Button from "../../components/Button/Button";
 import List from "../../components/List/List";
-import Span from "../../components/Span/Span";
-import Dropdown from "../../components/Dropdown/Dropdown";
 import EmojiPicker from "../../components/EmojiPicker/EmojiPicker";
+import Image from "../../components/Image/Image";
 
 import {emoji, sticker} from "../../modules/consts/emoji";
 import {Icons} from "../../modules/consts/icons";
-import EventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
 import Validator from "../../modules/tools/Validator";
-import Image from "../../components/Image/Image";
-
-
 
 export default class ChatPage extends BaseView {
     sidebar

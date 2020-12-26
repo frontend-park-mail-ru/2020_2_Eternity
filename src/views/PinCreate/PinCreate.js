@@ -10,8 +10,6 @@ import Button from "../../components/Button/Button";
 import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
-import Validator from "../../modules/tools/Validator";
-
 
 export default class PinCreate extends BaseView {
     upload

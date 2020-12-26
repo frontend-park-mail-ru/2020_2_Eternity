@@ -14,6 +14,7 @@ export default class SettingsController extends BaseController {
         this.view.onResetPreview = this.onResetPreview.bind(this);
     }
 
+    // eslint-disable-next-line no-unused-vars
     on(data = {}) {
         eventBus.on(Events.userInfoUpdate, this.onUserInfoUpdate.bind(this));
         eventBus.on(Events.userAvatarUpdate, this.onUserAvatarUpdate.bind(this));
@@ -50,7 +51,7 @@ export default class SettingsController extends BaseController {
     }
 
     onUserAvatarUpdate(data = {}) {
-        UserModel.updateAvatar(data['file']).then((response) => {
+        UserModel.updateAvatar(data['file']).then(() => {
             // TODO: обновить аватар в шапке и вообще добавить его туда :D event bus emit
             this.view.context.avatar = URL.createObjectURL(data['localFile']);
             this.view.render();

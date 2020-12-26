@@ -13,11 +13,12 @@ class ThemeSwitcher extends BaseComponent {
     init() {
         document.addEventListener('change', (event) => {
             if (event.target instanceof HTMLElement && event.target.closest('#themeSwitcher')) {
+                // eslint-disable-next-line no-undef
                 onThemeChanged();
             }
         });
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', this.toggleThemeSwitcher.bind(this));
-
+        // eslint-disable-next-line no-undef
         if (getCurrentTheme() === 'dark') {
             this.setChecked();
         }
@@ -25,7 +26,7 @@ class ThemeSwitcher extends BaseComponent {
 
     toggleThemeSwitcher() {
         (window.matchMedia('(prefers-color-scheme: dark)').matches) ? applyTheme('dark') : applyTheme('light');
-
+        // eslint-disable-next-line no-undef
         if (getCurrentTheme() === 'dark') {
             this.setChecked();
         } else {
@@ -35,6 +36,7 @@ class ThemeSwitcher extends BaseComponent {
     }
 
     render() {
+        // eslint-disable-next-line no-undef
         this.context.dark = getCurrentTheme() === 'dark';
         return super.render();
     }

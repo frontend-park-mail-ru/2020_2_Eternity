@@ -9,13 +9,11 @@ import Avatar from "../../components/Avatar/Avatar";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Image from "../../components/Image/Image";
 import List from "../../components/List/List";
-
-import {Icons} from "../../modules/consts/icons";
-import Validator from "../../modules/tools/Validator";
 import Link from "../../components/Link/Link";
 import Popup from "../../components/Popup/Popup";
 import ReportForm from "../../components/ReportForm/ReportForm";
 
+import {Icons} from "../../modules/consts/icons";
 
 export default class PinPage extends BaseView {
     pinImg

@@ -14,8 +14,6 @@ import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import {Icons} from "../../modules/consts/icons";
 
-
-
 export default class SettingsPage extends BaseView {
     form
     // for uploading and preview avatar

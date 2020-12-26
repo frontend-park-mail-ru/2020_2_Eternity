@@ -97,7 +97,7 @@ export default class Request {
         });
     }
 
-    static getAvatar(imgLink) {
+    static getAvatar() {
         return this.requestGET(urls.avatar);
     }
 

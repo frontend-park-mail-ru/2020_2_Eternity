@@ -4,20 +4,18 @@ import BaseView from "../BaseView.js";
 
 import Card from "../../components/Card/Card.js";
 import Userbar from "../../components/Userbar/Userbar";
-import List from "../../components/List/List";
 import Popup from "../../components/Popup/Popup";
-
-import eventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
-import Button from "../../components/Button/Button";
-import {Icons} from "../../modules/consts/icons";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Link from "../../components/Link/Link";
 import Navbar from "../../components/Navbar/Navbar";
+import Button from "../../components/Button/Button";
+
+import eventBus from "../../modules/tools/EventBus";
+import {Events} from "../../modules/consts/events";
+import {Icons} from "../../modules/consts/icons";
+
 
 export default class MainPage extends BaseView {
-    test
-
     popupPinView
     cards = []
     lastPin

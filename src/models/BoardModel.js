@@ -1,5 +1,4 @@
 import request from "../modules/request/Request.js";
-import {fakeBoard} from "../modules/consts/fake.js";
 
 class BoardModel {
     constructor() {}

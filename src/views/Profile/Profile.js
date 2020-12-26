@@ -11,7 +11,6 @@ import Userbar from "../../components/Userbar/Userbar";
 import List from "../../components/List/List";
 import {Icons} from "../../modules/consts/icons";
 
-
 export default class ProfilePage extends BaseView {
     // for followers list in popup
     followPopup

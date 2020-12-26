@@ -3,8 +3,6 @@ import ChatPage from "../views/Chat/Chat.js";
 import ChatModel from "../models/ChatModel";
 import EventBus from "../modules/tools/EventBus";
 import {Events} from "../modules/consts/events";
-import UserModel from "../models/UserModel";
-import {Icons} from "../modules/consts/icons";
 
 export default class ChatController extends BaseController {
     expandDelayMs = 300

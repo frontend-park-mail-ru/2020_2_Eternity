@@ -1,12 +1,7 @@
 import BaseController from "./BaseController.js";
 import BoardPage from "../views/Board/Board.js";
 
-import eventBus from "../modules/tools/EventBus.js";
-import {Events} from "../modules/consts/events.js";
-import {routes} from "../modules/consts/routes.js";
-
 import BoardModel from "../models/BoardModel.js";
-import CommentModel from "../models/CommentModel";
 import PinModel from "../models/PinModel";
 
 

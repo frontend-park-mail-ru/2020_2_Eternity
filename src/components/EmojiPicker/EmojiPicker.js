@@ -38,7 +38,6 @@ export default class EmojiPicker extends BaseComponent {
     }
 
     render() {
-        const node = document.createElement('span')
         this.context.smileIcon = Icons.smile;
         this.context.list = this.list.render();
         return super.render();

@@ -2,9 +2,6 @@ import template from "./NotificationBell.hbs"
 
 import BaseComponent from "../BaseComponent.js";
 
-import EventBus from "../../modules/tools/EventBus.js";
-import {Events} from "../../modules/consts/events.js";
-
 /**
  * Класс, отвечающий за колокольчик (символ уведомлений в навбаре)
  */

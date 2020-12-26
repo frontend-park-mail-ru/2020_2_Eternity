@@ -1,7 +1,6 @@
 import template from "./ReportForm.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-import List from "../List/List";
 import Button from "../Button/Button";
 import Textarea from "../Textarea/Textarea";
 import Checkbox from "../Checkbox/Checkbox";

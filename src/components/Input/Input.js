@@ -62,11 +62,13 @@ export default class Input extends BaseComponent {
         if (this.element) {
             return this.element.value;
         }
+        return null;
     }
     get files() {
         if (this.element && this.context.type === 'file') {
             return this.element.files;
         }
+        return null;
     }
 
     clear() {

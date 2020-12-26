@@ -16,6 +16,7 @@ export default class Checkbox extends BaseComponent {
         if (this.element) {
             return this.element.parentElement.nextElementSibling.textContent;
         }
+        return null;
     }
     setChecked() {
         if (this.element) {

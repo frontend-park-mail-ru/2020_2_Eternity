@@ -1,8 +1,6 @@
 import template from "./Button.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-import EventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
 
 export default class Button extends BaseComponent {
     button

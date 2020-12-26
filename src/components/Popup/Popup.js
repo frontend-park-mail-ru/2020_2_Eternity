@@ -1,9 +1,6 @@
 import template from "./Popup.hbs"
 
 import BaseComponent from "../BaseComponent.js";
-import EventBus from "../../modules/tools/EventBus";
-import {Events} from "../../modules/consts/events";
-
 
 export default class Popup extends BaseComponent {
     constructor(context={}) {

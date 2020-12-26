@@ -15,7 +15,6 @@ import BoardCreateController from "./controllers/BoardCreateController";
 import ChatController from "./controllers/ChatController.js";
 import SettingsController from "./controllers/SettingsController";
 
-import SessionController from "./controllers/SessionController.js";
 import NotificationsController from "./controllers/NotificationsController";
 
 
