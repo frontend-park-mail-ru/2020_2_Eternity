@@ -18,6 +18,7 @@ import ReportForm from "../../components/ReportForm/ReportForm";
 import WideDropdown from "../../components/WideDropdown/WideDropdown";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import Boardbar from "../../components/Boardbar/Boardbar";
+import Span from "../../components/Span/Span";
 
 
 export default class PinPage extends BaseView {
@@ -41,6 +42,7 @@ export default class PinPage extends BaseView {
     boardDrop
     newBoardLink
     createForm
+    createBoardBtn
 
     constructor(context = {}) {
         super('Просмотр пина', context, null);
@@ -138,10 +140,8 @@ export default class PinPage extends BaseView {
         this.createForm = new Popup({
             id: 'createForm',
         })
-        // TODO: СЮДА В КОНТЕКСТ ПЕРЕДАВАТЬ ССЫЛКУ И ИД ПИНА, ЧТОБЫ ПОТОМ СОБРАТЬ ДАННЫЕ И ОТПРАВИТЬ В ЗАПРОС
         this.createFormComponent = new CreateForm();
         this.createForm.formContent(this.createFormComponent.render());
-
 
         const data = {
             ...this.context,
@@ -268,7 +268,6 @@ export default class PinPage extends BaseView {
                 type: 'submit'
             })
 
-
             const commentArea = document.querySelector('.pin__form');
             commentArea.innerHTML = this.userComment.render();
             commentArea.insertAdjacentHTML('beforeend', this.btnComment.render());
@@ -280,19 +279,44 @@ export default class PinPage extends BaseView {
 
             this.newBoardLink = document.getElementById('newBoardLink');
             this.newBoardLink.addEventListener('click', this.onShowCreateBoardPopup);
+
+            document.getElementById('createForm').querySelector('.create-board-form__pin__img').classList.remove('hidden');
+            document.getElementById('createForm').querySelector('.create-board-form__pin__img').setAttribute('src', data.img_link);
+            this.createBoardBtn = document.getElementById('createBoardBtn');
+            this.createBoardBtn.dataset.pinId = data.id;
+            this.createBoardBtn.addEventListener('click', this.onCreateBoardAndAttach);
         }
     }
 
-    loadBoards(data) {
+    loadBoards(data, lastAttached) {
+        console.log(data)
         let res = []
-        data.forEach((board) => {
-            const b = new Boardbar({
-                ...board,
-                type: 'add'
+        if (data) {
+            data.forEach((bd) => {
+                const b = new Boardbar(bd)
+                res.push(b);
             })
-            res.push(b);
-        })
+        } else {
+            res.push(new Span({
+                text: 'Нет созданных досок',
+                custom: 'chat__window__messages__help'
+            }))
+        }
         this.boardDrop.list.formContentFromListObjects(res)
+
+        if (lastAttached.count !== 0) {
+            if (lastAttached.count === 1) {
+                this.boardDrop.showSaved();
+            } else {
+                this.boardDrop.setCountSaved(lastAttached.count);
+            }
+            this.boardDrop.setText(lastAttached.board.title);
+        }
+
+        this.boardDrop.element.querySelectorAll('.btn').forEach((btn) => {
+            btn.addEventListener('click', this.onAttachPin);
+        })
+        // this.boardDrop.element.querySelectorAll('[data-act="remove"]')
         // this.dropdown.element.addEventListener('change', this.onAttachPin);
     }
 

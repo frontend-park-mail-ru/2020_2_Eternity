@@ -19,7 +19,7 @@ export default class CreateForm extends BaseComponent {
 
     render() {
         this.pinImg = new Image({
-            src: '/img/img11.jpg',
+            src: '',
             id: this.context.pin_id,
             class: 'create-board-form__pin__img',
         })
@@ -51,13 +51,4 @@ export default class CreateForm extends BaseComponent {
         }
         return super.render();
     }
-
-    getCheckedProblems() {
-        let res = [];
-        this.checksElems.forEach((el) => {
-            el.isChecked() ? res.push(el.element.getAttribute('id')) : ''
-        })
-        return res;
-    }
-
 }

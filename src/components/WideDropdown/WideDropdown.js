@@ -6,13 +6,14 @@ import {Icons} from "../../modules/consts/icons";
 import Dropdown from "../Dropdown/Dropdown";
 
 export default class WideDropdown extends BaseComponent {
+    countSaved
     isSaved
     isOpened
     list
 
     constructor(context = {}) {
         super(template, context);
-
+        this.countSaved = 0;
         this.list = new List({
             customItem: context.customItem,
             custom: 'dropdown__drop__list ' + context.custom,
@@ -34,11 +35,31 @@ export default class WideDropdown extends BaseComponent {
 
     showSaved() {
         this.isSaved = true;
-        this.element.querySelector('.dropdown__label__saved').setAttribute('display', 'block');
+        this.countSaved++;
+        this.element.querySelector('.dropdown__label__saved').classList.add('dropdown__label__saved_active')
+    }
+    decSaved() {
+        this.countSaved--;
+
+        if (this.countSaved > 1) {
+            this.element.querySelector('.dropdown__label__saved').textContent = `Сохранено на еще ${this.countSaved - 1}`
+        }
+        if (this.countSaved === 0) {
+            this.element.querySelector('.dropdown__label__saved').classList.remove('dropdown__label__saved_active')
+        }
+        if (this.countSaved === 1) {
+            this.element.querySelector('.dropdown__label__saved').textContent = 'Сохранено на доске'
+        }
     }
     clearSaved() {
         this.isSaved = false;
-        this.element.querySelector('.dropdown__label__saved').setAttribute('display', 'none');
+        this.element.querySelector('.dropdown__label__saved').classList.remove('dropdown__label__saved_active')
+    }
+    setCountSaved(count) {
+        this.isSaved = true;
+        this.countSaved = count;
+        this.element.querySelector('.dropdown__label__saved').textContent = `Сохранено на еще ${--count}`
+        this.element.querySelector('.dropdown__label__saved').classList.add('dropdown__label__saved_active')
     }
 
     showDrop() {

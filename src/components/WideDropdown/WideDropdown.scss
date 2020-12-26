@@ -40,6 +40,11 @@
     font-size: xx-small;
     margin: 0;
     padding: 0;
+
+    &_active {
+      display: flex;
+      visibility: visible;
+    }
   }
 
   &__text {

@@ -27,6 +27,18 @@ class BoardModel {
             return response;
         });
     }
+
+    detachPin(data={}) {
+        return request.detachPin(data.board_id, data.pin_id).then((r) => {
+            return r;
+        })
+    }
+
+    checkAttachingPin(data={}) {
+        return request.checkAttachingPin(data.pin_id).then((r) => {
+            return r.json();
+        })
+    }
 }
 
 export default new BoardModel();
