@@ -45,9 +45,8 @@
     transition: all .3s ease-in-out;
 
     &::placeholder {
+      opacity: 1;
       @include color-assign(color, font-color--secondary);
-      transition: .3s;
-      transition-delay: .3s;
     }
 
     &:not(:placeholder-shown) {

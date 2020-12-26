@@ -16,9 +16,6 @@ import Link from "../../components/Link/Link";
 import Navbar from "../../components/Navbar/Navbar";
 
 export default class MainPage extends BaseView {
-    test
-
-    popupPinView
     cards = []
     lastPin
     list = []
@@ -47,28 +44,6 @@ export default class MainPage extends BaseView {
         this.currentIdx = 0;
         this.cardsInRow = 0;
         this.maxHeight = 0;
-
-        // this.test = new Dropdown({
-        //     id: 'dropdown1',
-        //     title: 'Доступные доски'
-        // });
-/*
-
-        /!**
-         * УБРАТЬ---------------------------------
-         *!/
-        const te = new Userbar({
-            username: 'example',
-            img_link: '/img/img11/.jpg',
-        })
-        this.test = new List({
-            id: 'test',
-        });
-        this.test.addItem(te, "prepend");
-        /!**
-         * ---------------------------------------
-         *!/
-*/
 
         this.lastPin = 0;
 
@@ -187,8 +162,6 @@ export default class MainPage extends BaseView {
         let data = {
             pins: this.list,
             users: this.users,
-            popup: this.popupPinView.render(),
-            // test: this.test.render(),
         }
 
         if (Navbar.context.isAuth) {
