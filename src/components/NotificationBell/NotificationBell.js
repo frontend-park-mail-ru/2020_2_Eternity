@@ -100,4 +100,12 @@ export default class NotificationBell extends BaseComponent {
             this.element.querySelector('.notification__count').innerHTML = '';
         }
     }
+
+    render() {
+        this.context = {
+            ...this.context,
+            num: this.countNews,
+        }
+        return super.render();
+    }
 }

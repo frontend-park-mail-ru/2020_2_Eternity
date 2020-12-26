@@ -194,6 +194,7 @@
   animation: fade-in both ease-in-out;
   animation-duration: .2s;
   position: fixed !important;
+  top: 40px !important;
 
   width: 300px;
   max-height: 80vh !important;
@@ -206,11 +207,6 @@
   .list__item {
     animation: none;
   }
-}
-.notification__item {
-  padding: 10px .5rem;
-  border-radius: 25px;
-  //cursor: pointer;
 }
 
 #pagesDrop {
@@ -262,4 +258,11 @@
       display: flex;
     }
   }
+}
+
+#markAsReadNotes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: .3rem;
 }

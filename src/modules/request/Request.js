@@ -223,6 +223,9 @@ export default class Request {
     static getNotifications() {
         return this.requestGET(urls.notifications);
     }
+    static markReadNotifications() {
+        return this.requestPUT(urls.notifications);
+    }
 
     static getFollowers(username) {
         return this.requestGET(urls.followers.replace(':username', username));

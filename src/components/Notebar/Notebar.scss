@@ -1,0 +1,43 @@
+@import "src/themes";
+
+.notebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 25px;
+  height: 45px;
+  padding: 10px 1rem;
+  transition: .3s ease-in-out;
+
+  &__wrap {
+    font-weight: 300;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__help {
+    position: absolute;
+    right: 1rem;
+    width: 2rem;
+
+    .btn {
+      margin: 0 !important;
+    }
+
+    &__time {
+      font-size: small;
+      @include color-assign(color, font-color--secondary);
+
+    }
+  }
+
+  &:hover {
+    @include color-assign(background-color, accent);
+  }
+
+  &__text {
+
+  }
+}

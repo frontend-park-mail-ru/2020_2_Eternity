@@ -25,6 +25,9 @@ export default class ws {
      * @param {string} username - сторона, открывающая сокет
      */
     static on(socket, store, username) {
+        socket.onclose = () => {
+            console.log('соединение закрыто');
+        }
         socket.onmessage = (response) => {
             ws.onResponse(store, response, socket, username);
         }
@@ -66,6 +69,7 @@ export default class ws {
 
         let isOwn;
         let time;
+        let msg;
         switch (type) {
             case responseTypeWS.createMessage:
                 isOwn = payload.username === username;
@@ -93,13 +97,31 @@ export default class ws {
 
             case responseTypeWS.noteFollow:
                 store.EventBus.emit(store.Events.follow, {})
-                store.EventBus.emit(store.Events.addNotification, {})
+                msg = {
+                    text: `Пользователь <b>${payload.Follower}</b> подписался на вас`,
+                    username: payload.Follower,
+                }
+                store.EventBus.emit(store.Events.addNotification, msg)
                 break;
 
             case responseTypeWS.notePin:
-            case responseTypeWS.noteComment:
-                store.EventBus.emit(store.Events.addNotification, {});
+                msg = {
+                    text: `Пользователь <b>${data.payload.username}</b> опубликовал новый пин`,
+                    username: payload.username,
+                    href: `/pin/${payload.Id}`
+                }
+                store.EventBus.emit(store.Events.addNotification, msg);
                 break;
+
+            case responseTypeWS.noteComment:
+                msg = {
+                    text: `Пользователь <b>${data.payload.username}</b> прокомментировал ваш пин`,
+                    username: payload.username,
+                    href: `/pin/${payload.PinId}`
+                }
+                store.EventBus.emit(store.Events.addNotification, msg);
+                break;
+
 
             case responseTypeWS.noteMessage:
                 isOwn = payload.username === username;
@@ -156,14 +178,43 @@ export default class ws {
         };
 
         const notifsType = [
-            'Пользователь username прокомментировал ваш пин pintitle',
-            'Пользователь username опубликовал новый пин pintitle',
-            'Пользователь username подписался на вас',
-            `${data.payload.new_messages} новых сообщений с ${data.payload.collocutor_name}`,
-            `${data.payload.username} прислал новое сообщение`,
+            `Пользователь <b>${data.payload.username}</b> прокомментировал ваш пин`,
+            `Пользователь <b>${data.payload.username}</b> опубликовал новый пин`,
+            `Пользователь <b>${data.payload.Follower}</b> подписался на вас`,
+            `Новых сообщений от <b>${data.payload.collocutor_name}</b>: <b>${data.payload.new_messages}</b>`,
+            `Новое сообщение от <b>${data.payload.username}</b>`,
+        ]
+        const nameType = [
+            data.payload.username,
+            data.payload.username,
+            data.payload.Follower,
+            data.payload.collocutor_name,
+            data.payload.username
         ]
 
-        return notifsType[data.type];
+        let href;
+        switch (data.type) {
+            case 0:
+            case 1:
+                href = `/pin/${data.payload.PinId || data.payload.Id}`
+                break;
+            case 2:
+                href = `/@${data.payload.Follower}`
+                break;
+            case 3:
+            case 4:
+                href = '/messages'
+                break;
+        }
+
+        return {
+            text: notifsType[data.type],
+            username: nameType[data.type],
+            chatId: data.payload.chat_id,
+            PinId: data.payload.PinId,
+            href: href,
+            id: data.payload.Id,
+        };
     }
 
     static encodeUTF8(str) {

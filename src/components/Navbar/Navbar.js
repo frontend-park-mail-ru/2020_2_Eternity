@@ -29,18 +29,20 @@ class Navbar extends BaseComponent {
         this.context.isAuthenticated = false;
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
         document.addEventListener('click', this.showPages.bind(this));
-    }
 
-    render() {
-        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
         this.themeSwitcher = ThemeSwitcher;
         this.dropdown = new Dropdown({
             id: 'notificationsDropdown',
+            placeholder: 'Новых уведомлений нет',
         })
         this.notificationBell = new NotificationBell({
             id: 'showNotifications',
             dataAttr: 'data-activates="' + this.dropdown.context.id + '"',
         })
+    }
+
+    render() {
+        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
 
         let defaultPage = {
             icon: Icons.home,
