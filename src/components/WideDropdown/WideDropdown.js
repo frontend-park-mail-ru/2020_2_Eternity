@@ -75,12 +75,14 @@ export default class WideDropdown extends BaseComponent {
         this.element.querySelector('.dropdown__drop').classList.add('dropdown__drop__active');
 
         document.addEventListener('click', this.listenerOnClose);
+        window.addEventListener('resize', () => this.hideDrop());
         setTimeout(() => {
             this.isOpened = true;
         }, 300);
     }
     hideDrop() {
         document.removeEventListener('click', this.listenerOnClose);
+        window.removeEventListener('resize', () => this.hideDrop());
         this.isOpened = false;
         this.element.querySelector('.dropdown__drop').classList.remove('dropdown__drop__active');
     }

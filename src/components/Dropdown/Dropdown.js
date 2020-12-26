@@ -46,10 +46,12 @@ export default class Dropdown extends BaseComponent {
 
     startListeners() {
         document.addEventListener('click', this.closeOnClickOutside);
+        window.addEventListener('resize', () => this.hide());
         // this.selectItemOnClickBind();
     }
     removeListeners() {
         document.removeEventListener('click', this.closeOnClickOutside);
+        window.removeEventListener('resize', () => this.hide());
     }
 
     closeOnClickOutsideBind(event) {
