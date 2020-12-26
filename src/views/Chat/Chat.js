@@ -80,7 +80,7 @@ export default class ChatPage extends BaseView {
         this.messages = new List({
             id: 'message-list',
             custom: 'chat__window__messages',
-            placeholder: '<div class="chat__window__messages__help">Выберите чат, чтобы начать общение</div>',
+            placeholder: '<div class="chat__window__messages__help">Найдите пользователя, чтобы начать с ним диалог</div>',
             customItem: 'chat__message__wrap',
         })
         this.dialog = new Dialog();
@@ -101,6 +101,9 @@ export default class ChatPage extends BaseView {
         this.fillWith(data);
         super.render()
 
+        /*document.getElementById('sidebar').setAttribute('style', 'display: none');
+        document.getElementById('sidebar').setAttribute('style', 'width: 1px');
+*/
         this.expandToggler = document.getElementById('sidebar-toggler');
         this.expandToggler.addEventListener('click', this.onExpand);
 
@@ -175,6 +178,18 @@ export default class ChatPage extends BaseView {
             const item = this.createDialogToWindow(d);
             res.push(item);
         })
+
+        /*if (res.length) {
+            document.getElementById('sidebar').removeAttribute('style');
+            // document.getElementById('sidebar').setAttribute('style', 'width: 1px');
+        } else {
+            let c = document.getElementById('chat');
+            let msg = document.createElement('div')
+        }
+
+        if (document.querySelector('.chat__window__messages__help')) {
+            document.querySelector('.chat__window__messages__help').innerText = res.length ? 'Выберите чат, чтобы начать общение' : '';
+        }*/
         this.sidebar.formContent(res);
     }
     addDialog(data={}) {

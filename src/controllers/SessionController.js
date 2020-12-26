@@ -51,9 +51,8 @@ class SessionController extends BaseController {
         data.event.preventDefault();
         UserModel.logout().then((response) => {
             if (!response.error) {
-                console.log('logout success')
-                eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 this.off();
+                eventBus.emit(Events.pathChanged, {path: routes.mainPage});
             }
         }).catch((error) => console.log(error));
     }
