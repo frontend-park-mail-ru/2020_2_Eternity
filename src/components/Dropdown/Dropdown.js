@@ -44,7 +44,7 @@ export default class Dropdown extends BaseComponent {
     }
 
     startListeners() {
-        // document.addEventListener('click', this.closeOnClickOutside);
+        document.addEventListener('click', this.closeOnClickOutside);
         // this.selectItemOnClickBind();
     }
     removeListeners() {
@@ -52,6 +52,7 @@ export default class Dropdown extends BaseComponent {
     }
 
     closeOnClickOutsideBind(event) {
+        console.log('yay')
         if (this.isOpened && (!event.target.closest('.dropdown') || !(event.target instanceof HTMLElement))) {
             this.hide();
         }
@@ -80,9 +81,11 @@ export default class Dropdown extends BaseComponent {
         this.getPositionByOrigin()
         if (this.dropdown && !this.isOpened) {
             this.dropdown.classList.add('dropdown__active');
-            this.isOpened = true;
+            this.startListeners();
+            setTimeout(() => {
+                this.isOpened = true;
+            }, 300);
         }
-        this.startListeners();
     }
 
     hide() {
