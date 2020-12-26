@@ -1,7 +1,8 @@
 let CACHE_NAME = 'offline-fallback';
 let urlsToCache = [
-    '/',
-    '/Pin/'
+    './',
+    './pin/',
+    './img/'
 ]
 
 self.addEventListener('install', (event) => {
@@ -31,12 +32,12 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
-                if (cachedResponse) {
-                    // console.log('Отдан кэш')
-                    return cachedResponse;
-                }
-                // console.log('Запрос направлен в сеть')
-                return fetch(event.request);
+                return cachedResponse || fetch(event.request).then((response) => {
+                    return caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, response.clone());
+                        return response;
+                    })
+                })
             })
         )
 });
