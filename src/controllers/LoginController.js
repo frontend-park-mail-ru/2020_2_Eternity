@@ -33,6 +33,7 @@ export default class LoginController extends BaseController {
             if (!response.error) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 SessionController.on(response);
+                eventBus.emit(Events.onLogin);
             }
         }).catch((error) => console.log(error));
     }

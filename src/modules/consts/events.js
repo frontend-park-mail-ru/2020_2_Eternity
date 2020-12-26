@@ -5,6 +5,7 @@ export const Events = {
     userLogin: 'userLogin',
     userLogout: 'userLogout',
     userSignup: 'userSignup',
+    onLogin: 'onLogin',
 
     userInfoUpdate: 'userInfoUpdate',
     userAvatarUpdate: 'userAvatarUpdate',

@@ -8,10 +8,11 @@ import UserModel from "./UserModel";
 
 class ChatModel {
     // TODO: адрес бэка в конфиг какой нибудь вынести
-    socket = new WebSocket('wss://pinteo.ru/api/ws');
+    socketURL = 'wss://pinteo.ru/api/ws';
+    socket = new WebSocket(this.socketURL);
 
     constructor() {
-        EventBus.on(Events.userLogin, this.connect.bind(this));
+        EventBus.on(Events.onLogin, this.openSocket.bind(this), this.connect.bind(this));
         // TODO: закрыть WS по логауту
         // EventBus.on(Events.userLogout, )
     }
@@ -19,19 +20,23 @@ class ChatModel {
     connect() {
         return request.createWSConnect().then((response) => {
             if (response.ok) {
-                UserModel.getProfile().then((response) => {
+                return UserModel.getProfile().then((response) => {
                     if (!response.error) {
                         ws.on(this.socket, {EventBus, Events}, response.username);
                     }
                 })
             }
-            return new Promise(((resolve) => {
-                this.socket.onopen = () => {
-                    console.log('соединение с чатиком установлено');
-                    resolve(true);
-                }
-            }))
+            // return new Promise(((resolve) => {
+            //     this.socket.onopen = () => {
+            //         console.log('соединение с чатиком установлено');
+            //         resolve(true);
+            //     }
+            // }))
         })
+    }
+
+    openSocket() {
+        this.socket = new WebSocket(this.socketURL);
     }
 
     send(chatId, text) {
