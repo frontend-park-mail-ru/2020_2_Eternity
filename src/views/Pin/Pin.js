@@ -237,7 +237,7 @@ export default class PinPage extends BaseView {
                 rows: 2,
                 label: 'Добавить комментарий',
                 noMessageForError: true,
-            })
+            }, Validator.checkEmpty)
             this.btnComment = new Button({
                 id: 'btnComment',
                 text: Icons.send,

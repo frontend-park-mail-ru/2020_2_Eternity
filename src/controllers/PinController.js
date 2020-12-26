@@ -111,17 +111,20 @@ export default class PinController extends BaseController {
 
 
     onPinComment() {
-        const data = {
-            is_root: true,
-            content: this.view.userComment.value,
-            pin_id: this.view.context.info.id,
-        }
-
-        CommentModel.createComment(data).then((response) => {
-            if (!response.error) {
-                this.view.addCommentToList(response);
+        this.view.userComment.checkValid();
+        if (!this.view.userComment.hasError()) {
+            const data = {
+                is_root: true,
+                content: this.view.userComment.value,
+                pin_id: this.view.context.info.id,
             }
-        })
+
+            CommentModel.createComment(data).then((response) => {
+                if (!response.error) {
+                    this.view.addCommentToList(response);
+                }
+            })
+        }
     }
 
     onPinAttach(data = {}) {
