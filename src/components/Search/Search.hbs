@@ -1,15 +1,10 @@
 <form class="search" id="{{id}}">
-    <input type="checkbox" id="toggleSearch" class="search__toggle" hidden />
-    <div class="search__field">
-        <label for="toggleSearch" class="search__label">
-            <span class="search__close"></span>
-        </label>
+    <input type="checkbox" id="toggleSearch" class="search__toggle">
+    <label for="toggleSearch" class="search__toggle__icon"><div class="search__toggle__icon__btn"></div></label>
 
+    <div class="search__box">
         <input type="text" class="search__input" placeholder="{{placeholder}}" />
-
-        <label for="toggleSearch" class="search__label">
-            <div class="search__button"><div class="search__icon search__button--toggle"></div></div>
-            <button class="search__button search__button--submit" id="search"><div class="search__icon"></div></button>
-        </label>
+        {{{clear}}}
+        <button class="search__btn" id="search"><div class="search__btn__icon"></div></button>
     </div>
 </form>

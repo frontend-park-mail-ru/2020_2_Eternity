@@ -1,6 +1,6 @@
 let CACHE_NAME = 'offline-fallback';
 let urlsToCache = [
-    './',
+    // './',
     './pin/',
     './img/'
 ]
@@ -8,7 +8,7 @@ let urlsToCache = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(urlsToCache);
+            // return cache.addAll(urlsToCache);
         })
     )
     // console.log('SW Установлен');
@@ -19,7 +19,7 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.filter((cacheName) => {
-                    // return true IF YOU WANT TO REMOVE OLD CACHE
+                    return true //IF YOU WANT TO REMOVE OLD CACHE
                 }).map((cacheName) => {
                     return caches.delete(cacheName)
                 })

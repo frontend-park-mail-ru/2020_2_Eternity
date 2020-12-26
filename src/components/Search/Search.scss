@@ -1,173 +1,364 @@
 @mixin largescreen {
-    @media only screen and (min-device-width: 768px) and (min-width: 768px) {
-        @content;
-    }
+  @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
 }
+
 @mixin breakpoints {
-    @media only screen and (max-device-width: 630px) and (max-width: 630px),
-    only screen  and (max-device-width: 880px) and (max-width: 880px) and (min-device-width: 768px) and (min-width: 768px) {
-        @content;
-    }
+  @media only screen and (max-device-width: 630px) and (max-width: 630px),
+  only screen and (max-device-width: 880px) and (max-width: 880px) and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
 }
 
 @import "src/colors";
 @import "src/themes";
 
+//.search {
+//    display: flex;
+//    align-items: center;
+//    position: relative;
+//    width: 100%;
+//    height: 50px;
+//
+//    &__toggle:checked {
+//        ~ .search__field {
+//            width: calc(100% - 80px);
+//            border-width: 1px;
+//
+//            .search__input {
+//                &::placeholder {
+//                    opacity: 1;
+//                }
+//            }
+//
+//            .search__close {
+//                left: -25px;
+//            }
+//
+//            .search__button {
+//                right: 5px;
+//                width: 35px;
+//                height: 35px;
+//                border-radius: 50px;
+//
+//                &--toggle {
+//                    display: none;
+//                }
+//
+//                &--submit {
+//                    display: flex;
+//                }
+//            }
+//        }
+//
+//        @include breakpoints {
+//            ~ .search__field {
+//                position: fixed;
+//                @include color-assign(background-color, secondary);
+//                left: 0;
+//                margin: 0;
+//                height: 50px;
+//                width: 100%;
+//                border-radius: 0;
+//                border-bottom: none;
+//                border-right: none;
+//                border-left: none;
+//                box-shadow: 0 7px 8px 0 rgba(26, 26, 26, 0.01);
+//
+//                transform: translateY(52px);
+//
+//                .search__close {
+//                    left: 10px;
+//                    z-index: 1;
+//                }
+//                .search__input {
+//                    padding: 5px 15px 5px 40px;
+//                }
+//            }
+//        }
+//    }
+//
+//    &__close {
+//        position: relative;
+//        top: 50%;
+//        left: 0;
+//        transform: translateX(-50%);
+//        transition: .3s;
+//
+//        &::before,
+//        &::after {
+//            position: absolute;
+//            display: block;
+//            content: '';
+//            width: 15px;
+//            height: 3px;
+//            @include color-assign(background-color, font-color--primary);
+//        }
+//        &::before {
+//            transform: rotate(45deg);
+//        }
+//        &::after {
+//            transform: rotate(-45deg);
+//        }
+//    }
+//
+//    &__field {
+//        position: absolute;
+//        right: 0;
+//        left: 50%;
+//        width: 40px;
+//        height: 45px;
+//        @include color-assign(border, accent, '0 solid THEMECOLOR');
+//        border-radius: 50px;
+//        transform: translateX(-50%);
+//        transform-origin: right;
+//        transition: .3s;
+//    }
+//
+//    &__input {
+//        position: absolute;
+//        left: 0;
+//        box-sizing: border-box;
+//        width: calc(100% - 40px);
+//        height: 100%;
+//        padding: 5px 15px;
+//        @include color-assign(color, font-color--primary);
+//        background-color: transparent;
+//        border: 0;
+//        outline: none;
+//        font-size: 16px;
+//
+//        &::placeholder {
+//            @include color-assign(color, font-color--secondary);
+//            opacity: 0;
+//            transition: .3s;
+//            transition-delay: .3s;
+//        }
+//    }
+//
+//    &__label {
+//        cursor: pointer;
+//    }
+//
+//    &__button {
+//        position: absolute;
+//        top: 50%;
+//        right: 0;
+//        display: flex;
+//        justify-content: center;
+//        align-items: center;
+//        width: 50px;
+//        height: 50px;
+//        @include color-assign(background-color, accent);
+//        border-radius: 25px;
+//        transform: translateY(-50%);
+//        cursor: pointer;
+//        outline: none;
+//        transition: .3s;
+//
+//        &--submit {
+//            display: none;
+//            border: 0;
+//        }
+//    }
+//
+//    &__icon {
+//        position: relative;
+//        width: 19px;
+//        height: 19px;
+//
+//        &::before {
+//            display: block;
+//            content: '';
+//            width: 12px;
+//            height: 12px;
+//            background-color: transparent;
+//            @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
+//            border-radius: 50px;
+//        }
+//
+//        &::after {
+//            position: absolute;
+//            right: 0;
+//            bottom: 0;
+//            display: block;
+//            content: '';
+//            width: 8px;
+//            height: 2px;
+//            @include color-assign(background-color, font-color--primary);
+//            transform: rotate(45deg);
+//            transform-origin: right;
+//        }
+//    }
+//}
+
+
 .search {
-    display: flex;
-    align-items: center;
+  position: relative;
+  height: 45px;
+  width: 70%;
+  border-radius: 25px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all .3s;
+  @include color-assign(border, accent, '1px solid THEMECOLOR');
+
+  @media only screen and (max-device-width: 1020px) and (max-width: 1020px) {
+    width: 50%;
+  }
+
+  &__toggle {
+    display: none;
+  }
+
+  &__box {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: all .3s;
+  }
 
-    &__toggle:checked {
-        ~ .search__field {
-            width: calc(100% - 80px);
-            border-width: 1px;
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 5px 60px 5px 15px;
+    @include color-assign(color, font-color--primary);
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    font-size: 16px;
+    transition: all .3s ease-in-out;
 
-            .search__input {
-                &::placeholder {
-                    opacity: 1;
-                }
-            }
-
-            .search__close {
-                left: -25px;
-            }
-
-            .search__button {
-                right: 5px;
-                width: 35px;
-                height: 35px;
-                border-radius: 50px;
-
-                &--toggle {
-                    display: none;
-                }
-
-                &--submit {
-                    display: flex;
-                }
-            }
-        }
-
-        @include breakpoints {
-            ~ .search__field {
-                position: fixed;
-                @include color-assign(background-color, secondary);
-                left: 0;
-                margin: 0;
-                height: 50px;
-                width: 100%;
-                border-radius: 0;
-                border-bottom: none;
-                border-right: none;
-                border-left: none;
-                box-shadow: 0 7px 8px 0 rgba(26, 26, 26, 0.01);
-
-                transform: translateY(52px);
-
-                .search__close {
-                    left: 10px;
-                    z-index: 1;
-                }
-                .search__input {
-                    padding: 5px 15px 5px 40px;
-                }
-            }
-        }
+    &::placeholder {
+      @include color-assign(color, font-color--secondary);
+      transition: .3s;
+      transition-delay: .3s;
     }
 
-    &__close {
-        position: relative;
-        top: 50%;
-        left: 0;
-        transform: translateX(-50%);
-        transition: .3s;
-
-        &::before,
-        &::after {
-            position: absolute;
-            display: block;
-            content: '';
-            width: 15px;
-            height: 3px;
-            @include color-assign(background-color, font-color--primary);
-        }
-        &::before {
-            transform: rotate(45deg);
-        }
-        &::after {
-            transform: rotate(-45deg);
-        }
+    &:not(:placeholder-shown) {
+      ~ .search__clean {
+        display: flex;
+        visibility: visible;
+      }
     }
+  }
 
-    &__field {
+  &__btn {
+    position: absolute;
+    right: -5px;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    @include color-assign(background-color, accent);
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color .3s ease-in-out;
+
+    &__icon {
+      position: relative;
+      width: 19px;
+      height: 19px;
+
+      &::before {
+        display: block;
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: transparent;
+        @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
+        border-radius: 50px;
+      }
+
+      &::after {
         position: absolute;
         right: 0;
-        left: 50%;
-        width: 40px;
-        height: 45px;
-        @include color-assign(border, accent, '0 solid THEMECOLOR');
-        border-radius: 50px;
-        transform: translateX(-50%);
+        bottom: 0;
+        display: block;
+        content: '';
+        width: 8px;
+        height: 2px;
+        @include color-assign(background-color, font-color--primary);
+        transform: rotate(45deg);
         transform-origin: right;
-        transition: .3s;
+      }
+    }
+  }
+
+  &__clean {
+    display: none;
+    position: absolute;
+    right: 35px;
+  }
+
+  @media only screen and (max-device-width: 630px) and (max-width: 630px) {
+    width: 45px;
+    padding: 0;
+    border: none;
+
+    &__box {
+      position: fixed;
+      width: 0;
+      height: 0;
+      top: 60px;
+      left: 0;
+    }
+
+    &__btn {
+      display: none;
     }
 
     &__input {
-        position: absolute;
-        left: 0;
-        box-sizing: border-box;
-        width: calc(100% - 40px);
-        height: 100%;
-        padding: 5px 15px;
-        @include color-assign(color, font-color--primary);
-        background-color: transparent;
-        border: 0;
-        outline: none;
-        font-size: 16px;
-
-        &::placeholder {
-            @include color-assign(color, font-color--secondary);
-            opacity: 0;
-            transition: .3s;
-            transition-delay: .3s;
-        }
-    }
-
-    &__label {
-        cursor: pointer;
-    }
-
-    &__button {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        @include color-assign(background-color, accent);
-        border-radius: 25px;
-        transform: translateY(-50%);
-        cursor: pointer;
-        outline: none;
+      padding-right: 130px;
+      &::placeholder {
         transition: .3s;
-
-        &--submit {
-            display: none;
-            border: 0;
-        }
+        transition-delay: .3s;
+        opacity: 0;
+      }
     }
 
-    &__icon {
-        position: relative;
-        width: 19px;
-        height: 19px;
+    &__toggle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      z-index: 2;
+      opacity: 0;
+      outline: none;
 
-        &::before {
+      &__icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 25px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        left: 0;
+        @include color-assign(background-color, accent);
+        transition: .3s ease-in-out;
+
+        &__btn {
+          position: relative;
+          width: 19px;
+          height: 19px;
+
+          &::before {
             display: block;
             content: '';
             width: 12px;
@@ -175,9 +366,9 @@
             background-color: transparent;
             @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
             border-radius: 50px;
-        }
+          }
 
-        &::after {
+          &::after {
             position: absolute;
             right: 0;
             bottom: 0;
@@ -188,6 +379,65 @@
             @include color-assign(background-color, font-color--primary);
             transform: rotate(45deg);
             transform-origin: right;
+          }
         }
+      }
     }
+    &__toggle:checked {
+      ~ .search__toggle__icon {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+      }
+
+      ~ .search__box {
+        @include color-assign(background-color, secondary);
+        @include color-assign(border-top, accent, '1px solid THEMECOLOR');
+        width: 100%;
+        height: 60px;
+        box-shadow: $box-shadow-secondary;
+
+        .search__btn {
+          display: flex;
+          visibility: visible;
+          top: auto;
+          right: 5px;
+          width: 65px;
+          height: 45px;
+
+          animation: fade-in .3s both;
+          animation-delay: .3s;
+
+
+          &__icon {
+            width: 65px;
+
+            &::before {
+              @include color-assign(color, font-color--primary);
+              content: 'Поиск';
+              font-weight: 600;
+              border: none;
+              width: 100%;
+              margin: 0 auto;
+            }
+
+            &::after {
+              display: none;
+              opacity: 0;
+            }
+          }
+        }
+
+        .search__clean {
+          width: 45px;
+          height: 45px;
+          @include color-assign(background-color, accent);
+          right: 75px;
+        }
+
+        .search__input::placeholder {
+          opacity: 1;
+        }
+      }
+    }
+  }
 }

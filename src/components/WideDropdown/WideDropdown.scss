@@ -78,6 +78,7 @@
   &__active {
     visibility: visible;
     display: inline-block;
+    @include color-assign(border, accent, '1px solid THEMECOLOR');
   }
 
   &__list {

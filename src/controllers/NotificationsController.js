@@ -54,14 +54,12 @@ class NotificationsController extends BaseController {
 
     on() {
         document.addEventListener('click', (event) => {
-            const bell = event.target.closest('#' + this.nav.notificationBell.context.id);
-            if (bell) {
+            if (event.target.closest('#' + this.nav.notificationBell.context.id)) {
                 this.onShowNotifications(event);
             }
         })
         document.addEventListener('click', (event) => {
-            const close = event.target.closest('#alert-close');
-            if (close) {
+            if (event.target.closest('#alert-close')) {
                 this.nav.notificationBar.closeBar();
             }
         })
