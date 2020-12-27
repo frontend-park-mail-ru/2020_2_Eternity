@@ -135,6 +135,7 @@ class Navbar extends BaseComponent {
         if (document.getElementById('navbar')) {
             this.formNoCollapseMenu();
             this.formCollapseMenu();
+            this.formDrops();
         }
 
         if (this.context.isAuth) {
@@ -156,6 +157,11 @@ class Navbar extends BaseComponent {
         if (window.location.pathname === '/following') {
             this.defaultPage.icon = Icons.heart;
             this.defaultPage.href = '/following';
+            this.defaultPage.custom = 'pages-link';
+        } else {
+            this.defaultPage.icon = Icons.home;
+            this.defaultPage.href = '/';
+            this.defaultPage.custom = (window.location.pathname === '/') ? 'pages-link' : '';
         }
         this.link.context = {
             ...this.link.context,
@@ -235,6 +241,18 @@ class Navbar extends BaseComponent {
         }
 
         document.getElementById('menu').innerHTML = node.innerHTML;
+    }
+
+    formDrops() {
+        if (!document.getElementById('notificationsDropdown')) {
+            document.getElementById('navbar').insertAdjacentHTML('afterend', this.dropdown.render())
+        }
+        if (!document.getElementById('pagesDrop')) {
+            document.getElementById('navbar').insertAdjacentHTML('afterend', this.pagesDrop.render())
+        }
+        if (!document.getElementById('alert')) {
+            document.getElementById('navbar').insertAdjacentHTML('afterend', this.notificationBar.render())
+        }
     }
 }
 
