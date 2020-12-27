@@ -134,19 +134,19 @@ export default class SettingsPage extends BaseView {
                     }
                 }
             });
-            console.log(description.value)
-            // if (ok) {
-            //     this.form.elements.forEach((element) => {
-            //         if (element instanceof FileUpload && element.value) {
-            //             let formData = new FormData();
-            //             formData.append('image', element.value);
-            //             values.file = formData;
-            //             values.localFile = element.value;
-            //         }
-            //         values[element.context.id] = element.element.value;
-            //     })
-            //     eventBus.emit(Events.profileUpdate, {event: event, ...values});
-            // }
+
+            if (ok) {
+                this.form.elements.forEach((element) => {
+                    if (element instanceof FileUpload && element.value) {
+                        let formData = new FormData();
+                        formData.append('image', element.value);
+                        values.file = formData;
+                        values.localFile = element.value;
+                    }
+                    values[element.context.id] = element.element.value;
+                })
+                eventBus.emit(Events.profileUpdate, {event: event, ...values});
+            }
         })
 
         this.upload.element.addEventListener('change', this.onShowAvatarPreview);
