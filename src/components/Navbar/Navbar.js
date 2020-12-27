@@ -27,7 +27,6 @@ class Navbar extends BaseComponent {
 
     constructor(context = {}) {
         super(template, context);
-        this.context.isAuth = false;
 
         this.onLogoutClick = this.logoutClick.bind(this);
 
@@ -48,28 +47,22 @@ class Navbar extends BaseComponent {
             id: 'searchForm',
             placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'
         });
-    }
 
-    render() {
-        let defaultPage = {
+        this.defaultPage = {
             icon: Icons.home,
             href: '/',
             custom: 'pages-link',
         };
-        if (window.location.pathname === '/following') {
-            defaultPage.icon = Icons.heart;
-            defaultPage.href = '/following';
-        }
         this.link = new Link({
             id: 'pagesLink',
-            custom: 'menu-link ' + defaultPage.custom,
-            href: defaultPage.href,
-            text: defaultPage.icon,
+            custom: 'menu-link ' + this.defaultPage.custom,
+            href: this.defaultPage.href,
+            text: this.defaultPage.icon,
         })
-        if (this.context.isAuth) {
-            this.link.context.text = this.link.context.text + ' ' + Icons.arrowBottom
-            this.link.context.dataAttr = 'data-activates="pagesDrop"';
-        }
+    }
+
+    render() {
+        this.createPagesLink();
 
         const mainLink = new Link({
             href: '/',
@@ -138,6 +131,12 @@ class Navbar extends BaseComponent {
 
     change(data={}) {
         this.context = {...this.context, ...data};
+
+        if (document.getElementById('navbar')) {
+            this.formNoCollapseMenu();
+            this.formCollapseMenu();
+        }
+
         if (this.context.isAuth) {
             if (document.getElementById('logout')) {
                 document.getElementById('logout').addEventListener('click', this.onLogoutClick);
@@ -145,87 +144,94 @@ class Navbar extends BaseComponent {
         }
     }
 
+    createElem(content, id='') {
+        const el = document.createElement('li');
+        el.className = 'menu-item';
+        el.id = id;
+        el.innerHTML = content;
+        return el;
+    }
+
+    createPagesLink() {
+        if (window.location.pathname === '/following') {
+            this.defaultPage.icon = Icons.heart;
+            this.defaultPage.href = '/following';
+        }
+        this.link.context = {
+            ...this.link.context,
+            custom: 'menu-link ' + this.defaultPage.custom,
+            href: this.defaultPage.href,
+            text: this.defaultPage.icon,
+        }
+        if (this.context.isAuth) {
+            this.link.context.text = this.link.context.text + ' ' + Icons.arrowBottom
+            this.link.context.dataAttr = 'data-activates="pagesDrop"';
+        }
+    }
+
     formNoCollapseMenu() {
         const node = document.createElement('ul');
 
-        const el = document.createElement('li');
-        el.className = 'menu-item';
-
-        el.innerHTML = this.link.render();
-        node.insertAdjacentElement('afterbegin', el);
-
-        el.id = 'themeItem';
-        el.innerHTML = this.themeSwitcher.render();
-        node.insertAdjacentElement('afterbegin', el);
+        this.createPagesLink();
+        node.insertAdjacentElement('afterbegin', this.createElem(this.link.render()));
+        node.insertAdjacentElement('afterbegin', this.createElem(this.themeSwitcher.render(), 'themeItem'));
 
         if (this.context.isAuth) {
-            el.id = '';
-            el.innerHTML = this.notificationBell.render();
-            node.insertAdjacentElement('afterbegin', el);
+            node.insertAdjacentElement('afterbegin', this.createElem(this.notificationBell.render()));
 
-            el.id = 'messages';
             const link = new Link({
                 href: '/messages',
                 custom: 'navbrand__messages-icon',
                 text: Icons.chat,
             })
-            el.innerHTML = link.render();
-            node.insertAdjacentElement('afterbegin', el);
+            node.insertAdjacentElement('afterbegin', this.createElem(link.render(), 'messages'));
         }
         node.insertAdjacentHTML('afterbegin', this.search.render());
-
+        console.log(node)
         document.getElementById('menu_no-collapse').innerHTML = node.innerHTML;
     }
 
     formCollapseMenu() {
         const node = document.createElement('ul');
 
-        const el = document.createElement('li');
-        el.className = 'menu-item';
+        node.insertAdjacentElement('beforeend', this.createElem(this.themeSwitcher.render(), 'themeItem-collapse'));
 
-        el.id = 'themeItem-collapse';
-        el.innerHTML = this.themeSwitcher.render();
-        node.insertAdjacentElement('beforeend', el);
-
-        el.id = '';
         if (this.context.isAuth) {
-            el.innerHTML = new Link({
+            const menu = new Link({
                 href: `/@${this.context.username}`,
                 custom: 'menu-link',
                 text: 'Профиль',
-            }).render();
-            node.insertAdjacentElement('beforeend', el);
+            });
+            node.insertAdjacentElement('beforeend', this.createElem(menu.render()));
 
-            el.id = 'messages-link';
-            el.innerHTML = new Link({
+            const ms = new Link({
                 href: '/messages',
                 custom: 'menu-link',
                 text: 'Сообщения',
             })
-            node.insertAdjacentElement('beforeend', el);
+            node.insertAdjacentElement('beforeend', this.createElem(ms.render(), 'messages-link'));
 
-            el.id = '';
-            el.innerHTML = new Link({
+            const logout = new Link({
                 href: '',
                 id: 'logout',
                 custom: 'menu-link',
                 text: 'Выход',
             })
-            node.insertAdjacentElement('beforeend', el);
+            node.insertAdjacentElement('beforeend', this.createElem(logout.render()));
         } else {
-            el.innerHTML = new Link({
+            const signup = new Link({
                 href: `/signup`,
                 custom: 'menu-link',
                 text: 'Регистрация',
             }).render();
-            node.insertAdjacentElement('beforeend', el);
+            node.insertAdjacentElement('beforeend', this.createElem(signup.render()));
 
-            el.innerHTML = new Link({
+            const login = new Link({
                 href: `/login`,
                 custom: 'menu-link',
                 text: 'Вход',
             }).render();
-            node.insertAdjacentElement('beforeend', el);
+            node.insertAdjacentElement('beforeend', this.createElem(login.render()));
         }
 
         document.getElementById('menu').innerHTML = node.innerHTML;
