@@ -17,6 +17,8 @@ import {Icons} from "../modules/consts/icons";
 import Boardbar from "../components/Boardbar/Boardbar";
 
 export default class PinController extends BaseController {
+    pressedKeys = {};
+
     constructor() {
         super(new PinPage());
 
@@ -30,6 +32,7 @@ export default class PinController extends BaseController {
         this.view.onShowBoardDrop = this.onShowBoardDrop.bind(this);
         this.view.onShowCreateBoardPopup = this.onShowCreateBoardPopup.bind(this);
         this.view.onCreateBoardAndAttach = this.onCreateBoardAndAttach.bind(this);
+        this.sendCommentOnEnter = this.sendCommentOnEnter.bind(this);
     }
 
     on(data = {}) {
@@ -80,6 +83,12 @@ export default class PinController extends BaseController {
         }).catch((error) => console.log(error));
 
         eventBus.on(Events.pinAttach, this.onPinAttach.bind(this));
+
+        document.addEventListener('keydown', this.sendCommentOnEnter);
+
+        document.addEventListener('keyup', (event) => {
+            delete this.pressedKeys[event.key];
+        });
     }
 
     off() {
@@ -133,9 +142,23 @@ export default class PinController extends BaseController {
             this.view.createBoardBtn.removeEventListener('click', this.view.onCreateBoardAndAttach);
         }
 
+        document.removeEventListener('keydown', this.sendCommentOnEnter);
+
+        document.removeEventListener('keyup', (event) => {
+            delete this.pressedKeys[event.key];
+        });
+
         super.off();
     }
 
+    sendCommentOnEnter(event) {
+        this.pressedKeys[event.key] = true;
+
+        if (event.key === 'Enter' && !this.pressedKeys['Shift'] && document.activeElement === document.getElementById('userComment')) {
+            event.preventDefault();
+            this.onPinComment();
+        }
+    }
 
     onPinComment() {
         this.view.userComment.checkValid();

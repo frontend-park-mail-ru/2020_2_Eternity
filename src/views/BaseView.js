@@ -19,6 +19,7 @@ export default class BaseView {
 
         this.#app = document.getElementById('app')
         this.navbar = Navbar;
+        this.searchOnEnter = this.searchOnEnter.bind(this);
     }
 
     render() {
@@ -26,6 +27,8 @@ export default class BaseView {
 
         this.context['navbar'] = this.navbar.render();
         this.#app.innerHTML = this.template(this.context);
+
+        document.addEventListener('keydown', this.searchOnEnter);
 
         // TODO: вынести обработчик наружу и добавить событие обновления шапки отдельно
         if (this.navbar.logoutLink) {
@@ -43,9 +46,21 @@ export default class BaseView {
         }
     }
 
-    change() {}
+    change() {
+    }
+
+    searchOnEnter(event) {
+        if (event.key === 'Enter' && document.activeElement === document.querySelector('.search__input')) {
+            event.preventDefault();
+            if (this.navbar.search.value) {
+                eventBus.emit(Events.search, {request: this.navbar.search.value});
+            }
+        }
+    }
 
     clear() {
+        document.removeEventListener('keydown', this.searchOnEnter);
+
         this.context = {};
     }
 

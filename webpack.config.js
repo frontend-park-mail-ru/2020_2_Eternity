@@ -74,7 +74,7 @@ module.exports = {
         require('autoprefixer')
     ],
 
-    optimization: {
+    /*optimization: {
         minimize: true,
         minimizer: [
             new TerserPlugin({
@@ -85,7 +85,7 @@ module.exports = {
                 parallel: true,
             }),
         ],
-    },
+    },*/
 
     devServer: {
         contentBase: path.join(__dirname, 'build'),

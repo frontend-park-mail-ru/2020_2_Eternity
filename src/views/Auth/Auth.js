@@ -41,6 +41,9 @@ export default class AuthRegPage extends BaseView {
      * @return //TODO: понять и простить
      */
     render() {
+        if (localStorage.getItem('authImg')) {
+            this.context.img = localStorage.getItem('authImg');
+        }
         const email = new Input({
             label: 'Адрес электронной почты',
             type: 'text',

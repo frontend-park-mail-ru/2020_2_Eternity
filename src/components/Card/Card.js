@@ -6,13 +6,19 @@ import {Icons} from "../../modules/consts/icons";
 import Image from "../Image/Image";
 
 export default class Card extends BaseComponent {
-    constructor(context = {}) {
+    profile;
+
+    constructor(context = {}, profile = false) {
         super(template, context);
+        this.profile = profile;
     }
 
     render() {
-        this.context.height = this.context.height / (this.context.width / (15 * parseFloat(getComputedStyle(document.documentElement).fontSize)));
+        this.profile ? this.context.height = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize) :
+                       this.context.height = this.context.height /
+                           (this.context.width / (15 * parseFloat(getComputedStyle(document.documentElement).fontSize)));
         this.context.width = 15 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
         const share = new Button({
             customButton: 'btn_round btn_round_middle btn_with-icon card__actions__go share',
             text: Icons.share,

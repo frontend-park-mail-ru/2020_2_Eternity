@@ -54,6 +54,7 @@ export default class PinPage extends BaseView {
             id: 'pinImg',
             src: this.context.img_link,
         })
+
         const authorAvatar = new Avatar({
             img_link: '',
             mini: true,
@@ -223,6 +224,7 @@ export default class PinPage extends BaseView {
 
     changePinAuthor(avatar, username) {
         const curr = document.querySelector('.pin__info__author');
+        localStorage.setItem('authImgAuthor', username);
         curr.setAttribute('href', '/@' + username);
         curr.innerHTML = avatar.render();
         curr.insertAdjacentText('beforeend', username);
@@ -237,13 +239,15 @@ export default class PinPage extends BaseView {
         this.context.info = data;
 
         this.pinImg.show(data.img_link);
+        localStorage.setItem('authImg', data.img_link);
+        localStorage.setItem('authImgLink', window.location.pathname);
         this.pinImg.element.parentElement.classList.remove('load-animation');
         this.linkDownload.element.setAttribute('href', data.img_link);
         const filename = data.img_link.trim().split('/').pop();
         this.linkDownload.element.setAttribute('download', filename);
 
         const authorAvatar = new Avatar({
-            img_link: data.avatar,
+            img_link: data.avatar ? data.avatar : '/img/default.svg',
             mini: true,
         })
         this.changePinTitle(data.title);

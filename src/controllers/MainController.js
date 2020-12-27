@@ -111,11 +111,11 @@ export default class MainController extends BaseController {
 
         super.on(data, note);
         this.currentWidth = document.getElementById('app').offsetWidth;
-        window.addEventListener('resize', this.resize);
+        window.addEventListener('resize', /*this.view.debounce(*/this.resize/*.bind(this), 100)*/);
     }
 
     off() {
-        // window.stop();
+        window.stop();
         // this.view.copyLinkBtns.forEach((btn) => {
         //     btn.removeEventListener('click', this.view.onCopyLink);
         // });

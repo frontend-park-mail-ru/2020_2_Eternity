@@ -15,6 +15,8 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Link from "../../components/Link/Link";
 import Navbar from "../../components/Navbar/Navbar";
 
+import PinModel from "../../models/PinModel";
+
 export default class MainPage extends BaseView {
     cards = []
     lastPin
@@ -49,6 +51,19 @@ export default class MainPage extends BaseView {
 
         this.listenerMutex = true;
         this.fillingMutex = true;
+    }
+
+    debounce(func, ms) {
+        let timeout;
+
+        return function () {
+            let self = this;
+            const functionCall = function () {
+                return func.apply(self, arguments);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(functionCall, ms);
+        }
     }
 
     fillEmptyPlace() {
@@ -116,6 +131,20 @@ export default class MainPage extends BaseView {
 
             this.context.protoBoards = [];
         }*/
+
+        if (!localStorage.getItem('authImg')) {
+            if (this.context.protoPins) {
+                let idx = Math.floor(Math.random() * Math.floor(15));
+                if (this.context.protoPins[idx]) {
+                    localStorage.setItem('authImg', this.context.protoPins[idx].img_link);
+                    localStorage.setItem('authImgLink', `/pin/${this.context.protoPins[idx].id}`);
+
+                    PinModel.getPin({pin: this.context.protoPins[idx].id}).then((response) => {
+                        localStorage.setItem('authImgAuthor', response.username);
+                    });
+                }
+            }
+        }
 
         if (this.context.protoPins) {
             if ((this.cardsInRow === 0 || this.cardsInRow === cardNumber) && this.matrix.length < 2) {
@@ -204,13 +233,15 @@ export default class MainPage extends BaseView {
         if (document.getElementsByClassName("content-grid")[0] && this.listenerMutex) {
             this.listenerMutex = false;
 
-            window.addEventListener('scroll', () => {
+            /*window.addEventListener('scroll', () => {
                 // console.log('WORK');
                 this.fillEmptyPlace();
-            });
+            });*/
+
+            window.addEventListener('scroll', this.debounce(() => this.fillEmptyPlace(), 100));
         }
 
-        console.log(this.matrix)
+        // console.log(this.matrix)
 
 
         // this.copyLinkBtns = document.querySelectorAll('.copy-link');

@@ -21,6 +21,7 @@ export default class ChatController extends BaseController {
         this.view.onShowEmoji = this.onShowEmoji.bind(this);
         this.view.onPutEmoji = this.onPutEmoji.bind(this);
         this.view.onEmojiTabChange = this.onEmojiTabChange.bind(this);
+        this.sendMessageOnEnter = this.sendMessageOnEnter.bind(this, this.pressedKeys);
     }
 
     on() {
@@ -43,9 +44,7 @@ export default class ChatController extends BaseController {
             this.openConnection();
         }
 
-        document.addEventListener('keydown', (event) => {
-            this.sendMessageOnEnter(event);
-        })
+        document.addEventListener('keydown',  this.sendMessageOnEnter);
 
         document.addEventListener('keyup', (event) => {
             delete this.pressedKeys[event.key];
@@ -54,14 +53,12 @@ export default class ChatController extends BaseController {
         super.on();
     }
 
-    sendMessageOnEnter(event) {
-        this.pressedKeys[event.key] = true;
+    sendMessageOnEnter(pressedKeys, event) {
+        pressedKeys[event.key] = true;
 
-        if (event.key === 'Enter' && !this.pressedKeys['Shift']) {
+        if (document.activeElement === document.getElementById(this.view.msgInput.context.id) && event.key === 'Enter' && !this.pressedKeys['Shift']) {
             event.preventDefault();
-            if (document.activeElement === document.getElementById(this.view.msgInput.context.id)) {
-                this.onSend();
-            }
+            this.onSend();
         }
     }
 
@@ -95,9 +92,7 @@ export default class ChatController extends BaseController {
 
         window.removeEventListener('resize', this.debounce(this.onResizeExpandSidebar, this.expandDelayMs));
 
-        document.removeEventListener('keydown', (event) => {
-            this.sendMessageOnEnter(event);
-        });
+        document.removeEventListener('keydown',  this.sendMessageOnEnter);
 
         document.removeEventListener('keyup', (event) => {
             delete this.pressedKeys[event.key];

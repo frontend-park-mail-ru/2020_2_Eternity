@@ -252,7 +252,7 @@ export default class ProfilePage extends BaseView {
     loadDesk() {
         if (this.context.pins) {
             this.context.pins.forEach((pin) => {
-                const nc = new Card(pin);
+                const nc = new Card(pin, true);
                 this.pins.push(nc);
             });
         }
