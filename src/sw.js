@@ -3,7 +3,6 @@ const timeout = 10000;
 
 let urlsToCache = [
     './',
-    './img/'
 ]
 
 self.addEventListener('install', (event) => {
@@ -44,9 +43,7 @@ const fromNetwork = (request, timeout) =>
         fetch(request).then(response => {
             clearTimeout(timeoutId);
             fulfill(response);
-            if (request.method === 'GET') {
-                update(request);
-            }
+            update(request);
         }, reject);
     });
 
