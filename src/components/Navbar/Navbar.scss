@@ -213,19 +213,25 @@
   animation: fade-in both ease-in-out;
   animation-duration: .2s;
   position: fixed !important;
-  margin-top: 35px;
+  top: 40px;
   width: 180px !important;
+
+  @media only screen and (min-device-width: 431px) and (min-width: 431px) {
+    top: 45px !important;
+  }
 
   @include smallscreen {
     width: 100vw !important;
-    margin-top: 0 !important;
+    top: 100vh;
   }
 }
 .pages-link {
   @include color-assign(background-color, accent);
   border-radius: 25px;
   padding: 0 15px !important;
-  height: 50px !important;
+  height: 45px !important;
+  display: flex;
+  align-items: center;
 }
 
 #messages {

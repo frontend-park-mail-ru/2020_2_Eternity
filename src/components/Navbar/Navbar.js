@@ -5,12 +5,13 @@ import NotificationBell from "../NotificationBell/NotificationBell";
 import Search from "../Search/Search";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Dropdown from "../Dropdown/Dropdown";
+import NotificationBar from "../NotificationBar/NotificationBar";
+import Link from "../Link/Link";
 
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
-import Link from "../Link/Link";
 import {Icons} from "../../modules/consts/icons";
-import NotificationBar from "../NotificationBar/NotificationBar";
+
 
 class Navbar extends BaseComponent {
     burger
@@ -26,7 +27,10 @@ class Navbar extends BaseComponent {
 
     constructor(context = {}) {
         super(template, context);
-        this.context.isAuthenticated = false;
+        this.context.isAuth = false;
+
+        this.onLogoutClick = this.logoutClick.bind(this);
+
         document.addEventListener('click', this.changeMobileMenuViewBind.bind(this));
         document.addEventListener('click', this.showPages.bind(this));
 
@@ -39,17 +43,20 @@ class Navbar extends BaseComponent {
             id: 'showNotifications',
             dataAttr: 'data-activates="' + this.dropdown.context.id + '"',
         })
+        this.notificationBar = new NotificationBar();
+        this.search = new Search({
+            id: 'searchForm',
+            placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'
+        });
     }
 
     render() {
-        this.search = new Search({id: 'searchForm', placeholder: 'Введите @Имя пользователя или #Пин для поиска только в этих категориях'});
-
         let defaultPage = {
             icon: Icons.home,
             href: '/',
             custom: 'pages-link',
         };
-        if (document.title.trim().split(' ').pop() === 'Подписки') {
+        if (window.location.pathname === '/following') {
             defaultPage.icon = Icons.heart;
             defaultPage.href = '/following';
         }
@@ -79,21 +86,19 @@ class Navbar extends BaseComponent {
         })
         this.pagesDrop.formContent([mainLink, subFeedLink]);
 
-        this.notificationBar = new NotificationBar();
-
         const data = {
-            notification: this.notificationBell.render(),
             search: this.search.render(),
             theme: this.themeSwitcher.render(),
-            notificationsDropdown: this.dropdown.render(),
-
             l: this.link.render(),
-            pagesDrop: this.pagesDrop.render(),
-
+        }
+        const authData = {
+            notification: this.notificationBell.render(),
+            notificationsDropdown: this.dropdown.render(),
             notificationBar: this.notificationBar.render(),
+            pagesDrop: this.pagesDrop.render(),
         }
 
-        this.context = {...this.context, ...data};
+        this.context.isAuth ? this.context = {...this.context, ...data, ...authData} : this.context = {...this.context, ...data};
         return super.render();
     }
 
@@ -126,22 +131,104 @@ class Navbar extends BaseComponent {
     get logoutLink() {
         return document.getElementById('logout');
     }
+    logoutClick(event) {
+        document.getElementById('logout').removeEventListener('click', this.onLogoutClick);
+        eventBus.emit(Events.userLogout, {event: event});
+    }
 
-    change (data={}) {
-        this.context = { ...data };
-
-        const navbar = document.getElementById('navbar');
-        if (navbar) {
-            navbar.outerHTML = this.render();
-        }
-
-        if (this.logoutLink) {
-            this.logoutLink.addEventListener('click', this.logoutClick);
+    change(data={}) {
+        this.context = {...this.context, ...data};
+        if (this.context.isAuth) {
+            if (document.getElementById('logout')) {
+                document.getElementById('logout').addEventListener('click', this.onLogoutClick);
+            }
         }
     }
 
-    logoutClick = (event) => {
-        eventBus.emit(Events.userLogout, {event: event});
+    formNoCollapseMenu() {
+        const node = document.createElement('ul');
+
+        const el = document.createElement('li');
+        el.className = 'menu-item';
+
+        el.innerHTML = this.link.render();
+        node.insertAdjacentElement('afterbegin', el);
+
+        el.id = 'themeItem';
+        el.innerHTML = this.themeSwitcher.render();
+        node.insertAdjacentElement('afterbegin', el);
+
+        if (this.context.isAuth) {
+            el.id = '';
+            el.innerHTML = this.notificationBell.render();
+            node.insertAdjacentElement('afterbegin', el);
+
+            el.id = 'messages';
+            const link = new Link({
+                href: '/messages',
+                custom: 'navbrand__messages-icon',
+                text: Icons.chat,
+            })
+            el.innerHTML = link.render();
+            node.insertAdjacentElement('afterbegin', el);
+        }
+        node.insertAdjacentHTML('afterbegin', this.search.render());
+
+        document.getElementById('menu_no-collapse').innerHTML = node.innerHTML;
+    }
+
+    formCollapseMenu() {
+        const node = document.createElement('ul');
+
+        const el = document.createElement('li');
+        el.className = 'menu-item';
+
+        el.id = 'themeItem-collapse';
+        el.innerHTML = this.themeSwitcher.render();
+        node.insertAdjacentElement('beforeend', el);
+
+        el.id = '';
+        if (this.context.isAuth) {
+            el.innerHTML = new Link({
+                href: `/@${this.context.username}`,
+                custom: 'menu-link',
+                text: 'Профиль',
+            }).render();
+            node.insertAdjacentElement('beforeend', el);
+
+            el.id = 'messages-link';
+            el.innerHTML = new Link({
+                href: '/messages',
+                custom: 'menu-link',
+                text: 'Сообщения',
+            })
+            node.insertAdjacentElement('beforeend', el);
+
+            el.id = '';
+            el.innerHTML = new Link({
+                href: '',
+                id: 'logout',
+                custom: 'menu-link',
+                text: 'Выход',
+            })
+            node.insertAdjacentElement('beforeend', el);
+        } else {
+            el.innerHTML = new Link({
+                href: `/signup`,
+                custom: 'menu-link',
+                text: 'Регистрация',
+            }).render();
+            node.insertAdjacentElement('beforeend', el);
+
+            el.innerHTML = new Link({
+                href: `/login`,
+                custom: 'menu-link',
+                text: 'Вход',
+            }).render();
+            node.insertAdjacentElement('beforeend', el);
+        }
+
+        document.getElementById('menu').innerHTML = node.innerHTML;
     }
 }
 

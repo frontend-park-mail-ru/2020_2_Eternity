@@ -115,7 +115,7 @@ export default class MainController extends BaseController {
     }
 
     off() {
-        window.stop();
+        // window.stop();
         // this.view.copyLinkBtns.forEach((btn) => {
         //     btn.removeEventListener('click', this.view.onCopyLink);
         // });

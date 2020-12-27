@@ -8,7 +8,6 @@ import {routes} from "../modules/consts/routes.js";
 
 import Navbar from "../components/Navbar/Navbar";
 
-import Request from "../modules/request/Request";
 
 class SessionController extends BaseController {
     notification
@@ -27,14 +26,6 @@ class SessionController extends BaseController {
     }
 
     on(data = {}) {
-        this.notification = setInterval(() => {
-            Request.getNotifications().then((response) => {
-                return response.json();
-            }).then((responseJSON) => {
-                eventBus.emit(Events.newNotifications, {num: responseJSON.length});
-            });
-        }, 1000000);
-
         eventBus.emit(Events.navbarChanged, {isAuth: true, username: data.username});
         eventBus.on(Events.userLogout, this.onLogout.bind(this));
     }
@@ -44,8 +35,6 @@ class SessionController extends BaseController {
         eventBus.emit(Events.navbarChanged, {isAuth: false});
         eventBus.off(Events.userLogout, this.onLogout.bind(this));
     }
-
-    // TODO: func for check user session
 
     onLogout(data = {}) {
         data.event.preventDefault();
