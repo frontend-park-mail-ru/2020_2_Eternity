@@ -14,6 +14,7 @@ import {Events} from "../modules/consts/events";
 export default class MainController extends BaseController {
     searchData = {}
     loadMoreLock
+    currentWidth;
 
     constructor() {
         super(new MainPage());
@@ -23,8 +24,10 @@ export default class MainController extends BaseController {
     }
 
     resize = () => {
-        this.off();
-        this.on();
+        if (this.currentWidth !== document.getElementById('app').offsetWidth) {
+            this.off();
+            this.on();
+        }
     }
 
     on(data = {}, note) {
@@ -107,10 +110,12 @@ export default class MainController extends BaseController {
         }
 
         super.on(data, note);
+        this.currentWidth = document.getElementById('app').offsetWidth;
         window.addEventListener('resize', this.resize);
     }
 
     off() {
+        window.stop();
         // this.view.copyLinkBtns.forEach((btn) => {
         //     btn.removeEventListener('click', this.view.onCopyLink);
         // });

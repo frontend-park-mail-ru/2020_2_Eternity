@@ -62,7 +62,7 @@ export default class MainPage extends BaseView {
     }
 
     render() {
-        console.log(window.innerHeight + document.getElementsByTagName("html")[0].scrollTop)
+        // console.log(window.innerHeight + document.getElementsByTagName("html")[0].scrollTop)
 
         this.width = document.getElementById('app').offsetWidth;
 
@@ -83,7 +83,7 @@ export default class MainPage extends BaseView {
             // this.left = (this.width - ((cardWidth + indent) * cardNumber) - indent) / 2;
         }
 
-        console.log(indent);
+        // console.log(indent);
 
         if (this.left === 0) {
             this.left = (this.width - ((cardWidth + indent) * cardNumber) + indent) / 2;
@@ -209,6 +209,8 @@ export default class MainPage extends BaseView {
                 this.fillEmptyPlace();
             });
         }
+
+        console.log(this.matrix)
 
 
         // this.copyLinkBtns = document.querySelectorAll('.copy-link');
