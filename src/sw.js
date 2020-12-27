@@ -1,5 +1,5 @@
 let CACHE_NAME = 'offline-fallback';
-const timeout = 10000;
+const timeout = 5000;
 
 let urlsToCache = [
     './',
@@ -33,7 +33,6 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         fromNetwork(event.request, timeout).catch(() => fromCache(event.request))
     );
-    event.waitUntil(update(event.request));
 });
 
 // Запрос к сети
