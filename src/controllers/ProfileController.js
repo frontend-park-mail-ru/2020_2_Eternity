@@ -9,6 +9,7 @@ import BoardModel from "../models/BoardModel";
 import EventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events";
 import ChatModel from "../models/ChatModel";
+import Span from "../components/Span/Span";
 
 export default class ProfileController extends BaseController {
     constructor() {
@@ -142,16 +143,33 @@ export default class ProfileController extends BaseController {
     }
 
     onTabChange(event) {
+        let help = new Span({custom: 'profile__info__help'})
+
         if (event.target instanceof HTMLInputElement) {
             switch (event.target.id.replace('tab', '')) {
                 case 'pin':
-                    this.view.changeDeskContent(this.view.pins);
+                    if (this.view.pins.length !== 0) {
+                        this.view.changeDeskContent(this.view.pins);
+                    } else {
+                        help.context.text = 'Пользователь еще не создал ни одного пина';
+                        document.getElementById('desk-content').innerHTML = help.render()
+                    }
                     break;
                 case 'board':
-                    this.view.changeDeskContent(this.view.boards);
+                    if (this.view.boards.length !== 0) {
+                        this.view.changeDeskContent(this.view.boards);
+                    } else {
+                        help.context.text = 'Пользователь еще не создал ни одной доски';
+                        document.getElementById('desk-content').innerHTML = help.render()
+                    }
                     break;
                 default:
-                    this.view.changeDeskContent([...this.view.pins, ...this.view.boards]);
+                    if (this.view.boards.length === 0 && this.view.pins.length === 0) {
+                        help.context.text = 'У пользователя нет досок или пинов';
+                        document.getElementById('desk-content').innerHTML = help.render()
+                    } else  {
+                        this.view.changeDeskContent([...this.view.pins, ...this.view.boards]);
+                    }
                     break;
             }
         }
