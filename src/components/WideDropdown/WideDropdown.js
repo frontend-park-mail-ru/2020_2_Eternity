@@ -71,8 +71,17 @@ export default class WideDropdown extends BaseComponent {
         }
     }
 
+
+    getPositionByOrigin() {
+        if (document.documentElement.clientWidth <= 430) {
+            const dropSize = getComputedStyle(this.element.querySelector('.dropdown__drop')).height;
+            this.element.querySelector('.dropdown__drop').style.top = `calc(100vh - ${dropSize})`;
+            this.element.querySelector('.dropdown__drop').style.left = '';
+        }
+    }
     showDrop() {
         this.element.querySelector('.dropdown__drop').classList.add('dropdown__drop__active');
+        this.getPositionByOrigin()
 
         document.addEventListener('click', this.listenerOnClose);
         window.addEventListener('resize', () => this.hideDrop());
@@ -81,10 +90,13 @@ export default class WideDropdown extends BaseComponent {
         }, 300);
     }
     hideDrop() {
+        this.element.querySelector('.dropdown__drop').style.top = '';
+        if (document.documentElement.clientWidth > 430) {
+            this.element.querySelector('.dropdown__drop').classList.remove('dropdown__drop__active');
+        }
         document.removeEventListener('click', this.listenerOnClose);
         window.removeEventListener('resize', () => this.hideDrop());
         this.isOpened = false;
-        this.element.querySelector('.dropdown__drop').classList.remove('dropdown__drop__active');
     }
 
     setText(text) {

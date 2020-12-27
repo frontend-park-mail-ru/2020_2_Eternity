@@ -10,6 +10,7 @@ import Popup from "../../components/Popup/Popup";
 import Userbar from "../../components/Userbar/Userbar";
 import List from "../../components/List/List";
 import {Icons} from "../../modules/consts/icons";
+import Span from "../../components/Span/Span";
 
 
 export default class ProfilePage extends BaseView {
@@ -261,6 +262,14 @@ export default class ProfilePage extends BaseView {
                 this.boards.push(nb);
             });
         }
-        this.desk.formContentFromListObjects([...this.pins, ...this.boards]);
+
+        if (this.pins.length === 0 && this.boards.length === 0) {
+            const help = new Span({custom: 'profile__info__help'})
+            help.context.text = 'У пользователя нет досок или пинов';
+            document.getElementById('desk-content').innerHTML = help.render()
+        } else {
+            this.desk.formContentFromListObjects([...this.pins, ...this.boards]);
+        }
+
     }
 }

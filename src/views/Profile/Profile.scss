@@ -183,3 +183,14 @@
     }
   }
 }
+
+.profile__info__help {
+  position: absolute;
+  left: 0;
+  display: flex;
+  width: 100%;
+  @include color-assign(color, font-color--secondary);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

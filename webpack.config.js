@@ -3,6 +3,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     // devtool: 'source-map',
@@ -30,11 +32,11 @@ module.exports = {
             },
             {
                 test:/\.s[ac]ss$/,
-                use: [
-                    'style-loader',
-                    'css-loader?url=false',
-                    'sass-loader',
-                ]
+                use: ['style-loader', 'css-loader?url=false', 'sass-loader',]
+            },
+            {
+                test:/\.(css|s[ac]ss)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader?url=false', 'sass-loader',]
             },
             {
                 test: /\.(svg|png|jpe?g|)$/,
@@ -61,9 +63,9 @@ module.exports = {
                 {from: './public/static/fonts', to: 'fonts'},
             ]
         }),
-        // new MiniCssExtractPlugin({
-        //     filename: 'index.scss',
-        // }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+        }),
         new HtmlWebpackPlugin({
             inject: false,
             template: './src/index.html',
@@ -71,6 +73,19 @@ module.exports = {
         }),
         require('autoprefixer')
     ],
+
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                extractComments: true,
+            }),
+            new CssMinimizerPlugin({
+                parallel: true,
+            }),
+        ],
+    },
 
     devServer: {
         contentBase: path.join(__dirname, 'build'),

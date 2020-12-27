@@ -6,6 +6,10 @@
   }
 }
 
+.dropdown__wrap {
+  transition: .3s ease-in-out;
+}
+
 .dropdown__label {
   position: relative;
 
@@ -115,6 +119,23 @@
       padding: .5rem .8rem;
       border-radius: 50%;
       margin-right: .3rem;
+    }
+  }
+
+  @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+    position: fixed;
+    font-size: 18px;
+    top: 100vh;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 45vh !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin: 0;
+
+    &__list {
+      height: 65%;
+      margin-top: -10px;
     }
   }
 }

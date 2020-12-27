@@ -87,4 +87,18 @@
       }
     }
   }
+
+  &-wrap {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+      position: fixed;
+      font-size: 1.4rem;
+      top: 100vh;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 45vh !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin: 0;
+    }
+  }
 }

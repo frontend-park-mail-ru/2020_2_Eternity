@@ -29,6 +29,7 @@ export default class ImageUpload extends BaseComponent {
             type: 'file',
             customInputGroup: 'image-upload__input',
             customInput: 'image-upload__input',
+            dataAttr: 'accept="image/*"'
         })
         this.reset = new Button({
             id: 'reset',

@@ -32,6 +32,9 @@ export default class List extends BaseComponent {
         const newItem = this.createItem(itemObject);
         order === 'append' ? this.elements.push(newItem) : this.elements.unshift(newItem);
         if (this.element) {
+            if (this.element.querySelector('.pin__comments__empty')) {
+                this.clearContent();
+            }
             order === 'append' ? this.element.insertAdjacentHTML('beforeend', newItem.render()) : this.element.insertAdjacentHTML('afterbegin', newItem.render());
         }
     }
