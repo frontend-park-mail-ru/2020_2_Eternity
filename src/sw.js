@@ -33,6 +33,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         fromNetwork(event.request, timeout).catch(() => fromCache(event.request))
     );
+    event.waitUntil(update(event.request));
 });
 
 // Запрос к сети

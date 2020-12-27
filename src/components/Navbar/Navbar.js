@@ -47,28 +47,23 @@ class Navbar extends BaseComponent {
         let defaultPage = {
             icon: Icons.home,
             href: '/',
-            custom: ''
+            custom: 'pages-link',
         };
-        switch (document.title.trim().split(' ').pop()) {
-            case 'Главная':
-                defaultPage.custom = 'pages-link';
-                break;
-            case 'Подписки':
-                defaultPage = {
-                    icon: Icons.heart,
-                    href: '/following',
-                    custom: 'pages-link',
-                }
-                break;
+        if (document.title.trim().split(' ').pop() === 'Подписки') {
+            defaultPage.icon = Icons.heart;
+            defaultPage.href = '/following';
         }
-
         this.link = new Link({
             id: 'pagesLink',
             custom: 'menu-link ' + defaultPage.custom,
             href: defaultPage.href,
-            text: defaultPage.icon + ' ' + Icons.arrowBottom,
-            dataAttr: 'data-activates="pagesDrop"'
+            text: defaultPage.icon,
         })
+        if (this.context.isAuth) {
+            this.link.context.text = this.link.context.text + ' ' + Icons.arrowBottom
+            this.link.context.dataAttr = 'data-activates="pagesDrop"';
+        }
+
         const mainLink = new Link({
             href: '/',
             text: 'Главная',
