@@ -31,17 +31,12 @@ export default class BoardCreate extends BaseView {
             customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
-        }, Validator.validateAlphaField);
+        }, Validator.validateEmptyField);
         const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
             class: 'form__input input-group__field_noresize',
             id: 'description',
-        }, Validator.validateEmptyField);
-        const privateTgl = new LabeledToggle({
-            label: 'Сделать доску приватной?',
-            small: 'Другие пользователи не смогут увидеть ее',
-            id: 'private',
         });
         const createBtn = new Button({
             id: 'submit',
@@ -49,7 +44,7 @@ export default class BoardCreate extends BaseView {
             text: 'Создать',
             customButton: 'btn_green'
         });
-        const form = new FormGenerator('Board-creating', ...[title, description, privateTgl, createBtn]).createForm();
+        const form = new FormGenerator('Board-creating', ...[title, description, createBtn]).createForm();
 
         const data = {
             form: form.render()
@@ -64,7 +59,7 @@ export default class BoardCreate extends BaseView {
             let ok = true;
 
             form.elements.forEach((element) => {
-                if (element instanceof Input) {
+                if (element instanceof Input && element.validator) {
                     element.checkValid();
                     if (element.hasError()) {
                         ok = false;
@@ -75,7 +70,6 @@ export default class BoardCreate extends BaseView {
                 data = {
                     title: title.value,
                     description: description.value,
-                    private: privateTgl.value,
                 };
                 eventBus.emit(Events.boardCreating, {event: event, ...data});
             }

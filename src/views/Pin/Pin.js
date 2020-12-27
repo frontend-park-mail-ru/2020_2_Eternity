@@ -248,7 +248,7 @@ export default class PinPage extends BaseView {
         })
         this.changePinTitle(data.title);
         this.changePinAuthor(authorAvatar, data.username);
-        this.changePinDescription(data.content);
+        this.changePinDescription(data.content.replace(/&gt;/g, '>').replace(/&lt;/g, '<'));
 
         // TODO: наверное такое надо чекать через роутер из localstorage и рендерить уже с ними, с auth
         if (this.context.auth) {

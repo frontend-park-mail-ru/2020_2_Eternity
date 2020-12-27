@@ -61,14 +61,14 @@ export default class SettingsPage extends BaseView {
             customClasses: 'form__input',
             value: this.context.name,
             id: 'name'
-        }, Validator.checkAlphabetNum);
+        }, Validator.validateNameField);
         const surname = new Input({
             label: fieldsLabels['surname'],
             type: 'text',
             customClasses: 'form__input',
             value: this.context.surname,
             id: 'surname'
-        }, Validator.checkAlphabetNum)
+        }, Validator.validateNameField)
         const email = new Input({
             label: fieldsLabels['email'],
             type: 'email',
@@ -82,7 +82,7 @@ export default class SettingsPage extends BaseView {
             class: 'form__input',
             value: this.context.description,
             id: 'description',
-        }, Validator.checkAlphabetNum)
+        })
         const oldPassword = new Input({
             label: fieldsLabels['oldPassword'],
             type: 'password',
@@ -127,26 +127,26 @@ export default class SettingsPage extends BaseView {
             let values = {};
 
             this.form.elements.forEach((element) => {
-                if (element instanceof Input) {
+                if (element instanceof Input && element.validator) {
                     element.checkValid();
                     if (element.hasError()) {
                         ok = false;
                     }
                 }
             });
-
-            if (ok) {
-                this.form.elements.forEach((element) => {
-                    if (element instanceof FileUpload && element.value) {
-                        let formData = new FormData();
-                        formData.append('image', element.value);
-                        values.file = formData;
-                        values.localFile = element.value;
-                    }
-                    values[element.context.id] = element.element.value;
-                })
-                eventBus.emit(Events.profileUpdate, {event: event, ...values});
-            }
+            console.log(description.value)
+            // if (ok) {
+            //     this.form.elements.forEach((element) => {
+            //         if (element instanceof FileUpload && element.value) {
+            //             let formData = new FormData();
+            //             formData.append('image', element.value);
+            //             values.file = formData;
+            //             values.localFile = element.value;
+            //         }
+            //         values[element.context.id] = element.element.value;
+            //     })
+            //     eventBus.emit(Events.profileUpdate, {event: event, ...values});
+            // }
         })
 
         this.upload.element.addEventListener('change', this.onShowAvatarPreview);

@@ -4,6 +4,7 @@ class Validator {
         empty: 'Поле не может быть пустым',
         email: 'Некорректный e-mail',
         alpha: 'Поле может содержать только буквенные символы и цифры',
+        name: 'Поле может содержать только буквенные символы',
         password: 'Пароль должен содержать не менее 8 буквенных символов и цифр',
     }
 
@@ -11,10 +12,15 @@ class Validator {
         this.AlphaNumRegExp = RegExp(/^[\w]+$/);
         this.PasswordRegExp = RegExp(/^(?=.*[\w]).{8,50}$/);
         this.EmailRegExp = RegExp(/^[.\w]+@([\w-]+\.)+[\w-]{2,4}$/);
+        this.NameRegExp = RegExp(/^[\wА-Яа-я]+$/);
     }
 
     checkEmpty = (value) => {
-        return (value === '') ? this.errors.empty : null;
+        if (!value) {
+            return this.errors.empty;
+        } else {
+            return null;
+        }
     }
     checkAlphabetNum = (value) => {
         if (value) {
@@ -32,6 +38,12 @@ class Validator {
         if (value) {
             const ok = this.EmailRegExp.test(value);
             return ok ? null : this.errors.email;
+        }
+    }
+    checkName = (value) => {
+        if (value) {
+            const ok = this.NameRegExp.test(value);
+            return ok ? null : this.errors.name;
         }
     }
 
@@ -53,8 +65,7 @@ class Validator {
     validatePasswordField = this.compose(this.checkEmpty, this.checkPassword);
     validateAlphaField = this.compose(this.checkEmpty, this.checkAlphabetNum);
     validateEmptyField = this.compose(this.checkEmpty);
-
-    // Валидация необязательных полей (могут быть пустыми)
+    validateNameField = this.compose(this.checkName);
 }
 
 

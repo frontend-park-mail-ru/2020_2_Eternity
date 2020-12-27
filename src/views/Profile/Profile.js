@@ -205,7 +205,7 @@ export default class ProfilePage extends BaseView {
                                                                         .querySelectorAll('li');
         name.innerText = data.name + ' ' + data.surname;
         username.innerText = '@' + data.username;
-        description.innerText = data.description;
+        description.innerText = data.description.replace(/&gt;/g, '>').replace(/&lt;/g, '<');
 
         this.changeUserFollowersNum(data.followers);
         this.changeUserFollowingsNum(data.following);

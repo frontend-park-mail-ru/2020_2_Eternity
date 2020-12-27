@@ -16,8 +16,10 @@ import {Events} from "../../modules/consts/events.js";
  * @class View, отвечающая за авторизацию
  */
 export default class AuthRegPage extends BaseView {
-    form;
-    pageType;
+    form
+    pageType
+    username
+    password
 
     /**
      * Конструирует новую страницу для авторизации или регистрации
@@ -45,13 +47,13 @@ export default class AuthRegPage extends BaseView {
             placeholder: 'example@email.com',
             id: 'email'
         }, Validator.validateEmailField);
-        const username = new Input({
+        this.username = new Input({
             label: 'Логин',
             type: 'text',
             placeholder: 'Username',
             id: 'username'
         }, Validator.validateAlphaField)
-        const password = new Input({
+        this.password = new Input({
             label: 'Пароль',
             type: 'password',
             placeholder: 'Password',
@@ -64,7 +66,7 @@ export default class AuthRegPage extends BaseView {
             customButton: 'btn_green',
         });
 
-        let elements = [username, password, btn];
+        let elements = [this.username, this.password, btn];
         if (this.pageType === 'registration') {
             elements.unshift(email);
         }

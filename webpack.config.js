@@ -7,7 +7,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-    devtool: 'source-map',
+    // devtool: 'source-map',
     entry: {
         main: './src/index.js',
         sw: './src/sw.js',
