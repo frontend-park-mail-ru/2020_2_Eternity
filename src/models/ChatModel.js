@@ -7,7 +7,7 @@ import UserModel from "./UserModel";
 
 class ChatModel {
     // TODO: адрес бэка в конфиг какой нибудь вынести
-    socketURL = 'ws://localhost:8008/api/ws';
+    socketURL = 'wss://pinteo.ru/api/ws';
     socket = new WebSocket(this.socketURL);
 
     constructor() {
