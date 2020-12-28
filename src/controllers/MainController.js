@@ -10,6 +10,8 @@ import UserModel from "../models/UserModel";
 
 import eventBus from "../modules/tools/EventBus";
 import {Events} from "../modules/consts/events";
+import FollowOfferForm from "../components/FollowOfferForm/FollowOfferForm";
+import EventBus from "../modules/tools/EventBus";
 
 export default class MainController extends BaseController {
     searchData = {}
@@ -21,6 +23,7 @@ export default class MainController extends BaseController {
 
         // this.view.onCopyLink = this.onCopyLink.bind(this);
         this.view.onShowCreateDropdown = this.onShowCreateDropdown.bind(this);
+        this.view.getBackOnCloseOffer = this.getBackOnCloseOffer.bind(this);
     }
 
     resize = () => {
@@ -86,14 +89,23 @@ export default class MainController extends BaseController {
         } else {
             if (window.location.pathname === '/following') {
                 PinModel.getFeedPins().then((response) => {
-                    // this.view.fillWith({protoPins: fakePins});
-                    this.view.fillWith({protoPins: response});
-                    this.view.render();
+                    if (response.length !== 0) {
+                        // this.view.fillWith({protoPins: fakePins});
+                        this.view.fillWith({protoPins: response});
+                        this.view.render();
 
-                    if (response.length < 15) {
-                        this.loadMoreLock = false;
+                        if (response.length < 15) {
+                            this.loadMoreLock = false;
+                        }
+                        this.view.fillEmptyPlace();
+                    } else {
+                        UserModel.getPopular().then((response) => {
+                            this.view.popupOfferComponent.context.users = response;
+                            this.view.popupOffer.element.querySelector('.modal-window__window__content').innerHTML = this.view.popupOfferComponent.render()
+                            this.view.popupOffer.origin = document.getElementById('pagesDrop').querySelector('a[href="/following"]')
+                            this.view.popupOffer.open('#followOfferPopup');
+                        })
                     }
-                    this.view.fillEmptyPlace();
                 }).catch((error) => console.log(error));
             } else {
                 PinModel.getAllPins().then((response) => {
@@ -119,6 +131,13 @@ export default class MainController extends BaseController {
         // this.view.copyLinkBtns.forEach((btn) => {
         //     btn.removeEventListener('click', this.view.onCopyLink);
         // });
+
+        if (this.view.popupOffer) {
+            if (this.view.popupOffer.isOpened) {
+                this.view.popupOffer.close();
+                this.view.popupOffer.element.querySelector('.modal-window__close').removeEventListener('click', this.view.getBackOnCloseOffer)
+            }
+        }
 
         if (this.view.btnCreate) {
             if (this.view.btnCreate.element) {
@@ -230,5 +249,9 @@ export default class MainController extends BaseController {
                 this.view.dropdownCreate.show();
             }
         }
+    }
+
+    getBackOnCloseOffer() {
+        EventBus.emit(Events.goBack, {});
     }
 }

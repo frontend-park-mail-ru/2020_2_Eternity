@@ -53,6 +53,7 @@ export default class PinPage extends BaseView {
         this.pinImg = new Image({
             id: 'pinImg',
             src: this.context.img_link,
+            class: 'pin__img',
         })
 
         const authorAvatar = new Avatar({
@@ -221,7 +222,6 @@ export default class PinPage extends BaseView {
         curr.className = 'pin__info__title';
         curr.innerText = title;
     }
-
     changePinAuthor(avatar, username) {
         const curr = document.querySelector('.pin__info__author');
         localStorage.setItem('authImgAuthor', username);
@@ -231,17 +231,42 @@ export default class PinPage extends BaseView {
     }
     changePinDescription(content) {
         const curr = document.querySelector('.pin__info__description');
-        curr.className = 'pin__info__description';
-        curr.innerText = content;
+        if (!content) {
+            curr.remove();
+        } else {
+            curr.className = 'pin__info__description';
+            curr.innerText = content;
+        }
+    }
+
+    setOrientationView(height, width) {
+        if (width/height > 1) {
+            document.getElementById('pinWindow').classList.remove('pin_vertical');
+            document.getElementById('pinWindow').classList.add('pin_horizontal');
+            return true;
+        }
+    }
+    setCommentListSize() {
+        const right = document.getElementById('pinWindow').querySelector('.pin__wrap__right');
+        this.pinImg.element.onload = () => {
+            const ha = window.getComputedStyle(right.querySelector('.pin__actions')).height.replace('px', '');
+            const hi = window.getComputedStyle(right.querySelector('.pin__info')).height.replace('px', '');
+            const hw = window.getComputedStyle(right).height.replace('px', '');
+
+            this.comments.element.style.height = parseInt(hw) - parseInt(ha) - parseInt(hi) - 135 + 'px';
+            this.comments.element.style.maxHeight = 'none';
+        }
     }
 
     load(data={}) {
         this.context.info = data;
 
+        const horizontal = this.setOrientationView(data.height, data.width);
+
         this.pinImg.show(data.img_link);
         localStorage.setItem('authImg', data.img_link);
         localStorage.setItem('authImgLink', window.location.pathname);
-        this.pinImg.element.parentElement.classList.remove('load-animation');
+        this.pinImg.element.parentElement.parentElement.classList.remove('load-animation');
         this.linkDownload.element.setAttribute('href', data.img_link);
         const filename = data.img_link.trim().split('/').pop();
         this.linkDownload.element.setAttribute('download', filename);
@@ -254,6 +279,10 @@ export default class PinPage extends BaseView {
         this.changePinTitle(data.title);
         this.changePinAuthor(authorAvatar, data.username);
         this.changePinDescription(data.content.replace(/&gt;/g, '>').replace(/&lt;/g, '<'));
+
+        if (!horizontal) {
+            this.setCommentListSize();
+        }
 
         // TODO: наверное такое надо чекать через роутер из localstorage и рендерить уже с ними, с auth
         if (this.context.auth) {
@@ -293,7 +322,6 @@ export default class PinPage extends BaseView {
     }
 
     loadBoards(data, lastAttached) {
-        console.log(data)
         let res = []
         if (data) {
             data.forEach((bd) => {

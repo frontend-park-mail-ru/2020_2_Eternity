@@ -19,7 +19,7 @@ class ChatModel {
     connect() {
         return request.createWSConnect().then((response) => {
             if (response.ok) {
-                Navbar.notificationBell.setNotificationsCount({num: response.notes_amount});
+                // Navbar.notificationBell.setNotificationsCount({num: response.notes_amount});
                 return UserModel.getProfile().then((response) => {
                     if (!response.error) {
                         ws.on(this.socket, {EventBus, Events}, response.username);

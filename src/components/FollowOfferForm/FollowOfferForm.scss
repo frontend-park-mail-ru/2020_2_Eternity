@@ -1,0 +1,14 @@
+.offer__wrap {
+  margin-top: 20px;
+  text-align: center;
+  &__title {
+    margin-bottom: 5px;
+  }
+  &__help {
+    font-size: smaller;
+  }
+}
+#followOfferList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

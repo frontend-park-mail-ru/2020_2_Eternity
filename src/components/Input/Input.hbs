@@ -1,5 +1,5 @@
 <div class="input-group {{customInputGroup}}">
     <input type="{{type}}" placeholder="&nbsp;" value="{{{value}}}" id="{{id}}" class="input-group__field {{customInput}}" {{{dataAttr}}}>
     <label class="input-group__label {{customLabel}}" for="{{id}}">{{{label}}}</label>
-    <div class="error"></div>
+    {{#if needError}}<div class="error"></div>{{/if}}
 </div>

@@ -103,6 +103,12 @@ class UserModel {
         return request.markReadNotifications().then(() => {});
     }
 
+    getPopular() {
+        return request.getPopularUsers().then((response) => {
+            return response.json();
+        })
+    }
+
 }
 
 export default new UserModel();
