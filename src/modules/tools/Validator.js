@@ -9,7 +9,7 @@ class Validator {
     }
 
     constructor() {
-        this.AlphaNumRegExp = RegExp(/^[\w]+$/);
+        this.AlphaNumRegExp = RegExp(/^[A-Za-z0-9]+$/);
         this.PasswordRegExp = RegExp(/^(?=.*[\w]).{8,50}$/);
         this.EmailRegExp = RegExp(/^[.\w]+@([\w-]+\.)+[\w-]{2,4}$/);
         this.NameRegExp = RegExp(/^[\wА-Яа-я]+$/);
