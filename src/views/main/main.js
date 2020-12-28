@@ -140,7 +140,9 @@ export default class MainPage extends BaseView {
                     localStorage.setItem('authImgLink', `/pin/${this.context.protoPins[idx].id}`);
 
                     PinModel.getPin({pin: this.context.protoPins[idx].id}).then((response) => {
+                        console.log(response);
                         localStorage.setItem('authImgAuthor', response.username);
+                        localStorage.setItem('authImgAuthorAvatar', response.avatar);
                     });
                 }
             }

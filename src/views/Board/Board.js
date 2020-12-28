@@ -68,7 +68,7 @@ export default class BoardPage extends BaseView {
 
             let list = [];
             data.pins.forEach((pin) => {
-                const nc = new Card(pin);
+                const nc = new Card(pin, true);
                 list.push(nc);
             });
             this.desk.formContentFromListObjects(list);

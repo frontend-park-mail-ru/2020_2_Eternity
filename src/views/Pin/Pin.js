@@ -250,6 +250,7 @@ export default class PinPage extends BaseView {
             img_link: data.avatar ? data.avatar : '/img/default.svg',
             mini: true,
         })
+        localStorage.setItem('authImgAuthorAvatar', data.avatar);
         this.changePinTitle(data.title);
         this.changePinAuthor(authorAvatar, data.username);
         this.changePinDescription(data.content.replace(/&gt;/g, '>').replace(/&lt;/g, '<'));
