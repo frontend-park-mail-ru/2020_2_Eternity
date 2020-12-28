@@ -1,0 +1,11 @@
+.report-form {
+  margin-top: 20px;
+
+  &__checkbox {
+    margin: 1rem 0;
+  }
+
+  .list__item__input:checked + .list__item__content {
+    background-color: transparent !important;
+  }
+}

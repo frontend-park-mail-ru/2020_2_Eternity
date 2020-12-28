@@ -1,6 +1,7 @@
 import eventBus from "../tools/EventBus.js";
 import {Events} from "../consts/events.js";
 import {routes} from "../consts/routes.js";
+import EventBus from "../tools/EventBus.js";
 
 export default class Router {
     container
@@ -44,6 +45,7 @@ export default class Router {
         }
 
         eventBus.on(Events.pathChanged, this.go.bind(this));
+        eventBus.on(Events.goBack, this.back.bind(this));
     }
 
     /**
@@ -83,7 +85,7 @@ export default class Router {
 
     /**
      * Парсит пути вида path/:id и возвращает объект {path: id} (как в parseQuery)
-     * ! :id может быть :num (pin) или :word (username) !
+     * ! :id может быть :num (Pin) или :word (username) !
      *
      * @param path
      * @returns {{}}
@@ -178,19 +180,31 @@ export default class Router {
     }
 
     /**
-     * Возвращает HTMLAnchorElement, для которого необходимо перейти по ссылке (пин, ссылка)
+     * Возвращает path, на который нужно перейти, и target (источник ссылки)
      *
      * @param target
-     * @returns {HTMLAnchorElement}
+     * @returns { {target: Element || null, pathname: string || null} }
      */
     checkRouteAnchor(target) {
-        if (target instanceof HTMLAnchorElement) {
-            return target;
+        if (target.closest('[data-link]')) {
+            return {
+                target: target.closest('[data-link]'),
+                pathname: target.closest('[data-link]').getAttribute('data-link')
+            }
         }
-        if (target instanceof HTMLImageElement && target.parentElement instanceof HTMLAnchorElement) {
-            return target.parentElement;
+        if (target.closest('[data-activates]') ||
+            target.closest('[data-popup]') ||
+            target.closest('[data-copy]')) {
+            return {target: target, pathname: null};
         }
-        return target;
+        if (target.closest('a')) {
+            return {
+                target: target.closest('a'),
+                pathname: target.closest('a').pathname
+            }
+        }
+
+        return {target: null, pathname: null}
     }
 
     /**
@@ -198,19 +212,16 @@ export default class Router {
      */
     start() {
         this.container.addEventListener('click', (evt) => {
-            let {target} = evt;
-            target = this.checkRouteAnchor(target);
-
-            if (target instanceof HTMLAnchorElement) {
-                evt.preventDefault();
-                this.navigateTo(target.pathname, this.state);
+            const {target, pathname} = this.checkRouteAnchor(evt.target);
+            if (target) {
+                if (!target.getAttribute('download')) {
+                    evt.preventDefault();
+                    if (pathname) {
+                        EventBus.emit(Events.pathChanged, {path: pathname});
+                        // this.navigateTo(target.pathname, this.state);
+                    }
+                }
             }
-            // TODO: если этого else не будет, то будет плохо при переходе по пинам с главной :)
-            //       если ткнуть по сердечку или card-content блоку попасть, например
-            //       но без этого не будут работать кнопки ugh
-            // else {
-            //     evt.preventDefault();
-            // }
         });
 
         window.addEventListener('popstate', () => {
@@ -225,16 +236,20 @@ export default class Router {
      * если она отлична от текущей
      *
      * @param path
+     * @param note
      * @param state
      * @returns {*}
      */
-    navigateTo(path = '', state = null) {
+    navigateTo(path = '', note=null, state = null) {
         // TODO: обновление контента страницы по запросу на эту же страницу?
-        if (path === this.getFragment()) {
+
+        // TODO: Надо будет вернуть этот кусок кода, поняв как определять параметры страницы
+        /*if (path === this.getFragment()) {
+            // console.log(this.getFragment());
             return;
-        }
+        }*/
         window.history.pushState(state, '', this.root + this.clearSlashes(path));
-        this.checkRoute();
+        this.checkRoute(note);
         return this;
     }
 
@@ -243,7 +258,7 @@ export default class Router {
      *
      * @returns {boolean}
      */
-    checkRoute() {
+    checkRoute(note) {
         const fragment = this.getFragment();
 
         return this.routes.some(route => {
@@ -259,7 +274,7 @@ export default class Router {
 
                 this.currentLocation = fragment;
                 this.currentController = route.controller;
-                route.controller.on(query);
+                route.controller.on(query, note);
             }
 
             return false;
@@ -301,6 +316,6 @@ export default class Router {
      * @param data
      */
     go(data={}) {
-        this.navigateTo(data.path);
+        this.navigateTo(data.path, data.note);
     }
 }

@@ -1,0 +1,46 @@
+@import "src/colors";
+@import "src/themes";
+
+@mixin smallscreen {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+        @content;
+    }
+}
+
+.notification {
+    position: relative;
+
+    @include smallscreen {
+        display: none;
+    }
+
+    &__bell {
+        @include color-assign(color, font-color--primary);
+    }
+
+    &__count {
+        position: absolute;
+        bottom: 0;
+        left: 10px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @include color-assign(color, font-color--white);
+        background-color: $color-green;
+        border-radius: 50%;
+        padding: 2px;
+        font-size: small;
+
+        transition: all .3s ease-in-out;
+
+        &_too-much {
+            color: transparent !important;
+        }
+    }
+}

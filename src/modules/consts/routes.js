@@ -14,4 +14,5 @@ export const routes = {
 
     chatPage: /^\/messages$/,
     searchPage: /^\/search$/,
+    followFeed: /^\/following$/,
 };

@@ -1,0 +1,137 @@
+@import "src/colors";
+@import "src/themes";
+
+.modal-window {
+    /* ------------------ Подложка ------------------ */
+    &__shadow {
+        display: block;
+        width: 100%;
+
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        border: none;
+        background-color: black;
+        opacity: 0;
+
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 98;
+
+        transition: opacity 0.15s ease;
+
+        &_show {
+            pointer-events: auto;
+            opacity: 0.6;
+        }
+    }
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    visibility: hidden;
+    opacity: 1;
+
+    pointer-events: none;
+
+    z-index: 100;
+
+    &_active{
+        opacity: 1;
+    }
+    &_moved,
+    &_active {
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    &_opened {
+        position: fixed;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    /* ------------------ Кнопка закрыть ------------------ */
+    &__close {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+
+        @include color-assign(background-color, accent);
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 2;
+
+        border-radius: 100%;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        transition: .2s ease-in-out;
+
+        &__icon {
+            width: 10px;
+            @include color-assign(color, font-color--primary);
+            transition: .2s ease-in-out;
+        }
+    }
+
+    /* ------------------ Обертка ------------------ */
+    &__wrap {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        width: 100%;
+        min-height: calc(100% - 60px);
+
+        margin: 60px auto 0;
+    }
+
+    /* ------------------ Контент ------------------ */
+    &__window {
+        position: relative;
+        box-sizing: border-box;
+        margin: 15px 0;
+
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        @include color-assign(background-color, secondary);
+        border-radius: 25px;
+        padding: 30px;
+
+        width: 600px;
+        max-width: 100%;
+
+        opacity: 0;
+        overflow: visible;
+
+        transition: all .2s ease, background-color .2s ease-in-out;
+        transform: scale(0.9);
+    }
+
+    &_active &__window {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

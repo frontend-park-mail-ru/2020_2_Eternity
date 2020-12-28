@@ -1,0 +1,6 @@
+<div class="input-group">
+    <textarea rows="{{rows}}" cols="{{cols}}" maxlength="{{maxlength}}"
+              class="input-group__field {{customInput}}" placeholder="&nbsp;" id="{{id}}">{{{value}}}</textarea>
+    <label class="input-group__label {{customLabel}}" for="{{id}}">{{{label}}}</label>
+    {{#if needError}}<div class="error"></div>{{/if}}
+</div>

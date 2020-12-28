@@ -1,0 +1,48 @@
+<nav class="navbar" id="navbar">
+    <div class="navbrand">
+        <a href="/" class="brand"></a>
+
+        <ul class="menu menu_no-collapse" id="menu_no-collapse">
+            {{{search}}}
+            {{#if isAuth}}
+                <li class="menu-item" id="messages"><a href="/messages" class="navbrand__messages-icon">
+                    <svg viewBox="0 0 511.096 511.096" fill="currentColor" width="20px"><path d="m74.414 480.548h-36.214l25.607-25.607c13.807-13.807 22.429-31.765 24.747-51.246-59.127-38.802-88.554-95.014-88.554-153.944 0-108.719 99.923-219.203 256.414-219.203 165.785 0 254.682 101.666 254.682 209.678 0 108.724-89.836 210.322-254.682 210.322-28.877 0-59.01-3.855-85.913-10.928-25.467 26.121-59.973 40.928-96.087 40.928z"/></svg>
+                </a></li>
+                <li class="menu-item">{{{notification}}}</li>
+            {{/if}}
+            <li class="menu-item" id="themeItem">{{{theme}}}</li>
+            <li class="menu-item">{{{l}}}</li>
+        </ul>
+
+        <div class="burger" id="burger">
+			<span class="burger-open">
+				<svg fill="currentColor" width="24" height="16">
+                    <path d="M0 0h24v2H0zM0 7h24v2H0zM0 14h24v2H0z"/>
+				</svg>
+			</span>
+            <span class="burger-close">
+				<svg fill="currentColor" width="24" height="24">
+					<path d="M17.778.808l1.414 1.414L11.414 10l7.778 7.778-1.414 1.414L10 11.414l-7.778 7.778-1.414-1.414L8.586 10 .808 2.222 2.222.808 10 8.586 17.778.808z"/>
+				</svg>
+			</span>
+        </div>
+    </div>
+
+
+    <ul class="menu" id="menu">
+        <li class="menu-item" id="themeItem-collapse">{{{theme}}}</li>
+        {{#if isAuth}}
+            <li class="menu-item"><a href="/@{{username}}" class="menu-link">Профиль</a></li>
+            <li class="menu-item" id="messages-link"><a href="/messages" class="menu-link">Сообщения</a></li>
+            <li class="menu-item"><a href="" id="logout" class="menu-link" data-activates="">Выход</a></li>
+        {{else}}
+            <li class="menu-item"><a href="/signup" class="menu-link">Регистрация</a></li>
+            <li class="menu-item"><a href="/login" class="menu-link">Вход</a></li>
+        {{/if}}
+    </ul>
+</nav>
+
+{{{notificationsDropdown}}}
+{{{pagesDrop}}}
+
+{{{notificationBar}}}

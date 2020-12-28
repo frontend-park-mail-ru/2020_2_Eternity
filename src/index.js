@@ -1,6 +1,6 @@
 'use strict'
 
-import './index.css'
+import './index.scss'
 
 import {routes} from "./modules/consts/routes.js"
 import Router from "./modules/route/Router.js";
@@ -10,33 +10,45 @@ import LoginController from "./controllers/LoginController.js"
 import PinController from "./controllers/PinController.js";
 import BoardController from "./controllers/BoardController.js";
 import ProfileController from "./controllers/ProfileController.js";
-import CreateController from "./controllers/CreateController.js";
+import PinCreateController from "./controllers/PinCreateController";
+import BoardCreateController from "./controllers/BoardCreateController";
 import ChatController from "./controllers/ChatController.js";
-import SearchController from "./controllers/SearchController.js";
+import SettingsController from "./controllers/SettingsController";
+
+import NotificationsController from "./controllers/NotificationsController";
+import SearchController from "./controllers/SearchController";
+
 import SessionController from "./controllers/SessionController.js";
 
 const application = document.getElementById('app');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then(() => {
-            console.log('serviceWorker registered');
-        }).catch((error) => console.log(error));
-    })
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('SW registered: ', registration);
+        }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+        });
+    });
 }
 
 export let router = new Router(application)
+
+let mc = new MainController;
+
 router
-    .add(routes.mainPage, new MainController)
+    .add(routes.mainPage, mc)
     .add(routes.loginPage, new LoginController('auth'))
     .add(routes.regPage, new LoginController('registration'))
     .add(routes.pinPage, new PinController)
     .add(routes.boardPage, new BoardController)
-    .add(routes.pinCreatingPage, new CreateController('pin'))
-    .add(routes.boardCreatingPage, new CreateController('board'))
-    .add(routes.profilePage, new ProfileController('view'))
-    .add(routes.settingsPage, new ProfileController('edit'))
+    .add(routes.pinCreatingPage, new PinCreateController)
+    .add(routes.boardCreatingPage, new BoardCreateController)
+    .add(routes.profilePage, new ProfileController)
+    .add(routes.settingsPage, new SettingsController)
     .add(routes.chatPage, new ChatController)
-    .add(routes.searchPage, new SearchController)
+    .add(routes.followFeed, mc)
 router.start();
 
+NotificationsController.on()
+SearchController.on()

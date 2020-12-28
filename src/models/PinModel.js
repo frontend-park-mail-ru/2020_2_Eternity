@@ -37,11 +37,37 @@ class PinModel {
         })
     }
 
+    getFeedPins() {
+        return request.getSubPins().then((response) => {
+            return response.json();
+        })
+    }
+
     getBoardPins(data = {}) {
         return request.getBoardPins(data.board).then((response) => {
             return response.json();
         });
     }
+
+    getNextFeedPins(data = {}) {
+        return request.getAllPins(data.lastPin).then((response) => {
+            return response.json();
+        })
+    }
+
+    getAllSearchData(data = {}) {
+        return request.getSearchData(data.type, data.content).then((response) => {
+            return response.json();
+        })
+    }
+
+    getNextSearchData(data = {}) {
+        return request.getSearchData(data.type, data.content, data.lastPin).then((response) => {
+            return response.json();
+        })
+    }
 }
+
+
 
 export default new PinModel();

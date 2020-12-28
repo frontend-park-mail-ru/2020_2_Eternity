@@ -1,0 +1,263 @@
+@use "../layoutPresets/layout";
+
+@import "./src/colors";
+@import "./src/themes";
+
+@mixin smallscreen {
+  @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+    @content;
+  }
+}
+
+.pin {
+  // BASE ON MOBILE FOR VERTICAL AND HORIZONTAL -----------------------------------------------------
+  &__wrap {
+    overflow: hidden;
+    border-radius: 25px;
+    min-height: 370px;
+    max-width: 500px;
+    @include color-assign(background-color, secondary);
+    box-shadow: $box-shadow-secondary;
+
+    &__left, &__right {
+      box-sizing: border-box;
+      height: 100%;
+      float: left;
+    }
+
+    &__right {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 1em;
+      min-height: 400px;
+    }
+
+    &__left {
+      display: flex;
+      width: 100%;
+      height: auto;
+      border-radius: 25px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .btn {
+      margin: 15px 10px 0;
+    }
+
+    .dropdown__wrap {
+      margin-top: 5px;
+    }
+  }
+
+  &__board {
+    position: absolute;
+    top: .5em;
+    right: .5rem;
+  }
+
+  &__info {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 1em;
+    @include color-assign(border-bottom, accent, '1px solid THEMECOLOR');
+
+    &__title {
+      min-height: 1em;
+      margin: 10px 0;
+      font-weight: 600;
+      word-wrap: break-word;
+    }
+
+    &__author {
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1rem;
+      .avatar {
+        margin: 0 5px;
+      }
+    }
+
+    &__description {
+      min-height: 2em;
+      margin-top: 0;
+    }
+  }
+
+  &__form {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+
+    .input-group {
+      width: 97%;
+      margin-right: 10px;
+    }
+  }
+
+  &__comments {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    max-height: 50vh;
+    min-height: 160px;
+
+    padding: 0;
+    margin: -1px 0 15px;
+    list-style: none;
+    overflow-y: auto;
+
+    &__empty {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 5em;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      @include color-assign(color, font-color--secondary);
+    }
+
+    @include layout.largescreen {
+      height: 100%;
+    }
+  }
+}
+
+// VERTICAL LARGE SCREEN -----------------------------------------------------
+.pin_vertical {
+  .pin__wrap {
+    @include layout.largescreen {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      grid-template-rows: auto;
+
+      width: 95vw;
+      max-width: 900px;
+      min-height: 565px;
+
+      &__left {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+        &__img {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          border-radius: 25px;
+
+          .pin__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+
+      }
+      &__right {
+      }
+    }
+  }
+}
+
+// HORIZONTAL LARGE SCREEN -----------------------------------------------------
+.pin_horizontal {
+  .pin__wrap {
+    @include layout.largescreen {
+      display: flex;
+      flex-direction: column;
+
+      width: 75vw;
+      max-width: 660px;
+      min-height: 580px;
+
+      &__left {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+        &__img {
+          display: flex;
+          width: 100%;
+          overflow: hidden;
+          border-radius: 25px;
+
+          .pin__img {
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+          }
+        }
+
+      }
+      &__right {
+
+      }
+    }
+  }
+}
+
+
+.share {
+  width: auto;
+  min-height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem !important;
+
+  @include smallscreen {
+    margin: 0 !important;
+    height: 30vh !important;
+    max-height: 30vh !important;
+    width: 100vw;
+    padding: .4rem .5rem !important;
+  }
+
+  &__title {
+    width: 100%;
+    margin: 5px 5px 10px;
+  }
+
+  &__social {
+    display: inline-flex;
+    margin: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+
+    &::after {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: #0cce6b;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import "src/colors";
+@import "src/themes";
+
+.settings-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 750px;
+    margin: 30px auto;
+    @include color-assign(background-color, secondary);
+    box-sizing: border-box;
+    border-radius: 25px;
+    padding: 2rem 5rem 3rem;
+    box-shadow: $box-shadow-secondary;
+
+    .file-upload {
+        margin-bottom: 20px;
+    }
+
+    &__avatar {
+        position: relative;
+    }
+}

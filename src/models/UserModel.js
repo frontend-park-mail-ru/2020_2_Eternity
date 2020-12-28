@@ -65,10 +65,50 @@ class UserModel {
     }
 
     followUser(data = {}) {
-        return request.followUser(data).then((response) => {
-            return response.json();
+        return request.followUser(data.username).then((response) => {
+            return response;
         });
     }
+
+    unfollowUser(data={}) {
+        return request.unfollowUser(data.username).then((response) => {
+            return response;
+        })
+    }
+
+    isFollowing(data={}) {
+        return request.isFollowing(data.username).then((response) => {
+            return response.json();
+        })
+    }
+
+    getFollowers(data={}) {
+        return request.getFollowers(data.username).then((response) => {
+            return response.json();
+        })
+    }
+    getFollowings(data={}) {
+        return request.getFollowings(data.username).then((response) => {
+            return response.json();
+        })
+    }
+
+    getNotifications() {
+        return request.getNotifications().then((response) => {
+            return response.json();
+        })
+    }
+
+    markReadNotifications() {
+        return request.markReadNotifications().then(() => {});
+    }
+
+    getPopular() {
+        return request.getPopularUsers().then((response) => {
+            return response.json();
+        })
+    }
+
 }
 
 export default new UserModel();

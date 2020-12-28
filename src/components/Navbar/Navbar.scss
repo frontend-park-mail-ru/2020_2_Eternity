@@ -1,0 +1,274 @@
+@import "src/colors";
+@import "src/themes";
+
+@mixin largescreen {
+  @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
+}
+@mixin smallscreen {
+  @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+    @content;
+  }
+}
+
+@mixin xsmall {
+  @media only screen and (max-device-width: 285px) and (max-width: 285px) {
+    @content;
+  }
+}
+
+.brand {
+  padding: 0;
+  display: inline-flex;
+  align-self: flex-start;
+  box-sizing: border-box;
+
+  height: 100%;
+  width: 100px;
+  min-width: 100px;
+  @include color-assign(background, logo, 'THEMECOLOR no-repeat center');
+  @include smallscreen {
+    height: 100%;
+    width: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+    background: url("/img/p-logo.png") no-repeat center;
+  }
+
+  @include xsmall {
+    display: none;
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 40px;
+  min-height: 60px;
+
+  display: flex;
+  flex-direction: column;
+
+
+  @include color-assign(color, font-color--primary);
+  @include color-assign(background-color, secondary);
+  box-shadow: $box-shadow;
+  transition: .3s ease-in-out;
+
+  @include xsmall {
+    padding: 0 20px;
+  }
+
+  // Media Query for Desktop
+  @include largescreen {
+    flex-direction: row;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .navbrand {
+    display: flex;
+    flex-grow: 3;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .burger {
+      display: flex;
+      margin-left: 20px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: none;
+      transition: all .3s ease;
+
+      @include smallscreen {
+        margin-left: 10px;
+      }
+
+      &-close {
+        display: none;
+      }
+
+      &.active {
+        .burger-open {
+          display: none;
+        }
+        .burger-close {
+          display: flex;
+        }
+      }
+
+      // Media Query for Desktop
+      @include largescreen {
+        display: none;
+      }
+    }
+  }
+
+  .menu {
+    position: relative;
+    list-style: none;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    transition: all .3s ease;
+
+    &_no-collapse {
+      display: flex;
+      float: right;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      height: auto;
+      margin: 0;
+      width: 100%;
+    }
+
+    &-item {
+      height: 45px;
+      display: flex;
+      align-items: center;
+      line-height: inherit;
+      @include color-assign(color, font-color--primary);
+      text-transform: uppercase;
+    }
+
+    &-link {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $color-green;
+      }
+    }
+
+    &.active {
+      height: 100px;
+    }
+    @include smallscreen {
+      &.active {
+        height: 145px;
+      }
+    }
+
+
+    // Media Query for Desktop
+    @include largescreen {
+      display: flex;
+      float: right;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      height: auto;
+      margin: 0;
+
+      &-item {
+        height: 60px;
+      }
+    }
+  }
+}
+
+#notificationsDropdown {
+  animation: fade-in both ease-in-out;
+  animation-duration: .2s;
+  position: fixed !important;
+  top: 40px !important;
+
+  width: 300px;
+  max-height: 80vh !important;
+  padding: 1rem !important;
+
+  @include smallscreen {
+    display: none;
+  }
+
+  .list__item {
+    animation: none;
+  }
+}
+
+#pagesDrop {
+  animation: fade-in both ease-in-out;
+  animation-duration: .2s;
+  position: fixed !important;
+  top: 40px;
+  width: 180px !important;
+
+  @media only screen and (min-device-width: 431px) and (min-width: 431px) {
+    top: 45px !important;
+  }
+
+  @include smallscreen {
+    width: 100vw !important;
+    top: 100vh;
+  }
+}
+.pages-link {
+  @include color-assign(background-color, accent);
+  border-radius: 25px;
+  padding: 0 15px !important;
+  height: 45px !important;
+  display: flex;
+  align-items: center;
+}
+
+#messages {
+  @include smallscreen {
+    display: none;
+  }
+  &-link {
+    display: none;
+    @include smallscreen {
+      display: block;
+    }
+  }
+}
+
+#themeItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include smallscreen {
+    display: none;
+  }
+
+  &-collapse {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: .5rem;
+    @include smallscreen {
+      display: flex;
+    }
+  }
+}
+
+#markAsReadNotes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: .3rem;
+}

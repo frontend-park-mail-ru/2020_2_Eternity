@@ -1,7 +1,7 @@
 import BaseController from "./BaseController.js";
 
 import UserModel from "../models/UserModel.js"
-import AuthRegPage from "../views/auth/auth.js";
+import AuthRegPage from "../views/Auth/Auth.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -33,6 +33,11 @@ export default class LoginController extends BaseController {
             if (!response.error) {
                 eventBus.emit(Events.pathChanged, {path: routes.mainPage});
                 SessionController.on(response);
+                eventBus.emit(Events.onLogin);
+            } else {
+                if (response.error === 'bad login or password') {
+                    this.view.password.addError('Неверное имя пользователя или пароль');
+                }
             }
         }).catch((error) => console.log(error));
     }
@@ -41,6 +46,8 @@ export default class LoginController extends BaseController {
         UserModel.reg(data).then((response) => {
             if (!response.error) {
                 this.onLogin(data);
+            } else {
+                this.view.username.addError('Такой пользователь уже существует');
             }
         }).catch((error) => console.log(error));
     }

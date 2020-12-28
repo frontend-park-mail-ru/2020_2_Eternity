@@ -109,3 +109,6 @@ fabric.properties
 .idea/
 node_modules/
 dist/
+
+*.css
+*.css.map

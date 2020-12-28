@@ -1,0 +1,24 @@
+@use "../layoutPresets/desk";
+
+.board {
+    &__info {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        &__title {
+            margin: 0 0 10px;
+        }
+        &__descr {
+            margin: .5rem;
+        }
+    }
+    &__content {
+        text-align: right;
+    }
+}

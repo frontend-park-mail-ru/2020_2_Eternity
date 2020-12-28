@@ -1,0 +1,84 @@
+@import "src/colors";
+@import "src/themes";
+
+.board {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+
+    &__title {
+        display: flex;
+        width: 100%;
+        margin: 10px 0;
+
+        text-align: start;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &__date {
+        font-weight: normal;
+        margin: 5px 0;
+        @include color-assign(color, font-color--secondary);
+    }
+
+    &__card {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-areas: "first second"
+                         "first third";
+        grid-template-columns: minmax(0, 50%);
+        grid-template-rows: minmax(0, 50%);
+
+        text-decoration: none;
+        @include color-assign(background-color, accent);
+        border-radius: 25px;
+        overflow: hidden;
+        position: relative;
+        transition: .2s ease-in-out;
+
+        &__img {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            object-fit: cover;
+            object-position: center;
+
+            &:nth-child(1) {
+                grid-area: first;
+                box-sizing: border-box;
+                @include color-assign(border-right, font-color--white, '3px solid THEMECOLOR');
+            }
+            &:nth-child(2){
+                grid-area: second;
+                box-sizing: border-box;
+                @include color-assign(border-bottom, font-color--white, '3px solid THEMECOLOR');
+            }
+            &:nth-child(3) {
+                grid-area: third;
+            }
+        }
+
+        &__placeholder {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            flex-direction: column;
+            font-weight: 300;
+            font-size: smaller;
+            opacity: 0.4;
+
+            .icon__idea {
+                width: 30px;
+                height: 30px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

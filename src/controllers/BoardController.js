@@ -1,5 +1,5 @@
 import BaseController from "./BaseController.js";
-import BoardPage from "../views/board/board.js";
+import BoardPage from "../views/Board/Board.js";
 
 import eventBus from "../modules/tools/EventBus.js";
 import {Events} from "../modules/consts/events.js";
@@ -20,8 +20,9 @@ export default class BoardController extends BaseController {
             this.view.fillWith(response);
 
             PinModel.getBoardPins(data).then((pinsResponse) => {
+                response.pins = pinsResponse;
                 this.view.fillWith({pins: pinsResponse});
-                this.view.render();
+                this.view.load(response);
             })
         }).catch((error) => console.log(error));
 

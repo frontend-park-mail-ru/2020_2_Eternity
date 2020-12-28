@@ -1,0 +1,132 @@
+@import "src/themes";
+
+@mixin largescreen {
+  @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
+}
+
+
+.chat {
+  display: flex;
+  height: calc(100vh - 80px);
+  position: relative;
+
+  &__window {
+    display: inline-block;
+    width: 100%;
+    padding-left: 60px;
+    overflow: hidden;
+
+    transition: all .3s ease-in-out;
+
+    &__messages {
+      display: flex;
+      flex-direction: column-reverse;
+      flex: 1 1 auto;
+
+      overflow-y: auto;
+      height: calc(100% - 120px);
+      list-style: none;
+      padding: 0 20px 20px;
+      margin: 0;
+
+      &__help {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        @include color-assign(color, font-color--secondary);
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 20px;
+      width: 100%;
+      @include color-assign(background-color, secondary);
+
+
+      &__input {
+        width: 80%;
+        margin: 0 5px;
+
+        position: relative;
+      }
+
+      &__actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        margin: auto 0;
+      }
+    }
+  }
+
+  &__message__wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-self: flex-end;
+
+    animation: none;
+  }
+}
+
+.content__expand {
+  @include largescreen {
+    padding-left: 300px;
+  }
+}
+
+.message__received {
+  align-self: flex-start;
+}
+
+#msgInput {
+  padding-right: 40px;
+}
+
+.smile-picker {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.smile {
+  background-color: transparent;
+  padding: 0;
+
+  .message__text {
+    font-size: 50px;
+  }
+}
+
+.sticker {
+  width: 60px;
+  height: 60px;
+  padding: 2px;
+  object-fit: contain;
+  object-position: center;
+
+  &_chat {
+    background-color: transparent;
+  }
+}
+.message__text__sticker {
+  width: 120px;
+  @include largescreen {
+    width: 150px;
+  }
+}

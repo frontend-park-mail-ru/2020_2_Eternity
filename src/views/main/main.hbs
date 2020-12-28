@@ -1,9 +1,20 @@
-{{{ navbar }}}
+{{{navbar}}}
+
+{{#each users}}
+    {{{this}}}
+{{/each}}
+
+<!--{{#each boards}}
+    {{{this}}}
+{{/each}}-->
 
 <div class="content-grid">
     {{#each pins}}
-        <div class="content-grid__item">
-            {{{ this }}}
-        </div>
+        {{{this}}}
     {{/each}}
 </div>
+
+{{{dropdownCreate}}}
+{{{btnCreate}}}
+
+{{{popup}}}

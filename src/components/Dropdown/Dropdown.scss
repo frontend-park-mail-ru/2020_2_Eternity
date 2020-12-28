@@ -1,0 +1,53 @@
+@import "src/colors";
+@import "src/themes";
+
+@mixin smallscreen {
+    @media only screen and (max-device-width: 430px) and (max-width: 430px) {
+        @content;
+    }
+}
+
+.dropdown {
+    display: none;
+
+    width: 210px;
+    max-height: 150px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 20px 15px !important;
+    position: absolute;
+    z-index: 999;
+
+    text-align: left;
+    @include color-assign(color, font-color--primary);
+
+    outline: none;
+    border-radius: 25px;
+    @include color-assign(background-color, secondary);
+    box-shadow: $box-shadow-secondary;
+
+    transition: .3s all ease-in-out;
+
+    &__active {
+        visibility: visible;
+        display: inline-block;
+        @include color-assign(border, accent, '1px solid THEMECOLOR');
+    }
+
+    &::-webkit-scrollbar {width: 0;}
+    &::-webkit-scrollbar-track {margin-right: 20px;}
+
+    @include smallscreen {
+        position: fixed;
+        top: 100vh;
+        left: 0;
+        height: 30vh !important;
+        max-height: 30vh !important;
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin: 0;
+    }
+}

@@ -1,0 +1,71 @@
+@import "src/colors";
+@import "src/themes";
+
+@mixin largescreen {
+    @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+        @content;
+    }
+}
+
+.dialog {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    margin: 10px auto;
+    width: 100%;
+
+    .avatar {
+        min-width: 40px;
+    }
+
+    &_unread {
+        @include color-assign(background-color, secondary);
+    }
+
+    &__content {
+        overflow: hidden;
+        width: 70%;
+        padding: 0 10px;
+
+        @include largescreen {
+            width: 60%;
+        }
+
+        &__user {
+            font-weight: bolder;
+        }
+        &__text {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &__info {
+        display: flex;
+        position: relative;
+        height: 100%;
+
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        font-size: smaller;
+
+        &__count {
+            position: absolute;
+            bottom: 0;
+
+            display: inline-block;
+            max-width: 25px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            background-color: $color-green;
+            border-radius: 25px;
+            padding: 0 6px;
+            @include color-assign(color, font-color--white);
+        }
+    }
+}

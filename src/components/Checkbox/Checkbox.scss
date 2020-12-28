@@ -1,0 +1,38 @@
+@import "src/colors";
+@import "src/themes";
+
+.checkbox {
+    &__label {
+        margin: 0 5px;
+        display: block;
+        cursor: pointer;
+    }
+
+    &__group {
+        position: relative;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        background: transparent;
+        border: 2px solid $color-blue;
+        border-radius: 5px;
+    }
+
+    &__checked {
+        content: '';
+        width: 4px;
+        height: 10px;
+        margin-top: -2px;
+        border-right: 2px solid $color-blue;
+        border-bottom: 2px solid $color-blue;
+        opacity: 0;
+        transform: rotate(30deg);
+        transition: .2s;
+    }
+
+    &__input:checked + &__checked {
+        opacity: 1;
+    }
+}

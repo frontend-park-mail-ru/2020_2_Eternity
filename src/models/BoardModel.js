@@ -10,6 +10,12 @@ class BoardModel {
         });
     }
 
+    getBoardCover(data={}) {
+        return request.getBoardCover(data.board_id).then((response) => {
+            return response.json();
+        })
+    }
+
     createBoard(data={}) {
         return request.boardPost(data.title, data.description).then((response) => {
             return response.json();
@@ -24,9 +30,23 @@ class BoardModel {
 
     attachPin(data = {}) {
         return request.attachPin(data.board_id, data.pin_id).then((response) => {
-            return response.json();
+            return response;
         });
     }
+
+    detachPin(data={}) {
+        return request.detachPin(data.board_id, data.pin_id).then((r) => {
+            return r;
+        })
+    }
+
+    checkAttachingPin(data={}) {
+        return request.checkAttachingPin(data.pin_id).then((r) => {
+            return r.json();
+        })
+    }
+
+
 }
 
 export default new BoardModel();

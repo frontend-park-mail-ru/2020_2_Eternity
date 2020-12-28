@@ -1,0 +1,59 @@
+.desk__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-auto-rows: 20rem;
+  grid-gap: 2rem;
+  margin: 20px auto;
+  padding: 0;
+
+  &__item {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    animation: .2s ease-in both fade-in;
+
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        animation-delay: $i * (.04s);
+      }
+    }
+  }
+}
+
+.fade-in {
+  animation: fade-in;
+  animation-duration: .3s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(5%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.fade-out {
+  animation: fade-out;
+  animation-duration: .3s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(5%);
+  }
+}

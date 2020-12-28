@@ -1,0 +1,196 @@
+@use "../layoutPresets/desk";
+
+@mixin largescreen {
+  @media only screen and (min-device-width: 768px) and (min-width: 768px) {
+    @content;
+  }
+}
+
+@import "src/colors";
+@import "src/themes";
+
+
+.profile {
+  &-card {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 12vh auto 20px;
+    border-radius: 12px;
+
+    &__user-avatar {
+      position: relative;
+      display: inline-block;
+    }
+
+    &__user-info {
+      text-align: center;
+      line-height: 1.7rem;
+      padding: 0;
+      margin: 15px auto;
+      list-style-type: none;
+
+      &__item {
+        &:last-child {
+          margin-top: .7rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+        &:first-child {
+          font-size: 1.3rem;
+          font-weight: bold;
+        }
+      }
+
+      .btn {
+        margin: 0 5px;
+      }
+    }
+  }
+
+  &__edit {
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  &-desk {
+    height: 100%;
+    padding: 1rem;
+    text-align: right;
+
+    &__create {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      @include color-assign(background-color, secondary);
+      border-radius: 25px;
+      padding: 0 .5em;
+      margin-left: 1em;
+
+      &__linktext {
+        display: none;
+      }
+
+      .btn {
+        box-shadow: none;
+        padding: 0 1em;
+
+        &_with-icon svg {
+          height: 20px;
+        }
+      }
+
+      @include largescreen {
+        justify-content: flex-end;
+        background-color: transparent;
+        box-shadow: none;
+
+        .btn {
+          &:first-child {
+            margin-right: 20px;
+          }
+        }
+
+        &__linktext {
+          display: inline-flex;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: center;
+
+    @include largescreen {
+      justify-content: space-between;
+    }
+  }
+
+  &-tabs {
+    height: 3rem;
+    width: 13rem;
+    margin: 1em 0;
+    @include color-assign(background-color, secondary);
+    font-weight: 600;
+    border-radius: 25px;
+
+    &__list {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+
+      &__item {
+        display: flex;
+        flex-grow: 1;
+        padding: 0;
+        justify-content: center;
+        position: relative;
+
+        &__icon {
+          position: relative;
+          font-size: 0;
+          line-height: 1rem;
+          border-radius: 25px;
+          width: 1rem;
+          padding: 1rem;
+          transition: all .3s ease-in-out;
+          color: transparent;
+          text-align: center;
+          cursor: pointer;
+
+          &__svg {
+            position: absolute;
+            left: 1rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            @include color-assign(color, font-color--primary);
+          }
+        }
+
+        &__input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+
+          &:checked + .profile-tabs__list__item__icon {
+            @include color-assign(background-color, accent);
+            font-size: 1rem;
+            width: 3rem;
+            @include color-assign(color, font-color--primary);
+            padding-inline-start: 3rem;
+          }
+          &:focus + .profile-tabs__list__item__icon {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile__info__help {
+  position: absolute;
+  left: 0;
+  display: flex;
+  width: 100%;
+  @include color-assign(color, font-color--secondary);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

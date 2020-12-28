@@ -1,0 +1,27 @@
+@import "src/colors";
+@import "src/themes";
+
+.comment {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    margin: 0 auto;
+    min-height: 50px;
+    padding: 10px 20px;
+
+    @include color-assign(color, font-color--primary);
+    @include color-assign(border-top, accent, '1px solid THEMECOLOR');
+
+    &__author {
+        display: block;
+        font-weight: bold;
+    }
+
+    &__time {
+        @include color-assign(color, font-color--secondary);
+        position: absolute;
+        right: 20px;
+        top: 5px;
+    }
+}

@@ -1,0 +1,249 @@
+@import "src/colors";
+@import "src/themes";
+
+.search {
+  position: relative;
+  height: 45px;
+  width: 70%;
+  border-radius: 25px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all .3s;
+  @include color-assign(border, hoverlabel, '1px solid THEMECOLOR');
+
+  @media only screen and (max-device-width: 1020px) and (max-width: 1020px) {
+    width: 50%;
+  }
+
+  &__toggle {
+    display: none;
+  }
+
+  &__box {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: all .3s;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 5px 60px 5px 15px;
+    @include color-assign(color, font-color--primary);
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    font-size: 16px;
+    transition: all .3s ease-in-out;
+
+    &::placeholder {
+      opacity: 1;
+      @include color-assign(color, font-color--secondary);
+    }
+
+    &:not(:placeholder-shown) {
+      ~ .search__clean {
+        display: flex;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    right: -5px;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    @include color-assign(background-color, accent);
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color .3s ease-in-out;
+
+    &__icon {
+      position: relative;
+      width: 19px;
+      height: 19px;
+
+      &::before {
+        display: block;
+        content: '';
+        width: 12px;
+        height: 12px;
+        background-color: transparent;
+        @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
+        border-radius: 50px;
+      }
+
+      &::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        display: block;
+        content: '';
+        width: 8px;
+        height: 2px;
+        @include color-assign(background-color, font-color--primary);
+        transform: rotate(45deg);
+        transform-origin: right;
+      }
+    }
+  }
+
+  &__clean {
+    display: none;
+    position: absolute;
+    right: 35px;
+  }
+
+  @media only screen and (max-device-width: 630px) and (max-width: 630px) {
+    width: 45px;
+    padding: 0;
+    border: none;
+
+    &__box {
+      position: fixed;
+      width: 0;
+      height: 0;
+      top: 60px;
+      left: 0;
+    }
+
+    &__btn {
+      display: none;
+    }
+
+    &__input {
+      padding-right: 130px;
+      &::placeholder {
+        transition: .3s;
+        transition-delay: .3s;
+        opacity: 0;
+      }
+    }
+
+    &__toggle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      z-index: 2;
+      opacity: 0;
+      outline: none;
+
+      &__icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 25px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        left: 0;
+        @include color-assign(background-color, accent);
+        transition: .3s ease-in-out;
+
+        &__btn {
+          position: relative;
+          width: 19px;
+          height: 19px;
+
+          &::before {
+            display: block;
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: transparent;
+            @include color-assign(border, font-color--primary, '2px solid THEMECOLOR');
+            border-radius: 50px;
+          }
+
+          &::after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            display: block;
+            content: '';
+            width: 8px;
+            height: 2px;
+            @include color-assign(background-color, font-color--primary);
+            transform: rotate(45deg);
+            transform-origin: right;
+          }
+        }
+      }
+    }
+    &__toggle:checked {
+      ~ .search__toggle__icon {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+      }
+
+      ~ .search__box {
+        @include color-assign(background-color, secondary);
+        @include color-assign(border-top, accent, '1px solid THEMECOLOR');
+        width: 100%;
+        height: 60px;
+        box-shadow: $box-shadow-secondary;
+
+        .search__btn {
+          display: flex;
+          visibility: visible;
+          top: auto;
+          right: 5px;
+          width: 65px;
+          height: 45px;
+
+          animation: fade-in .3s both;
+          animation-delay: .3s;
+
+
+          &__icon {
+            width: 65px;
+
+            &::before {
+              @include color-assign(color, font-color--primary);
+              content: 'Поиск';
+              font-weight: 600;
+              border: none;
+              width: 100%;
+              margin: 0 auto;
+            }
+
+            &::after {
+              display: none;
+              opacity: 0;
+            }
+          }
+        }
+
+        .search__clean {
+          width: 45px;
+          height: 45px;
+          @include color-assign(background-color, accent);
+          right: 75px;
+        }
+
+        .search__input::placeholder {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

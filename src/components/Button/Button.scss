@@ -1,0 +1,142 @@
+@import "src/colors";
+@import "src/themes";
+
+.btn {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+
+    height: 45px;
+    min-height: 24px;
+    line-height: 40px;
+    padding: 0 1.5rem;
+    overflow: hidden;
+    @include color-assign(background-color, secondary);
+    @include color-assign(color, font-color--primary);
+
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+
+    outline: none;
+    border: none;
+    border-radius: 25px;
+
+    transition: all .3s ease-out;
+
+    &__ext {
+        opacity: 0;
+        position: absolute;
+        text-transform: none;
+    }
+
+    &:hover {
+        text-decoration: none;
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+    }
+
+    &_round {
+        padding: 0;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+
+        &_mini {
+            width: 24px;
+            height: 24px;
+        }
+
+        &_middle {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &_with-icon svg {
+        display: inline-block;
+        float: none;
+        height: 50%;
+        font-size: inherit;
+        text-align: center;
+        vertical-align: middle;
+    }
+}
+
+.btn[disabled] {
+    cursor: default !important;
+    @include color-assign(color, font-color--primary, 'THEMECOLOR !important');
+    @include color-assign(background-color, secondary, 'THEMECOLOR !important');
+    box-shadow: none !important;
+
+    &:hover {
+        background-color: #cdcdcd !important;
+    }
+}
+
+/* ------- COLORS ------- */
+.btn {
+    &_red {
+        @include color-assign(color, font-color--white);
+        background-color: $color-red;
+
+        &:hover {
+            background-color: $color-red-dark;
+        }
+    }
+
+    &_green {
+        @include color-assign(color, font-color--white);
+        background-color: $color-green;
+
+        &:hover {
+            background-color: $color-green-dark;
+        }
+    }
+
+    &_blue {
+        @include color-assign(color, font-color--white);
+        background-color: $color-blue;
+
+        &:hover {
+            background-color: $color-blue-dark;
+        }
+    }
+
+    &_transparent {
+        background-color: transparent;
+        box-shadow: none;
+
+        &:hover {
+            background-color: transparent;
+            box-shadow: none;
+            color: $color-blue;
+        }
+    }
+}
+
+.fade-in_icon {
+    animation: fade-in_icon;
+    animation-duration: .8s;
+}
+@keyframes fade-in_icon {
+    0% {
+        background-color: $color-green;
+        color: transparent;
+    }
+    50% {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+    }
+    100% {
+        background-color: $color-green;
+        @include color-assign(color, font-color--white);
+    }
+}

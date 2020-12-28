@@ -1,0 +1,35 @@
+@import "src/colors";
+@import "src/themes";
+
+.message {
+    padding: 10px 20px;
+    border-radius: 25px;
+    @include color-assign(color, font-color--primary);
+    @include color-assign(background-color, accent);
+    //background-color: #e6e7ec;
+    max-width: 600px;
+    width: fit-content;
+    position: relative;
+    margin: 15px 0 20px;
+    word-break: break-all;
+
+    &_own {
+        @include color-assign(color, font-color--white);
+        margin-left: auto;
+        background-color: $color-blue;
+    }
+
+    &__time {
+        position: absolute;
+        left: 10px;
+        bottom: -20px;
+        @include color-assign(color, font-color--secondary);
+        font-size: small;
+
+        &__own {
+            position: absolute;
+            left: auto;
+            right: 0;
+        }
+    }
+}

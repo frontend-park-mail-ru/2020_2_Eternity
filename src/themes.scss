@@ -1,0 +1,80 @@
+// ---------------------------------------
+// TEXT DEFINITIONS
+// ---------------------------------------
+$light: 'light';
+$dark: 'dark';
+$font-color--primary: 'font-color--primary';
+$font-color--white: 'font-color--white';
+$font-color--secondary: 'font-color--secondary';
+
+// ---------------------------------------
+// THEMES
+// ---------------------------------------
+$themes: (
+        light: (
+                primary: #fafafa,
+                secondary: #fefefe,
+                accent: #efefef,
+                font-color--primary: #111111,
+                font-color--white: #fff,
+                font-color--secondary: #9e9e9e,
+                skeleton-bg: linear-gradient(to right, rgba(0,0,0,.05) 8%, rgba(0,0,0, .08) 18%, rgba(0,0,0,.05) 33%),
+                logo: 'url("/img/logo-light.svg")',
+                hoverlabel: rgba(17, 17, 17, .05),
+        ),
+        dark: (
+                primary: #1f2128,
+                secondary: #242731,
+                accent: #2a2f3e,
+                font-color--primary: #cadae5,
+                font-color--white: #fafafa,
+                font-color--secondary: #9e9e9e,
+                skeleton-bg: linear-gradient(to right, rgba(255,255,255,.05) 8%, rgba(255,255,255, .08) 18%, rgba(255,255,255,.05) 33%),
+                logo: 'url("/img/logo-dark.svg")',
+                hoverlabel: rgba(202, 218, 229, .1),
+        )
+);
+@function compose-colors-var($color-key) {
+  @return '--color-#{$color-key}';
+}
+
+@function color-get($palette, $color-key) {
+  @return map-get(map-get($themes, $palette), $color-key);
+}
+
+
+:root {
+  @each $key, $value in map-get($themes, 'light') {
+    #{compose-colors-var($key)}: #{$value};
+  }
+}
+:root[data-theme='dark'] {
+  @each $key, $value in map-get($themes, 'dark') {
+    #{compose-colors-var($key)}: #{$value};
+  }
+
+  img {
+    filter: grayscale(30%);
+    transition: filter .3s ease-in-out;
+    //filter: brightness(.8) contrast(1.2);
+  }
+}
+
+
+$color-placeholder: 'THEMECOLOR';
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  @if not $index {
+    @return $string;
+  }
+  @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+}
+
+
+@mixin color-assign($property, $color-key, $additionalProperties: '') {
+  $fallback: #{color-get('light', $color-key)};
+  $var: var(#{compose-colors-var($color-key)});
+
+  #{$property}: if(str-length($additionalProperties) == 0, $fallback, #{str-replace($additionalProperties, $color-placeholder, $fallback)});
+  #{$property}: if(str-length($additionalProperties) == 0, $var, #{str-replace($additionalProperties, $color-placeholder, $var)});
+}

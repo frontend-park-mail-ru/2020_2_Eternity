@@ -1,0 +1,131 @@
+@import "themes";
+
+@import "components/Avatar/Avatar";
+@import "components/FileUpload/FileUpload";
+@import "components/Popup/Popup";
+@import "components/Input/Input";
+@import "components/Card/Card";
+@import "components/Board/Board";
+@import "components/Dropdown/Dropdown";
+@import "components/Toggle/Toggle";
+@import "components/Toggle/LabeledToggle/LabeledToggle";
+@import "components/NotificationBell/NotificationBell";
+@import "components/Comment/Comment";
+@import "components/Dialog/Dialog";
+@import "components/Dialog/Message/Message";
+@import "components/Sidebar/Sidebar";
+@import "components/Button/Button";
+@import "components/ImageUpload/ImageUpload";
+@import "components/Checkbox/Checkbox";
+@import "components/Navbar/Navbar";
+@import "components/Search/Search";
+@import "components/Userbar/Userbar";
+@import "components/form/form";
+@import "components/List/List";
+@import "components/List/Item/Item";
+@import "components/ThemeSwitcher/ThemeSwitcher";
+@import "components/EmojiPicker/EmojiPicker";
+@import "components/ReportForm/ReportForm";
+@import "components/Tooltip/Tooltip";
+@import "components/WideDropdown/WideDropdown";
+@import "components/CreateForm/CreateForm";
+@import "components/Boardbar/Boardbar";
+@import "components/NotificationBar/NotificationBar";
+@import "components/Notebar/Notebar";
+@import "components/Followbar/Followbar";
+@import "components/FollowOfferForm/FollowOfferForm";
+
+@import "views/Profile/Profile";
+@import "views/Settings/Settings";
+@import "views/main/main";
+@import "views/Auth/Auth";
+@import "views/PinCreate/PinCreate";
+@import "views/BoardCreate/BoardCreate";
+@import "views/Pin/Pin";
+@import "views/Chat/Chat";
+@import "views/Board/Board";
+
+@media (max-width: 575px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@font-face {
+    font-family: 'emoji';
+    src: url("../public/static/fonts/TwitterColorEmoji.ttf");
+}
+
+body {
+    font-size: 1rem;
+    font-weight: 300;
+    @include color-assign(color, font-color--primary);
+    @include color-assign(background-color, primary);
+    transition: all .2s ease-in-out, background .3s ease-in-out;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    will-change: background-color;
+}
+
+a {
+    @include color-assign(color, font-color--primary);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#app {
+    margin-top: 70px;
+}
+
+.hidden {
+    display: none;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+
+.load-animation {
+    border-radius: 25px;
+    @include color-assign(background, skeleton-bg);
+    background-size: 1200px 100px;
+    animation: load 2s forwards linear infinite;
+
+    &_short {
+        display: inline-flex;
+        min-height: 1em;
+        min-width: 8em;
+        max-width: 50%;
+    }
+    &_round {
+        border-radius: 50%;
+    }
+}
+
+@keyframes load{
+    0% {
+        background-position: -500px 0;
+    }
+    100% {
+        background-position: 500px 0;
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+}
