@@ -1,12 +1,9 @@
-<a href="/board/{{id}}" class="board">
+<a href="/board/{{id}}" class="board" data-board="{{id}}">
     <section class="board__card">
-        {{#each coverPins}}
-            <img class="board__card__img" src="{{ this.imgSrc }}" alt="">
-        {{/each}}
+        {{#each coverPins}}{{{this}}}{{/each}}
     </section>
     <section>
         <h2 class="board__title">{{ title }}</h2>
         <p class="board__date">{{ date }}</p>
     </section>
 </a>
-

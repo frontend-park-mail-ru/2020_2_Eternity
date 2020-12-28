@@ -74,18 +74,18 @@ module.exports = {
         require('autoprefixer')
     ],
 
-    /*optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                parallel: true,
-                extractComments: true,
-            }),
-            new CssMinimizerPlugin({
-                parallel: true,
-            }),
-        ],
-    },*/
+    // optimization: {
+    //     minimize: true,
+    //     minimizer: [
+    //         new TerserPlugin({
+    //             parallel: true,
+    //             extractComments: true,
+    //         }),
+    //         new CssMinimizerPlugin({
+    //             parallel: true,
+    //         }),
+    //     ],
+    // },
 
     devServer: {
         contentBase: path.join(__dirname, 'build'),

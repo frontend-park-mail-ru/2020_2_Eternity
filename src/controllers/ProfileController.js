@@ -62,6 +62,12 @@ export default class ProfileController extends BaseController {
                 BoardModel.getUserBoards(data).then((boardsResponse) => {
                     this.view.fillWith({boards: boardsResponse});
                     this.view.loadDesk();
+
+                    boardsResponse.forEach((b) => {
+                        BoardModel.getBoardCover({board_id: b.id}).then((coverResp) => {
+                            this.view.mboards[b.id].loadCover(coverResp);
+                        })
+                    })
                 });
             });
         }).catch((error) => console.log(error));
@@ -156,7 +162,8 @@ export default class ProfileController extends BaseController {
                     }
                     break;
                 case 'board':
-                    if (this.view.boards.length !== 0) {
+                    if (Object.keys(this.view.mboards).length !== 0) {
+                        this.view.boards = Object.values(this.view.mboards);
                         this.view.changeDeskContent(this.view.boards);
                     } else {
                         help.context.text = 'Пользователь еще не создал ни одной доски';
@@ -164,10 +171,11 @@ export default class ProfileController extends BaseController {
                     }
                     break;
                 default:
-                    if (this.view.boards.length === 0 && this.view.pins.length === 0) {
+                    if (Object.keys(this.view.mboards).length === 0 && this.view.pins.length === 0) {
                         help.context.text = 'У пользователя нет досок или пинов';
                         document.getElementById('desk-content').innerHTML = help.render()
                     } else  {
+                        this.view.boards = Object.values(this.view.mboards);
                         this.view.changeDeskContent([...this.view.pins, ...this.view.boards]);
                     }
                     break;

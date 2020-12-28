@@ -193,7 +193,7 @@ class Navbar extends BaseComponent {
             node.insertAdjacentElement('afterbegin', this.createElem(link.render(), 'messages'));
         }
         node.insertAdjacentHTML('afterbegin', this.search.render());
-        console.log(node)
+
         document.getElementById('menu_no-collapse').innerHTML = node.innerHTML;
     }
 
@@ -229,14 +229,14 @@ class Navbar extends BaseComponent {
                 href: `/signup`,
                 custom: 'menu-link',
                 text: 'Регистрация',
-            }).render();
+            });
             node.insertAdjacentElement('beforeend', this.createElem(signup.render()));
 
             const login = new Link({
                 href: `/login`,
                 custom: 'menu-link',
                 text: 'Вход',
-            }).render();
+            });
             node.insertAdjacentElement('beforeend', this.createElem(login.render()));
         }
 

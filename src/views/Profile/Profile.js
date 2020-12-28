@@ -24,6 +24,7 @@ export default class ProfilePage extends BaseView {
     newContent
     pins
     boards
+    mboards
 
     // for event listeners
     deskContent
@@ -38,6 +39,7 @@ export default class ProfilePage extends BaseView {
     constructor(context = {}) {
         super('Профиль', context, null);
         this.template = template;
+        this.mboards = {};
     }
 
     render() {
@@ -258,10 +260,10 @@ export default class ProfilePage extends BaseView {
         }
         if (this.context.boards) {
             this.context.boards.forEach((board) => {
-                const nb = new Board(board);
-                this.boards.push(nb);
+                this.mboards[board.id] = new Board(board);
             });
         }
+        this.boards = Object.values(this.mboards);
 
         if (this.pins.length === 0 && this.boards.length === 0) {
             const help = new Span({custom: 'profile__info__help'})

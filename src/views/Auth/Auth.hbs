@@ -3,7 +3,15 @@
 <div class="layout__container">
     <div class="wrap">
         <div class="wrap__left">
-            <img src={{#if img}}{{img}}{{else}}"/img/authCat.jpg"{{/if}} style="height: 100%; width: 100%;">
+            <a class="link-pin" id="link-pin" href="{{link}}">
+                {{#if username}}
+                    <div class="link-pin__author">
+                        {{{avatar}}}
+                        <span class="link-pin__author__name">{{username}}</span>
+                    </div>
+                {{/if}}
+                <img class="link-pin__img" src="{{linkImg}}">
+            </a>
         </div>
 
         <div class="wrap__right">

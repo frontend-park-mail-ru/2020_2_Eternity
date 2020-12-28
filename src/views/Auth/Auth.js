@@ -10,6 +10,7 @@ import Validator from "../../modules/tools/Validator.js";
 
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
+import Avatar from "../../components/Avatar/Avatar";
 
 
 /**
@@ -32,7 +33,6 @@ export default class AuthRegPage extends BaseView {
         super('Авторизация', context, null);
         this.template = template;
         this.pageType = pageType;
-        this.pageType === 'registration' ? (this.context.reg = true) : (this.context.reg = false);
     }
 
     /**
@@ -41,9 +41,8 @@ export default class AuthRegPage extends BaseView {
      * @return //TODO: понять и простить
      */
     render() {
-        if (localStorage.getItem('authImg')) {
-            this.context.img = localStorage.getItem('authImg');
-        }
+        this.pageType === 'registration' ? (this.context.reg = true) : (this.context.reg = false);
+
         const email = new Input({
             label: 'Адрес электронной почты',
             type: 'text',
@@ -75,8 +74,24 @@ export default class AuthRegPage extends BaseView {
         }
         this.form = new FormGenerator(this.pageType, ...elements).createForm();
 
+        // LEFT PIC
+        if (localStorage.getItem('authImg') && localStorage.getItem('authImgLink') && localStorage.getItem('authImgAuthor')) {
+            this.context.linkImg = localStorage.getItem('authImg');
+            this.context.link = localStorage.getItem('authImgLink');
+            this.context.username = localStorage.getItem('authImgAuthor');
+            this.context.avatar = localStorage.getItem('authImgAuthorAvatar') || '/img/default.svg'
+        } else {
+            this.context.linkImg = "/img/authCat.jpg";
+        }
+
         const data = {
-            form: this.form.render()
+            form: this.form.render(),
+
+            username: this.context.username,
+            avatar: new Avatar({
+                img_link: this.context.avatar,
+                custom: 'avatar_mini'
+            }).render()
         };
 
         this.fillWith(data);
