@@ -10,6 +10,12 @@ class BoardModel {
         });
     }
 
+    getBoardCover(data={}) {
+        return request.getBoardCover(data.board_id).then((response) => {
+            return response.json();
+        })
+    }
+
     createBoard(data={}) {
         return request.boardPost(data.title, data.description).then((response) => {
             return response.json();
@@ -39,6 +45,8 @@ class BoardModel {
             return r.json();
         })
     }
+
+
 }
 
 export default new BoardModel();

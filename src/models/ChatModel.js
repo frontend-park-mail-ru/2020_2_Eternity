@@ -4,6 +4,7 @@ import ws from "../modules/websocket/websocket";
 import EventBus from "../modules/tools/EventBus";
 import {Events} from "../modules/consts/events";
 import UserModel from "./UserModel";
+import Navbar from "../components/Navbar/Navbar";
 
 class ChatModel {
     // TODO: адрес бэка в конфиг какой нибудь вынести
@@ -13,25 +14,18 @@ class ChatModel {
     constructor() {
         EventBus.on(Events.onLogin, this.openSocket.bind(this), this.connect.bind(this));
         EventBus.on(Events.userLogout, this.closeConnect.bind(this));
-        // TODO: закрыть WS по логауту
-        // EventBus.on(Events.userLogout, )
     }
 
     connect() {
         return request.createWSConnect().then((response) => {
             if (response.ok) {
+                Navbar.notificationBell.setNotificationsCount({num: response.notes_amount});
                 return UserModel.getProfile().then((response) => {
                     if (!response.error) {
                         ws.on(this.socket, {EventBus, Events}, response.username);
                     }
                 })
             }
-            // return new Promise(((resolve) => {
-            //     this.socket.onopen = () => {
-            //         console.log('соединение с чатиком установлено');
-            //         resolve(true);
-            //     }
-            // }))
         })
     }
 

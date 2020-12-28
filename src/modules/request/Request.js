@@ -175,6 +175,10 @@ export default class Request {
         return this.requestGET(urls.board.replace(':id', id));
     }
 
+    static getBoardCover(id) {
+        return this.requestGET(urls.boardCover.replace(':id', id));
+    }
+
     static getUserBoards(username) {
         return this.requestGET(urls.boards.replace(':username', username));
     }

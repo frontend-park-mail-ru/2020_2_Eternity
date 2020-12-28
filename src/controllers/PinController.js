@@ -55,7 +55,7 @@ export default class PinController extends BaseController {
                         BoardModel.getUserBoards(profileResponse).then((boardResponse) => {
                             BoardModel.checkAttachingPin({pin_id: response.id}).then((checkingResponse) => {
                                 let m = {};
-                                if (checkingResponse) {
+                                if (checkingResponse.length !== 0) {
                                     checkingResponse.forEach((b) => {
                                         m[b.id] = b;
                                     })

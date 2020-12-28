@@ -45,7 +45,6 @@ export default class BoardPage extends BaseView {
     load(data={}) {
         const node = document.querySelector('.board__info');
         const [title, author, descr] = node.children;
-        console.log(data)
         title.textContent = data.title;
         title.className = 'board__info__title';
 
@@ -58,7 +57,7 @@ export default class BoardPage extends BaseView {
         descr.textContent = data.content;
         descr.className = 'board__info__descr';
 
-        if (data.pins) {
+        if (data.pins.length !== 0) {
             this.desk = new List({
                 id: 'desk-content',
                 custom: 'desk__grid',
