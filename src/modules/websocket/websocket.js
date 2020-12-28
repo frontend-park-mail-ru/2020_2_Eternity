@@ -196,7 +196,7 @@ export default class ws {
         switch (data.type) {
             case 0:
             case 1:
-                href = `/pin/${data.payload.PinId || data.payload.Id}`
+                href = `/pin/${data.payload.pin_id || data.payload.id}`
                 break;
             case 2:
                 href = `/@${data.payload.Follower}`
@@ -206,14 +206,14 @@ export default class ws {
                 href = '/messages'
                 break;
         }
-
+        console.log(data)
         return {
             text: notifsType[data.type],
             username: nameType[data.type],
             chatId: data.payload.chat_id,
-            PinId: data.payload.PinId,
+            PinId: data.payload.pin_id,
             href: href,
-            id: data.payload.Id,
+            id: data.payload.id,
         };
     }
 
