@@ -11,6 +11,7 @@ import FormGenerator from "../../modules/tools/FormGenerator.js";
 import eventBus from "../../modules/tools/EventBus.js";
 import {Events} from "../../modules/consts/events.js";
 import Validator from "../../modules/tools/Validator";
+import Followbar from "../../components/Followbar/Followbar";
 
 
 export default class BoardCreate extends BaseView {
@@ -28,14 +29,13 @@ export default class BoardCreate extends BaseView {
         const title = new Input({
             label: fieldsLabels.title,
             type: 'text',
-            customClasses: 'form__input',
             value: this.context.title,
             id: 'title'
         }, Validator.validateEmptyField);
         const description = new Textarea({
             label: fieldsLabels.description,
             rows: 7,
-            class: 'form__input input-group__field_noresize',
+            customInput: 'input-group__field_noresize',
             id: 'description',
         });
         const createBtn = new Button({

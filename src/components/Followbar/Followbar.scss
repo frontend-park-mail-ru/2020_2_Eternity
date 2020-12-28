@@ -1,0 +1,40 @@
+@import "src/themes";
+
+.followbar {
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  box-sizing: border-box;
+  padding: .7rem 1.5rem;
+  position: relative;
+  @include color-assign(background-color, hoverlabel);
+  margin: .5rem;
+
+  &__user {
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+    font-weight: 600;
+
+    .avatar {
+      margin-right: .6rem;
+    }
+  }
+
+  &__count {
+    &__num {
+      font-weight: 600;
+    }
+  }
+
+  &__help {
+    font-size: small;
+    @include color-assign(color, font-color--secondary);
+  }
+
+  &__btn {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}

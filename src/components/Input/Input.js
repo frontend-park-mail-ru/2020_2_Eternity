@@ -13,6 +13,7 @@ export default class Input extends BaseComponent {
         super(template, context);
         this.validator = validator;
         this.messageForError = !context.noMessageForError;
+        this.context.needError = !context.noMessageForError;
     }
 
     getHTML() {

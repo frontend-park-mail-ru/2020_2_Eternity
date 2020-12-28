@@ -16,6 +16,8 @@ import Link from "../../components/Link/Link";
 import Navbar from "../../components/Navbar/Navbar";
 
 import PinModel from "../../models/PinModel";
+import FollowOfferForm from "../../components/FollowOfferForm/FollowOfferForm";
+import EventBus from "../../modules/tools/EventBus";
 
 export default class MainPage extends BaseView {
     cards = []
@@ -34,6 +36,8 @@ export default class MainPage extends BaseView {
 
     copyLinkBtns
 
+    popupOffer
+    popupOfferComponent
     dropdownCreate
     btnCreate
 
@@ -111,11 +115,6 @@ export default class MainPage extends BaseView {
             }
         }
 
-        this.popupPinView = new Popup({
-            id: 'pinView',
-            custom: 'pin__view',
-        })
-
         if (this.context.protoUsers) {
             this.context.protoUsers.forEach((user) => {
                this.users.push(new Userbar(user).render());
@@ -190,9 +189,17 @@ export default class MainPage extends BaseView {
             custom: 'create__dropdown'
         })
 
+        this.popupOffer = new Popup({
+            id: 'followOfferPopup',
+        })
+        this.popupOfferComponent = new FollowOfferForm({
+            id: 'followOfferForm',
+        })
+
         let data = {
             pins: this.list,
             users: this.users,
+            popup: this.popupOffer.render(),
         }
 
         if (Navbar.context.isAuth) {
@@ -209,7 +216,7 @@ export default class MainPage extends BaseView {
             data = {
                 ...data,
                 dropdownCreate: this.dropdownCreate.render(),
-                btnCreate: this.btnCreate.render()
+                btnCreate: this.btnCreate.render(),
             }
         }
 
@@ -245,14 +252,13 @@ export default class MainPage extends BaseView {
 
         // console.log(this.matrix)
 
-
-        // this.copyLinkBtns = document.querySelectorAll('.copy-link');
-        // this.copyLinkBtns.forEach((btn) => {
-        //     btn.addEventListener('click', this.onCopyLink);
-        // });
-
         if (Navbar.context.isAuth) {
             this.btnCreate.element.addEventListener('click', this.onShowCreateDropdown);
         }
+        if (this.popupOffer.element.querySelector('.modal-window__close')) {
+            this.popupOffer.element.querySelector('.modal-window__close').addEventListener('click', this.getBackOnCloseOffer)
+        }
     }
+
+
 }

@@ -206,7 +206,7 @@ export default class ws {
                 href = '/messages'
                 break;
         }
-        console.log(data)
+
         return {
             text: notifsType[data.type],
             username: nameType[data.type],

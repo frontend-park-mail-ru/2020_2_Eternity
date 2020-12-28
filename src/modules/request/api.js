@@ -45,6 +45,8 @@ export const urls = {
 
     report: `/${apiPath}/report`,
 
-    subfeed: `/${apiPath}/subfeed`
+    subfeed: `/${apiPath}/subfeed`,
+
+    popular: `/${apiPath}/user/popular`,
 }
 

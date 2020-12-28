@@ -292,4 +292,8 @@ export default class Request {
             })
         })
     }
+
+    static getPopularUsers() {
+        return this.requestGET(urls.popular);
+    }
 }
