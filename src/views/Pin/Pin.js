@@ -53,7 +53,7 @@ export default class PinPage extends BaseView {
         this.pinImg = new Image({
             id: 'pinImg',
             src: this.context.img_link,
-            custom: 'pin__img',
+            class: 'pin__img',
         })
 
         const authorAvatar = new Avatar({

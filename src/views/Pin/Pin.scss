@@ -166,13 +166,15 @@
         &__img {
           display: flex;
           width: 100%;
+          height: 100%;
           overflow: hidden;
           border-radius: 25px;
 
           .pin__img {
-            object-fit: contain;
-            object-position: center;
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
           }
         }
 
