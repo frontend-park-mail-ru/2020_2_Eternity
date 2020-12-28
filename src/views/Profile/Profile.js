@@ -46,6 +46,7 @@ export default class ProfilePage extends BaseView {
         this.pins = []
         this.boards = []
         this.newContent = []
+        this.mboards = {}
 
         this.userbar = new Userbar();
 
