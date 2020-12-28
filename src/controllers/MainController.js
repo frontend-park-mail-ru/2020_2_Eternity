@@ -140,6 +140,19 @@ export default class MainController extends BaseController {
         this.view.currentIdx = 0;
         this.view.cardsInRow = 0;
         this.view.maxHeight = 0;
+
+        this.view.currentVirtualIndexTop = 1;
+        this.view.previousVirtualIndexTop = 0;
+
+        this.view.currentVirtualHeightTop = 0;
+        this.view.previousVirtualHeightTop = 0;
+
+        this.view.currentVirtualIndexBottom = 0;
+        this.view.previousVirtualIndexBottom = 0;
+
+        this.view.currentVirtualHeightBottom = 0;
+        this.view.previousVirtualHeightBottom = 0;
+
         // console.log(this.view.list);
         super.off();
         window.removeEventListener('resize', this.resize);

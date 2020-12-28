@@ -37,6 +37,18 @@ export default class MainPage extends BaseView {
     dropdownCreate
     btnCreate
 
+    currentVirtualIndexTop = 1;
+    previousVirtualIndexTop = 0;
+
+    currentVirtualHeightTop = 0;
+    previousVirtualHeightTop = 0;
+
+    currentVirtualIndexBottom = 0;
+    previousVirtualIndexBottom = 0;
+
+    currentVirtualHeightBottom = 0;
+    previousVirtualHeightBottom = 0;
+
     constructor(context = {}) {
         super('Главная', context, null);
         this.width = window.innerWidth;
@@ -76,6 +88,110 @@ export default class MainPage extends BaseView {
         }
     }
 
+    setVirtualizeMax() {
+        if (this.currentVirtualIndexTop !== this.previousVirtualIndexTop) {
+            if (this.matrix.length > this.currentVirtualIndexTop) {
+                this.currentVirtualHeightTop = Math.max(...this.matrix[this.currentVirtualIndexTop].map((elem) => elem.h));
+                this.previousVirtualIndexTop = this.currentVirtualIndexTop;
+            }
+        }
+    }
+
+    setVirtualizeMin() {
+        if (this.currentVirtualIndexBottom === 0) {
+            for (let i = this.matrix.length - 1; i > 1; --i) {
+                this.currentVirtualIndexBottom = i;
+                if (Math.min(...this.matrix[i].map((elem) => elem.h - elem.c.context.height)) < window.innerHeight + document.getElementsByTagName("html")[0].scrollTop) {
+                    this.currentVirtualIndexBottom++;
+                    break;
+                }
+            }
+        }
+
+        if (this.currentVirtualIndexBottom !== this.previousVirtualIndexBottom) {
+            if (this.matrix.length > 0) {
+                this.currentVirtualHeightBottom = Math.min(...this.matrix[this.currentVirtualIndexBottom].map((elem) => elem.h - elem.c.context.height));
+                this.previousVirtualIndexBottom = this.currentVirtualIndexBottom;
+            }
+        }
+
+        // console.log([this.currentVirtualIndexBottom, this.currentVirtualHeightBottom])
+    }
+
+    checkIfOut() {
+        this.setVirtualizeMax();
+        this.setVirtualizeMin();
+
+        if (this.currentVirtualIndexBottom > 0 && window.innerHeight + document.getElementsByTagName("html")[0].scrollTop < this.currentVirtualHeightBottom - 200) {
+            // console.log(window.innerHeight + document.getElementsByTagName("html")[0].scrollTop)
+            for (let mLen = this.matrix.length - 1; mLen >= this.currentVirtualIndexBottom; mLen--) {
+                this.matrix[mLen].forEach((elem) => {
+                    let domElem = document.getElementById(`pin${elem.c.context.id}`);
+                    if (domElem) {
+                        domElem.parentElement.removeChild(domElem);
+                        this.list.pop();
+                    }
+                })
+            }
+            this.previousVirtualHeightBottom = this.currentVirtualHeightBottom;
+            this.currentVirtualIndexBottom--;
+
+            // console.log(this.previousVirtualHeightBottom);
+        }
+
+        if (this.currentVirtualIndexBottom > 0 && this.currentVirtualIndexBottom < this.matrix.length - 1 && window.innerHeight + document.getElementsByTagName("html")[0].scrollTop > this.previousVirtualHeightBottom) {
+            let pins = document.createDocumentFragment();
+
+            this.matrix[this.currentVirtualIndexBottom + 1].forEach((elem) => {
+                let renderedElem = elem.c.render();
+                let template = document.createElement('template');
+                template.innerHTML = renderedElem;
+                template = template.content.firstChild;
+
+                pins.appendChild(template);
+
+                this.list.push(renderedElem);
+            })
+
+            document.querySelector('.content-grid').appendChild(pins);
+
+            this.currentVirtualIndexBottom++;
+            // console.log([window.innerHeight + document.getElementsByTagName("html")[0].scrollTop, this.currentVirtualHeightBottom, this.currentVirtualIndexBottom])
+        }
+
+
+        if (this.currentVirtualIndexTop > 0 && document.getElementsByTagName("html")[0].scrollTop > this.currentVirtualHeightTop + 100) {
+            this.matrix[this.currentVirtualIndexTop].forEach((elem) => {
+                let domElem = document.getElementById(`pin${elem.c.context.id}`);
+                domElem.parentElement.removeChild(domElem);
+                this.list.shift();
+                this.previousVirtualHeightTop = this.currentVirtualHeightTop;
+            })
+            this.currentVirtualIndexTop++;
+        }
+
+        if (this.currentVirtualIndexTop > 1 && document.getElementsByTagName("html")[0].scrollTop < this.previousVirtualHeightTop - 50) {
+            let pins = document.createDocumentFragment();
+
+            this.matrix[this.currentVirtualIndexTop - 1].forEach((elem) => {
+                let renderedElem = elem.c.render();
+                let template = document.createElement('template');
+                template.innerHTML = renderedElem;
+                template = template.content.firstChild;
+
+                pins.appendChild(template);
+
+                this.list.unshift(renderedElem);
+            })
+
+            document.querySelector('.content-grid').insertBefore(pins, document.querySelector('.content-grid').firstChild);
+
+            this.currentVirtualIndexTop--;
+        }
+
+        // console.log(this.currentVirtualIndexTop)
+    }
+
     render() {
         // console.log(window.innerHeight + document.getElementsByTagName("html")[0].scrollTop)
 
@@ -107,7 +223,7 @@ export default class MainPage extends BaseView {
         if (this.matrix.length === 0) {
             this.matrix.push([]);
             for (let i = 0; i < cardNumber; ++i) {
-                this.matrix[0].push(0);
+                this.matrix[0].push({h: 0, c: null});
             }
         }
 
@@ -118,19 +234,19 @@ export default class MainPage extends BaseView {
 
         if (this.context.protoUsers) {
             this.context.protoUsers.forEach((user) => {
-               this.users.push(new Userbar(user).render());
-            });
-
-            this.context.protoUsers = [];   
-        }
-/*
-        if (this.context.protoBoards) {
-            this.context.protoBoards.forEach((user) => {
                 this.users.push(new Userbar(user).render());
             });
 
-            this.context.protoBoards = [];
-        }*/
+            this.context.protoUsers = [];
+        }
+        /*
+                if (this.context.protoBoards) {
+                    this.context.protoBoards.forEach((user) => {
+                        this.users.push(new Userbar(user).render());
+                    });
+
+                    this.context.protoBoards = [];
+                }*/
 
         if (!localStorage.getItem('authImg')) {
             if (this.context.protoPins) {
@@ -140,7 +256,7 @@ export default class MainPage extends BaseView {
                     localStorage.setItem('authImgLink', `/pin/${this.context.protoPins[idx].id}`);
 
                     PinModel.getPin({pin: this.context.protoPins[idx].id}).then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         localStorage.setItem('authImgAuthor', response.username);
                         localStorage.setItem('authImgAuthorAvatar', response.avatar);
                     });
@@ -157,7 +273,7 @@ export default class MainPage extends BaseView {
             this.context.protoPins.forEach((pin) => {
                 pin.pleft = this.left;
 
-                pin.ptop = this.matrix[this.currentIdx - 1][this.cardsInRow];
+                pin.ptop = this.matrix[this.currentIdx - 1][this.cardsInRow].h;
                 this.left += cardWidth + indent;
 
                 const card = new Card(pin);
@@ -166,7 +282,10 @@ export default class MainPage extends BaseView {
                 this.list.push(card.render());
                 this.lastPin = pin.id;
 
-                this.matrix[this.currentIdx].push((pin.title ? card.context.height + 25 : card.context.height) + 15 + this.matrix[this.currentIdx - 1][this.cardsInRow]);
+                this.matrix[this.currentIdx].push({
+                    h: (pin.title ? card.context.height + 25 : card.context.height) + 15 + this.matrix[this.currentIdx - 1][this.cardsInRow].h,
+                    c: card
+                });
                 this.cardsInRow++;
 
                 if (this.cardsInRow === cardNumber) {
@@ -179,7 +298,7 @@ export default class MainPage extends BaseView {
             this.context.protoPins = [];
         }
         if (this.currentIdx && this.currentIdx > 0) {
-            this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1])
+            this.maxHeight = Math.min(...this.matrix[this.currentIdx - 1].map((elem) => elem.h));
         }
         // console.log(this.maxHeight);
         //
@@ -241,10 +360,10 @@ export default class MainPage extends BaseView {
             });*/
 
             window.addEventListener('scroll', this.debounce(() => this.fillEmptyPlace(), 100));
+            window.addEventListener('scroll', this.debounce(() => this.checkIfOut(), 16));
         }
 
-        // console.log(this.matrix)
-
+        // console.log(this.matrix);
 
         // this.copyLinkBtns = document.querySelectorAll('.copy-link');
         // this.copyLinkBtns.forEach((btn) => {
